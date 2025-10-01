@@ -1,0 +1,151 @@
+{
+  "title": "Startech Innovation Homepage | Startech Innovation",
+  "headings": [
+    {
+      "level": "H1",
+      "text": "The New Standard in Enterprise Evolution"
+    },
+    {
+      "level": "H3",
+      "text": "Expertise"
+    },
+    {
+      "level": "H3",
+      "text": "Experience"
+    },
+    {
+      "level": "H3",
+      "text": "Execution"
+    },
+    {
+      "level": "H3",
+      "text": "Solutions Framework"
+    },
+    {
+      "level": "H2",
+      "text": "We Take Pride in Our Numbers"
+    },
+    {
+      "level": "H2",
+      "text": "Contact Us"
+    }
+  ],
+  "navigation": [
+    {
+      "text": "",
+      "href": "https://www.startech-innovation.com/"
+    },
+    {
+      "text": "Solutions",
+      "href": "https://www.startech-innovation.com/solutions"
+    },
+    {
+      "text": "Clients",
+      "href": "https://www.startech-innovation.com/clients"
+    },
+    {
+      "text": "Solutions",
+      "href": "https://www.startech-innovation.com/solutions"
+    },
+    {
+      "text": "Clients",
+      "href": "https://www.startech-innovation.com/clients"
+    }
+  ],
+  "paragraphs": [
+    "Solutions",
+    "Clients",
+    "More",
+    "Tangible Augmentation for Your Business",
+    "Experience matters. Let us take your enterprise through change without the learning pains.",
+    "Over 30 senior and 40 junior programmers",
+    "Over 150 years of total engineering experiences to draw from",
+    "Business Process Analysis",
+    "Review and Re-Engineering",
+    "IT Operations Strategy",
+    "IT Structures,Standards and Best-Practices.",
+    "Seamless Solutions and Seamless Services using Information Technology",
+    "",
+    "Focus on Domains rather than technology",
+    "",
+    "Legacy Systems to Wireless Systems to RFID Systems",
+    "20",
+    "Years of Experience",
+    "30+",
+    "Solutions Implemented",
+    "4",
+    "Countries World Wide",
+    "Thank you for contacting us.",
+    "1003 Bukit Merah Central #06-07 Singapore 159836"
+  ],
+  "lists": [
+    [
+      "Solutions",
+      "Clients"
+    ],
+    [
+      "Solutions",
+      "Clients",
+      "More"
+    ],
+    []
+  ],
+  "buttons": [
+    {
+      "text": "Skip to Main Content",
+      "href": null
+    },
+    {
+      "text": "Submit",
+      "href": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "PAGES_CONTAINER",
+      "className": "PAGES_CONTAINER",
+      "text": "SolutionsClientsMoreUse tab to navigate through the menu items.The New Standard in Enterprise EvolutionTangible Augmentation for Your BusinessExperience matters. Let us take your enterprise through change without the learning pains.Our SolutionsOur Clients #comp-kk2sktdt svg [data-color=\"1\"] {fill: #FD6262;} ExpertiseOver 30 senior and 40 junior programmers #comp-kk2skte2 svg [data-color=\"1\"] {fill: #FD6262;} ExperienceOver 150 years of total engineering experiences to draw from #comp-kk2sktdx svg [data-color=\"1\"] {fill: #FD6262;} ExecutionBusiness Process Analysis Review and Re-Engineering IT Operations Strategy IT Structures,Standards and Best-Practices. #comp-kk2sktdk svg [data-color=\"1\"] {fill: #FD6262;} Solutions FrameworkSeamless Solutions and Seamless Services using Information Technology Focus on Domains rather than technology Legacy Systems to Wireless Systems to RFID Systems 20Years of Experience30+Solutions Implemented4Countries World WideWe Take Pride in Our NumbersContact UsFirst nameLast nameEmailWrite a messageSubmitThank you for contacting us."
+    },
+    {
+      "id": "comp-li5e6yha",
+      "className": "Oqnisf comp-li5e6yha wixui-section",
+      "text": "SolutionsClientsMoreUse tab to navigate through the menu items.The New Standard in Enterprise EvolutionTangible Augmentation for Your BusinessExperience matters. Let us take your enterprise through change without the learning pains.Our SolutionsOur Clients"
+    },
+    {
+      "id": "comp-kk2oiy64",
+      "className": "comp-kk2oiy64 CohWsy wixui-column-strip",
+      "text": "SolutionsClientsMoreUse tab to navigate through the menu items.The New Standard in Enterprise EvolutionTangible Augmentation for Your BusinessExperience matters. Let us take your enterprise through change without the learning pains.Our SolutionsOur Clients"
+    },
+    {
+      "id": "comp-libhqne7",
+      "className": "Oqnisf comp-libhqne7 wixui-section",
+      "text": "#comp-kk2sktdt svg [data-color=\"1\"] {fill: #FD6262;} ExpertiseOver 30 senior and 40 junior programmers #comp-kk2skte2 svg [data-color=\"1\"] {fill: #FD6262;} ExperienceOver 150 years of total engineering experiences to draw from"
+    },
+    {
+      "id": "comp-libhtx7k",
+      "className": "Oqnisf comp-libhtx7k wixui-section",
+      "text": "#comp-kk2sktdx svg [data-color=\"1\"] {fill: #FD6262;} ExecutionBusiness Process Analysis Review and Re-Engineering IT Operations Strategy IT Structures,Standards and Best-Practices. #comp-kk2sktdk svg [data-color=\"1\"] {fill: #FD6262;} Solutions FrameworkSeamless Solutions and Seamless Services using Information Technology Focus on Domains rather than technology Legacy Systems to Wireless Systems to RFID Systems"
+    },
+    {
+      "id": "comp-li5e6yhb2",
+      "className": "Oqnisf comp-li5e6yhb2 wixui-section",
+      "text": "20Years of Experience30+Solutions Implemented4Countries World WideWe Take Pride in Our Numbers"
+    },
+    {
+      "id": "comp-kkmfixc6",
+      "className": "comp-kkmfixc6 CohWsy wixui-column-strip",
+      "text": "20Years of Experience30+Solutions Implemented4Countries World Wide"
+    },
+    {
+      "id": "comp-lia3wbxh",
+      "className": "Oqnisf comp-lia3wbxh wixui-section",
+      "text": "Contact UsFirst nameLast nameEmailWrite a messageSubmitThank you for contacting us."
+    },
+    {
+      "id": "comp-kk2x12ut",
+      "className": "comp-kk2x12ut CohWsy wixui-column-strip",
+      "text": "1003 Bukit Merah Central #06-07 Singapore 159836"
+    }
+  ],
+  "allText": "Skip to Main Content\nSolutions\nClients\n\nSolutions\n\nClients\n\nThe New Standard\nin Enterprise Evolution\n\nTangible Augmentation for Your Business\n\nExperience matters.  Let us take your enterprise through change without the learning pains.\n\nOur Solutions\nOur Clients\nExpertise\n\nOver 30  senior and 40 junior programmers\n\nExperience\n\nOver 150 years of total engineering experiences to draw from\n\nExecution\n\nBusiness Process Analysis\n\nReview and Re-Engineering\n\n IT Operations Strategy\n\nIT Structures,Standards and Best-Practices.\n\nSolutions Framework\n\nSeamless Solutions and Seamless Services using Information Technology \n\n \n\nFocus on Domains rather than technology \n\n \n\nLegacy Systems to Wireless Systems to RFID Systems \n\n20\n\nYears of Experience\n\n30+\n\nSolutions Implemented\n\n4\n\nCountries World Wide\n\nWe Take Pride in Our Numbers\nContact Us\nFirst name\nLast name\nEmail\nWrite a message\nSubmit\n\n1003 Bukit Merah Central #06-07\nSingapore 159836"
+}
