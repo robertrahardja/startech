@@ -84,16 +84,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (result.success) {
                     // Show success message
-                    alert(result.message);
+                    showNotification('success', 'Message Sent Successfully!', 'Thank you for reaching out. We\'ll get back to you within 24 hours.');
                     // Reset form
                     contactForm.reset();
                 } else {
                     // Show error message
-                    alert('Error: ' + (result.error || 'Failed to send message. Please try again.'));
+                    showNotification('error', 'Failed to Send', result.error || 'Please try again or contact us directly at rr.startech.innovation@gmail.com');
                 }
             } catch (error) {
                 console.error('Form submission error:', error);
-                alert('An error occurred while sending your message. Please try again later or contact us directly at info@startech-innovation.com');
+                showNotification('error', 'Connection Error', 'Please check your connection and try again, or contact us directly at rr.startech.innovation@gmail.com');
             } finally {
                 // Re-enable submit button
                 submitButton.disabled = false;
@@ -165,3 +165,52 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
 });
+
+// Notification function for form feedback
+function showNotification(type, title, message) {
+    // Remove existing notification if any
+    const existing = document.querySelector('.notification-modal');
+    if (existing) {
+        existing.remove();
+    }
+
+    // Create notification modal
+    const modal = document.createElement('div');
+    modal.className = `notification-modal ${type}`;
+
+    const icon = type === 'success'
+        ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+
+    modal.innerHTML = `
+        <div class="notification-overlay"></div>
+        <div class="notification-content">
+            <div class="notification-icon ${type}">
+                ${icon}
+            </div>
+            <h3 class="notification-title">${title}</h3>
+            <p class="notification-message">${message}</p>
+            <button class="notification-close">Got it</button>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Trigger animation
+    setTimeout(() => modal.classList.add('show'), 10);
+
+    // Close on button click
+    const closeBtn = modal.querySelector('.notification-close');
+    const overlay = modal.querySelector('.notification-overlay');
+
+    const closeModal = () => {
+        modal.classList.remove('show');
+        setTimeout(() => modal.remove(), 300);
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', closeModal);
+
+    // Auto close after 5 seconds
+    setTimeout(closeModal, 5000);
+}
