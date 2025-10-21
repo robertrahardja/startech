@@ -63,8 +63,9 @@ export async function onRequestPost(context) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'Startech Website <noreply@startech-innovation.com>',
+        from: 'Startech Website <onboarding@resend.dev>',
         to: ['info@startech-innovation.com'],
+        reply_to: email,
         subject: `New Contact Form Submission from ${name}`,
         html: `
           <h2>New Contact Form Submission</h2>
