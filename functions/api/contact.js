@@ -64,7 +64,7 @@ export async function onRequestPost(context) {
       },
       body: JSON.stringify({
         from: 'Startech Website <onboarding@resend.dev>',
-        to: ['info@startech-innovation.com'],
+        to: ['rr.startech.innovation@gmail.com'],
         reply_to: email,
         subject: `New Contact Form Submission from ${name}`,
         html: `
