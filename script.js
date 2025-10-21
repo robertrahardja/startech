@@ -1,5 +1,16 @@
 // Mobile Menu Toggle
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if shimmer has already been shown
+    const hasSeenShimmer = localStorage.getItem('hasSeenNavShimmer');
+
+    if (hasSeenShimmer) {
+        // Disable shimmer animation if already seen
+        document.body.classList.add('no-shimmer');
+    } else {
+        // Mark as seen after first view
+        localStorage.setItem('hasSeenNavShimmer', 'true');
+    }
+
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-menu a');
@@ -46,19 +57,48 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle contact form submission
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
 
             // Get form data
             const formData = new FormData(contactForm);
             const data = Object.fromEntries(formData);
 
-            // Here you would normally send the data to a server
-            // For now, we'll just show an alert
-            alert('Thank you for your message! We will get back to you soon.');
+            // Get submit button and disable it
+            const submitButton = contactForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
 
-            // Reset form
-            contactForm.reset();
+            try {
+                // Send to API endpoint
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Show success message
+                    alert(result.message);
+                    // Reset form
+                    contactForm.reset();
+                } else {
+                    // Show error message
+                    alert('Error: ' + (result.error || 'Failed to send message. Please try again.'));
+                }
+            } catch (error) {
+                console.error('Form submission error:', error);
+                alert('An error occurred while sending your message. Please try again later or contact us directly at info@startech-innovation.com');
+            } finally {
+                // Re-enable submit button
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+            }
         });
     }
 
@@ -91,10 +131,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentScroll = window.pageYOffset;
 
         if (currentScroll > 100) {
-            navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+            navbar.style.background = '#000000';
             navbar.style.backdropFilter = 'blur(20px)';
         } else {
-            navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+            navbar.style.background = '#000000';
             navbar.style.backdropFilter = 'blur(10px)';
         }
 

@@ -1,0 +1,6 @@
+# Environment Variables for Local Development
+# Copy this file to .dev.vars and add your actual API keys
+
+# Resend API Key
+# Get your API key from: https://resend.com/api-keys
+RESEND_API_KEY=re_123456789_your_api_key_here
