@@ -39,24 +39,24 @@ export default function Hero({ onAskAi }: HeroProps) {
         <div className="glow-breathe absolute bottom-1/4 right-0 h-[400px] w-[500px] rounded-full bg-st-gold/[0.02] blur-[120px]" style={{ animationDelay: "3s" }} />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-3xl text-center">
+      <div className="relative z-10 mx-auto max-w-4xl text-center">
         {/* Logo */}
         <div className="mb-14 flex justify-center animate-fade-in">
           <img
             src="/assets/startech-logo-full.png"
             alt="StarTech Innovation"
-            className="h-20 w-auto sm:h-24 md:h-28"
+            className="h-20 w-auto sm:h-24 md:h-32"
           />
         </div>
 
         {/* Main headline with rotating word */}
         <div className="mb-6 animate-fade-in-up">
-          <h1 className="font-display text-[1.75rem] leading-[1.2] tracking-[-0.03em] text-white sm:text-3xl md:text-4xl lg:text-5xl">
+          <h1 className="font-display text-3xl leading-[1.2] tracking-[-0.03em] text-white sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
             We build what your
             <br />
             business needs in
           </h1>
-          <div className="mt-1 h-[1.4em] overflow-hidden text-[1.75rem] sm:text-3xl md:text-4xl lg:text-5xl">
+          <div className="mt-1 h-[1.4em] overflow-hidden text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
             <span
               key={wordIndex}
               className={`inline-block font-display italic leading-[1.4] tracking-[-0.03em] ${
@@ -87,7 +87,7 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="mx-auto mb-12 max-w-md animate-fade-in-up"
           style={{ animationDelay: "0.3s" }}
         >
-          <p className="text-[15px] font-light leading-[1.7] text-st-text-muted">
+          <p className="text-base font-light leading-[1.7] text-st-text-muted md:text-lg">
             Enterprise AI implementation and software engineering
             for organisations across Singapore and Southeast Asia.
             Strategy to production in 90 days.

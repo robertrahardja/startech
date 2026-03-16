@@ -71,10 +71,10 @@ function IndustryCard({
       }`}
       style={{ transitionDelay: `${index * 80}ms` }}
     >
-      <h3 className="mb-2 text-[13px] font-medium tracking-wide text-white">
+      <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
         {industry.name}
       </h3>
-      <p className="text-[13px] font-light leading-[1.7] text-st-text-muted">
+      <p className="text-sm font-light leading-[1.7] text-st-text-muted">
         {industry.description}
       </p>
     </div>

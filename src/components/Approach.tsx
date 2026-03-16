@@ -111,10 +111,10 @@ function TimelineCard({
         <span className="mb-1 inline-block text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted">
           {step.week}
         </span>
-        <h3 className="mb-3 text-[13px] font-medium tracking-wide text-white">
+        <h3 className="mb-3 text-sm font-medium tracking-wide text-white md:text-base">
           {step.title}
         </h3>
-        <ul className="mb-4 space-y-1.5 text-[13px] font-light leading-[1.7] text-st-text-muted">
+        <ul className="mb-4 space-y-1.5 text-sm font-light leading-[1.7] text-st-text-muted">
           {step.items.map((item) => (
             <li key={item} className="flex items-start gap-2.5">
               <span className="mt-2 h-px w-3 shrink-0 bg-st-border" />
