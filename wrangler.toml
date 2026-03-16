@@ -3,6 +3,11 @@ compatibility_date = "2025-03-01"
 
 main = "./worker/index.ts"
 
+routes = [
+  { pattern = "startech-innovation.com", custom_domain = true },
+  { pattern = "www.startech-innovation.com", custom_domain = true },
+]
+
 [assets]
 directory = "./dist"
 binding = "ASSETS"
