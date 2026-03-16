@@ -95,7 +95,7 @@ export default function Nav({ onAskAi }: NavProps) {
             : "bg-transparent"
         }`}
       >
-        <nav className="mx-auto flex max-w-[960px] items-center justify-between px-6 py-5 sm:px-8">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-8">
           <a
             href="#"
             className="flex min-h-[44px] min-w-[44px] items-center"

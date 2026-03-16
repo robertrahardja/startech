@@ -63,7 +63,7 @@ const STEPS: TimelineStep[] = [
 export default function Approach() {
   return (
     <section id="approach" className="relative py-28 sm:py-36">
-      <div className="mx-auto max-w-[640px] px-6 sm:px-8">
+      <div className="mx-auto max-w-3xl px-6 sm:px-8">
         <SectionHeader
           label="Approach"
           title="Strategy to production in 90 days"

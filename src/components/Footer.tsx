@@ -3,7 +3,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-st-border">
-      <div className="mx-auto max-w-[960px] px-6 py-12 sm:px-8">
+      <div className="mx-auto max-w-7xl px-6 py-12 sm:px-8">
         <div className="flex flex-col items-center gap-8 sm:flex-row sm:justify-between">
           <div className="flex flex-col items-center gap-3 sm:items-start">
             <img
