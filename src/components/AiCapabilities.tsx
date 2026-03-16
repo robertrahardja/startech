@@ -84,7 +84,7 @@ function CapabilityCard({
       style={{ transitionDelay: `${index * 80}ms` }}
     >
       <div className="mb-5 flex items-baseline justify-between">
-        <span className="font-display text-2xl text-white">
+        <span className="font-display text-2xl text-white md:text-3xl">
           {capability.metric}
         </span>
         <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted">
@@ -92,10 +92,10 @@ function CapabilityCard({
         </span>
       </div>
 
-      <h3 className="mb-2 text-[13px] font-medium tracking-wide text-white">
+      <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
         {capability.title}
       </h3>
-      <p className="text-[13px] font-light leading-[1.7] text-st-text-muted">
+      <p className="text-sm font-light leading-[1.7] text-st-text-muted">
         {capability.description}
       </p>
     </div>

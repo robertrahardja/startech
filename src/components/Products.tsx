@@ -133,10 +133,10 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-lg bg-white/[0.04] text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
           {ICONS[product.icon]}
         </div>
-        <h3 className="mb-2 text-[13px] font-medium tracking-wide text-white">
+        <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
           {product.title}
         </h3>
-        <p className="mb-5 text-[13px] font-light leading-[1.7] text-st-text-muted">
+        <p className="mb-5 text-sm font-light leading-[1.7] text-st-text-muted">
           {product.description}
         </p>
         <div className="flex flex-wrap gap-1.5">
@@ -193,10 +193,10 @@ function SectionHeader({
       <span className="mb-3 inline-block text-[10px] font-light tracking-[0.2em] uppercase text-st-text-muted">
         {label}
       </span>
-      <h2 className="mb-4 font-display text-2xl tracking-[-0.02em] text-white sm:text-3xl md:text-[2.25rem]">
+      <h2 className="mb-4 font-display text-2xl tracking-[-0.02em] text-white sm:text-3xl md:text-4xl lg:text-5xl">
         {title}
       </h2>
-      <p className="max-w-md text-[15px] font-light leading-[1.7] text-st-text-muted">
+      <p className="max-w-lg text-[15px] font-light leading-[1.7] text-st-text-muted md:text-base">
         {subtitle}
       </p>
     </div>
