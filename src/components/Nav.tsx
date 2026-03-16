@@ -1,0 +1,146 @@
+import { useState, useEffect } from "react";
+import AiIcon from "./AiIcon";
+
+interface NavProps {
+  onAskAi: () => void;
+}
+
+const NAV_LINKS = [
+  { label: "Products", href: "#products" },
+  { label: "AI", href: "#ai-capabilities" },
+  { label: "Industries", href: "#industries" },
+  { label: "Approach", href: "#approach" },
+  { label: "Contact", href: "#contact" },
+];
+
+export default function Nav({ onAskAi }: NavProps) {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
+  return (
+    <>
+      {/* Mobile fullscreen menu — z-60 to sit above everything including floating button */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 flex flex-col bg-st-bg md:hidden"
+          style={{ zIndex: 60 }}
+        >
+          {/* Top bar with logo and close */}
+          <div className="flex items-center justify-between px-6 py-5">
+            <a href="#" className="flex min-h-[44px] min-w-[44px] items-center">
+              <img
+                src="/assets/startech-logo-full.png"
+                alt="StarTech Innovation"
+                className="h-8 w-auto"
+              />
+            </a>
+            <button
+              onClick={() => setMobileOpen(false)}
+              aria-label="Close menu"
+              className="flex h-11 w-11 items-center justify-center rounded-md"
+            >
+              <svg className="h-4 w-4 text-st-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Links — centered */}
+          <div className="flex flex-1 flex-col items-center justify-center gap-8">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className="font-display text-2xl text-white transition-colors duration-300 hover:text-st-text-muted"
+              >
+                {link.label}
+              </a>
+            ))}
+            <div className="mt-2 h-px w-12 bg-white/10" />
+            <button
+              onClick={() => {
+                setMobileOpen(false);
+                onAskAi();
+              }}
+              className="hero-btn-primary group relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-light tracking-wide text-white transition-all duration-500"
+            >
+              <span className="relative z-10 flex items-center gap-2.5">
+                <AiIcon className="h-3.5 w-3.5 text-st-gold-light" />
+                Ask us
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Header bar */}
+      <header
+        className={`fixed top-0 left-0 z-50 w-full transition-all duration-500 ${
+          scrolled
+            ? "nav-blur border-b border-st-border bg-st-bg/80"
+            : "bg-transparent"
+        }`}
+      >
+        <nav className="mx-auto flex max-w-[960px] items-center justify-between px-6 py-5 sm:px-8">
+          <a
+            href="#"
+            className="flex min-h-[44px] min-w-[44px] items-center"
+          >
+            <img
+              src="/assets/startech-logo-full.png"
+              alt="StarTech Innovation"
+              className="h-7 w-auto opacity-70 transition-opacity duration-300 hover:opacity-90"
+            />
+          </a>
+
+          {/* Desktop */}
+          <div className="hidden items-center gap-1 md:flex">
+            {NAV_LINKS.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="rounded-md px-3 py-2 text-[12px] font-light tracking-wide text-st-text-muted/70 transition-colors duration-300 hover:text-white"
+              >
+                {link.label}
+              </a>
+            ))}
+            <button
+              onClick={onAskAi}
+              className="hero-btn-primary group relative ml-4 overflow-hidden rounded-xl px-4 py-2 text-[12px] font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                <AiIcon className="h-3 w-3 text-st-gold-light transition-all duration-500 group-hover:text-st-gold" />
+                Ask us
+              </span>
+            </button>
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setMobileOpen(true)}
+            aria-label="Open menu"
+            className="flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-md md:hidden"
+          >
+            <span className="block h-px w-4 bg-st-text-muted/60" />
+            <span className="block h-px w-4 bg-st-text-muted/60" />
+            <span className="block h-px w-4 bg-st-text-muted/60" />
+          </button>
+        </nav>
+      </header>
+    </>
+  );
+}

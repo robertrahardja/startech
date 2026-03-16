@@ -1,0 +1,378 @@
+@import "tailwindcss";
+
+/* ─── Theme Tokens ────────────────────────────────────────────────────────── */
+@theme {
+  --color-st-bg: #09090b;
+  --color-st-bg-elevated: #0f0f13;
+  --color-st-bg-card: #141419;
+  --color-st-surface: rgba(255, 255, 255, 0.03);
+  --color-st-border: rgba(255, 255, 255, 0.06);
+  --color-st-border-hover: rgba(255, 255, 255, 0.12);
+  --color-st-text: #e4e4e7;
+  --color-st-text-muted: #71717a;
+  --color-st-blue: #4f6bf7;
+  --color-st-blue-light: #818cf8;
+  --color-st-pink: #c084fc;
+  --color-st-accent: #6366f1;
+  --color-st-gold: #d4a853;
+  --color-st-gold-light: #e7c47a;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+
+  --animate-fade-in-up: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-fade-in: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-slide-in-right: slide-in-right 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-slide-in-up: slide-in-up 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── Base Layer ──────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-st-bg);
+    color: var(--color-st-text);
+    line-height: 1.65;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background-color: var(--color-st-accent);
+    color: white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+  }
+}
+
+/* ─── Keyframes ───────────────────────────────────────────────────────────── */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typing-dot {
+  0%, 60%, 100% {
+    opacity: 0.2;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 0.6;
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes line-grow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes glow-breathe {
+  0%, 100% {
+    opacity: 0.03;
+  }
+  50% {
+    opacity: 0.06;
+  }
+}
+
+/* ─── Utility Classes ─────────────────────────────────────────────────────── */
+@layer utilities {
+  .glass {
+    background: var(--color-st-surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-st-border);
+  }
+
+  .gradient-text {
+    background: linear-gradient(
+      135deg,
+      var(--color-st-blue) 0%,
+      var(--color-st-pink) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .card {
+    background: var(--color-st-bg-card);
+    border: 1px solid var(--color-st-border);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+  }
+
+  .card:hover {
+    border-color: var(--color-st-border-hover);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .nav-blur {
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  .typing-dot {
+    animation: typing-dot 1.4s ease-in-out infinite;
+  }
+
+  .typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  /* Premium line animation for timeline */
+  .line-grow {
+    transform-origin: top;
+    animation: line-grow 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* Subtle breathing glow */
+  .glow-breathe {
+    animation: glow-breathe 6s ease-in-out infinite;
+  }
+
+  /* Gold shimmer entrance — plays once */
+  .gold-shimmer {
+    animation: gold-shimmer 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes gold-shimmer {
+    0% {
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+    30% {
+      color: rgba(212, 168, 83, 0.2);
+    }
+    100% {
+      color: white;
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Rotating word — gold entrance then settle */
+  .word-rotate-enter {
+    animation: word-rotate-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes word-rotate-in {
+    0% {
+      opacity: 0;
+      transform: translateY(100%);
+      color: var(--color-st-gold-light);
+      text-shadow: 0 0 30px rgba(212, 168, 83, 0.4);
+    }
+    60% {
+      color: var(--color-st-gold-light);
+      text-shadow: 0 0 15px rgba(212, 168, 83, 0.2);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      color: white;
+      text-shadow: none;
+    }
+  }
+
+  .word-rotate-exit {
+    animation: word-rotate-out 0.4s cubic-bezier(0.7, 0, 0.84, 0) both;
+  }
+
+  @keyframes word-rotate-out {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+  }
+
+  /* Hero primary button — glass with gold shimmer on hover */
+  .hero-btn-primary {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 0 rgba(212, 168, 83, 0);
+  }
+
+  .hero-btn-primary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(212, 168, 83, 0.08) 45%,
+      rgba(231, 196, 122, 0.15) 50%,
+      rgba(212, 168, 83, 0.08) 55%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero-btn-primary:hover {
+    border-color: rgba(212, 168, 83, 0.25);
+    box-shadow:
+      0 0 20px rgba(212, 168, 83, 0.08),
+      0 0 60px rgba(212, 168, 83, 0.04);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .hero-btn-primary:hover::before {
+    transform: translateX(100%);
+  }
+
+  /* Hero secondary button — glass with soft white glow on hover */
+  .hero-btn-secondary {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .hero-btn-secondary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.04) 45%,
+      rgba(255, 255, 255, 0.08) 50%,
+      rgba(255, 255, 255, 0.04) 55%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hero-btn-secondary:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .hero-btn-secondary:hover::before {
+    transform: translateX(100%);
+  }
+
+  /* Star whirl entrance — spins in once then rests */
+  .star-whirl {
+    animation: star-whirl 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes star-whirl {
+    0% {
+      opacity: 0;
+      transform: rotate(-180deg) scale(0.3);
+      filter: drop-shadow(0 0 8px rgba(212, 168, 83, 0.6));
+    }
+    50% {
+      filter: drop-shadow(0 0 12px rgba(212, 168, 83, 0.4));
+    }
+    100% {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+      filter: drop-shadow(0 0 0 transparent);
+    }
+  }
+
+  /* Subtle gold glimmer on a line */
+  .gold-glimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(212, 168, 83, 0.0) 40%,
+      rgba(212, 168, 83, 0.3) 50%,
+      rgba(212, 168, 83, 0.0) 60%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: glimmer-sweep 3s ease-in-out infinite;
+  }
+
+  @keyframes glimmer-sweep {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+}
