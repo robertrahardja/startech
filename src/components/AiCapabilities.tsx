@@ -49,7 +49,7 @@ const CAPABILITIES = [
 export default function AiCapabilities() {
   return (
     <section id="ai-capabilities" className="relative py-28 sm:py-36">
-      <div className="mx-auto max-w-[960px] px-6 sm:px-8">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <SectionHeader
           label="AI Capabilities"
           title="Enterprise AI, production-ready"

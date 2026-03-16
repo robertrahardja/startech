@@ -157,7 +157,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 export default function Products() {
   return (
     <section id="products" className="relative py-28 sm:py-36">
-      <div className="mx-auto max-w-[960px] px-6 sm:px-8">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <SectionHeader
           label="Products"
           title="What we build"
