@@ -117,7 +117,7 @@ export default function AskStartech({ isOpen, onClose }: AskStartechProps) {
           const ctx = new AudioContext();
           const source = ctx.createMediaElementSource(audio);
           const gain = ctx.createGain();
-          gain.gain.value = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ? 4.0 : 1.5;
+          gain.gain.value = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ? 10.0 : 1.5;
           source.connect(gain);
           gain.connect(ctx.destination);
         } catch {
