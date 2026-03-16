@@ -32,7 +32,10 @@ export default function Contact() {
       try {
         const res = await fetch("/api/contact", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+          },
           body: JSON.stringify(form),
         });
 
@@ -135,6 +138,7 @@ export default function Contact() {
                 rows={4}
                 value={form.message}
                 onChange={handleChange}
+                maxLength={5000}
                 className="w-full min-h-[44px] rounded-lg border border-st-border bg-transparent px-3.5 py-3 text-[13px] font-light text-white placeholder-st-text-muted/30 outline-none transition-colors duration-300 focus:border-st-border-hover"
                 placeholder="Tell us about your project..."
               />
@@ -223,6 +227,7 @@ function FormField({
         required={required}
         value={value}
         onChange={onChange}
+        maxLength={name === "email" ? 320 : name === "phone" ? 30 : 200}
         className="w-full min-h-[44px] rounded-lg border border-st-border bg-transparent px-3.5 py-3 text-[13px] font-light text-white placeholder-st-text-muted/30 outline-none transition-colors duration-300 focus:border-st-border-hover"
       />
     </div>
