@@ -226,8 +226,10 @@ export default function AskStartech({ isOpen, onClose }: AskStartechProps) {
               m.id === assistantMsg.id ? { ...m, content: fullContent } : m
             )
           );
-          // Auto-play TTS after response completes
-          playTts(fullContent, assistantMsg.id);
+          // On desktop, auto-play TTS. On iOS/mobile, user must tap play
+          if (!/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            playTts(fullContent, assistantMsg.id);
+          }
         } else {
           setMessages((prev) => prev.filter((m) => m.id !== assistantMsg.id));
         }
@@ -493,24 +495,29 @@ function MessageBubble({
         ))}
         {/* Play button for assistant messages */}
         {!isUser && message.content && (
-          <button
-            onClick={onPlay}
-            aria-label={isPlaying ? "Playing..." : "Play audio"}
-            className={`ml-1 inline-flex h-6 w-6 min-h-[44px] min-w-[44px] items-center justify-center align-middle text-st-text-muted/30 transition-colors duration-300 hover:text-st-text-muted ${
-              isPlaying ? "text-st-accent/60" : ""
-            }`}
-          >
-            {isPlaying ? (
-              <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
-                <rect x="6" y="5" width="4" height="14" rx="1" />
-                <rect x="14" y="5" width="4" height="14" rx="1" />
-              </svg>
-            ) : (
-              <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5.14v14l11-7-11-7z" />
-              </svg>
-            )}
-          </button>
+          <div className="mt-1.5 flex items-center">
+            <button
+              onClick={onPlay}
+              aria-label={isPlaying ? "Playing..." : "Play audio"}
+              className={`flex h-7 min-h-[44px] min-w-[44px] items-center gap-1.5 rounded-md px-2 text-[10px] tracking-wide transition-colors duration-300 ${
+                isPlaying
+                  ? "text-st-gold-light"
+                  : "text-st-text-muted hover:text-st-text"
+              }`}
+            >
+              {isPlaying ? (
+                <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                  <rect x="6" y="5" width="4" height="14" rx="1" />
+                  <rect x="14" y="5" width="4" height="14" rx="1" />
+                </svg>
+              ) : (
+                <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5.14v14l11-7-11-7z" />
+                </svg>
+              )}
+              {isPlaying ? "Playing" : "Listen"}
+            </button>
+          </div>
         )}
       </div>
     </div>
