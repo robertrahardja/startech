@@ -21,6 +21,7 @@ export interface ContactResponse {
 export interface Product {
   title: string;
   description: string;
+  details?: string[];
   icon: string;
   tags: string[];
   span?: "wide" | "tall" | "default";

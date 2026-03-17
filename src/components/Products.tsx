@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useInView } from "../hooks/useInView";
 import type { Product } from "../types";
 
@@ -6,6 +7,12 @@ const PRODUCTS: Product[] = [
     title: "Enterprise ERP",
     description:
       "Full enterprise resource planning — financials, HR, inventory, procurement, and manufacturing — on Java Spring Boot and PostgreSQL.",
+    details: [
+      "Multi-module: GL, AP, AR, payroll, and fixed assets",
+      "Real-time inventory with barcode and RFID",
+      "Procurement workflow with approval chains",
+      "Manufacturing BOM and production scheduling",
+    ],
     icon: "erp",
     tags: ["Spring Boot", "PostgreSQL", "React"],
     span: "wide",
@@ -14,6 +21,12 @@ const PRODUCTS: Product[] = [
     title: "AI Decision Engine",
     description:
       "Business intelligence powered by GPT-4. Upload data, ask questions, get actionable insights with confidence scoring.",
+    details: [
+      "Natural language queries over any data source",
+      "RAG pipeline with vector embeddings",
+      "Confidence scoring with source attribution",
+      "Automated report generation and delivery",
+    ],
     icon: "brain",
     tags: ["OpenAI", "RAG", "AWS"],
     span: "default",
@@ -22,6 +35,12 @@ const PRODUCTS: Product[] = [
     title: "Startup Valuation",
     description:
       "DCF modelling, comparable analysis, and AI-powered projections for startup and venture capital due diligence.",
+    details: [
+      "DCF with Monte Carlo simulation",
+      "Comparable analysis with live market data",
+      "AI growth projections by sector benchmarks",
+      "Cap table modelling and waterfall analysis",
+    ],
     icon: "chart",
     tags: ["Finance", "Analytics"],
     span: "default",
@@ -30,6 +49,12 @@ const PRODUCTS: Product[] = [
     title: "Insurance Scanner",
     description:
       "AI document processing for insurance claims. Extract key terms, flag risks, reconcile across policies automatically.",
+    details: [
+      "Extracts clauses, limits, and exclusions from PDFs",
+      "Cross-policy reconciliation for gaps and overlaps",
+      "Risk scoring for underwriter review",
+      "Batch processing for portfolio-level analysis",
+    ],
     icon: "scan",
     tags: ["Claude Vision", "Document AI"],
     span: "default",
@@ -38,6 +63,12 @@ const PRODUCTS: Product[] = [
     title: "Education Platform",
     description:
       "Learning management with AI tutoring, adaptive assessments, spaced repetition, and multi-language delivery.",
+    details: [
+      "AI tutor adapting to each student's level",
+      "Spaced repetition for long-term retention",
+      "Auto-generated quizzes from course material",
+      "Voice delivery in 50+ languages",
+    ],
     icon: "edu",
     tags: ["LMS", "AI Tutor", "ElevenLabs"],
     span: "tall",
@@ -46,6 +77,12 @@ const PRODUCTS: Product[] = [
     title: "Healthcare IT",
     description:
       "Hospital management — patient records, scheduling, billing, and AI-assisted triage for Indonesian healthcare providers.",
+    details: [
+      "Electronic medical records with role-based access",
+      "Scheduling with SMS and WhatsApp reminders",
+      "AI-assisted triage by symptom severity",
+      "BPJS insurance claim integration",
+    ],
     icon: "health",
     tags: ["Healthcare", "AWS"],
     span: "default",
@@ -54,6 +91,12 @@ const PRODUCTS: Product[] = [
     title: "Crypto Exchange",
     description:
       "Full cryptocurrency trading platform with real-time pricing, wallet management, and regulatory compliance tools.",
+    details: [
+      "Order matching with sub-millisecond latency",
+      "Multi-currency wallet, cold and hot storage",
+      "Built-in KYC and AML compliance",
+      "Real-time price feeds and WebSocket charting",
+    ],
     icon: "exchange",
     tags: ["Web3", "Finance"],
     span: "default",
@@ -62,6 +105,12 @@ const PRODUCTS: Product[] = [
     title: "AI Avatar Studio",
     description:
       "Personalised video content at scale. AI presenters for training, marketing, and multilingual customer engagement.",
+    details: [
+      "Avatar creation from a single photo or video",
+      "Script-to-video with automatic lip sync",
+      "Multi-language voice cloning via ElevenLabs",
+      "Batch rendering for personalised outreach",
+    ],
     icon: "video",
     tags: ["HeyGen", "ElevenLabs"],
     span: "wide",
@@ -113,6 +162,7 @@ const ICONS: Record<string, React.ReactNode> = {
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
   const [ref, isInView] = useInView({ threshold: 0.1 });
+  const [flipped, setFlipped] = useState(false);
 
   const spanClass =
     product.span === "wide"
@@ -121,34 +171,86 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         ? "md:row-span-2"
         : "";
 
+  const hasDetails = product.details && product.details.length > 0;
+
   return (
     <div
       ref={ref}
-      className={`card group relative overflow-hidden rounded-xl p-6 sm:p-7 ${spanClass} ${
-        isInView ? "reveal visible" : "reveal"
-      }`}
+      className={`flip-card ${spanClass} ${isInView ? "reveal visible" : "reveal"}`}
       style={{ transitionDelay: `${index * 60}ms` }}
     >
-      <div className="relative z-10">
-        <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-lg bg-white/[0.04] text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
-          {ICONS[product.icon]}
+      <div
+        className={`flip-card-inner ${flipped ? "is-flipped" : ""}`}
+        onClick={hasDetails ? () => setFlipped((p) => !p) : undefined}
+      >
+        {/* ─── Front ─── */}
+        <div className="flip-card-front card group relative overflow-hidden rounded-xl p-6 sm:p-7">
+          <div className="relative z-10 flex h-full flex-col">
+            <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-lg bg-white/[0.04] text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
+              {ICONS[product.icon]}
+            </div>
+            <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
+              {product.title}
+            </h3>
+            <p className="mb-5 flex-1 text-sm font-light leading-[1.7] text-st-text-muted">
+              {product.description}
+            </p>
+            <div className="flex flex-wrap items-center gap-1.5">
+              {product.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-md bg-white/[0.03] px-2 py-0.5 text-[10px] font-light tracking-wide text-st-text-muted"
+                >
+                  {tag}
+                </span>
+              ))}
+              {hasDetails && (
+                <span className="ml-auto text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
+                  Details
+                </span>
+              )}
+            </div>
+          </div>
         </div>
-        <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
-          {product.title}
-        </h3>
-        <p className="mb-5 text-sm font-light leading-[1.7] text-st-text-muted">
-          {product.description}
-        </p>
-        <div className="flex flex-wrap gap-1.5">
-          {product.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-md bg-white/[0.03] px-2 py-0.5 text-[10px] font-light tracking-wide text-st-text-muted"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+
+        {/* ─── Back ─── */}
+        {hasDetails && (
+          <div className="flip-card-back flip-card-back-glass rounded-xl p-5 sm:p-6">
+            <div className="relative z-10 flex h-full flex-col">
+              {/* Compact header */}
+              <div className="mb-3 flex items-center gap-2.5">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-white/[0.06] text-st-gold-light/70">
+                  {ICONS[product.icon]}
+                </div>
+                <h3 className="text-[13px] font-medium tracking-wide text-white">
+                  {product.title}
+                </h3>
+              </div>
+
+              <div className="mb-3 h-px w-full gold-glimmer" />
+
+              {/* Detail items — compact */}
+              <ul className="flex-1 space-y-2">
+                {product.details!.map((detail) => (
+                  <li
+                    key={detail}
+                    className="flex items-start gap-2.5 text-[12px] font-light leading-[1.6] text-st-text-muted/90"
+                  >
+                    <span className="mt-[7px] h-px w-2.5 shrink-0 bg-st-gold-light/20" />
+                    {detail}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Flip back hint */}
+              <div className="mt-3 flex items-center justify-end">
+                <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/30">
+                  Tap to flip
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -164,7 +266,7 @@ export default function Products() {
           subtitle="Production software that solves real problems — from enterprise ERP to AI-powered decision tools."
         />
 
-        <div className="grid auto-rows-fr grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {PRODUCTS.map((product, i) => (
             <ProductCard key={product.title} product={product} index={i} />
           ))}
