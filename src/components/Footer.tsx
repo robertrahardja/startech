@@ -1,3 +1,5 @@
+import Link from "./solutions/Link";
+
 export default function Footer() {
   const year = new Date().getFullYear();
 
@@ -19,18 +21,21 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-1 text-[11px] font-light tracking-wide text-st-text-muted">
-            <a href="#products" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text-muted">
+            <Link href="/#products" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text-muted">
               Products
-            </a>
-            <a href="#ai-capabilities" className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center px-3 transition-colors duration-300 hover:text-st-text-muted">
+            </Link>
+            <Link href="/solutions" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text-muted">
+              Solutions
+            </Link>
+            <Link href="/#ai-capabilities" className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center px-3 transition-colors duration-300 hover:text-st-text-muted">
               AI
-            </a>
-            <a href="#industries" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text-muted">
+            </Link>
+            <Link href="/#industries" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text-muted">
               Industries
-            </a>
-            <a href="#contact" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text-muted">
+            </Link>
+            <Link href="/#contact" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text-muted">
               Contact
-            </a>
+            </Link>
           </div>
 
           <div className="text-center text-[11px] font-light text-st-text-muted sm:text-right">

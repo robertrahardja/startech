@@ -5,9 +5,12 @@
  * - POST /api/chat    — Proxies to OpenAI GPT-4o-mini with streaming SSE
  * - POST /api/tts     — Proxies to ElevenLabs text-to-speech
  * - POST /api/contact — Sends email via Resend
+ * - POST /api/demo    — AI-powered product demos with lead capture
  *
  * Static assets are served by the ASSETS binding (Cloudflare Workers static assets).
  */
+
+import { DEMO_CONFIGS } from "./demo-configs";
 
 interface Env {
   ASSETS: Fetcher;
@@ -15,6 +18,7 @@ interface Env {
   ELEVENLABS_API_KEY: string;
   RESEND_API_KEY: string;
   ENVIRONMENT: string;
+  DB: D1Database;
 }
 
 // ─── Security Headers ───────────────────────────────────────────────────────
@@ -26,7 +30,7 @@ const SECURITY_HEADERS: Record<string, string> = {
   "Permissions-Policy": "camera=(), microphone=(self), geolocation=()",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
   "Content-Security-Policy":
-    "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; media-src 'self' blob:; frame-ancestors 'none'",
+    "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; media-src 'self' blob:; frame-ancestors 'none'",
 };
 
 // ─── Rate Limiting (in-memory, per-isolate) ─────────────────────────────────
@@ -362,6 +366,177 @@ async function handleContact(
   );
 }
 
+async function handleDemo(
+  request: Request,
+  env: Env
+): Promise<Response> {
+  if (!env.OPENAI_API_KEY) {
+    return jsonError("Demo service is not configured.", 503);
+  }
+
+  if (isRequestTooLarge(request, 50_000)) {
+    return jsonError("Request too large.", 413);
+  }
+
+  // CSRF check
+  if (request.headers.get("X-Requested-With") !== "XMLHttpRequest") {
+    return jsonError("Invalid request.", 403);
+  }
+
+  let body: {
+    type?: string;
+    email?: string;
+    name?: string;
+    company?: string;
+    input?: Record<string, string>;
+  };
+  try {
+    body = await request.json();
+  } catch {
+    return jsonError("Invalid request body.", 400);
+  }
+
+  // Validate demo type
+  const demoType = sanitizeString(body.type || "", 100);
+  const config = DEMO_CONFIGS[demoType];
+  if (!config) {
+    return jsonError("Invalid demo type.", 400);
+  }
+
+  // Validate email
+  const email = sanitizeEmail(body.email || "");
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  if (!email || !emailRegex.test(email)) {
+    return jsonError("Valid email is required.", 400);
+  }
+
+  const name = sanitizeString(body.name || "", 200);
+  const company = sanitizeString(body.company || "", 200);
+
+  // Validate input fields
+  const rawInput = body.input || {};
+  const sanitizedInput: Record<string, string> = {};
+
+  for (const field of config.inputFields) {
+    const value = sanitizeString(String(rawInput[field.name] || ""), field.maxLength);
+    if (field.required && !value) {
+      return jsonError(`${field.label} is required.`, 400);
+    }
+    if (value) {
+      sanitizedInput[field.name] = value;
+    }
+  }
+
+  // Build the user message from input fields
+  const userMessage = Object.entries(sanitizedInput)
+    .map(([key, val]) => `${key}: ${val}`)
+    .join("\n");
+
+  if (!userMessage) {
+    return jsonError("Input is required.", 400);
+  }
+
+  // Call OpenAI (non-streaming, we need full JSON response)
+  const openaiResponse = await fetch(
+    "https://api.openai.com/v1/chat/completions",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${env.OPENAI_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: config.systemPrompt },
+          { role: "user", content: userMessage },
+        ],
+        max_tokens: config.maxTokens,
+        temperature: 0.7,
+        response_format: { type: "json_object" },
+      }),
+    }
+  );
+
+  if (!openaiResponse.ok) {
+    console.error("OpenAI API error:", openaiResponse.status);
+    return jsonError("AI service temporarily unavailable.", 502);
+  }
+
+  let aiResult: Record<string, unknown>;
+  try {
+    const data = (await openaiResponse.json()) as {
+      choices?: Array<{ message?: { content?: string } }>;
+    };
+    const content = data.choices?.[0]?.message?.content;
+    if (!content) {
+      return jsonError("AI returned no response.", 502);
+    }
+    aiResult = JSON.parse(content);
+  } catch {
+    return jsonError("Failed to parse AI response.", 502);
+  }
+
+  // Store lead in D1 (fire-and-forget for speed, but log errors)
+  const clientIp =
+    request.headers.get("CF-Connecting-IP") ||
+    request.headers.get("X-Forwarded-For") ||
+    "unknown";
+
+  const inputJson = JSON.stringify(sanitizedInput);
+  const outputJson = JSON.stringify(aiResult);
+
+  try {
+    if (env.DB) {
+      await env.DB.prepare(
+        "INSERT INTO demo_leads (email, name, company, demo_type, input_data, output_data, ip) VALUES (?, ?, ?, ?, ?, ?, ?)"
+      ).bind(email, name || null, company || null, demoType, inputJson, outputJson, clientIp).run();
+    }
+  } catch (err) {
+    console.error("D1 insert error:", err);
+  }
+
+  // Send notification email (fire-and-forget)
+  if (env.RESEND_API_KEY) {
+    try {
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${env.RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "StarTech Demos <onboarding@resend.dev>",
+          to: ["rr.startech.innovation@gmail.com"],
+          reply_to: email,
+          subject: `Demo Lead: ${escapeHtml(config.description)} — ${escapeHtml(email)}`,
+          html: `
+            <h2>New Demo Lead</h2>
+            <p><strong>Demo:</strong> ${escapeHtml(config.description)}</p>
+            <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+            ${name ? `<p><strong>Name:</strong> ${escapeHtml(name)}</p>` : ""}
+            ${company ? `<p><strong>Company:</strong> ${escapeHtml(company)}</p>` : ""}
+            <p><strong>Time:</strong> ${new Date().toISOString()}</p>
+            <hr>
+            <p><small>StarTech AI Demo Lead Capture</small></p>
+          `,
+          text: `Demo: ${config.description}\nEmail: ${email}\n${name ? `Name: ${name}\n` : ""}${company ? `Company: ${company}\n` : ""}`,
+        }),
+      });
+    } catch (err) {
+      console.error("Resend notification error:", err);
+    }
+  }
+
+  return new Response(
+    JSON.stringify({ success: true, result: aiResult }),
+    {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+}
+
 function escapeHtml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
@@ -419,6 +594,7 @@ export default {
       "/api/chat": [20, 60_000],
       "/api/tts": [10, 60_000],
       "/api/contact": [3, 60_000],
+      "/api/demo": [5, 3_600_000], // 5 per hour
     };
 
     const limits = rateLimits[url.pathname];
@@ -449,6 +625,9 @@ export default {
           break;
         case "/api/contact":
           response = await handleContact(request, env);
+          break;
+        case "/api/demo":
+          response = await handleDemo(request, env);
           break;
         default:
           response = jsonError("Not found.", 404);

@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import AiIcon from "./AiIcon";
+import Link from "./solutions/Link";
 
 interface NavProps {
   onAskAi: () => void;
 }
 
 const NAV_LINKS = [
-  { label: "Products", href: "#products" },
-  { label: "AI", href: "#ai-capabilities" },
-  { label: "Industries", href: "#industries" },
-  { label: "Approach", href: "#approach" },
-  { label: "Contact", href: "#contact" },
+  { label: "Products", href: "/#products" },
+  { label: "Solutions", href: "/solutions" },
+  { label: "AI", href: "/#ai-capabilities" },
+  { label: "Industries", href: "/#industries" },
+  { label: "Approach", href: "/#approach" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Nav({ onAskAi }: NavProps) {
@@ -40,13 +42,13 @@ export default function Nav({ onAskAi }: NavProps) {
         >
           {/* Top bar with logo and close */}
           <div className="flex items-center justify-between px-6 py-5">
-            <a href="#" className="flex min-h-[44px] min-w-[44px] items-center">
+            <Link href="/" className="flex min-h-[44px] min-w-[44px] items-center">
               <img
                 src="/assets/startech-logo-full.png"
                 alt="StarTech Innovation"
                 className="h-8 w-auto"
               />
-            </a>
+            </Link>
             <button
               onClick={() => setMobileOpen(false)}
               aria-label="Close menu"
@@ -61,14 +63,14 @@ export default function Nav({ onAskAi }: NavProps) {
           {/* Links — centered */}
           <div className="flex flex-1 flex-col items-center justify-center gap-8">
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
                 className="font-display text-2xl text-white transition-colors duration-300 hover:text-st-text-muted"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <div className="mt-2 h-px w-12 bg-white/10" />
             <button
@@ -96,8 +98,8 @@ export default function Nav({ onAskAi }: NavProps) {
         }`}
       >
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-8">
-          <a
-            href="#"
+          <Link
+            href="/"
             className="flex min-h-[44px] min-w-[44px] items-center"
           >
             <img
@@ -105,18 +107,18 @@ export default function Nav({ onAskAi }: NavProps) {
               alt="StarTech Innovation"
               className="h-7 w-auto opacity-70 transition-opacity duration-300 hover:opacity-90 lg:h-9"
             />
-          </a>
+          </Link>
 
           {/* Desktop */}
           <div className="hidden items-center gap-1 md:flex">
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className="rounded-md px-4 py-2 text-sm font-light tracking-wide text-st-text-muted/70 transition-colors duration-300 hover:text-white lg:text-base"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <button
               onClick={onAskAi}

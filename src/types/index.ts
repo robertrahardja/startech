@@ -39,3 +39,23 @@ export interface TimelineStep {
   items: string[];
   deliverable: string;
 }
+
+export interface DemoLead {
+  email: string;
+  name?: string;
+  company?: string;
+}
+
+export interface DemoRequest {
+  type: string;
+  email: string;
+  name?: string;
+  company?: string;
+  input: Record<string, string>;
+}
+
+export interface DemoResponse {
+  success: boolean;
+  result?: Record<string, unknown>;
+  error?: string;
+}
