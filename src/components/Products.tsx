@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useInView } from "../hooks/useInView";
 import type { Product } from "../types";
+import ExpandedDetailCard from "./ExpandedDetailCard";
 
 const PRODUCTS: Product[] = [
   {
@@ -160,9 +161,16 @@ const ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
-function ProductCard({ product, index }: { product: Product; index: number }) {
+function ProductCard({
+  product,
+  index,
+  onExpand,
+}: {
+  product: Product;
+  index: number;
+  onExpand: (product: Product) => void;
+}) {
   const [ref, isInView] = useInView({ threshold: 0.1 });
-  const [flipped, setFlipped] = useState(false);
 
   const spanClass =
     product.span === "wide"
@@ -176,87 +184,45 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
   return (
     <div
       ref={ref}
-      className={`flip-card ${spanClass} ${isInView ? "reveal visible" : "reveal"}`}
+      className={`product-card ${spanClass} ${isInView ? "reveal visible" : "reveal"}`}
       style={{ transitionDelay: `${index * 60}ms` }}
+      onClick={hasDetails ? () => onExpand(product) : undefined}
     >
-      <div
-        className={`flip-card-inner ${flipped ? "is-flipped" : ""}`}
-        onClick={hasDetails ? () => setFlipped((p) => !p) : undefined}
-      >
-        {/* ─── Front ─── */}
-        <div className="flip-card-front card group relative overflow-hidden rounded-xl p-6 sm:p-7">
-          <div className="relative z-10 flex h-full flex-col">
-            <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-lg bg-white/[0.04] text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
-              {ICONS[product.icon]}
-            </div>
-            <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
-              {product.title}
-            </h3>
-            <p className="mb-5 flex-1 text-sm font-light leading-[1.7] text-st-text-muted">
-              {product.description}
-            </p>
-            <div className="flex flex-wrap items-center gap-1.5">
-              {product.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-md bg-white/[0.03] px-2 py-0.5 text-[10px] font-light tracking-wide text-st-text-muted"
-                >
-                  {tag}
-                </span>
-              ))}
-              {hasDetails && (
-                <span className="ml-auto text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
-                  Details
-                </span>
-              )}
-            </div>
+      <div className="card group relative cursor-pointer overflow-hidden rounded-xl p-6 sm:p-7">
+        <div className="relative z-10 flex h-full flex-col">
+          <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-lg bg-white/[0.04] text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
+            {ICONS[product.icon]}
+          </div>
+          <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
+            {product.title}
+          </h3>
+          <p className="mb-5 flex-1 text-sm font-light leading-[1.7] text-st-text-muted">
+            {product.description}
+          </p>
+          <div className="flex flex-wrap items-center gap-1.5">
+            {product.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-md bg-white/[0.03] px-2 py-0.5 text-[10px] font-light tracking-wide text-st-text-muted"
+              >
+                {tag}
+              </span>
+            ))}
+            {hasDetails && (
+              <span className="ml-auto text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
+                Details →
+              </span>
+            )}
           </div>
         </div>
-
-        {/* ─── Back ─── */}
-        {hasDetails && (
-          <div className="flip-card-back flip-card-back-glass rounded-xl p-5 sm:p-6">
-            <div className="relative z-10 flex h-full flex-col">
-              {/* Compact header */}
-              <div className="mb-3 flex items-center gap-2.5">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-white/[0.06] text-st-gold-light/70">
-                  {ICONS[product.icon]}
-                </div>
-                <h3 className="text-[13px] font-medium tracking-wide text-white">
-                  {product.title}
-                </h3>
-              </div>
-
-              <div className="mb-3 h-px w-full gold-glimmer" />
-
-              {/* Detail items — compact */}
-              <ul className="flex-1 space-y-2">
-                {product.details!.map((detail) => (
-                  <li
-                    key={detail}
-                    className="flex items-start gap-2.5 text-[12px] font-light leading-[1.6] text-st-text-muted/90"
-                  >
-                    <span className="mt-[7px] h-px w-2.5 shrink-0 bg-st-gold-light/20" />
-                    {detail}
-                  </li>
-                ))}
-              </ul>
-
-              {/* Flip back hint */}
-              <div className="mt-3 flex items-center justify-end">
-                <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/30">
-                  Tap to flip
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
 }
 
 export default function Products() {
+  const [expanded, setExpanded] = useState<Product | null>(null);
+
   return (
     <section id="products" className="relative py-28 sm:py-36">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
@@ -268,10 +234,30 @@ export default function Products() {
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {PRODUCTS.map((product, i) => (
-            <ProductCard key={product.title} product={product} index={i} />
+            <ProductCard
+              key={product.title}
+              product={product}
+              index={i}
+              onExpand={setExpanded}
+            />
           ))}
         </div>
       </div>
+
+      {expanded && (
+        <ExpandedDetailCard
+          title={expanded.title}
+          description={expanded.description}
+          details={expanded.details!}
+          tags={expanded.tags}
+          header={
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.08] text-st-gold-light">
+              {ICONS[expanded.icon]}
+            </div>
+          }
+          onClose={() => setExpanded(null)}
+        />
+      )}
     </section>
   );
 }
@@ -290,15 +276,15 @@ function SectionHeader({
   return (
     <div
       ref={ref}
-      className={`mb-16 ${isInView ? "reveal visible" : "reveal"}`}
+      className={`mb-16 text-center ${isInView ? "reveal visible" : "reveal"}`}
     >
       <span className="mb-3 inline-block text-[10px] font-light tracking-[0.2em] uppercase text-st-text-muted">
         {label}
       </span>
-      <h2 className="mb-4 font-display text-2xl tracking-[-0.02em] text-white sm:text-3xl md:text-4xl lg:text-5xl">
+      <h2 className="mb-4 font-display text-2xl tracking-[-0.02em] text-white sm:text-3xl md:text-5xl lg:text-6xl">
         {title}
       </h2>
-      <p className="max-w-lg text-[15px] font-light leading-[1.7] text-st-text-muted md:text-base">
+      <p className="mx-auto max-w-lg text-[15px] font-light leading-[1.7] text-st-text-muted md:text-base">
         {subtitle}
       </p>
     </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useInView } from "../hooks/useInView";
 import { SectionHeader } from "./Products";
+import ExpandedDetailCard from "./ExpandedDetailCard";
 
 const CAPABILITIES = [
   {
@@ -83,7 +84,11 @@ const CAPABILITIES = [
   },
 ];
 
+type Capability = (typeof CAPABILITIES)[number];
+
 export default function AiCapabilities() {
+  const [expanded, setExpanded] = useState<Capability | null>(null);
+
   return (
     <section id="ai-capabilities" className="relative py-28 sm:py-36">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
@@ -95,10 +100,29 @@ export default function AiCapabilities() {
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {CAPABILITIES.map((cap, i) => (
-            <CapabilityCard key={cap.title} capability={cap} index={i} />
+            <CapabilityCard key={cap.title} capability={cap} index={i} onExpand={setExpanded} />
           ))}
         </div>
       </div>
+
+      {expanded && (
+        <ExpandedDetailCard
+          title={expanded.title}
+          description={expanded.description}
+          details={expanded.details}
+          header={
+            <div className="mb-4 flex items-baseline justify-between">
+              <span className="font-display text-3xl text-st-gold-light sm:text-4xl">
+                {expanded.metric}
+              </span>
+              <span className="text-xs font-light tracking-[0.15em] uppercase text-white/50">
+                {expanded.metricLabel}
+              </span>
+            </div>
+          }
+          onClose={() => setExpanded(null)}
+        />
+      )}
     </section>
   );
 }
@@ -106,89 +130,49 @@ export default function AiCapabilities() {
 function CapabilityCard({
   capability,
   index,
+  onExpand,
 }: {
-  capability: (typeof CAPABILITIES)[number];
+  capability: Capability;
   index: number;
+  onExpand: (cap: Capability) => void;
 }) {
   const [ref, isInView] = useInView({ threshold: 0.1 });
-  const [flipped, setFlipped] = useState(false);
 
   const hasDetails = capability.details && capability.details.length > 0;
 
   return (
     <div
       ref={ref}
-      className={`flip-card ${isInView ? "reveal visible" : "reveal"}`}
+      className={`product-card ${isInView ? "reveal visible" : "reveal"}`}
       style={{ transitionDelay: `${index * 80}ms` }}
+      onClick={hasDetails ? () => onExpand(capability) : undefined}
     >
-      <div
-        className={`flip-card-inner ${flipped ? "is-flipped" : ""}`}
-        onClick={hasDetails ? () => setFlipped((p) => !p) : undefined}
-      >
-        {/* ─── Front ─── */}
-        <div className="flip-card-front card group relative overflow-hidden rounded-xl p-6 sm:p-7">
-          <div className="relative z-10 flex h-full flex-col">
-            <div className="mb-5 flex items-baseline justify-between">
-              <span className="font-display text-2xl text-white md:text-3xl">
-                {capability.metric}
-              </span>
-              <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted">
-                {capability.metricLabel}
+      <div className="card group relative cursor-pointer overflow-hidden rounded-xl p-6 sm:p-7">
+        <div className="relative z-10 flex h-full flex-col">
+          <div className="mb-5 flex items-baseline justify-between">
+            <span className="font-display text-2xl text-white md:text-3xl">
+              {capability.metric}
+            </span>
+            <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted">
+              {capability.metricLabel}
+            </span>
+          </div>
+
+          <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
+            {capability.title}
+          </h3>
+          <p className="flex-1 text-sm font-light leading-[1.7] text-st-text-muted">
+            {capability.description}
+          </p>
+
+          {hasDetails && (
+            <div className="mt-4 flex items-center justify-end">
+              <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
+                Details →
               </span>
             </div>
-
-            <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
-              {capability.title}
-            </h3>
-            <p className="flex-1 text-sm font-light leading-[1.7] text-st-text-muted">
-              {capability.description}
-            </p>
-
-            {hasDetails && (
-              <div className="mt-4 flex items-center justify-end">
-                <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
-                  Details
-                </span>
-              </div>
-            )}
-          </div>
+          )}
         </div>
-
-        {/* ─── Back ─── */}
-        {hasDetails && (
-          <div className="flip-card-back flip-card-back-glass rounded-xl p-5 sm:p-6">
-            <div className="relative z-10 flex h-full flex-col">
-              <div className="mb-3 flex items-baseline justify-between">
-                <span className="font-display text-xl text-st-gold-light/70 md:text-2xl">
-                  {capability.metric}
-                </span>
-                <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-gold-light/40">
-                  {capability.metricLabel}
-                </span>
-              </div>
-
-              <div className="mb-3 h-px w-full gold-glimmer" />
-
-              <ul className="flex-1 space-y-2">
-                {capability.details.map((detail) => (
-                  <li
-                    key={detail}
-                    className="flex items-start gap-2.5 text-[12px] font-light leading-[1.6] text-st-text-muted/90"
-                  >
-                    <span className="mt-[7px] h-px w-2.5 shrink-0 bg-st-gold-light/20" />
-                    {detail}
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-3 flex items-center justify-end">
-                <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/30">
-                  Tap to flip
-                </span>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

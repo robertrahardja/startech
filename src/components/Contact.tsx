@@ -76,10 +76,6 @@ export default function Contact() {
           <div className="space-y-8">
             <div className="space-y-5">
               <ContactDetail
-                label="Address"
-                value="1003 Bukit Merah Central #06-07, Singapore 159836"
-              />
-              <ContactDetail
                 label="Email"
                 value="info@startech-innovation.com"
                 href="mailto:info@startech-innovation.com"

@@ -35,16 +35,22 @@ export default function Link({
       return;
     }
 
-    e.preventDefault();
-    onClick?.();
-
     // Parse path and hash from href (e.g. "/#contact" or "/solutions")
     const hashIndex = href.indexOf("#");
     const path = hashIndex >= 0 ? href.slice(0, hashIndex) : href;
     const hash = hashIndex >= 0 ? href.slice(hashIndex) : "";
+    const normalizedPath = path || "/";
+
+    // Same page + hash: let the browser handle native hash scroll
+    if (window.location.pathname === normalizedPath && hash) {
+      onClick?.();
+      return;
+    }
+
+    e.preventDefault();
+    onClick?.();
 
     // Navigate to the path if it changed
-    const normalizedPath = path || "/";
     if (window.location.pathname !== normalizedPath) {
       window.history.pushState({}, "", href);
       window.dispatchEvent(new PopStateEvent("popstate"));

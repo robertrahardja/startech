@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useInView } from "../hooks/useInView";
 import { SectionHeader } from "./Products";
+import ExpandedDetailCard from "./ExpandedDetailCard";
 
 const INDUSTRIES = [
   {
@@ -71,7 +72,11 @@ const INDUSTRIES = [
   },
 ];
 
+type Industry = (typeof INDUSTRIES)[number];
+
 export default function Industries() {
+  const [expanded, setExpanded] = useState<Industry | null>(null);
+
   return (
     <section id="industries" className="relative py-28 sm:py-36">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
@@ -83,10 +88,19 @@ export default function Industries() {
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {INDUSTRIES.map((industry, i) => (
-            <IndustryCard key={industry.name} industry={industry} index={i} />
+            <IndustryCard key={industry.name} industry={industry} index={i} onExpand={setExpanded} />
           ))}
         </div>
       </div>
+
+      {expanded && (
+        <ExpandedDetailCard
+          title={expanded.name}
+          description={expanded.description}
+          details={expanded.details}
+          onClose={() => setExpanded(null)}
+        />
+      )}
     </section>
   );
 }
@@ -94,74 +108,39 @@ export default function Industries() {
 function IndustryCard({
   industry,
   index,
+  onExpand,
 }: {
-  industry: (typeof INDUSTRIES)[number];
+  industry: Industry;
   index: number;
+  onExpand: (ind: Industry) => void;
 }) {
   const [ref, isInView] = useInView({ threshold: 0.1 });
-  const [flipped, setFlipped] = useState(false);
 
   const hasDetails = industry.details && industry.details.length > 0;
 
   return (
     <div
       ref={ref}
-      className={`flip-card ${isInView ? "reveal visible" : "reveal"}`}
+      className={`product-card ${isInView ? "reveal visible" : "reveal"}`}
       style={{ transitionDelay: `${index * 80}ms` }}
+      onClick={hasDetails ? () => onExpand(industry) : undefined}
     >
-      <div
-        className={`flip-card-inner ${flipped ? "is-flipped" : ""}`}
-        onClick={hasDetails ? () => setFlipped((p) => !p) : undefined}
-      >
-        {/* ─── Front ─── */}
-        <div className="flip-card-front card group relative overflow-hidden rounded-xl p-6 sm:p-7">
-          <div className="relative z-10 flex h-full flex-col">
-            <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
-              {industry.name}
-            </h3>
-            <p className="flex-1 text-sm font-light leading-[1.7] text-st-text-muted">
-              {industry.description}
-            </p>
-            {hasDetails && (
-              <div className="mt-4 flex items-center justify-end">
-                <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
-                  Details
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* ─── Back ─── */}
-        {hasDetails && (
-          <div className="flip-card-back flip-card-back-glass rounded-xl p-5 sm:p-6">
-            <div className="relative z-10 flex h-full flex-col">
-              <h3 className="mb-1 text-[13px] font-medium tracking-wide text-white">
-                {industry.name}
-              </h3>
-
-              <div className="mb-3 h-px w-full gold-glimmer" />
-
-              <ul className="flex-1 space-y-2">
-                {industry.details.map((detail) => (
-                  <li
-                    key={detail}
-                    className="flex items-start gap-2.5 text-[12px] font-light leading-[1.6] text-st-text-muted/90"
-                  >
-                    <span className="mt-[7px] h-px w-2.5 shrink-0 bg-st-gold-light/20" />
-                    {detail}
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-3 flex items-center justify-end">
-                <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/30">
-                  Tap to flip
-                </span>
-              </div>
+      <div className="card group relative cursor-pointer overflow-hidden rounded-xl p-6 sm:p-7">
+        <div className="relative z-10 flex h-full flex-col">
+          <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
+            {industry.name}
+          </h3>
+          <p className="flex-1 text-sm font-light leading-[1.7] text-st-text-muted">
+            {industry.description}
+          </p>
+          {hasDetails && (
+            <div className="mt-4 flex items-center justify-end">
+              <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
+                Details →
+              </span>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

@@ -111,24 +111,28 @@ export default function Nav({ onAskAi }: NavProps) {
 
           {/* Desktop */}
           <div className="hidden items-center gap-1 md:flex">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="rounded-md px-4 py-2 text-sm font-light tracking-wide text-st-text-muted/70 transition-colors duration-300 hover:text-white lg:text-base"
+            <div className="nav-shimmer-wrap flex items-center gap-1">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="nav-shimmer-link rounded-md px-4 py-2 text-sm font-light tracking-wide transition-colors duration-300 lg:text-base"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            <div className="ask-us-glow relative ml-4 rounded-xl">
+              <button
+                onClick={onAskAi}
+                className="hero-btn-primary group relative overflow-hidden rounded-xl px-5 py-2.5 text-sm font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white lg:text-base"
               >
-                {link.label}
-              </Link>
-            ))}
-            <button
-              onClick={onAskAi}
-              className="hero-btn-primary group relative ml-4 overflow-hidden rounded-xl px-5 py-2.5 text-sm font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white lg:text-base"
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                <AiIcon className="h-3 w-3 text-st-gold-light transition-all duration-500 group-hover:text-st-gold" />
-                Ask us
-              </span>
-            </button>
+                <span className="ask-us-text-shimmer relative z-10 flex items-center gap-2">
+                  <AiIcon className="h-3 w-3 text-st-gold-light transition-all duration-500 group-hover:text-st-gold" />
+                  Ask us
+                </span>
+              </button>
+            </div>
           </div>
 
           {/* Mobile hamburger */}

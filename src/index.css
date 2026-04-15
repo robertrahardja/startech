@@ -183,6 +183,105 @@
     -webkit-backdrop-filter: blur(20px) saturate(180%);
   }
 
+  /* Gold shimmer — single sweep from Products to Contact, plays once */
+  .nav-shimmer-wrap {
+    background: linear-gradient(
+      90deg,
+      #71717a 0%,
+      #71717a 35%,
+      #e7c47a 46%,
+      #ffd992 50%,
+      #e7c47a 54%,
+      #71717a 65%,
+      #71717a 100%
+    );
+    background-size: 300% 100%;
+    background-position: 110% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: nav-shimmer-once 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s 1 forwards;
+  }
+
+  .nav-shimmer-link:hover {
+    -webkit-text-fill-color: white;
+  }
+
+  @keyframes nav-shimmer-once {
+    0% {
+      background-position: 110% 0;
+    }
+    100% {
+      background-position: -10% 0;
+    }
+  }
+
+  /* Ask us button — gold shimmer on border, then whole button glows */
+  .ask-us-glow {
+    position: relative;
+    animation: ask-us-btn-bright 1s ease 2.1s 1 both;
+  }
+
+  .ask-us-glow::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 0.75rem;
+    pointer-events: none;
+    box-shadow: 0 0 18px 3px rgba(231, 196, 122, 0.25);
+    opacity: 0;
+    animation: ask-us-outer-glow 1s ease 2.1s 1 both;
+  }
+
+
+
+  @keyframes ask-us-outer-glow {
+    0% { opacity: 0; }
+    30% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  @keyframes ask-us-btn-bright {
+    0% {
+      box-shadow: none;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+    35% {
+      box-shadow: 0 0 24px 6px rgba(255, 217, 146, 0.4), 0 0 8px 2px rgba(255, 217, 146, 0.25), inset 0 0 16px rgba(255, 217, 146, 0.12);
+      border-color: rgba(255, 217, 146, 0.5);
+    }
+    100% {
+      box-shadow: none;
+      border-color: rgba(255, 255, 255, 0.06);
+    }
+  }
+
+  .ask-us-text-shimmer {
+    animation: ask-us-text-bright 1s ease 2.1s 1 both;
+  }
+
+  @keyframes ask-us-text-bright {
+    0% {
+      color: #71717a;
+    }
+    35% {
+      color: #ffd992;
+    }
+    100% {
+      color: #71717a;
+    }
+  }
+
+  @keyframes ask-us-text-sweep {
+    0% {
+      background-position: 110% 0;
+    }
+    100% {
+      background-position: -10% 0;
+    }
+  }
+
   .typing-dot {
     animation: typing-dot 1.4s ease-in-out infinite;
   }
@@ -376,58 +475,86 @@
     100% { background-position: -200% 0; }
   }
 
-  /* ─── 3D Flip Cards ──────────────────────────────────────────────────────── */
+  /* ─── Step box shimmer (once, left to right) ─────────────────────────── */
 
-  .flip-card {
-    perspective: 1200px;
+  .reveal.visible .step-box {
+    animation: step-shimmer 800ms ease both;
+  }
+
+  @keyframes step-shimmer {
+    0% {
+      box-shadow: 0 0 0 0 rgba(212, 168, 83, 0);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    40% {
+      box-shadow: 0 0 16px 2px rgba(212, 168, 83, 0.25);
+      border-color: rgba(212, 168, 83, 0.4);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(212, 168, 83, 0);
+    }
+  }
+
+  /* ─── Carousel animations ─────────────────────────────────────────────── */
+
+  .carousel-card-enter {
+    animation: carousel-fade-in 400ms ease both;
+  }
+
+  @keyframes carousel-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .carousel-item-enter {
+    animation: carousel-item-in 350ms ease both;
+  }
+
+  @keyframes carousel-item-in {
+    from {
+      opacity: 0;
+      transform: translateX(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* ─── Product Cards ──────────────────────────────────────────────────────── */
+
+  .product-card {
     cursor: pointer;
   }
 
-  .flip-card-inner {
-    position: relative;
-    width: 100%;
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    transform-style: preserve-3d;
+  /* ─── Expanded card glow (once) ──────────────────────────────────────── */
+
+  .expanded-card-glow {
+    animation: card-glow 3s ease forwards;
   }
 
-  .flip-card-inner.is-flipped {
-    transform: rotateY(180deg);
-  }
-
-  .flip-card-front,
-  .flip-card-back {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-  }
-
-  /* Front stays in flow to give the container height */
-  .flip-card-front {
-    position: relative;
-    z-index: 2;
-  }
-
-  /* Back is layered on top, fills the front's height */
-  .flip-card-back {
-    position: absolute;
-    inset: 0;
-    transform: rotateY(180deg);
-    z-index: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
-  .flip-card-back-glass {
-    background: linear-gradient(
-      145deg,
-      rgba(20, 20, 25, 0.92) 0%,
-      rgba(15, 15, 19, 0.96) 50%,
-      rgba(20, 20, 25, 0.92) 100%
-    );
-    backdrop-filter: blur(24px) saturate(150%);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
-    border: 1px solid rgba(212, 168, 83, 0.08);
-    box-shadow:
-      0 0 40px rgba(212, 168, 83, 0.03),
-      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  @keyframes card-glow {
+    0% {
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    }
+    15% {
+      box-shadow:
+        0 0 60px 10px rgba(212, 168, 83, 0.25),
+        0 0 120px 20px rgba(212, 168, 83, 0.1);
+    }
+    45% {
+      box-shadow:
+        0 0 40px 5px rgba(212, 168, 83, 0.15),
+        0 0 80px 10px rgba(212, 168, 83, 0.05);
+    }
+    100% {
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+    }
   }
 }

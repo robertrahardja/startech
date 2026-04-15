@@ -14,9 +14,7 @@ export default function Footer() {
               className="h-6 w-auto opacity-50"
             />
             <p className="text-center text-[11px] font-light leading-relaxed text-st-text-muted sm:text-left">
-              1003 Bukit Merah Central #06-07
-              <br />
-              Singapore 159836
+              Singapore
             </p>
           </div>
 
