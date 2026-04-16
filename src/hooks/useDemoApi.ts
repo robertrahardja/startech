@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { useDemoRateLimiter, recordDemoUsage } from "./useDemoRateLimiter";
 import type { DemoLead, DemoResponse } from "../types";
 
 const STORAGE_KEY = "startech-demo-lead";
@@ -22,6 +23,7 @@ export function useDemoApi(demoType: string) {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<Record<string, unknown> | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const rateLimiter = useDemoRateLimiter(demoType);
 
   const setLead = useCallback((newLead: DemoLead) => {
     setLeadState(newLead);
@@ -32,6 +34,14 @@ export function useDemoApi(demoType: string) {
     async (input: Record<string, string>) => {
       if (!lead?.email) {
         setError("Please enter your email first.");
+        return;
+      }
+
+      if (!rateLimiter.canSubmit) {
+        const resetStr = rateLimiter.resetTime
+          ? ` Try again at ${rateLimiter.resetTime.toLocaleTimeString("en-SG", { hour: "2-digit", minute: "2-digit" })}.`
+          : "";
+        setError(`Rate limit reached — ${rateLimiter.remainingUses} uses remaining.${resetStr}`);
         return;
       }
 
@@ -61,6 +71,7 @@ export function useDemoApi(demoType: string) {
           throw new Error(data.error || "Demo failed. Please try again.");
         }
 
+        recordDemoUsage(demoType);
         setResult(data.result || null);
       } catch (err) {
         setError(
@@ -70,7 +81,7 @@ export function useDemoApi(demoType: string) {
         setIsLoading(false);
       }
     },
-    [demoType, lead]
+    [demoType, lead, rateLimiter]
   );
 
   const clearResult = useCallback(() => {
@@ -78,5 +89,5 @@ export function useDemoApi(demoType: string) {
     setError(null);
   }, []);
 
-  return { lead, setLead, submitDemo, isLoading, result, error, clearResult };
+  return { lead, setLead, submitDemo, isLoading, result, error, clearResult, rateLimiter };
 }

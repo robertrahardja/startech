@@ -59,3 +59,5 @@ export interface DemoResponse {
   result?: Record<string, unknown>;
   error?: string;
 }
+
+export type DemoPhase = "preview" | "customize" | "custom_result";

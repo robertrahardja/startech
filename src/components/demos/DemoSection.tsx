@@ -13,7 +13,7 @@ export default function DemoSection({ slug, title }: { slug: string; title: stri
         <SectionHeader
           label="Try It"
           title="See it in action"
-          subtitle="Try a live demo powered by AI. Enter your details and see real results in seconds."
+          subtitle="See AI-powered results instantly. Customize with your own data."
         />
         <Suspense
           fallback={
