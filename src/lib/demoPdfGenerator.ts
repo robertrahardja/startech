@@ -9,8 +9,6 @@ const GRAY = [120, 120, 130] as const;
 const WHITE = [255, 255, 255] as const;
 const BLACK = [30, 30, 35] as const;
 
-type RGB = readonly [number, number, number];
-
 let jspdfModule: typeof import("jspdf") | null = null;
 let autotableModule: typeof import("jspdf-autotable") | null = null;
 
