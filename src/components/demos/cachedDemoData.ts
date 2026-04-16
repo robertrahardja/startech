@@ -2,10 +2,11 @@
  * Pre-cached demo results for instant preview mode.
  * Each key matches a slug from demoRegistry.ts.
  * Each value matches the exact shape the corresponding renderer expects.
+ * All company names, products, and people are fictional.
  */
 export const CACHED_DEMO_DATA: Record<string, Record<string, unknown>> = {
   "invoice-scanner": {
-    vendor: "The Coffee Bean & Tea Leaf — Raffles Place",
+    vendor: "Sample Café (Downtown)",
     date: "15 January 2026",
     currency: "SGD",
     items: [
@@ -38,14 +39,14 @@ export const CACHED_DEMO_DATA: Record<string, Record<string, unknown>> = {
     confirmed_date: "Wednesday, 22 January 2026",
     confirmed_time: "2:30 PM",
     duration_minutes: 60,
-    reminder_message: "Reminder: Your teeth whitening appointment is confirmed for Wed 22 Jan at 2:30 PM. Please arrive 10 minutes early and avoid coffee or tea for 24 hours beforehand. Reply CONFIRM or call 6234 5678 to reschedule.",
-    confirmation_text: "Your appointment has been booked with Dr. Sarah Lim at Orchard Dental Clinic. A confirmation email has been sent to your registered address.",
+    reminder_message: "Reminder: Your teeth whitening appointment is confirmed for Wed 22 Jan at 2:30 PM. Please arrive 10 minutes early and avoid coffee or tea for 24 hours beforehand. Reply CONFIRM or call us to reschedule.",
+    confirmation_text: "Your appointment has been booked with your attending dentist at our clinic. A confirmation email has been sent to your registered address.",
   },
 
   "quotation-generator": {
     quote_number: "QT-2026-0142",
     date: "16 January 2026",
-    client: "Horizon Property Management Pte Ltd",
+    client: "Sample Client Pte Ltd",
     items: [
       { description: "Website Design & Development (10-page corporate site)", quantity: 1, unit_price: 8500.00, amount: 8500.00 },
       { description: "SEO Setup & On-Page Optimisation", quantity: 1, unit_price: 2400.00, amount: 2400.00 },
@@ -62,10 +63,10 @@ export const CACHED_DEMO_DATA: Record<string, Record<string, unknown>> = {
 
   "job-posting-writer": {
     title: "Senior Full-Stack Engineer",
-    company: "PayNova Financial Technologies",
-    location: "Singapore (Hybrid — 3 days in-office at One Raffles Quay)",
+    company: "Sample Fintech Pte Ltd",
+    location: "Singapore (Hybrid — 3 days in-office)",
     employment_type: "Full-Time, Permanent",
-    summary: "Join PayNova, a Series B fintech startup transforming cross-border payments across Southeast Asia. You'll lead the development of our core payment processing platform serving over 200,000 merchants, working with a world-class engineering team in a fast-paced, high-impact environment.",
+    summary: "Join a Series B fintech startup transforming cross-border payments across Southeast Asia. You'll lead the development of our core payment processing platform serving over 200,000 merchants, working with a world-class engineering team in a fast-paced, high-impact environment.",
     responsibilities: [
       "Architect and build scalable payment processing services handling 10,000+ transactions per minute",
       "Lead technical design reviews and mentor a team of 4 engineers",
@@ -77,9 +78,9 @@ export const CACHED_DEMO_DATA: Record<string, Record<string, unknown>> = {
     requirements: [
       "5+ years of professional software engineering experience",
       "Strong proficiency in TypeScript/Node.js and at least one compiled language (Go, Rust, or Java)",
-      "Experience with PostgreSQL, Redis, and message queues (Kafka or RabbitMQ)",
+      "Experience with PostgreSQL, Redis, and message queues",
       "Solid understanding of distributed systems, microservices, and API design",
-      "Experience with AWS or GCP cloud infrastructure",
+      "Experience with major cloud platforms",
       "Excellent communication skills and a collaborative mindset",
     ],
     nice_to_have: [
@@ -103,7 +104,7 @@ export const CACHED_DEMO_DATA: Record<string, Record<string, unknown>> = {
     analysis_date: "16 January 2026",
     items: [
       { name: "A4 Copy Paper (Ream)", current_stock: 12, daily_usage: 3, days_until_empty: 4, restock_date: "20 Jan 2026", alert_level: "critical", recommended_order_qty: 50 },
-      { name: "Black Ink Cartridge (HP 67)", current_stock: 2, daily_usage: 0.5, days_until_empty: 4, restock_date: "20 Jan 2026", alert_level: "critical", recommended_order_qty: 8 },
+      { name: "Black Ink Cartridge (Standard)", current_stock: 2, daily_usage: 0.5, days_until_empty: 4, restock_date: "20 Jan 2026", alert_level: "critical", recommended_order_qty: 8 },
       { name: "Disposable Face Masks (Box/50)", current_stock: 8, daily_usage: 1, days_until_empty: 8, restock_date: "24 Jan 2026", alert_level: "warning", recommended_order_qty: 15 },
       { name: "Hand Sanitiser (500ml)", current_stock: 14, daily_usage: 1.5, days_until_empty: 9, restock_date: "25 Jan 2026", alert_level: "warning", recommended_order_qty: 20 },
       { name: "Whiteboard Markers (Pack/4)", current_stock: 25, daily_usage: 0.8, days_until_empty: 31, restock_date: "16 Feb 2026", alert_level: "ok", recommended_order_qty: 10 },
@@ -113,34 +114,34 @@ export const CACHED_DEMO_DATA: Record<string, Record<string, unknown>> = {
   },
 
   "social-media-manager": {
-    topic_summary: "Grand opening of Kopi & Kin, an artisanal café in Tiong Bahru serving specialty kopi and modern Peranakan pastries. Opening week features 1-for-1 kopi and a live Peranakan kueh-making demo.",
+    topic_summary: "Grand opening of a new artisanal café serving specialty coffee and modern local pastries. Opening week features 1-for-1 coffee and a live pastry-making demo.",
     posts: [
       {
         platform: "LinkedIn",
-        content: "Excited to announce the opening of Kopi & Kin in the heart of Tiong Bahru! 🎉\n\nAfter 18 months of planning and recipe development, we're bringing together Singapore's beloved kopi tradition with modern café culture.\n\nOur mission: preserve heritage flavours while making them accessible to a new generation.\n\n📍 78 Guan Chuan Street, #01-03\n🗓️ Grand opening: 25 January 2026\n☕ Opening week: 1-for-1 on all kopi drinks\n\nWe'd love to welcome you. Drop by and say hello!",
-        hashtags: ["#KopiAndKin", "#TiongBahru", "#SingaporeCafe", "#SupportLocal", "#GrandOpening"],
-        character_count: 487,
+        content: "Excited to announce the opening of our new café in the heart of the neighbourhood! 🎉\n\nAfter 18 months of planning and recipe development, we're bringing together traditional local coffee culture with modern café experience.\n\nOur mission: preserve heritage flavours while making them accessible to a new generation.\n\n🗓️ Grand opening: 25 January 2026\n☕ Opening week: 1-for-1 on all coffee drinks\n\nWe'd love to welcome you. Drop by and say hello!",
+        hashtags: ["#GrandOpening", "#LocalCafe", "#SupportLocal", "#SpecialtyCoffee", "#NeighbourhoodSpot"],
+        character_count: 472,
         best_posting_time: "Tuesday 8:00 AM",
       },
       {
         platform: "Instagram",
-        content: "The wait is over ☕✨\n\nKopi & Kin is opening its doors this Saturday in Tiong Bahru!\n\nTraditional kopi meets modern vibes — think kopi gao served in handmade ceramic cups, alongside kueh lapis that melts on your tongue.\n\n🎁 Opening week special: 1-for-1 kopi\n🎂 Live Peranakan kueh-making demo (Sat 3pm)\n📍 78 Guan Chuan Street\n\nTag someone you'd bring for kopi ☕👇",
-        hashtags: ["#KopiAndKin", "#TiongBahruCafe", "#SingaporeFood", "#KopiLovers", "#CafeHopping", "#SGCafe", "#Peranakan"],
-        character_count: 412,
+        content: "The wait is over ☕✨\n\nWe're opening our doors this Saturday!\n\nTraditional coffee meets modern vibes — think artisan brews served in handmade ceramic cups, alongside fresh pastries that melt on your tongue.\n\n🎁 Opening week special: 1-for-1 coffee\n🎂 Live pastry-making demo (Sat 3pm)\n\nTag someone you'd bring for coffee ☕👇",
+        hashtags: ["#LocalCafe", "#CoffeeLovers", "#CafeHopping", "#NewOpening", "#ArtisanCoffee", "#SupportLocal"],
+        character_count: 368,
         best_posting_time: "Saturday 11:00 AM",
       },
       {
         platform: "Facebook",
-        content: "🎉 GRAND OPENING — Kopi & Kin, Tiong Bahru 🎉\n\nWe're thrilled to finally open our doors at 78 Guan Chuan Street!\n\nWhat makes us different:\n☕ Specialty kopi brewed with beans from a 3rd-generation roaster\n🍰 Modern Peranakan pastries made fresh daily\n🎨 A cosy space designed for the neighbourhood\n\nOpening week highlights:\n• 1-for-1 on ALL kopi drinks (25 Jan – 1 Feb)\n• Live kueh-making demo with Chef Auntie Mei (Sat 3pm)\n• Free tote bag for first 100 customers\n\nBring your family, bring your friends — we can't wait to meet you! 🤗\n\n📍 78 Guan Chuan Street, #01-03, Singapore 160078\n⏰ Mon–Sat 7am–6pm | Sun 8am–4pm",
-        hashtags: ["#KopiAndKin", "#TiongBahru", "#SingaporeFood", "#NewCafe", "#SupportLocal"],
-        character_count: 642,
+        content: "🎉 GRAND OPENING 🎉\n\nWe're thrilled to finally open our doors!\n\nWhat makes us different:\n☕ Specialty coffee brewed with beans from a 3rd-generation roaster\n🍰 Modern pastries made fresh daily\n🎨 A cosy space designed for the neighbourhood\n\nOpening week highlights:\n• 1-for-1 on ALL coffee drinks (25 Jan – 1 Feb)\n• Live pastry-making demo (Sat 3pm)\n• Free tote bag for first 100 customers\n\nBring your family, bring your friends — we can't wait to meet you! 🤗\n\n⏰ Mon–Sat 7am–6pm | Sun 8am–4pm",
+        hashtags: ["#GrandOpening", "#LocalCafe", "#NewCafe", "#SupportLocal", "#SingaporeFood"],
+        character_count: 542,
         best_posting_time: "Thursday 12:00 PM",
       },
       {
         platform: "X/Twitter",
-        content: "Kopi & Kin opens this Saturday in Tiong Bahru! ☕\n\nSpecialty kopi × Peranakan pastries × neighbourhood vibes\n\n1-for-1 kopi all opening week 🎁\n📍 78 Guan Chuan St\n\nSee you there 👋",
-        hashtags: ["#KopiAndKin", "#TiongBahru", "#SingaporeFood", "#SGCafe"],
-        character_count: 198,
+        content: "Our new café opens this Saturday! ☕\n\nSpecialty coffee × modern pastries × neighbourhood vibes\n\n1-for-1 coffee all opening week 🎁\n\nSee you there 👋",
+        hashtags: ["#GrandOpening", "#LocalCafe", "#SGCafe", "#SpecialtyCoffee"],
+        character_count: 156,
         best_posting_time: "Saturday 9:00 AM",
       },
     ],
@@ -149,50 +150,50 @@ export const CACHED_DEMO_DATA: Record<string, Record<string, unknown>> = {
   "document-translator": {
     source_language: "English",
     target_language: "Chinese (Simplified)",
-    original_text: "Dear Mr. Tan,\n\nThank you for your interest in our managed IT services. Following our meeting on Monday, I'm pleased to provide a tailored proposal for TanCo Trading Pte Ltd.\n\nOur Standard Support Plan includes 24/7 system monitoring, monthly security patches, and a dedicated account manager. The monthly fee is SGD 2,800 for up to 50 endpoints.\n\nI've attached the full proposal with pricing tiers. Please don't hesitate to reach out if you have any questions.\n\nBest regards,\nSarah Chen\nBusiness Development Manager",
-    translated_text: "尊敬的陈先生，\n\n感谢您对我们托管IT服务的关注。根据周一的会议，我很高兴为 TanCo Trading 私人有限公司提供定制方案。\n\n我们的标准支持计划包括全天候系统监控、每月安全补丁更新以及专属客户经理。月费为新加坡币2,800元，涵盖最多50个终端设备。\n\n完整的方案及价格层级详见附件。如有任何疑问，请随时与我联系。\n\n此致敬礼，\nSarah Chen\n业务发展经理",
+    original_text: "Dear Mr. Lim,\n\nThank you for your interest in our managed IT services. Following our meeting on Monday, I'm pleased to provide a tailored proposal for your company.\n\nOur Standard Support Plan includes 24/7 system monitoring, monthly security patches, and a dedicated account manager. The monthly fee is SGD 2,800 for up to 50 endpoints.\n\nI've attached the full proposal with pricing tiers. Please don't hesitate to reach out if you have any questions.\n\nBest regards,\nBusiness Development Manager",
+    translated_text: "尊敬的林先生，\n\n感谢您对我们托管IT服务的关注。根据周一的会议，我很高兴为贵公司提供定制方案。\n\n我们的标准支持计划包括全天候系统监控、每月安全补丁更新以及专属客户经理。月费为新加坡币2,800元，涵盖最多50个终端设备。\n\n完整的方案及价格层级详见附件。如有任何疑问，请随时与我联系。\n\n此致敬礼，\n业务发展经理",
     notes: [
-      "\"Pte Ltd\" retained in English as it is a legal entity abbreviation commonly kept untranslated in Singapore business correspondence.",
+      "\"Pte Ltd\" is commonly kept untranslated in Singapore business correspondence as a legal entity abbreviation.",
       "\"Endpoints\" translated as \"终端设备\" (terminal devices) — the standard IT terminology in Mandarin.",
       "Monetary amounts kept in SGD format as is standard in Singapore bilingual communications.",
     ],
   },
 
   "employee-onboarding": {
-    offer_letter_preview: "OFFER OF EMPLOYMENT\n\nDate: 16 January 2026\n\nDear Rachel Lim,\n\nWe are pleased to offer you the position of Marketing Manager at StarBridge Consulting Pte Ltd, reporting to the Head of Marketing.\n\nStart Date: 3 February 2026\nMonthly Salary: SGD 7,500\nProbation Period: 3 months\nAnnual Leave: 18 days\nMedical Benefits: Group hospitalisation and outpatient coverage\n\nYour role will involve leading our digital marketing strategy, managing a team of 3 executives, and driving lead generation across Southeast Asia.\n\nPlease sign and return this letter by 23 January 2026 to confirm your acceptance.\n\nWe look forward to having you on board.\n\nYours sincerely,\nDavid Tan\nManaging Director\nStarBridge Consulting Pte Ltd",
-    nda_preview: "NON-DISCLOSURE AGREEMENT\n\nThis Agreement is entered into as of 3 February 2026 between StarBridge Consulting Pte Ltd (\"Company\") and Rachel Lim (\"Employee\").\n\n1. CONFIDENTIAL INFORMATION\nThe Employee acknowledges that during the course of employment, they will have access to proprietary information including but not limited to: client lists, pricing strategies, marketing campaigns, financial data, and trade secrets.\n\n2. OBLIGATIONS\nThe Employee agrees to:\n(a) Not disclose any Confidential Information to third parties\n(b) Use Confidential Information solely for Company purposes\n(c) Return all materials containing Confidential Information upon termination\n\n3. DURATION\nThis obligation survives for 2 years after employment ends.\n\n4. REMEDIES\nBreach may result in disciplinary action, termination, and/or legal proceedings.\n\nSigned: _______________\nDate: _______________",
+    offer_letter_preview: "OFFER OF EMPLOYMENT\n\nDate: 16 January 2026\n\nDear [Candidate Name],\n\nWe are pleased to offer you the position of Marketing Manager at [Company Name], reporting to the Head of Marketing.\n\nStart Date: 3 February 2026\nMonthly Salary: SGD 7,500\nProbation Period: 3 months\nAnnual Leave: 18 days\nMedical Benefits: Group hospitalisation and outpatient coverage\n\nYour role will involve leading our digital marketing strategy, managing a team of 3 executives, and driving lead generation across Southeast Asia.\n\nPlease sign and return this letter by 23 January 2026 to confirm your acceptance.\n\nWe look forward to having you on board.\n\nYours sincerely,\nManaging Director\n[Company Name]",
+    nda_preview: "NON-DISCLOSURE AGREEMENT\n\nThis Agreement is entered into as of 3 February 2026 between [Company Name] (\"Company\") and [Candidate Name] (\"Employee\").\n\n1. CONFIDENTIAL INFORMATION\nThe Employee acknowledges that during the course of employment, they will have access to proprietary information including but not limited to: client lists, pricing strategies, marketing campaigns, financial data, and trade secrets.\n\n2. OBLIGATIONS\nThe Employee agrees to:\n(a) Not disclose any Confidential Information to third parties\n(b) Use Confidential Information solely for Company purposes\n(c) Return all materials containing Confidential Information upon termination\n\n3. DURATION\nThis obligation survives for 2 years after employment ends.\n\n4. REMEDIES\nBreach may result in disciplinary action, termination, and/or legal proceedings.\n\nSigned: _______________\nDate: _______________",
     checklist: [
-      { task: "Send signed offer letter to HR", owner: "Rachel Lim", due_by: "23 Jan 2026", category: "Pre-Boarding" },
+      { task: "Send signed offer letter to HR", owner: "New Hire", due_by: "23 Jan 2026", category: "Pre-Boarding" },
       { task: "Prepare workstation and laptop", owner: "IT Department", due_by: "31 Jan 2026", category: "Pre-Boarding" },
       { task: "Create email account and system access", owner: "IT Department", due_by: "31 Jan 2026", category: "Pre-Boarding" },
       { task: "Schedule orientation with HR", owner: "HR Manager", due_by: "3 Feb 2026", category: "Day 1" },
       { task: "Complete payroll and CPF registration", owner: "Finance", due_by: "3 Feb 2026", category: "Day 1" },
       { task: "Team introduction and office tour", owner: "Head of Marketing", due_by: "3 Feb 2026", category: "Day 1" },
-      { task: "Review marketing strategy deck", owner: "Rachel Lim", due_by: "7 Feb 2026", category: "Week 1" },
-      { task: "1-on-1 with each team member", owner: "Rachel Lim", due_by: "14 Feb 2026", category: "Week 1-2" },
-      { task: "Complete mandatory compliance training", owner: "Rachel Lim", due_by: "14 Feb 2026", category: "Week 1-2" },
+      { task: "Review marketing strategy deck", owner: "New Hire", due_by: "7 Feb 2026", category: "Week 1" },
+      { task: "1-on-1 with each team member", owner: "New Hire", due_by: "14 Feb 2026", category: "Week 1-2" },
+      { task: "Complete mandatory compliance training", owner: "New Hire", due_by: "14 Feb 2026", category: "Week 1-2" },
       { task: "30-day check-in with manager", owner: "Head of Marketing", due_by: "5 Mar 2026", category: "Month 1" },
     ],
   },
 
   "sales-assistant": {
-    lead_summary: "James Wong, COO at NexTrade Logistics (150 employees, SGD 28M revenue). Interested in warehouse management automation. Currently using spreadsheets for inventory tracking across 3 warehouses. Pain point: frequent stockouts and manual data entry errors costing ~SGD 40K/month in lost efficiency.",
+    lead_summary: "COO at a mid-size logistics firm (150 employees, SGD 28M revenue). Interested in warehouse management automation. Currently using spreadsheets for inventory tracking across 3 warehouses. Pain point: frequent stockouts and manual data entry errors costing ~SGD 40K/month in lost efficiency.",
     emails: [
       {
-        subject: "Quick question about your warehouse operations, James",
-        body: "Hi James,\n\nGreat speaking with you at the Supply Chain Asia conference last week. Your point about the challenges of managing inventory across three warehouses really resonated — it's a problem we've helped several logistics companies solve.\n\nI did some quick research on NexTrade and noticed you've been expanding your cold chain capabilities. Congratulations on the new Tuas facility!\n\nI'd love to share how we helped a similar-sized logistics firm (SG Freight Solutions) cut their stockout rate by 73% and save over SGD 35K/month within 90 days of deployment.\n\nWould you have 20 minutes this Thursday or Friday for a quick call?\n\nBest regards,\nAlex",
+        subject: "Quick question about your warehouse operations",
+        body: "Hi,\n\nGreat speaking with you at the Supply Chain Asia conference last week. Your point about the challenges of managing inventory across three warehouses really resonated — it's a problem we've helped several logistics companies solve.\n\nI did some quick research on your company and noticed you've been expanding your cold chain capabilities. Congratulations on the new facility!\n\nI'd love to share how we helped a similar-sized logistics firm cut their stockout rate by 73% and save over SGD 35K/month within 90 days of deployment.\n\nWould you have 20 minutes this Thursday or Friday for a quick call?\n\nBest regards,\n[Your Name]",
         send_day: "Day 1",
         purpose: "Initial outreach — establish rapport and relevance",
       },
       {
-        subject: "ROI breakdown: Warehouse automation for NexTrade",
-        body: "Hi James,\n\nFollowing up on my earlier note. I put together a quick back-of-envelope ROI estimate based on what you shared:\n\n• Current manual data entry: ~40 hours/week across 3 warehouses\n• Estimated error rate: 3–5% (industry average for manual tracking)\n• Projected savings with automation: SGD 38K–45K/month\n• Typical payback period: 4–6 months\n\nI've attached a 2-page case study from SG Freight Solutions — same industry, similar scale, and they went live in just 6 weeks.\n\nHappy to walk through the numbers together if helpful. No pressure at all — just want to make sure you have the information to evaluate.\n\nBest,\nAlex",
+        subject: "ROI breakdown: Warehouse automation",
+        body: "Hi,\n\nFollowing up on my earlier note. I put together a quick back-of-envelope ROI estimate based on what you shared:\n\n• Current manual data entry: ~40 hours/week across 3 warehouses\n• Estimated error rate: 3–5% (industry average for manual tracking)\n• Projected savings with automation: SGD 38K–45K/month\n• Typical payback period: 4–6 months\n\nI've attached a 2-page case study from a client in the same industry — similar scale, and they went live in just 6 weeks.\n\nHappy to walk through the numbers together if helpful. No pressure at all — just want to make sure you have the information to evaluate.\n\nBest,\n[Your Name]",
         send_day: "Day 4",
         purpose: "Provide value with data and social proof",
       },
       {
         subject: "One last thought on the warehouse challenge",
-        body: "Hi James,\n\nI know you're busy, so I'll keep this brief.\n\nWe're running a small private workshop next Thursday (30 Jan) for operations leaders in logistics — \"3 Warehouse Automation Wins You Can Implement This Quarter.\" It's 45 minutes on Zoom, very practical, no sales pitch.\n\nGiven the challenges you mentioned at the conference, I thought it might be useful. Here's the registration link: [link]\n\nEither way, I'm happy to be a resource whenever you're ready to explore automation. Feel free to reach out anytime.\n\nCheers,\nAlex",
+        body: "Hi,\n\nI know you're busy, so I'll keep this brief.\n\nWe're running a small private workshop next Thursday (30 Jan) for operations leaders in logistics — \"3 Warehouse Automation Wins You Can Implement This Quarter.\" It's 45 minutes on Zoom, very practical, no sales pitch.\n\nGiven the challenges you mentioned at the conference, I thought it might be useful. Here's the registration link: [link]\n\nEither way, I'm happy to be a resource whenever you're ready to explore automation. Feel free to reach out anytime.\n\nCheers,\n[Your Name]",
         send_day: "Day 8",
         purpose: "Soft close with value-add invitation",
       },
@@ -313,7 +314,7 @@ export const CACHED_DEMO_DATA: Record<string, Record<string, unknown>> = {
           "Perform CPR and use an AED",
           "Activate the emergency response chain correctly",
         ],
-        content_summary: "Covers basic first aid for cuts, burns, fractures, and fainting. Includes CPR technique (30:2 compression-to-breath ratio) and AED operation. Teaches the emergency response chain: assess scene safety → call 995 → provide first aid → hand over to SCDF paramedics. Includes Singapore-specific Good Samaritan protections.",
+        content_summary: "Covers basic first aid for cuts, burns, fractures, and fainting. Includes CPR technique (30:2 compression-to-breath ratio) and AED operation. Teaches the emergency response chain: assess scene safety → call 995 → provide first aid → hand over to paramedics. Includes Singapore-specific Good Samaritan protections.",
         quiz: [
           {
             question: "What is the correct compression-to-breath ratio for adult CPR?",
@@ -337,7 +338,7 @@ export const CACHED_DEMO_DATA: Record<string, Record<string, unknown>> = {
     net_profit: 356000,
     gross_margin_pct: 42.8,
     net_margin_pct: 28.5,
-    analysis: "Q4 2025 shows strong performance with revenue up 18% quarter-over-quarter, driven primarily by the new enterprise client acquisitions in November. Expenses grew by only 9%, indicating improving operational efficiency. Net margin expanded by 3.2 percentage points from Q3, reflecting successful cost optimisation in cloud infrastructure and vendor renegotiations. The SGD 356K net profit represents the highest quarterly result this fiscal year.",
+    analysis: "Q4 2025 shows strong performance with revenue up 18% quarter-over-quarter, driven primarily by new enterprise client acquisitions in November. Expenses grew by only 9%, indicating improving operational efficiency. Net margin expanded by 3.2 percentage points from Q3, reflecting successful cost optimisation in cloud infrastructure and vendor renegotiations. The SGD 356K net profit represents the highest quarterly result this fiscal year.",
     key_metrics: [
       { metric: "Revenue Growth (QoQ)", value: "+18.2%", assessment: "positive" as const },
       { metric: "Operating Expenses", value: "SGD 891K", assessment: "neutral" as const },
