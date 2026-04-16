@@ -367,7 +367,6 @@ function salesAssistant(doc: import("jspdf").jsPDF, _autoTable: any, r: Record<s
 
 function complianceChecker(doc: import("jspdf").jsPDF, autoTable: any, r: Record<string, unknown>) {
   const score = r.risk_score as number;
-  const scoreColor: RGB = score >= 7 ? [220, 50, 50] : score >= 4 ? [200, 150, 30] : [50, 180, 80];
   let y = addHeader(doc, "Compliance Review", `${r.document_type} — Risk Score: ${score}/10`);
 
   y = addSectionTitle(doc, y, "Summary");
