@@ -40,15 +40,8 @@ export default function Nav({ onAskAi }: NavProps) {
           className="fixed inset-0 flex flex-col bg-st-bg md:hidden"
           style={{ zIndex: 60 }}
         >
-          {/* Top bar with logo and close */}
-          <div className="flex items-center justify-between px-6 py-5">
-            <Link href="/" className="flex min-h-[44px] min-w-[44px] items-center">
-              <img
-                src="/assets/startech-logo-full.png"
-                alt="StarTech Innovation"
-                className="h-8 w-auto"
-              />
-            </Link>
+          {/* Top bar with close */}
+          <div className="flex items-center justify-end px-6 py-5">
             <button
               onClick={() => setMobileOpen(false)}
               aria-label="Close menu"
@@ -60,8 +53,19 @@ export default function Nav({ onAskAi }: NavProps) {
             </button>
           </div>
 
-          {/* Links — centered */}
+          {/* Logo + Links — centered */}
           <div className="flex flex-1 flex-col items-center justify-center gap-8">
+            <Link
+              href="/"
+              onClick={() => setMobileOpen(false)}
+              className="mb-4 flex items-center justify-center"
+            >
+              <img
+                src="/assets/startech-logo-full.png"
+                alt="StarTech Innovation"
+                className="h-32 w-auto"
+              />
+            </Link>
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
@@ -100,7 +104,7 @@ export default function Nav({ onAskAi }: NavProps) {
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-8">
           <Link
             href="/"
-            className="flex min-h-[44px] min-w-[44px] items-center"
+            className="hidden min-h-[44px] min-w-[44px] items-center md:flex"
           >
             <img
               src="/assets/startech-logo-full.png"
@@ -139,7 +143,7 @@ export default function Nav({ onAskAi }: NavProps) {
           <button
             onClick={() => setMobileOpen(true)}
             aria-label="Open menu"
-            className="flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-md md:hidden"
+            className="ml-auto flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-md md:hidden"
           >
             <span className="block h-px w-4 bg-st-text-muted/60" />
             <span className="block h-px w-4 bg-st-text-muted/60" />
