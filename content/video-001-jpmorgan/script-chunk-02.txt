@@ -1,0 +1,11 @@
+So what does that mean for a 30-person company in Tanjong Pagar? Or a 12-person logistics firm in Tuas?
+
+Three things. And I want you to actually do them this month, not bookmark them.
+
+One. Stop calling it AI. Start calling it staff.
+
+Every time you write "AI" in a budget line, it gets pushed to next quarter. Every time you write "automation" or "junior analyst capacity" or "after-hours coverage", it gets approved.
+
+JPMorgan didn't suddenly have 19 billion dollars of AI budget appear. They moved existing budget from headcount, from consulting, from manual ops. The number is big because the savings were big.
+
+Look at your last three months of manual work. Reconciliation. Quote generation. Customer email triage. That's your AI budget. It's already in your P and L. It's just hiding in payroll.

@@ -1,0 +1,45 @@
+JPMorgan Chase just did something most businesses haven't woken up to yet.
+
+They reclassified AI from R and D to core infrastructure. Same line item as the data centers. Same line item as the trading systems. Not an experiment anymore, a utility.
+
+The 2026 number is 19.8 billion dollars. Two thousand staff working on AI full-time.
+
+Now if you're running a small or medium business in Singapore, your first reaction is probably "that's a bank, that's not me." And I want to push back on that. Because the lesson isn't the dollar amount. The lesson is the category change.
+
+Here's what changed. For five years, AI sat in the innovation budget. The CIO had a sandbox. The COO had a pilot project. The CFO had a line that said "experimental, review next year."
+
+That line is gone now. AI is now sitting next to the electricity bill. It's sitting next to the lease. It's a fixed cost of running the business, because the alternative is your competitor has it and you don't.
+
+So what does that mean for a 30-person company in Tanjong Pagar? Or a 12-person logistics firm in Tuas?
+
+Three things. And I want you to actually do them this month, not bookmark them.
+
+One. Stop calling it AI. Start calling it staff.
+
+Every time you write "AI" in a budget line, it gets pushed to next quarter. Every time you write "automation" or "junior analyst capacity" or "after-hours coverage", it gets approved.
+
+JPMorgan didn't suddenly have 19 billion dollars of AI budget appear. They moved existing budget from headcount, from consulting, from manual ops. The number is big because the savings were big.
+
+Look at your last three months of manual work. Reconciliation. Quote generation. Customer email triage. That's your AI budget. It's already in your P and L. It's just hiding in payroll.
+
+Two. Pick the boring task, not the impressive one.
+
+Every founder I talk to wants to build the AI chatbot. The AI sales assistant. The AI something that goes on the homepage.
+
+Don't.
+
+JPMorgan's biggest AI win this year was internal. Agents that read documents and pre-fill forms. That's it. Boring. Massive ROI.
+
+Your equivalent: invoice scanning. Receipt categorisation. Vendor email summarisation. Pick one. Ship it in 14 days. Measure the hours saved. That's the case for AI in your business, not a press release.
+
+Three. Build for portability, not for a vendor.
+
+JPMorgan can lock into OpenAI or Anthropic and switch in a weekend because they built abstractions. Most SMBs build directly against one API and then can't move when prices change or models get deprecated.
+
+Use a thin wrapper. Whether it's LangChain, LiteLLM, or a 50-line Python file you wrote yourself, make sure swapping models is a one-line change. The AI vendor war is going to get ugly in 2027. Don't be locked in.
+
+If you want me to look at where AI fits in your specific business and what the 14-day win looks like for you, the link is in the description.
+
+The companies that move now spend the next two years compounding. The companies that wait are going to spend the next two years explaining to their board why they didn't.
+
+See you in the next one.

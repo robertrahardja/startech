@@ -1,0 +1,15 @@
+Two. Pick the boring task, not the impressive one.
+
+Every founder I talk to wants to build the AI chatbot. The AI sales assistant. The AI something that goes on the homepage.
+
+Don't.
+
+JPMorgan's biggest AI win this year was internal. Agents that read documents and pre-fill forms. That's it. Boring. Massive ROI.
+
+Your equivalent: invoice scanning. Receipt categorisation. Vendor email summarisation. Pick one. Ship it in 14 days. Measure the hours saved. That's the case for AI in your business, not a press release.
+
+Three. Build for portability, not for a vendor.
+
+JPMorgan can lock into OpenAI or Anthropic and switch in a weekend because they built abstractions. Most SMBs build directly against one API and then can't move when prices change or models get deprecated.
+
+Use a thin wrapper. Whether it's LangChain, LiteLLM, or a 50-line Python file you wrote yourself, make sure swapping models is a one-line change. The AI vendor war is going to get ugly in 2027. Don't be locked in.

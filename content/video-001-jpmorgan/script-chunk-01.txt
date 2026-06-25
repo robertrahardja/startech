@@ -1,0 +1,11 @@
+JPMorgan Chase just did something most businesses haven't woken up to yet.
+
+They reclassified AI from R and D to core infrastructure. Same line item as the data centers. Same line item as the trading systems. Not an experiment anymore, a utility.
+
+The 2026 number is 19.8 billion dollars. Two thousand staff working on AI full-time.
+
+Now if you're running a small or medium business in Singapore, your first reaction is probably "that's a bank, that's not me." And I want to push back on that. Because the lesson isn't the dollar amount. The lesson is the category change.
+
+Here's what changed. For five years, AI sat in the innovation budget. The CIO had a sandbox. The COO had a pilot project. The CFO had a line that said "experimental, review next year."
+
+That line is gone now. AI is now sitting next to the electricity bill. It's sitting next to the lease. It's a fixed cost of running the business, because the alternative is your competitor has it and you don't.
