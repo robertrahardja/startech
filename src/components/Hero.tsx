@@ -45,7 +45,7 @@ export default function Hero({ onAskAi }: HeroProps) {
           <img
             src="/assets/startech-logo-full.png"
             alt="StarTech Innovation"
-            className="h-20 w-auto sm:h-24 md:h-32"
+            className="h-32 w-auto sm:h-40 md:h-56 lg:h-64"
           />
         </div>
 

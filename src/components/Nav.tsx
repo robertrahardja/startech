@@ -46,7 +46,7 @@ export default function Nav({ onAskAi }: NavProps) {
               <img
                 src="/assets/startech-logo-full.png"
                 alt="StarTech Innovation"
-                className="h-8 w-auto"
+                className="h-12 w-auto"
               />
             </Link>
             <button
@@ -105,7 +105,7 @@ export default function Nav({ onAskAi }: NavProps) {
             <img
               src="/assets/startech-logo-full.png"
               alt="StarTech Innovation"
-              className="h-7 w-auto opacity-70 transition-opacity duration-300 hover:opacity-90 lg:h-9"
+              className="h-11 w-auto opacity-70 transition-opacity duration-300 hover:opacity-90 lg:h-14"
             />
           </Link>
 

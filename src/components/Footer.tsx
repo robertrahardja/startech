@@ -11,11 +11,8 @@ export default function Footer() {
             <img
               src="/assets/startech-logo-full.png"
               alt="StarTech Innovation"
-              className="h-6 w-auto opacity-50"
+              className="h-12 w-auto opacity-50"
             />
-            <p className="text-center text-[11px] font-light leading-relaxed text-st-text-muted sm:text-left">
-              Singapore
-            </p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-1 text-[11px] font-light tracking-wide text-st-text-muted">
