@@ -42,5 +42,12 @@
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0",
     "wrangler": "^4.4.0"
+  },
+  "allowScripts": {
+    "core-js@3.49.0": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.27.3": true,
+    "sharp@0.34.5": true,
+    "workerd@1.20260312.1": true
   }
 }

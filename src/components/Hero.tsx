@@ -52,11 +52,18 @@ export default function Hero({ onAskAi }: HeroProps) {
         {/* Main headline with rotating word */}
         <div className="mb-6 animate-fade-in-up">
           <h1 className="font-display text-3xl leading-[1.2] tracking-[-0.03em] text-white sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
-            We build what your
+            We engineer businesses,
             <br />
-            business needs in
+            not just software.
           </h1>
-          <div className="mt-1 h-[1.4em] overflow-hidden text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
+          <div className="mt-5 flex items-center justify-center gap-4">
+            <span className="h-px w-8 bg-st-text-muted/20" />
+            <span className="text-[10px] font-light uppercase tracking-[0.22em] text-st-text-muted/70">
+              Specialising in
+            </span>
+            <span className="h-px w-8 bg-st-text-muted/20" />
+          </div>
+          <div className="mt-2 h-[1.4em] overflow-hidden text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
             <span
               key={wordIndex}
               className={`inline-block font-display italic leading-[1.4] tracking-[-0.03em] ${
