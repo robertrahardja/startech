@@ -168,45 +168,31 @@ export default function Hero({ onAskAi }: HeroProps) {
         </div>
       </div>
 
-      {/* The business card, as an object. Large screens only: it fills the
-          right column that would otherwise be dead space, and it is the
-          clearest possible statement of who this is. */}
-      <div className="hidden lg:block">
-        <div className="hero-card card-tilt mx-auto w-full max-w-md p-9">
-          <div className="flex items-start justify-between gap-6">
-            <img
-              src="/assets/startech-logo-full.svg"
-              alt=""
-              className="h-16 w-auto"
-            />
-            <span className="brand-rule mt-2 h-px w-12" />
-          </div>
+      {/* The identity, at size. Large screens only — this fills the right
+          column that would otherwise be empty, and on a phone the header logo
+          already does the job in the space available. */}
+      <div className="hidden lg:flex lg:flex-col lg:items-center lg:gap-8">
+        <img
+          src="/assets/startech-mark.svg"
+          alt=""
+          aria-hidden="true"
+          className="logo-float w-full max-w-[300px]"
+        />
 
-          <div className="mt-10">
-            <div className="font-display text-3xl leading-tight tracking-[-0.02em] text-st-text">
-              Robert Rahardja
-            </div>
-            <div className="mt-1.5 text-[13px] font-normal tracking-wide text-st-text-muted">
-              Managing Director
-            </div>
+        <div className="text-center">
+          <div className="font-display text-4xl leading-none tracking-[-0.02em] text-st-text xl:text-5xl">
+            StarTech
           </div>
-
-          <div className="mt-8 gradient-text font-display text-xl tracking-[-0.01em]">
+          <div className="mt-3 text-[11px] font-medium tracking-[0.42em] uppercase text-st-text-muted">
+            Innovation
+          </div>
+          <div className="brand-rule mx-auto mt-6 h-px w-16" />
+          <div className="mt-6 gradient-text font-display text-lg tracking-[-0.01em]">
             Business. Finance. Tech.
           </div>
-
-          <dl className="mt-10 space-y-2.5 border-t border-st-border pt-6 text-[12.5px]">
-            <div className="flex justify-between gap-4">
-              <dt className="text-st-text-muted">Singapore</dt>
-              <dd className="text-st-text-muted/80">UEN 202110461R</dd>
-            </div>
-            <div className="flex justify-between gap-4">
-              <dt className="text-st-text-muted">Working in</dt>
-              <dd className="text-st-text-muted/80">EN &middot; 中文 &middot; MS &middot; ID</dd>
-            </div>
-          </dl>
         </div>
       </div>
+
       </div>
     </section>
   );
