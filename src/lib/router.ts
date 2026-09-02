@@ -12,12 +12,13 @@ const SOLUTION_PATH = /^\/solutions\/([a-z0-9-]+)$/;
 
 /**
  * Resolve a pathname to a page. Pure — no React, no history access — so the
- * routing table can be read and tested without rendering anything.
+ * routing table is separable from rendering. Internal: the shell consumes
+ * useCurrentPage; export this if a test or a second caller ever needs it.
  *
  * An unknown path, including a /solutions/<slug> with no matching solution,
  * falls through to the homepage rather than erroring.
  */
-export function resolvePage(pathname: string): Page {
+function resolvePage(pathname: string): Page {
   if (pathname === "/solutions") {
     return { type: "solutions-index" };
   }
@@ -37,7 +38,7 @@ export function resolvePage(pathname: string): Page {
  * Current pathname, kept in sync with browser back/forward and with the
  * popstate events the Link component dispatches on navigation.
  */
-export function usePathname(): string {
+function usePathname(): string {
   const [pathname, setPathname] = useState(window.location.pathname);
 
   useEffect(() => {
