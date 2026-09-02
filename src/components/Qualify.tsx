@@ -6,13 +6,13 @@ import { useInView } from "../hooks/useInView";
  * Straight Line puts intelligence-gathering right after the open, and gates
  * the presentation behind two conditions: the product genuinely fits, and
  * they can afford it. A landing page cannot ask questions and hear answers,
- * so it does the next best thing — it states the situations it is for, and
- * plainly names the ones it is not, letting the visitor sift themselves.
+ * so it describes the shapes of problem it recognises and lets the visitor
+ * place themselves.
  *
- * Naming who this is not for is the honest half. It costs some leads and
- * makes the remaining ones considerably better — but it is set quietly, as a
- * single line under the fits rather than a panel of its own. The exclusions
- * should not carry more visual weight than the work.
+ * These are problem shapes, not industries or services — the firm takes on
+ * the full range, so an exclusion list would only turn away work it would
+ * accept. The affordability half of the gate is handled directly instead: a
+ * range on the first call, a firm number after discovery.
  */
 
 const FITS = [
@@ -69,17 +69,19 @@ export default function Qualify() {
           ))}
         </div>
 
-        {/* The honest half, kept quiet. This is a disclosure, not a pitch —
-            a bordered card with a heading would make the exclusions louder
-            than the fit, which is the wrong emphasis. */}
+        {/* Pricing, said plainly rather than deferred.
+            The one exclusion that survived is the only one that is actually
+            true: an off-the-shelf tool that already does the job. Everything
+            else on the earlier list — websites, branding, smaller budgets —
+            was a limit we do not have, and naming it turned away work we
+            would take. */}
         <div className="mt-10 max-w-3xl border-t border-st-border pt-7">
           <p className="text-[14px] leading-[1.8] text-st-text-muted/75">
-            <span className="text-st-text-muted">Less so</span> if an
-            off-the-shelf tool already covers it (we will tell you which one),
-            if you need a marketing site or a logo on its own, or if you want a
-            fixed quote before anyone has looked at how you work. If that is
-            you, we will point you at whoever is right &mdash; including a
-            competitor.
+            <span className="text-st-text-muted">On price:</span> you will get
+            a range on the first call and a firm number after discovery, not a
+            figure invented from an email. And if an off-the-shelf tool already
+            does the job, we will tell you which one &mdash; that is a cheaper
+            answer than anything we could build you.
           </p>
         </div>
 
