@@ -1,12 +1,6 @@
 import { useState, useCallback, useEffect, useMemo } from "react";
 import Nav from "./components/Nav";
-import Hero from "./components/Hero";
-import Products from "./components/Products";
-import CaseStudies from "./components/CaseStudies";
-import AiCapabilities from "./components/AiCapabilities";
-import Industries from "./components/Industries";
-import Approach from "./components/Approach";
-import Contact from "./components/Contact";
+import HomePage from "./pages/HomePage";
 import Footer from "./components/Footer";
 import AskStartech from "./components/AskStartech";
 import AiIcon from "./components/AiIcon";
@@ -64,17 +58,7 @@ export default function App() {
       <Nav onAskAi={openChat} />
 
       <main>
-        {page.type === "home" && (
-          <>
-            <Hero onAskAi={openChat} />
-            <CaseStudies />
-            <Products />
-            <AiCapabilities />
-            <Industries />
-            <Approach />
-            <Contact />
-          </>
-        )}
+        {page.type === "home" && <HomePage onAskAi={openChat} />}
 
         {page.type === "solutions-index" && (
           <SolutionsIndex onAskAi={openChat} />
