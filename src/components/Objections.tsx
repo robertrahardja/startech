@@ -4,20 +4,22 @@ import { useInView } from "../hooks/useInView";
 import { haptic } from "../lib/haptics";
 
 /**
- * The objections a visitor is already holding, stated out loud and answered.
+ * The questions clients actually ask before committing, answered plainly.
  *
- * Straight Line's rule is to deflect rather than evade — an objection you
- * dodge is never resolved, and the prospect quietly leaves. A landing page
- * cannot hear the objection, so it names the ones we already know are there:
- * the failed previous vendor, the solo principal, the price, the timeline.
+ * These are the doubts we know are in the room — a previous build that
+ * failed, what happens if the principal is unavailable, cost, timing, how
+ * much of their business they will have to explain. Answering them here
+ * saves a call, and answering them badly would be worse than staying quiet,
+ * so each answer carries something checkable.
  *
- * Each answer is written to be checkable. An answer that cannot be verified
- * on the call would make the section worse than not having it.
+ * Written as questions a client would ask, not as objections to overcome.
+ * The reader should never be able to tell that a sales framework shaped
+ * this page.
  */
 
 interface Objection {
   id: string;
-  /** In the visitor's own words, not softened. */
+  /** Phrased as the client would ask it, not as an objection to overcome. */
   said: string;
   answer: string;
   /** The verifiable part, where one exists. */
@@ -27,7 +29,7 @@ interface Objection {
 const OBJECTIONS: Objection[] = [
   {
     id: "burned",
-    said: "We paid for this once already and got something unusable.",
+    said: "We have paid for this once before and could not use it. What is different?",
     answer:
       "Usually the build was fine and the requirements were wrong — nobody sat with the people doing the work before the code started. So we do discovery first and you own the output whether or not you continue with us. If the previous system is salvageable we will say so; rewriting something that mostly works is a bad use of your money.",
     proof:
@@ -35,27 +37,27 @@ const OBJECTIONS: Objection[] = [
   },
   {
     id: "solo",
-    said: "You are one person. What happens if you are hit by a bus?",
+    said: "What happens to the system if you are unavailable?",
     answer:
-      "Fair, and the honest answer is that the principal writes the core and specialists are brought in as the work demands. What protects you is not headcount, it is that the system is documented, tested and deployed on infrastructure you own — your Cloudflare account, your database, your repository. Another engineer can pick it up because the tests describe what it is supposed to do.",
+      "The principal writes the core and specialists are brought in as the work demands. What protects you is not headcount, it is that the system is documented, tested and deployed on infrastructure you own — your Cloudflare account, your database, your repository. Another engineer can pick it up because the tests describe what it is supposed to do.",
     proof: "7,060 automated tests across 484 calculator classes.",
   },
   {
     id: "price",
-    said: "This is going to cost more than we planned.",
+    said: "What does something like this usually cost?",
     answer:
-      "Probably, and you should know that before we scope rather than after. We will tell you the real number on the first call, then cut scope together until it fits — a smaller system that ships beats a large one that stalls. Singapore SMEs can offset up to half through PSG, and we prepare that paperwork at no charge.",
+      "You get a range on the first call and a firm number after discovery. We will say the real figure early rather than late, then cut scope together until it fits — a smaller system that ships beats a large one that stalls. Singapore SMEs can offset up to half through PSG, and we prepare that paperwork at no charge.",
     proof: "Eligibility confirmed against current IMDA criteria, not assumed.",
   },
   {
     id: "timing",
-    said: "It is not the right time. Let us revisit next quarter.",
+    said: "Is there a cost to waiting a quarter or two?",
     answer:
-      "Then revisit next quarter — we would rather you called when the problem is urgent than commit while it is not. Worth knowing: the cost of waiting is usually not the software, it is the manual reconciliation and the mistakes in between. If you want, we will quantify that on the call and you can decide with a number in front of you.",
+      "Sometimes none, and we will say so. We would rather you called when the problem is urgent than commit while it is not. Worth knowing: the cost of waiting is usually not the software, it is the manual reconciliation and the mistakes in between. If you want, we will quantify that on the call and you can decide with a number in front of you.",
   },
   {
     id: "understand",
-    said: "Developers never understand how our business actually works.",
+    said: "How much will we have to explain about how our business works?",
     answer:
       "That is the entire reason this firm exists. You will not be explaining what a trial balance is, what CPF is owed, or why a claim reconciles the way it does. Brief us the way you would brief your accountant.",
     proof:
@@ -79,15 +81,15 @@ export default function Objections() {
           <div className="mb-4 flex items-center gap-3">
             <span className="brand-rule h-px w-10" />
             <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-st-text-muted sm:text-[10px] sm:tracking-[0.22em]">
-              What you are probably thinking
+              Straight answers
             </span>
           </div>
           <h2 className="font-display text-3xl leading-[1.2] tracking-[-0.03em] text-st-text sm:text-4xl md:text-5xl">
-            The five reasons people hesitate.
+            Questions worth asking first.
           </h2>
           <p className="mt-5 text-base font-normal leading-[1.7] text-st-text-muted">
-            All of them are reasonable. Here is the honest answer to each,
-            including where the answer is simply &ldquo;wait&rdquo;.
+            The ones we get asked most, answered plainly &mdash; including
+            where the honest answer is that you should wait.
           </p>
         </div>
 
