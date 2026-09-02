@@ -63,7 +63,7 @@ export default function Contact() {
         <SectionHeader
           label="Contact"
           title="Thirty minutes, and an honest answer"
-          subtitle="Tell us what the process costs you today. We will come back with what is worth building, what is not, and roughly what it would take."
+          subtitle="Tell us what the process costs you today. We will come back with what is worth building and what is not."
         />
 
         <div
