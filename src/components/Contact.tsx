@@ -63,17 +63,17 @@ export default function Contact() {
         <SectionHeader
           label="Contact"
           title="Thirty minutes, and an honest answer"
-          subtitle="Tell us what the process costs you today. We will come back with what is worth building and what is not."
+          subtitle="Tell us what the process costs you today, and we will come back with what is worth building."
         />
 
         <div
           ref={ref}
-          className={`mx-auto grid max-w-[800px] grid-cols-1 gap-12 lg:grid-cols-2 ${
+          className={`mx-auto grid max-w-5xl grid-cols-1 items-start gap-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-12 ${
             isInView ? "reveal visible" : "reveal"
           }`}
         >
-          {/* Info */}
-          <div className="space-y-8">
+          {/* Info, as a card — it was floating text in a lot of empty space. */}
+          <div className="card rounded-2xl p-7 sm:p-8">
             <div className="space-y-5">
               <ContactDetail
                 label="Email"
@@ -135,7 +135,7 @@ export default function Contact() {
                 value={form.message}
                 onChange={handleChange}
                 maxLength={5000}
-                className="w-full min-h-[44px] rounded-lg border border-st-border bg-transparent px-3.5 py-3 text-[13px] font-normal text-st-text placeholder-st-text-muted/30 outline-none transition-colors duration-300 focus:border-st-border-hover"
+                className="w-full min-h-[46px] rounded-lg border border-st-field bg-st-field-bg px-3.5 py-3 text-[14px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-all duration-300 hover:border-st-border-hover focus:border-st-blue-light focus:bg-st-bg-elevated focus:ring-2 focus:ring-st-blue/25"
                 placeholder="Tell us about your project..."
               />
             </div>
@@ -224,7 +224,7 @@ function FormField({
         value={value}
         onChange={onChange}
         maxLength={name === "email" ? 320 : name === "phone" ? 30 : 200}
-        className="w-full min-h-[44px] rounded-lg border border-st-border bg-transparent px-3.5 py-3 text-[13px] font-normal text-st-text placeholder-st-text-muted/30 outline-none transition-colors duration-300 focus:border-st-border-hover"
+        className="w-full min-h-[46px] rounded-lg border border-st-field bg-st-field-bg px-3.5 py-3 text-[14px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-all duration-300 hover:border-st-border-hover focus:border-st-blue-light focus:bg-st-bg-elevated focus:ring-2 focus:ring-st-blue/25"
       />
     </div>
   );

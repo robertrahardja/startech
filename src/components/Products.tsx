@@ -238,7 +238,7 @@ function SectionHeader({
   return (
     <div
       ref={ref}
-      className={`mb-16 text-center ${isInView ? "reveal visible" : "reveal"}`}
+      className={`mb-10 text-center sm:mb-14 ${isInView ? "reveal visible" : "reveal"}`}
     >
       <span className="mb-3 inline-block text-[10px] font-medium tracking-[0.2em] uppercase text-st-text-muted">
         {label}
@@ -246,7 +246,7 @@ function SectionHeader({
       <h2 className="mb-4 font-display text-2xl tracking-[-0.02em] text-st-text sm:text-3xl md:text-5xl lg:text-6xl">
         {title}
       </h2>
-      <p className="mx-auto max-w-lg text-[15px] font-normal leading-[1.7] text-st-text-muted md:text-base">
+      <p className="mx-auto max-w-3xl text-balance text-[15px] font-normal leading-[1.7] text-st-text-muted md:text-base">
         {subtitle}
       </p>
     </div>

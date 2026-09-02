@@ -23,6 +23,12 @@
   /* The indigo of the reverse-side wave — used for ambient glow only. */
   --color-st-glow: #0a1a49;
 
+  /* Form fields need to read as inputs against a black page. A 10%-white
+     hairline disappears; these sit at roughly 22% with a faint fill so the
+     box is visible before it is focused. */
+  --color-st-field: rgba(255, 255, 255, 0.22);
+  --color-st-field-bg: rgba(255, 255, 255, 0.04);
+
   --color-st-gold: #d4a853;
   --color-st-gold-light: #e7c47a;
 
