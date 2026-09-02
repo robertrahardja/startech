@@ -27,7 +27,7 @@ export default function SectionCta({
 }: SectionCtaProps) {
   return (
     <div className="mt-14 flex flex-col gap-4 border-t border-st-border pt-8 sm:flex-row sm:items-center sm:justify-between">
-      <p className="max-w-xl text-[15px] leading-[1.7] text-st-text-muted">
+      <p className="max-w-3xl text-pretty text-[15px] leading-[1.7] text-st-text-muted">
         {prompt}
       </p>
       <a
