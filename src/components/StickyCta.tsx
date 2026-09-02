@@ -84,7 +84,7 @@ export default function StickyCta({ onVisibilityChange }: StickyCtaProps) {
               already carries the offer, and a squeezed line beside it just
               crowds the bar. */}
           <p className="hidden text-[13.5px] leading-snug text-st-text-muted sm:block">
-            Thirty minutes, and an honest answer about what is worth building.
+            A thirty-minute call, and a clear view of what to build first.
           </p>
 
           <a
