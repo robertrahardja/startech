@@ -57,9 +57,9 @@ export default function Qualify() {
             Where we do our best work.
           </h2>
           <p className="mt-5 text-base font-normal leading-[1.7] text-st-text-muted">
-            Most of our work starts in one of these. If yours is somewhere
-            else entirely, the call is still free &mdash; we will just be
-            quicker about telling you so.
+            Most of our work starts in one of these. If yours looks different,
+            it is still worth a call &mdash; the shape of the problem matters
+            more than the industry it sits in.
           </p>
         </div>
 
