@@ -21,7 +21,7 @@ const INDUSTRIES = [
       "Accounting engines, insurance document processing, startup valuation, tax compliance, and fraud detection.",
     details: [
       "Real-time transaction monitoring and anomaly detection",
-      "Regulatory reporting for MAS and OJK compliance",
+      "Regulatory reporting — MAS, OJK, and the regime your auditor answers to",
       "Automated reconciliation across accounts and currencies",
       "AI-powered credit scoring and risk assessment",
     ],

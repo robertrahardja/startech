@@ -41,7 +41,7 @@ const PRODUCTS: Product[] = [
     details: [
       "Automated reconciliation across accounts and currencies, with deterministic dedupe",
       "Bank statement ingestion — including formats that carry no transfer identifier",
-      "KYC and AML workflows, MAS and OJK reporting",
+      "KYC and AML workflows, multi-jurisdiction regulatory reporting",
       "DCF and comparable analysis with Monte Carlo simulation",
     ],
     icon: "chart",

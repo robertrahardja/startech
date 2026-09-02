@@ -10,7 +10,9 @@ import { useInView } from "../hooks/useInView";
  * plainly names the ones it is not, letting the visitor sift themselves.
  *
  * Naming who this is not for is the honest half. It costs some leads and
- * makes the remaining ones considerably better.
+ * makes the remaining ones considerably better — but it is set quietly, as a
+ * single line under the fits rather than a panel of its own. The exclusions
+ * should not carry more visual weight than the work.
  */
 
 const FITS = [
@@ -23,8 +25,8 @@ const FITS = [
     body: "You paid for a system your team will not use. You are wary of starting again, and you want to know what will be different this time.",
   },
   {
-    headline: "You operate across Singapore and Indonesia",
-    body: "CPF and IRAS on one side, BPJS and OJK on the other, and no single supplier who understands both without being taught.",
+    headline: "You operate across borders",
+    body: "A Japanese exporter shipping worldwide. A European or American company with an Asian entity. A Singapore business hiring in Indonesia. Different currencies, tax regimes and filing calendars in one system — and no single supplier who understands both ends without being taught.",
   },
   {
     headline: "The numbers have to be right, not roughly right",
@@ -32,12 +34,6 @@ const FITS = [
   },
 ];
 
-const DOES_NOT_FIT = [
-  "An off-the-shelf tool already does this. We will tell you which one.",
-  "You need a marketing site, a logo, or a mobile app on its own.",
-  "The budget is under about SGD 10,000 — the work will not fit inside it honestly.",
-  "You want a fixed quote before anyone has looked at how you actually work.",
-];
 
 export default function Qualify() {
   const [ref, isInView] = useInView({ threshold: 0.1 });
@@ -58,11 +54,12 @@ export default function Qualify() {
             </span>
           </div>
           <h2 className="font-display text-3xl leading-[1.2] tracking-[-0.03em] text-st-text sm:text-4xl md:text-5xl">
-            We are a good fit for four situations.
+            Where we do our best work.
           </h2>
           <p className="mt-5 text-base font-normal leading-[1.7] text-st-text-muted">
-            And a poor one for several others. It is cheaper for both of us to
-            find that out now than three meetings in.
+            Most of our work starts in one of these. If yours is somewhere
+            else entirely, the call is still free &mdash; we will just be
+            quicker about telling you so.
           </p>
         </div>
 
@@ -72,31 +69,20 @@ export default function Qualify() {
           ))}
         </div>
 
-        {/* The honest half. Deliberately plainer than the cards above — this
-            is a disclosure, not a pitch. */}
-        <div className="mt-12 max-w-2xl rounded-xl border border-st-border bg-st-surface p-7">
-          <h3 className="text-[13px] font-medium tracking-[0.14em] uppercase text-st-text-muted">
-            When to call someone else
-          </h3>
-          <ul className="mt-5 space-y-3">
-            {DOES_NOT_FIT.map((item) => (
-              <li key={item} className="flex gap-3">
-                <span
-                  aria-hidden="true"
-                  className="mt-[9px] h-px w-3 flex-none bg-st-text-muted/50"
-                />
-                <span className="text-[14.5px] font-normal leading-[1.7] text-st-text-muted">
-                  {item}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-6 border-t border-st-border pt-5 text-[13.5px] leading-[1.7] text-st-text-muted/80">
-            If one of these is you, say so on the call and we will point you at
-            whoever is right — including a competitor. That costs us nothing and
-            saves you a quarter.
+        {/* The honest half, kept quiet. This is a disclosure, not a pitch —
+            a bordered card with a heading would make the exclusions louder
+            than the fit, which is the wrong emphasis. */}
+        <div className="mt-10 max-w-3xl border-t border-st-border pt-7">
+          <p className="text-[14px] leading-[1.8] text-st-text-muted/75">
+            <span className="text-st-text-muted">Less so</span> if an
+            off-the-shelf tool already covers it (we will tell you which one),
+            if you need a marketing site or a logo on its own, or if you want a
+            fixed quote before anyone has looked at how you work. If that is
+            you, we will point you at whoever is right &mdash; including a
+            competitor.
           </p>
         </div>
+
       </div>
     </section>
   );

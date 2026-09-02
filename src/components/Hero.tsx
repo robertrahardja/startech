@@ -37,9 +37,9 @@ export default function Hero({ onAskAi }: HeroProps) {
         >
           <span className="brand-rule h-px w-10" />
           <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-st-text-muted sm:text-[10px] sm:tracking-[0.22em]">
-            <span className="sm:hidden">Singapore &middot; SG + Indonesia</span>
+            <span className="sm:hidden">Singapore &middot; Working worldwide</span>
             <span className="hidden sm:inline">
-              Singapore &middot; Since 2021 &middot; SG + Indonesia
+              Singapore &middot; Since 2021 &middot; Working worldwide
             </span>
           </span>
         </div>
