@@ -83,10 +83,9 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="mt-6 max-w-2xl text-[1.0625rem] font-normal leading-[1.55] text-st-text-muted animate-fade-in-up sm:mt-8 sm:text-base sm:leading-[1.7] md:text-lg"
           style={{ animationDelay: "0.15s" }}
         >
-          Most developers need your ledger explained. We already know what a
-          trial balance is, what CPF is owed, and why the numbers have to
-          reconcile &mdash; so you brief us once, in your own language, and get
-          software that behaves the way your business actually works.
+          We don&apos;t just write code; we understand operations. Tell us how
+          your business actually runs, and we&apos;ll build the software to
+          power it.
         </p>
 
         {/* CTAs — one primary action and two ways in for someone not ready
@@ -177,7 +176,7 @@ export default function Hero({ onAskAi }: HeroProps) {
         <div className="hero-card card-tilt mx-auto w-full max-w-md p-9">
           <div className="flex items-start justify-between gap-6">
             <img
-              src="/assets/startech-logo-full.png"
+              src="/assets/startech-logo-full.svg"
               alt=""
               className="h-16 w-auto"
             />

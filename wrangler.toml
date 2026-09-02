@@ -3,6 +3,11 @@ compatibility_date = "2025-03-01"
 
 main = "./worker/index.ts"
 
+# Versioned preview URLs on *.workers.dev, so a build can be reviewed before
+# it is promoted to the custom domains below. Uploading a version does not
+# affect production traffic; only `wrangler versions deploy` does.
+preview_urls = true
+
 routes = [
   { pattern = "startech-innovation.com", custom_domain = true },
   { pattern = "www.startech-innovation.com", custom_domain = true },

@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="flex flex-col items-center gap-8 sm:flex-row sm:justify-between">
           <div className="flex flex-col items-center gap-3 sm:items-start">
             <img
-              src="/assets/startech-logo-full.png"
+              src="/assets/startech-logo-full.svg"
               alt="StarTech Innovation"
               className="h-6 w-auto opacity-70"
             />

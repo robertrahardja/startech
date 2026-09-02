@@ -30,7 +30,7 @@ const FITS = [
   },
   {
     headline: "The numbers have to be right, not roughly right",
-    body: "Payroll, ledgers, claims, reconciliation — where an approximation is a liability rather than a rounding error.",
+    body: "Money, payroll, claims — the places where close enough is not good enough, and being wrong costs more than being late.",
   },
 ];
 
