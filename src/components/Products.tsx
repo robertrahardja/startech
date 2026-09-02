@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useSnapRail, useTapGuard } from "../hooks/useSnapRail";
+import { haptic } from "../lib/haptics";
 import { useInView } from "../hooks/useInView";
 import type { Product } from "../types";
 import ExpandedDetailCard from "./ExpandedDetailCard";
@@ -89,12 +91,21 @@ function ProductCard({
   product,
   index,
   onExpand,
+  railRef,
 }: {
   product: Product;
   index: number;
   onExpand: (product: Product) => void;
+  railRef: React.RefObject<HTMLDivElement | null>;
 }) {
   const [ref, isInView] = useInView({ threshold: 0.1 });
+  const hasDetails = product.details && product.details.length > 0;
+
+  // Pointer-based so a swipe across the rail does not open the card.
+  const tap = useTapGuard(() => {
+    haptic("select");
+    onExpand(product);
+  }, railRef);
 
   const spanClass =
     product.span === "wide"
@@ -103,16 +114,14 @@ function ProductCard({
         ? "md:row-span-2"
         : "";
 
-  const hasDetails = product.details && product.details.length > 0;
-
   return (
     <div
       ref={ref}
-      className={`product-card ${spanClass} ${isInView ? "reveal visible" : "reveal"}`}
+      className={`product-card pressable h-full ${spanClass} ${isInView ? "reveal visible" : "reveal"}`}
       style={{ transitionDelay: `${index * 60}ms` }}
-      onClick={hasDetails ? () => onExpand(product) : undefined}
+      {...(hasDetails ? tap : {})}
     >
-      <div className="card group relative cursor-pointer overflow-hidden rounded-xl p-6 sm:p-7">
+      <div className="card group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-xl p-6 sm:p-7">
         <div className="relative z-10 flex h-full flex-col">
           <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-lg bg-st-surface text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
             {ICONS[product.icon]}
@@ -146,6 +155,7 @@ function ProductCard({
 
 export default function Products() {
   const [expanded, setExpanded] = useState<Product | null>(null);
+  const { railRef, active, goTo } = useSnapRail(PRODUCTS.length);
 
   return (
     <section id="products" className="relative py-20 sm:py-24">
@@ -156,14 +166,36 @@ export default function Products() {
           subtitle="We go deep in four areas rather than wide across twenty. Each one is led personally by the principal and staffed with specialists as the work demands."
         />
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {/* One swipeable rail on phones, a grid from sm: up. The rail is
+            native scroll-snap; only the dots are wired up in JS. */}
+        <div
+          ref={railRef}
+          className="snap-rail grid-cols-1 gap-3 sm:grid sm:grid-cols-2 sm:gap-3 lg:grid-cols-3"
+        >
           {PRODUCTS.map((product, i) => (
-            <ProductCard
+            <div key={product.title} className="snap-item" data-snap-index={i}>
+              <ProductCard
+                product={product}
+                index={i}
+                onExpand={setExpanded}
+                railRef={railRef}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Position indicator — phones only, where the rail exists. */}
+        <div className="mt-4 flex items-center justify-center sm:hidden">
+          {PRODUCTS.map((product, i) => (
+            <button
               key={product.title}
-              product={product}
-              index={i}
-              onExpand={setExpanded}
-            />
+              onClick={() => goTo(i)}
+              aria-label={`Show ${product.title}`}
+              aria-current={i === active}
+              className="flex h-11 w-11 items-center justify-center"
+            >
+              <span className="rail-dot" data-active={i === active} />
+            </button>
           ))}
         </div>
       </div>

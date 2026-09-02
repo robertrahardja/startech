@@ -174,6 +174,74 @@
     50%      { background-position: 100% 50%; }
   }
 
+  /* ── Hero card ────────────────────────────────────────────────────────────
+     The hero is the business card: a panel on black whose edge catches the
+     brand gradient. A conic gradient sweeps the border once on load — the
+     light passing over a printed edge — then settles to a static hairline.
+     The sweep is a rotating pseudo-element behind a masked inset, so nothing
+     but transform animates. */
+  .hero-card {
+    position: relative;
+    isolation: isolate;
+    border-radius: 1.5rem;
+    background: linear-gradient(180deg, #08080f 0%, #050509 100%);
+  }
+
+  /* The moving light. Sits behind the panel and is clipped by it. */
+  .hero-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--sweep, 0deg),
+      transparent 0deg,
+      transparent 200deg,
+      rgba(10, 104, 249, 0.7) 280deg,
+      rgba(225, 156, 220, 0.9) 320deg,
+      rgba(10, 104, 249, 0.5) 345deg,
+      transparent 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: card-sweep 2.4s cubic-bezier(0.4, 0, 0.2, 1) 0.3s 1 both;
+    z-index: -1;
+  }
+
+  /* The resting hairline, revealed as the sweep finishes. */
+  .hero-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    opacity: 0;
+    animation: fade-to-1 900ms ease 2.1s both;
+    pointer-events: none;
+  }
+
+  @property --sweep {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @keyframes card-sweep {
+    from { --sweep: 0deg; }
+    to   { --sweep: 360deg; }
+  }
+
+  @keyframes fade-to-1 {
+    to { opacity: 1; }
+  }
+
   /* Metric tile — a faint inner light, brightening on hover. */
   .metric-tile:hover {
     border-color: rgba(10, 104, 249, 0.35);
@@ -734,4 +802,107 @@
   }
 
   .scroll-progress { display: none; }
+}
+
+/* ─── Touch ───────────────────────────────────────────────────────────────────
+   Mobile gets real gestures, not just a narrower layout. Three principles:
+   1. Scrolling and snapping are CSS, never JS — the compositor keeps them at
+      frame rate on hardware a scroll listener would stutter on.
+   2. Every touchable thing answers instantly: a press state that fires on
+      touchstart, not on the 300ms-late click.
+   3. Nothing depends on hover, and nothing traps the page scroll.
+   ------------------------------------------------------------------------- */
+@layer utilities {
+
+  /* Horizontal snap rail. Children become full-width cards on a phone and the
+     rail disappears entirely at sm:, where a grid is the better shape. */
+  .snap-rail {
+    display: flex;
+    gap: 0.875rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 1.5rem;
+    padding: 0.25rem 1.5rem 1.25rem;
+    margin: 0 -1.5rem;
+    /* Let the browser own horizontal panning; keeps vertical scroll free. */
+    touch-action: pan-x pan-y;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .snap-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .snap-item {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    flex: 0 0 86%;
+    max-width: 26rem;
+  }
+
+  @media (min-width: 640px) {
+    .snap-rail {
+      display: grid;
+      overflow: visible;
+      margin: 0;
+      padding: 0;
+    }
+
+    .snap-item {
+      flex: initial;
+      max-width: none;
+    }
+  }
+
+  /* Press feedback. Scale is compositor-only, so it lands immediately even
+     while the page is still settling. */
+  .pressable {
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 140ms cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 220ms ease;
+    touch-action: manipulation;
+  }
+
+  .pressable:active {
+    transform: scale(0.975);
+  }
+
+  @media (hover: none) {
+    .pressable:active {
+      border-color: rgba(10, 104, 249, 0.45);
+    }
+  }
+
+  /* Drag affordance under a snap rail: dots that track the active card. */
+  .rail-dot {
+    height: 0.375rem;
+    width: 0.375rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.18);
+    transition: width 300ms cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 300ms ease;
+  }
+
+  .rail-dot[data-active="true"] {
+    width: 1.25rem;
+    background: linear-gradient(90deg, #4a8bfb, #e19cdc);
+  }
+
+  /* A hint that a rail can be swiped — nudges once, then stops for good. */
+  .swipe-hint {
+    animation: swipe-hint 1.6s cubic-bezier(0.4, 0, 0.2, 1) 1.4s 2 both;
+  }
+
+  @keyframes swipe-hint {
+    0%, 100% { transform: translateX(0); }
+    35%      { transform: translateX(-14px); }
+    70%      { transform: translateX(0); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swipe-hint { animation: none; }
+  .pressable:active { transform: none; }
 }
