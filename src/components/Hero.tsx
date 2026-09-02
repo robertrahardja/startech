@@ -6,10 +6,10 @@ interface HeroProps {
 
 /** Proof points shown under the fold-line. Every figure is verifiable. */
 const PROOF = [
-  { figure: "7,060", label: "automated tests" },
-  { figure: "484", label: "calculator classes" },
+  { figure: "20+", label: "years, both sides" },
+  { figure: "7,060", label: "tests that must pass" },
   { figure: "2", label: "jurisdictions" },
-  { figure: "20+", label: "years building" },
+  { figure: "4", label: "languages" },
 ];
 
 export default function Hero({ onAskAi }: HeroProps) {
@@ -35,7 +35,7 @@ export default function Hero({ onAskAi }: HeroProps) {
         >
           <span className="h-px w-8 bg-st-gold/60" />
           <span className="text-[10px] font-light tracking-[0.22em] uppercase text-st-text-muted">
-            Singapore &middot; Software house
+            Singapore &middot; Since 2021 &middot; SG + Indonesia
           </span>
         </div>
 
@@ -44,8 +44,8 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="max-w-3xl font-display text-4xl leading-[1.08] tracking-[-0.03em] text-white animate-fade-in-up sm:text-5xl md:text-6xl lg:text-7xl"
           style={{ textWrap: "balance" }}
         >
-          The engineer you bring in when the{" "}
-          <span className="italic gradient-text">last vendor failed</span>.
+          We speak <span className="italic gradient-text">business</span> and{" "}
+          <span className="italic gradient-text">tech</span>.
         </h1>
 
         {/* Sub */}
@@ -53,10 +53,10 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="mt-8 max-w-xl text-base font-light leading-[1.7] text-st-text-muted animate-fade-in-up md:text-lg"
           style={{ animationDelay: "0.15s" }}
         >
-          We rebuild the operational systems that off-the-shelf tools and
-          offshore teams couldn&apos;t. Every project is led personally by the
-          principal &mdash; and we work natively across Singapore and Indonesian
-          compliance.
+          Most developers need your ledger explained. We already know what a
+          trial balance is, what CPF is owed, and why the numbers have to
+          reconcile &mdash; so you brief us once, in your own language, and get
+          software that behaves the way your business actually works.
         </p>
 
         {/* CTAs */}
@@ -69,7 +69,7 @@ export default function Hero({ onAskAi }: HeroProps) {
             className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-4 text-center text-[13px] font-light tracking-wide text-white transition-all duration-500 active:scale-[0.97]"
           >
             <span className="relative z-10 flex items-center justify-center gap-2.5">
-              Send me your failed project
+              Tell me about your business
               <svg
                 className="h-3.5 w-3.5 text-st-gold-light transition-all duration-500 group-hover:translate-x-0.5 group-hover:text-st-gold"
                 fill="none"
@@ -101,8 +101,8 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="mt-5 text-[11px] font-light tracking-wide text-st-text-muted/70 animate-fade-in"
           style={{ animationDelay: "0.3s" }}
         >
-          A free 30-minute review. We&apos;ll tell you honestly whether
-          it&apos;s salvageable &mdash; even when the answer is no.
+          A free 30-minute conversation &mdash; no brief document required.
+          If software isn&apos;t the answer, we&apos;ll say so.
         </p>
 
         {/* Proof strip */}

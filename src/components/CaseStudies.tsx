@@ -178,8 +178,9 @@ export default function CaseStudies() {
             Systems running in production.
           </h2>
           <p className="mt-5 text-base font-light leading-[1.7] text-st-text-muted">
-            Four builds, with the parts that are usually left out: what the
-            business was doing beforehand, and what went wrong on the way.
+            Four builds, described the way a business owner would describe them
+            &mdash; what the company was actually doing beforehand, and what went
+            wrong on the way.
           </p>
         </div>
 
