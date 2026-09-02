@@ -102,7 +102,7 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
 
       <div className="grid items-start gap-8 lg:grid-cols-[1.5fr_1fr] lg:gap-14">
         <div>
-          <h3 className="font-display text-2xl leading-[1.2] tracking-[-0.02em] text-white md:text-[28px]">
+          <h3 className="font-display text-2xl leading-[1.25] tracking-[-0.02em] text-white md:text-3xl">
             {study.title}
           </h3>
 
@@ -174,7 +174,7 @@ export default function CaseStudies() {
               Selected work
             </span>
           </div>
-          <h2 className="font-display text-3xl leading-[1.15] tracking-[-0.03em] text-white sm:text-4xl md:text-5xl">
+          <h2 className="font-display text-3xl leading-[1.2] tracking-[-0.03em] text-white sm:text-4xl md:text-5xl">
             Systems running in production.
           </h2>
           <p className="mt-5 text-base font-light leading-[1.7] text-st-text-muted">

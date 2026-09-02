@@ -1,0 +1,166 @@
+{
+  "finding_counts": {
+    "src/components/AiCapabilities.tsx": {
+      "crap_moderate": {
+        "count": 1
+      }
+    },
+    "src/components/Approach.tsx": {
+      "crap_moderate": {
+        "count": 1
+      }
+    },
+    "src/components/AskStartech.tsx": {
+      "complexity_critical": {
+        "count": 2
+      },
+      "crap_critical": {
+        "count": 2
+      },
+      "crap_high": {
+        "count": 2
+      }
+    },
+    "src/components/Contact.tsx": {
+      "crap_moderate": {
+        "count": 2
+      }
+    },
+    "src/components/ExpandedDetailCard.tsx": {
+      "crap_moderate": {
+        "count": 1
+      }
+    },
+    "src/components/Industries.tsx": {
+      "crap_moderate": {
+        "count": 1
+      }
+    },
+    "src/components/Products.tsx": {
+      "crap_high": {
+        "count": 1
+      }
+    },
+    "src/components/demos/DemoShell.tsx": {
+      "complexity_critical": {
+        "count": 1
+      },
+      "crap_critical": {
+        "count": 1
+      }
+    },
+    "src/components/demos/renderers/AppointmentBookingDemo.tsx": {
+      "crap_high": {
+        "count": 1
+      }
+    },
+    "src/components/demos/renderers/ComplianceCheckerDemo.tsx": {
+      "crap_high": {
+        "count": 1
+      }
+    },
+    "src/components/demos/renderers/CustomerChatbotDemo.tsx": {
+      "crap_high": {
+        "count": 1
+      }
+    },
+    "src/components/demos/renderers/DocumentTranslatorDemo.tsx": {
+      "crap_high": {
+        "count": 1
+      }
+    },
+    "src/components/demos/renderers/EmployeeOnboardingDemo.tsx": {
+      "complexity_critical": {
+        "count": 1
+      },
+      "crap_critical": {
+        "count": 1
+      }
+    },
+    "src/components/demos/renderers/FinancialReportDemo.tsx": {
+      "complexity_critical": {
+        "count": 1
+      },
+      "crap_critical": {
+        "count": 1
+      }
+    },
+    "src/components/demos/renderers/InventoryTrackerDemo.tsx": {
+      "crap_high": {
+        "count": 1
+      }
+    },
+    "src/components/demos/renderers/InvoiceScannerDemo.tsx": {
+      "crap_high": {
+        "count": 1
+      }
+    },
+    "src/components/demos/renderers/JobPostingWriterDemo.tsx": {
+      "complexity_critical": {
+        "count": 1
+      },
+      "crap_critical": {
+        "count": 2
+      }
+    },
+    "src/components/demos/renderers/QuotationGeneratorDemo.tsx": {
+      "crap_high": {
+        "count": 1
+      }
+    },
+    "src/components/demos/renderers/SalesAssistantDemo.tsx": {
+      "crap_high": {
+        "count": 1
+      }
+    },
+    "src/components/demos/renderers/SocialMediaManagerDemo.tsx": {
+      "crap_critical": {
+        "count": 1
+      }
+    },
+    "src/components/demos/renderers/TrainingContentDemo.tsx": {
+      "crap_high": {
+        "count": 2
+      }
+    },
+    "src/components/solutions/Link.tsx": {
+      "crap_critical": {
+        "count": 1
+      }
+    },
+    "src/hooks/useDemoApi.ts": {
+      "crap_critical": {
+        "count": 1
+      }
+    },
+    "src/hooks/useDemoRateLimiter.ts": {
+      "crap_moderate": {
+        "count": 1
+      }
+    },
+    "src/lib/demoPdfGenerator.ts": {
+      "crap_high": {
+        "count": 1
+      },
+      "crap_moderate": {
+        "count": 7
+      }
+    },
+    "worker/index.ts": {
+      "complexity_critical": {
+        "count": 1
+      },
+      "crap_critical": {
+        "count": 4
+      },
+      "crap_high": {
+        "count": 1
+      }
+    }
+  },
+  "runtime_coverage_findings": [],
+  "target_keys": [
+    "src/components/AskStartech.tsx:complexity",
+    "worker/index.ts:complexity"
+  ]
+}
