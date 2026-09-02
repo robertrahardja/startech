@@ -280,6 +280,35 @@
     }
   }
 
+  /* The persistent CTA bar. Frosted rather than solid so the page reads
+     through it, with the brand gradient as a hairline along the top edge. */
+  .sticky-cta {
+    background: rgba(8, 8, 14, 0.82);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow:
+      0 -1px 0 rgba(255, 255, 255, 0.05) inset,
+      0 12px 40px rgba(0, 0, 0, 0.55);
+    position: relative;
+  }
+
+  .sticky-cta::before {
+    content: "";
+    position: absolute;
+    inset-inline: 12%;
+    top: -1px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(91, 141, 251, 0.7),
+      rgba(225, 156, 220, 0.7),
+      transparent
+    );
+    pointer-events: none;
+  }
+
   /* The Ask button is position:fixed, so on a display wider than the page cap
      it would drift out to the screen edge, away from the content. Past the
      cap, pin it to the content column's right edge instead. */
@@ -648,8 +677,11 @@
   }
 
   /* Star whirl entrance — spins in once then rests */
+  /* `backwards`, not `both`: this is a one-shot entrance, and `both` keeps
+     the final keyframe applied forever — which pins transform and beats any
+     later inline style, such as lifting the button clear of the CTA bar. */
   .star-whirl {
-    animation: star-whirl 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: star-whirl 1.2s cubic-bezier(0.16, 1, 0.3, 1) backwards;
   }
 
   @keyframes star-whirl {

@@ -1,8 +1,9 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Nav from "./components/Nav";
 import HomePage from "./pages/HomePage";
 import ScrollProgress from "./components/ScrollProgress";
 import AskButton from "./components/AskButton";
+import StickyCta from "./components/StickyCta";
 import Footer from "./components/Footer";
 import AskStartech from "./components/AskStartech";
 import SolutionsIndex from "./components/solutions/SolutionsIndex";
@@ -16,7 +17,21 @@ import { useCurrentPage } from "./lib/router";
  */
 export default function App() {
   const [chatOpen, setChatOpen] = useState(false);
+  const [ctaBarUp, setCtaBarUp] = useState(false);
   const page = useCurrentPage();
+
+  // A deep link like /#products arrives before React has rendered the
+  // section, so the browser finds no such element and stays at the top.
+  // Re-run the jump once the page exists.
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+
+    const frame = requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView();
+    });
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   const toggleChat = useCallback(() => setChatOpen((prev) => !prev), []);
   const openChat = useCallback(() => setChatOpen(true), []);
@@ -41,7 +56,9 @@ export default function App() {
 
       <Footer />
 
-      <AskButton onClick={toggleChat} />
+      <StickyCta onVisibilityChange={setCtaBarUp} />
+
+      <AskButton onClick={toggleChat} hidden={ctaBarUp} />
 
       <AskStartech isOpen={chatOpen} onClose={closeChat} />
     </div>
