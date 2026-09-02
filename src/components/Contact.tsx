@@ -88,7 +88,7 @@ export default function Contact() {
             </div>
 
             <div className="border-t border-st-border pt-6">
-              <p className="text-[13px] font-light leading-[1.7] text-st-text-muted">
+              <p className="text-[13px] font-normal leading-[1.7] text-st-text-muted">
                 No commitment required. We provide a custom ROI analysis
                 and implementation roadmap for your business.
               </p>
@@ -123,7 +123,7 @@ export default function Contact() {
             <div>
               <label
                 htmlFor="message"
-                className="mb-1.5 block text-[11px] font-light tracking-wide text-st-text-muted"
+                className="mb-1.5 block text-[11px] font-medium tracking-wide text-st-text-muted"
               >
                 Message <span className="text-st-text-muted/70">*</span>
               </label>
@@ -135,24 +135,24 @@ export default function Contact() {
                 value={form.message}
                 onChange={handleChange}
                 maxLength={5000}
-                className="w-full min-h-[44px] rounded-lg border border-st-border bg-transparent px-3.5 py-3 text-[13px] font-light text-white placeholder-st-text-muted/30 outline-none transition-colors duration-300 focus:border-st-border-hover"
+                className="w-full min-h-[44px] rounded-lg border border-st-border bg-transparent px-3.5 py-3 text-[13px] font-normal text-st-text placeholder-st-text-muted/30 outline-none transition-colors duration-300 focus:border-st-border-hover"
                 placeholder="Tell us about your project..."
               />
             </div>
 
             {status === "error" && (
-              <p className="text-[13px] font-light text-red-400/80">{errorMsg}</p>
+              <p className="text-[13px] font-normal text-red-400/80">{errorMsg}</p>
             )}
 
             {status === "success" ? (
-              <div className="rounded-lg border border-emerald-500/10 px-4 py-3 text-[13px] font-light text-emerald-400/80">
+              <div className="rounded-lg border border-emerald-500/10 px-4 py-3 text-[13px] font-normal text-emerald-400/80">
                 Thank you. We'll be in touch shortly.
               </div>
             ) : (
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="hero-btn-primary relative w-full overflow-hidden rounded-xl px-4 py-3.5 text-[13px] font-light tracking-wide text-white transition-all duration-500 disabled:opacity-40"
+                className="hero-btn-primary relative w-full overflow-hidden rounded-xl px-4 py-3.5 text-[13px] font-normal tracking-wide text-st-text transition-all duration-500 disabled:opacity-40"
               >
                 {status === "sending" ? "Sending..." : "Send message"}
               </button>
@@ -175,18 +175,18 @@ function ContactDetail({
 }) {
   return (
     <div>
-      <div className="mb-1 text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted">
+      <div className="mb-1 text-[10px] font-medium tracking-[0.15em] uppercase text-st-text-muted">
         {label}
       </div>
       {href ? (
         <a
           href={href}
-          className="inline-flex min-h-[44px] items-center text-[13px] font-light text-st-text transition-colors duration-300 hover:text-white"
+          className="inline-flex min-h-[44px] items-center text-[13px] font-normal text-st-text transition-colors duration-300 hover:text-st-text"
         >
           {value}
         </a>
       ) : (
-        <p className="text-[13px] font-light text-st-text">{value}</p>
+        <p className="text-[13px] font-normal text-st-text">{value}</p>
       )}
     </div>
   );
@@ -211,7 +211,7 @@ function FormField({
     <div>
       <label
         htmlFor={name}
-        className="mb-1.5 block text-[11px] font-light tracking-wide text-st-text-muted"
+        className="mb-1.5 block text-[11px] font-medium tracking-wide text-st-text-muted"
       >
         {label}
         {required && <span className="text-st-text-muted/70"> *</span>}
@@ -224,7 +224,7 @@ function FormField({
         value={value}
         onChange={onChange}
         maxLength={name === "email" ? 320 : name === "phone" ? 30 : 200}
-        className="w-full min-h-[44px] rounded-lg border border-st-border bg-transparent px-3.5 py-3 text-[13px] font-light text-white placeholder-st-text-muted/30 outline-none transition-colors duration-300 focus:border-st-border-hover"
+        className="w-full min-h-[44px] rounded-lg border border-st-border bg-transparent px-3.5 py-3 text-[13px] font-normal text-st-text placeholder-st-text-muted/30 outline-none transition-colors duration-300 focus:border-st-border-hover"
       />
     </div>
   );

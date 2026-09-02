@@ -361,7 +361,7 @@ export default function AskStartech({ isOpen, onClose }: AskStartechProps) {
         <div className="flex items-center justify-between border-b border-st-border px-4 py-3">
           <div className="flex items-center gap-2.5">
             <AiIcon className="h-4 w-4 text-st-accent" />
-            <span className="text-sm font-medium text-white">
+            <span className="text-sm font-medium text-st-text">
               Ask StarTech
             </span>
           </div>
@@ -370,7 +370,7 @@ export default function AskStartech({ isOpen, onClose }: AskStartechProps) {
             <button
               onClick={toggleMute}
               aria-label={isMuted ? "Unmute" : "Mute"}
-              className="flex h-11 w-11 items-center justify-center rounded-md text-st-text-muted transition-colors duration-300 hover:text-white"
+              className="flex h-11 w-11 items-center justify-center rounded-md text-st-text-muted transition-colors duration-300 hover:text-st-text"
             >
               {isMuted ? (
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -386,7 +386,7 @@ export default function AskStartech({ isOpen, onClose }: AskStartechProps) {
             <button
               onClick={onClose}
               aria-label="Close chat"
-              className="flex h-11 w-11 items-center justify-center rounded-md text-st-text-muted transition-colors duration-300 hover:text-white"
+              className="flex h-11 w-11 items-center justify-center rounded-md text-st-text-muted transition-colors duration-300 hover:text-st-text"
             >
               <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
@@ -419,7 +419,7 @@ export default function AskStartech({ isOpen, onClose }: AskStartechProps) {
                 <button
                   key={prompt}
                   onClick={() => sendMessage(prompt)}
-                  className="block w-full min-h-[44px] rounded-lg border border-st-border px-3 py-2.5 text-left text-[13px] text-st-text-muted transition-colors hover:border-st-border-hover hover:text-white"
+                  className="block w-full min-h-[44px] rounded-lg border border-st-border px-3 py-2.5 text-left text-[13px] text-st-text-muted transition-colors hover:border-st-border-hover hover:text-st-text"
                 >
                   {prompt}
                 </button>
@@ -440,7 +440,7 @@ export default function AskStartech({ isOpen, onClose }: AskStartechProps) {
                 className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border transition-all duration-300 ${
                   isListening
                     ? "border-st-accent/40 bg-st-accent/10 text-st-accent"
-                    : "border-st-border text-st-text-muted hover:border-st-border-hover hover:text-white"
+                    : "border-st-border text-st-text-muted hover:border-st-border-hover hover:text-st-text"
                 }`}
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
@@ -456,7 +456,7 @@ export default function AskStartech({ isOpen, onClose }: AskStartechProps) {
               placeholder={isListening ? "Listening..." : "Ask about our services..."}
               rows={1}
               disabled={isListening}
-              className="max-h-28 min-h-[44px] flex-1 resize-none rounded-lg border border-st-border bg-transparent px-3 py-2.5 text-sm text-white placeholder-st-text-muted/40 outline-none transition-colors focus:border-st-blue/40 disabled:opacity-40"
+              className="max-h-28 min-h-[44px] flex-1 resize-none rounded-lg border border-st-border bg-transparent px-3 py-2.5 text-sm text-st-text placeholder-st-text-muted/40 outline-none transition-colors focus:border-st-blue/40 disabled:opacity-40"
               style={{ lineHeight: "1.5" }}
             />
             <button
@@ -497,7 +497,7 @@ function MessageBubble({
     >
       <div
         className={`group relative max-w-[85%] rounded-lg px-3.5 py-2.5 text-[13px] leading-relaxed ${
-          isUser ? "bg-white/[0.08] text-white" : "text-st-text-muted"
+          isUser ? "bg-st-surface text-st-text" : "text-st-text-muted"
         }`}
       >
         {message.content.split("\n").map((line, i) => (

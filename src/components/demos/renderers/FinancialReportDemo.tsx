@@ -9,9 +9,9 @@ interface DemoRendererProps {
 }
 
 const inputClass =
-  "w-full min-h-[44px] rounded-lg border border-white/20 bg-white/[0.05] px-3.5 py-3 text-[13px] font-light text-white placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-white/40";
+  "w-full min-h-[44px] rounded-lg border border-st-border bg-st-surface px-3.5 py-3 text-[13px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-st-border";
 const labelClass =
-  "mb-1.5 block text-[11px] font-light tracking-wide text-white/60";
+  "mb-1.5 block text-[11px] font-medium tracking-wide text-st-text/60";
 
 interface KeyMetric {
   metric: string;
@@ -63,55 +63,55 @@ export default function FinancialReportDemo(props: DemoRendererProps) {
         {/* P&L Summary */}
         <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
           <div className="mb-4 flex items-baseline justify-between">
-            <h3 className="text-[15px] font-light text-white">
+            <h3 className="text-[15px] font-normal text-st-text">
               Profit &amp; Loss Summary
             </h3>
-            <span className="text-[11px] font-light tracking-wide text-st-text-muted">
+            <span className="text-[11px] font-medium tracking-wide text-st-text-muted">
               {rPeriod}
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
             <div>
-              <span className="text-[11px] font-light text-st-text-muted">
+              <span className="text-[11px] font-medium text-st-text-muted">
                 Revenue
               </span>
-              <p className="mt-0.5 text-[15px] font-light text-white">
+              <p className="mt-0.5 text-[15px] font-normal text-st-text">
                 {formatCurrency(rRevenue)}
               </p>
             </div>
             <div>
-              <span className="text-[11px] font-light text-st-text-muted">
+              <span className="text-[11px] font-medium text-st-text-muted">
                 Expenses
               </span>
-              <p className="mt-0.5 text-[15px] font-light text-white">
+              <p className="mt-0.5 text-[15px] font-normal text-st-text">
                 {formatCurrency(rExpenses)}
               </p>
             </div>
             <div>
-              <span className="text-[11px] font-light text-st-text-muted">
+              <span className="text-[11px] font-medium text-st-text-muted">
                 Net Profit
               </span>
               <p
-                className={`mt-0.5 text-[15px] font-light ${netProfit >= 0 ? "text-emerald-400" : "text-red-400"}`}
+                className={`mt-0.5 text-[15px] font-normal ${netProfit >= 0 ? "text-emerald-400" : "text-red-400"}`}
               >
                 {formatCurrency(netProfit)}
               </p>
             </div>
             <div>
-              <span className="text-[11px] font-light text-st-text-muted">
+              <span className="text-[11px] font-medium text-st-text-muted">
                 Gross Margin
               </span>
-              <p className="mt-0.5 text-[15px] font-light text-white">
+              <p className="mt-0.5 text-[15px] font-normal text-st-text">
                 {grossMargin}%
               </p>
             </div>
             <div>
-              <span className="text-[11px] font-light text-st-text-muted">
+              <span className="text-[11px] font-medium text-st-text-muted">
                 Net Margin
               </span>
               <p
-                className={`mt-0.5 text-[15px] font-light ${netMargin >= 0 ? "text-emerald-400" : "text-red-400"}`}
+                className={`mt-0.5 text-[15px] font-normal ${netMargin >= 0 ? "text-emerald-400" : "text-red-400"}`}
               >
                 {netMargin}%
               </p>
@@ -130,10 +130,10 @@ export default function FinancialReportDemo(props: DemoRendererProps) {
                   key={i}
                   className={`rounded-xl border bg-st-bg-card p-4 ${colors}`}
                 >
-                  <span className="text-[11px] font-light text-st-text-muted">
+                  <span className="text-[11px] font-medium text-st-text-muted">
                     {km.metric}
                   </span>
-                  <p className="mt-0.5 text-[15px] font-light">{km.value}</p>
+                  <p className="mt-0.5 text-[15px] font-normal">{km.value}</p>
                 </div>
               );
             })}
@@ -143,10 +143,10 @@ export default function FinancialReportDemo(props: DemoRendererProps) {
         {/* Analysis */}
         {analysis && (
           <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
-            <h4 className="mb-2 text-[13px] font-light text-st-text-muted">
+            <h4 className="mb-2 text-[13px] font-normal text-st-text-muted">
               Analysis
             </h4>
-            <p className="text-[13px] font-light leading-[1.7] text-white">
+            <p className="text-[13px] font-normal leading-[1.7] text-st-text">
               {analysis}
             </p>
           </div>
@@ -155,14 +155,14 @@ export default function FinancialReportDemo(props: DemoRendererProps) {
         {/* Trends */}
         {trends.length > 0 && (
           <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
-            <h4 className="mb-2 text-[13px] font-light text-st-text-muted">
+            <h4 className="mb-2 text-[13px] font-normal text-st-text-muted">
               Trends
             </h4>
             <ul className="space-y-1">
               {trends.map((trend, i) => (
                 <li
                   key={i}
-                  className="flex gap-2 text-[13px] font-light leading-[1.7] text-white"
+                  className="flex gap-2 text-[13px] font-normal leading-[1.7] text-st-text"
                 >
                   <span className="mt-1 text-st-text-muted/50">&bull;</span>
                   {trend}
@@ -175,14 +175,14 @@ export default function FinancialReportDemo(props: DemoRendererProps) {
         {/* Recommendations */}
         {recommendations.length > 0 && (
           <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
-            <h4 className="mb-2 text-[13px] font-light text-st-text-muted">
+            <h4 className="mb-2 text-[13px] font-normal text-st-text-muted">
               Recommendations
             </h4>
             <ol className="space-y-1">
               {recommendations.map((rec, i) => (
                 <li
                   key={i}
-                  className="flex gap-2 text-[13px] font-light leading-[1.7] text-white"
+                  className="flex gap-2 text-[13px] font-normal leading-[1.7] text-st-text"
                 >
                   <span className="min-w-[1.25rem] text-st-text-muted">
                     {i + 1}.
@@ -195,14 +195,14 @@ export default function FinancialReportDemo(props: DemoRendererProps) {
         )}
 
         {error && (
-          <p className="text-[13px] font-light text-red-400/80">{error}</p>
+          <p className="text-[13px] font-normal text-red-400/80">{error}</p>
         )}
 
         <div className="flex gap-3">
           <button
             type="button"
             onClick={clearResult}
-            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white"
+            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
           >
             Try Again
           </button>
@@ -213,7 +213,7 @@ export default function FinancialReportDemo(props: DemoRendererProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-light leading-relaxed text-st-gold-light/80">
+      <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-normal leading-relaxed text-st-gold-light/80">
         <p className="mb-2 font-medium text-st-gold-light">How to use this demo</p>
         <p>Enter the reporting period, total revenue, and total expenses in SGD. Optionally, add a breakdown of revenue sources or expense categories. The AI will generate a financial analysis with profit margins, key metrics, trend observations, and actionable recommendations.</p>
         <p className="mt-2 text-[12px] text-st-gold-light/60">Example: Period &apos;Q1 2026&apos;, Revenue &apos;$250,000&apos;, Expenses &apos;$180,000&apos;, Breakdown &apos;Product sales $150K, Services $100K. Rent $30K, Salaries $120K, Marketing $30K&apos;. The more detail, the richer the analysis.</p>
@@ -263,13 +263,13 @@ export default function FinancialReportDemo(props: DemoRendererProps) {
       </div>
 
       {error && (
-        <p className="text-[13px] font-light text-red-400/80">{error}</p>
+        <p className="text-[13px] font-normal text-red-400/80">{error}</p>
       )}
 
       <button
         type="submit"
         disabled={isLoading || !period.trim() || !revenue.trim()}
-        className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-light tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50 disabled:opacity-40"
+        className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-normal tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50 disabled:opacity-40"
       >
         {isLoading ? "Generating..." : "Generate Financial Report"}
       </button>

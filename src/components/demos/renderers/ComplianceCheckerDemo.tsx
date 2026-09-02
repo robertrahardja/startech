@@ -9,9 +9,9 @@ interface DemoRendererProps {
 }
 
 const inputClass =
-  "w-full min-h-[44px] rounded-lg border border-white/20 bg-white/[0.05] px-3.5 py-3 text-[13px] font-light text-white placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-white/40";
+  "w-full min-h-[44px] rounded-lg border border-st-border bg-st-surface px-3.5 py-3 text-[13px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-st-border";
 const labelClass =
-  "mb-1.5 block text-[11px] font-light tracking-wide text-white/60";
+  "mb-1.5 block text-[11px] font-medium tracking-wide text-st-text/60";
 
 interface Finding {
   clause_excerpt: string;
@@ -61,11 +61,11 @@ export default function ComplianceCheckerDemo(props: DemoRendererProps) {
             {/* Risk score */}
             <div className="flex flex-col items-center">
               <span
-                className={`text-[40px] font-light leading-none ${riskScoreColor(riskScore)}`}
+                className={`text-[40px] font-normal leading-none ${riskScoreColor(riskScore)}`}
               >
                 {riskScore}
               </span>
-              <span className="mt-1 text-[11px] font-light text-st-text-muted">
+              <span className="mt-1 text-[11px] font-medium text-st-text-muted">
                 Risk Score
               </span>
             </div>
@@ -73,14 +73,14 @@ export default function ComplianceCheckerDemo(props: DemoRendererProps) {
             {/* Summary */}
             <div className="flex-1">
               <div className="mb-2 flex items-center gap-2">
-                <h3 className="text-[15px] font-light text-white">
+                <h3 className="text-[15px] font-normal text-st-text">
                   Compliance Review
                 </h3>
-                <span className="rounded-full bg-white/[0.05] px-2 py-0.5 text-[11px] font-light text-st-text-muted">
+                <span className="rounded-full bg-st-surface px-2 py-0.5 text-[11px] font-medium text-st-text-muted">
                   {documentType}
                 </span>
               </div>
-              <p className="text-[13px] font-light leading-[1.7] text-st-text-muted">
+              <p className="text-[13px] font-normal leading-[1.7] text-st-text-muted">
                 {summary}
               </p>
             </div>
@@ -106,11 +106,11 @@ export default function ComplianceCheckerDemo(props: DemoRendererProps) {
                 >
                   <div className="flex items-center gap-3">
                     <span
-                      className={`rounded-full px-2 py-0.5 text-[11px] font-light ${sev.text} ${sev.bg}`}
+                      className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${sev.text} ${sev.bg}`}
                     >
                       {finding.severity}
                     </span>
-                    <span className="text-[13px] font-light text-white">
+                    <span className="text-[13px] font-normal text-st-text">
                       {finding.issue}
                     </span>
                   </div>
@@ -135,28 +135,28 @@ export default function ComplianceCheckerDemo(props: DemoRendererProps) {
                 {isExpanded && (
                   <div className="space-y-3 border-t border-st-border px-5 pb-5 pt-4">
                     {/* Clause excerpt */}
-                    <div className="rounded-lg border-l-2 border-st-border bg-white/[0.02] px-4 py-3">
-                      <p className="text-[12px] font-light italic leading-[1.7] text-st-text-muted">
+                    <div className="rounded-lg border-l-2 border-st-border bg-st-surface px-4 py-3">
+                      <p className="text-[12px] font-normal italic leading-[1.7] text-st-text-muted">
                         &ldquo;{finding.clause_excerpt}&rdquo;
                       </p>
                     </div>
 
                     {/* Regulation */}
                     <div>
-                      <span className="text-[11px] font-light text-st-text-muted">
+                      <span className="text-[11px] font-medium text-st-text-muted">
                         Regulation
                       </span>
-                      <p className="mt-0.5 text-[13px] font-light text-white">
+                      <p className="mt-0.5 text-[13px] font-normal text-st-text">
                         {finding.regulation}
                       </p>
                     </div>
 
                     {/* Suggestion */}
                     <div>
-                      <span className="text-[11px] font-light text-st-text-muted">
+                      <span className="text-[11px] font-medium text-st-text-muted">
                         Suggestion
                       </span>
-                      <p className="mt-0.5 text-[13px] font-light leading-[1.7] text-white">
+                      <p className="mt-0.5 text-[13px] font-normal leading-[1.7] text-st-text">
                         {finding.suggestion}
                       </p>
                     </div>
@@ -168,14 +168,14 @@ export default function ComplianceCheckerDemo(props: DemoRendererProps) {
         </div>
 
         {error && (
-          <p className="text-[13px] font-light text-red-400/80">{error}</p>
+          <p className="text-[13px] font-normal text-red-400/80">{error}</p>
         )}
 
         <div className="flex gap-3">
           <button
             type="button"
             onClick={clearResult}
-            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white"
+            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
           >
             Try Again
           </button>
@@ -186,7 +186,7 @@ export default function ComplianceCheckerDemo(props: DemoRendererProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-light leading-relaxed text-st-gold-light/80">
+      <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-normal leading-relaxed text-st-gold-light/80">
         <p className="mb-2 font-medium text-st-gold-light">How to use this demo</p>
         <p>Paste the text from a contract, employee policy, terms of service, or any business agreement. The AI will analyze it against key Singapore regulations — Employment Act, PDPA (data protection), Companies Act — and flag potential compliance issues with severity ratings and fix suggestions.</p>
         <p className="mt-2 text-[12px] text-st-gold-light/60">For best results, paste at least 2-3 paragraphs. The AI generates a risk score (0-10), identifies specific clauses of concern, cites the relevant regulation, and suggests corrective language.</p>
@@ -203,13 +203,13 @@ export default function ComplianceCheckerDemo(props: DemoRendererProps) {
       </div>
 
       {error && (
-        <p className="text-[13px] font-light text-red-400/80">{error}</p>
+        <p className="text-[13px] font-normal text-red-400/80">{error}</p>
       )}
 
       <button
         type="submit"
         disabled={isLoading || !contractText.trim()}
-        className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-light tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50 disabled:opacity-40"
+        className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-normal tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50 disabled:opacity-40"
       >
         {isLoading ? "Generating..." : "Check Compliance"}
       </button>

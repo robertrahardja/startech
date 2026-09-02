@@ -94,7 +94,7 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
       style={{ transitionDelay: `${index * 90}ms` }}
     >
       {/* Sector / market line */}
-      <div className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] font-light tracking-[0.18em] uppercase text-st-text-muted">
+      <div className="mb-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] font-medium tracking-[0.18em] uppercase text-st-text-muted">
         <span className="text-st-blue-light">{study.sector}</span>
         <span className="h-2.5 w-px bg-st-text-muted/30" />
         <span>{study.market}</span>
@@ -102,24 +102,24 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
 
       <div className="grid items-start gap-8 lg:grid-cols-[1.5fr_1fr] lg:gap-14">
         <div>
-          <h3 className="font-display text-2xl leading-[1.25] tracking-[-0.02em] text-white md:text-3xl">
+          <h3 className="font-display text-2xl leading-[1.25] tracking-[-0.02em] text-st-text md:text-3xl">
             {study.title}
           </h3>
 
           <div className="mt-6 space-y-5">
             <div>
-              <div className="mb-1.5 text-[10px] font-light tracking-[0.16em] uppercase text-st-gold/80">
+              <div className="mb-1.5 text-[10px] font-medium tracking-[0.16em] uppercase text-st-gold/80">
                 Before
               </div>
-              <p className="text-sm font-light leading-[1.75] text-st-text-muted">
+              <p className="text-sm font-normal leading-[1.75] text-st-text-muted">
                 {study.before}
               </p>
             </div>
             <div>
-              <div className="mb-1.5 text-[10px] font-light tracking-[0.16em] uppercase text-st-blue-light/80">
+              <div className="mb-1.5 text-[10px] font-medium tracking-[0.16em] uppercase text-st-blue-light/80">
                 What we built
               </div>
-              <p className="text-sm font-light leading-[1.75] text-st-text-muted">
+              <p className="text-sm font-normal leading-[1.75] text-st-text-muted">
                 {study.built}
               </p>
             </div>
@@ -129,10 +129,10 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
         {/* Right rail: the number, then the checkable details */}
         <div className="lg:pt-1">
           <div className="rounded-xl border border-st-border bg-st-surface p-5">
-            <div className="font-display text-4xl leading-none tracking-[-0.02em] text-white">
+            <div className="font-display text-4xl leading-none tracking-[-0.02em] text-st-text">
               {study.metric.figure}
             </div>
-            <div className="mt-2.5 text-[11px] font-light leading-snug text-st-text-muted">
+            <div className="mt-2.5 text-[11px] font-medium leading-snug text-st-text-muted">
               {study.metric.caption}
             </div>
           </div>
@@ -144,7 +144,7 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
                   aria-hidden="true"
                   className="mt-[7px] h-1 w-1 flex-none rounded-full bg-st-text-muted/50"
                 />
-                <span className="text-[12.5px] font-light leading-[1.65] text-st-text-muted/90">
+                <span className="text-[12.5px] font-normal leading-[1.65] text-st-text-muted/90">
                   {d}
                 </span>
               </li>
@@ -170,14 +170,14 @@ export default function CaseStudies() {
         >
           <div className="mb-4 flex items-center gap-3">
             <span className="h-px w-8 bg-st-gold/60" />
-            <span className="text-[10px] font-light tracking-[0.22em] uppercase text-st-text-muted">
+            <span className="text-[10px] font-medium tracking-[0.22em] uppercase text-st-text-muted">
               Selected work
             </span>
           </div>
-          <h2 className="font-display text-3xl leading-[1.2] tracking-[-0.03em] text-white sm:text-4xl md:text-5xl">
+          <h2 className="font-display text-3xl leading-[1.2] tracking-[-0.03em] text-st-text sm:text-4xl md:text-5xl">
             Systems running in production.
           </h2>
-          <p className="mt-5 text-base font-light leading-[1.7] text-st-text-muted">
+          <p className="mt-5 text-base font-normal leading-[1.7] text-st-text-muted">
             Four builds, described the way a business owner would describe them
             &mdash; what the company was actually doing beforehand, and what went
             wrong on the way.
@@ -190,7 +190,7 @@ export default function CaseStudies() {
           ))}
         </div>
 
-        <p className="mt-16 max-w-2xl border-t border-st-border pt-8 text-[12.5px] font-light leading-[1.7] text-st-text-muted/80">
+        <p className="mt-16 max-w-2xl border-t border-st-border pt-8 text-[12.5px] font-normal leading-[1.7] text-st-text-muted/80">
           Client names are withheld where the engagement is covered by
           confidentiality. Figures are drawn from the delivered systems and can
           be walked through in detail on a call.

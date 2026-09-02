@@ -2,20 +2,24 @@
 
 /* ─── Theme Tokens ────────────────────────────────────────────────────────── */
 @theme {
-  --color-st-bg: #09090b;
-  --color-st-bg-elevated: #0f0f13;
-  --color-st-bg-card: #141419;
-  --color-st-surface: rgba(255, 255, 255, 0.03);
-  --color-st-border: rgba(255, 255, 255, 0.06);
-  --color-st-border-hover: rgba(255, 255, 255, 0.12);
-  --color-st-text: #e4e4e7;
-  --color-st-text-muted: #71717a;
-  --color-st-blue: #4f6bf7;
-  --color-st-blue-light: #818cf8;
-  --color-st-pink: #c084fc;
-  --color-st-accent: #6366f1;
-  --color-st-gold: #d4a853;
-  --color-st-gold-light: #e7c47a;
+  /* Warm, unbleached canvas — white cards, hairline rules, near-black text.
+     Sector convention for finance and professional services: the page is
+     paper, the accent is spent only where something is actionable. */
+  --color-st-bg: #faf9f7;
+  --color-st-bg-elevated: #f4f2ee;
+  --color-st-bg-card: #ffffff;
+  --color-st-surface: #f4f2ee;
+  --color-st-border: #e6e3dd;
+  --color-st-border-hover: #cfcbc2;
+  --color-st-text: #16161a;
+  --color-st-text-muted: #5f5f6b;
+  --color-st-blue: #3a55d9;
+  --color-st-blue-light: #4f6bf7;
+  --color-st-pink: #8b5cf6;
+  --color-st-accent: #3a55d9;
+  /* Darkened from the dark-theme #d4a853 so it clears AA on white. */
+  --color-st-gold: #a97c2f;
+  --color-st-gold-light: #8a6425;
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
@@ -57,7 +61,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(22, 22, 26, 0.18);
     border-radius: 2px;
   }
 }
@@ -153,12 +157,13 @@
   .card {
     background: var(--color-st-bg-card);
     border: 1px solid var(--color-st-border);
+    box-shadow: 0 1px 2px rgba(22, 22, 26, 0.04);
     transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
   }
 
   .card:hover {
     border-color: var(--color-st-border-hover);
-    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 18px rgba(22, 22, 26, 0.07);
     transform: translateY(-1px);
   }
 
@@ -187,13 +192,13 @@
   .nav-shimmer-wrap {
     background: linear-gradient(
       90deg,
-      #71717a 0%,
-      #71717a 35%,
-      #e7c47a 46%,
-      #ffd992 50%,
-      #e7c47a 54%,
-      #71717a 65%,
-      #71717a 100%
+      #5f5f6b 0%,
+      #5f5f6b 35%,
+      #a97c2f 46%,
+      #8a6425 50%,
+      #a97c2f 54%,
+      #5f5f6b 65%,
+      #5f5f6b 100%
     );
     background-size: 300% 100%;
     background-position: 110% 0;
@@ -204,7 +209,7 @@
   }
 
   .nav-shimmer-link:hover {
-    -webkit-text-fill-color: white;
+    -webkit-text-fill-color: var(--color-st-text);
   }
 
   @keyframes nav-shimmer-once {
@@ -228,7 +233,7 @@
     inset: 0;
     border-radius: 0.75rem;
     pointer-events: none;
-    box-shadow: 0 0 18px 3px rgba(231, 196, 122, 0.25);
+    box-shadow: 0 0 18px 3px rgba(58, 85, 217, 0.18);
     opacity: 0;
     animation: ask-us-outer-glow 1s ease 2.1s 1 both;
   }
@@ -245,31 +250,30 @@
   @keyframes ask-us-btn-bright {
     0% {
       box-shadow: none;
-      border-color: rgba(255, 255, 255, 0.06);
     }
     35% {
-      box-shadow: 0 0 24px 6px rgba(255, 217, 146, 0.4), 0 0 8px 2px rgba(255, 217, 146, 0.25), inset 0 0 16px rgba(255, 217, 146, 0.12);
-      border-color: rgba(255, 217, 146, 0.5);
+      box-shadow: 0 0 20px 4px rgba(58, 85, 217, 0.28);
     }
     100% {
       box-shadow: none;
-      border-color: rgba(255, 255, 255, 0.06);
     }
   }
 
+  /* The Ask-us button is now a solid accent fill, so its label stays white.
+     The old colour-cycling shimmer fought that and left dark text on blue. */
   .ask-us-text-shimmer {
-    animation: ask-us-text-bright 1s ease 2.1s 1 both;
+    animation: none;
   }
 
   @keyframes ask-us-text-bright {
     0% {
-      color: #71717a;
+      color: var(--color-st-text-muted);
     }
     35% {
-      color: #ffd992;
+      color: var(--color-st-blue);
     }
     100% {
-      color: #71717a;
+      color: var(--color-st-text-muted);
     }
   }
 
@@ -364,75 +368,31 @@
     }
   }
 
-  /* Hero primary button — glass with gold shimmer on hover */
+  /* Primary button — solid accent fill. The one place the brand colour
+     is spent at full strength, so the main action is unmistakable. */
   .hero-btn-primary {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 0 0 rgba(212, 168, 83, 0);
-  }
-
-  .hero-btn-primary::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      105deg,
-      transparent 30%,
-      rgba(212, 168, 83, 0.08) 45%,
-      rgba(231, 196, 122, 0.15) 50%,
-      rgba(212, 168, 83, 0.08) 55%,
-      transparent 70%
-    );
-    transform: translateX(-100%);
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    background: var(--color-st-blue);
+    border: 1px solid var(--color-st-blue);
+    color: #ffffff;
+    box-shadow: 0 1px 2px rgba(22, 22, 26, 0.08);
   }
 
   .hero-btn-primary:hover {
-    border-color: rgba(212, 168, 83, 0.25);
-    box-shadow:
-      0 0 20px rgba(212, 168, 83, 0.08),
-      0 0 60px rgba(212, 168, 83, 0.04);
-    background: rgba(255, 255, 255, 0.06);
+    background: #2f47bd;
+    border-color: #2f47bd;
+    box-shadow: 0 2px 10px rgba(58, 85, 217, 0.22);
   }
 
-  .hero-btn-primary:hover::before {
-    transform: translateX(100%);
-  }
-
-  /* Hero secondary button — glass with soft white glow on hover */
+  /* Secondary button — hairline outline on paper. */
   .hero-btn-secondary {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  .hero-btn-secondary::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      105deg,
-      transparent 30%,
-      rgba(255, 255, 255, 0.04) 45%,
-      rgba(255, 255, 255, 0.08) 50%,
-      rgba(255, 255, 255, 0.04) 55%,
-      transparent 70%
-    );
-    transform: translateX(-100%);
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    background: var(--color-st-bg-card);
+    border: 1px solid var(--color-st-border);
+    color: var(--color-st-text);
   }
 
   .hero-btn-secondary:hover {
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 24px rgba(255, 255, 255, 0.03);
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  .hero-btn-secondary:hover::before {
-    transform: translateX(100%);
+    border-color: var(--color-st-border-hover);
+    background: var(--color-st-bg-elevated);
   }
 
   /* Star whirl entrance — spins in once then rests */
@@ -483,15 +443,15 @@
 
   @keyframes step-shimmer {
     0% {
-      box-shadow: 0 0 0 0 rgba(212, 168, 83, 0);
-      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 0 rgba(58, 85, 217, 0);
+      border-color: var(--color-st-border);
     }
     40% {
-      box-shadow: 0 0 16px 2px rgba(212, 168, 83, 0.25);
-      border-color: rgba(212, 168, 83, 0.4);
+      box-shadow: 0 0 14px 2px rgba(58, 85, 217, 0.18);
+      border-color: rgba(58, 85, 217, 0.35);
     }
     100% {
-      box-shadow: 0 0 0 0 rgba(212, 168, 83, 0);
+      box-shadow: 0 0 0 0 rgba(58, 85, 217, 0);
     }
   }
 

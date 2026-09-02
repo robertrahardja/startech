@@ -18,13 +18,9 @@ export default function Hero({ onAskAi }: HeroProps) {
       id="hero"
       className="relative flex min-h-[92vh] items-center overflow-hidden px-6 pt-28 pb-20"
     >
-      {/* Breathing glow */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="glow-breathe absolute top-0 left-1/2 h-[700px] w-[900px] -translate-x-1/2 -translate-y-1/3 rounded-full bg-st-blue/[0.06] blur-[160px]" />
-        <div
-          className="glow-breathe absolute bottom-1/4 right-0 h-[400px] w-[500px] rounded-full bg-st-gold/[0.02] blur-[120px]"
-          style={{ animationDelay: "3s" }}
-        />
+      {/* Soft tint behind the headline — barely there, keeps the paper warm */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-32 left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-st-blue/[0.05] blur-[140px]" />
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-5xl">
@@ -34,14 +30,14 @@ export default function Hero({ onAskAi }: HeroProps) {
           style={{ animationDelay: "0.05s" }}
         >
           <span className="h-px w-8 bg-st-gold/60" />
-          <span className="text-[10px] font-light tracking-[0.22em] uppercase text-st-text-muted">
+          <span className="text-[10px] font-medium tracking-[0.22em] uppercase text-st-text-muted">
             Singapore &middot; Since 2021 &middot; SG + Indonesia
           </span>
         </div>
 
         {/* Headline */}
         <h1
-          className="max-w-3xl font-display text-4xl leading-[1.08] tracking-[-0.03em] text-white animate-fade-in-up sm:text-5xl md:text-6xl lg:text-7xl"
+          className="max-w-3xl font-display text-4xl leading-[1.08] tracking-[-0.03em] text-st-text animate-fade-in-up sm:text-5xl md:text-6xl lg:text-7xl"
           style={{ textWrap: "balance" }}
         >
           We speak <span className="italic gradient-text">business</span> and{" "}
@@ -50,7 +46,7 @@ export default function Hero({ onAskAi }: HeroProps) {
 
         {/* Sub */}
         <p
-          className="mt-8 max-w-xl text-base font-light leading-[1.7] text-st-text-muted animate-fade-in-up md:text-lg"
+          className="mt-8 max-w-xl text-base font-normal leading-[1.7] text-st-text-muted animate-fade-in-up md:text-lg"
           style={{ animationDelay: "0.15s" }}
         >
           Most developers need your ledger explained. We already know what a
@@ -66,12 +62,12 @@ export default function Hero({ onAskAi }: HeroProps) {
         >
           <a
             href="#contact"
-            className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-4 text-center text-[13px] font-light tracking-wide text-white transition-all duration-500 active:scale-[0.97]"
+            className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-4 text-center text-[13px] font-medium tracking-wide text-st-text transition-all duration-500 active:scale-[0.97]"
           >
             <span className="relative z-10 flex items-center justify-center gap-2.5">
               Tell me about your business
               <svg
-                className="h-3.5 w-3.5 text-st-gold-light transition-all duration-500 group-hover:translate-x-0.5 group-hover:text-st-gold"
+                className="h-3.5 w-3.5 text-white/80 transition-all duration-500 group-hover:translate-x-0.5 group-hover:text-white"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={1.5}
@@ -88,7 +84,7 @@ export default function Hero({ onAskAi }: HeroProps) {
 
           <button
             onClick={onAskAi}
-            className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-4 text-[13px] font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white"
+            className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-4 text-[13px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
           >
             <span className="relative z-10 flex items-center justify-center gap-2.5">
               <AiIcon className="h-3.5 w-3.5" />
@@ -98,7 +94,7 @@ export default function Hero({ onAskAi }: HeroProps) {
         </div>
 
         <p
-          className="mt-5 text-[11px] font-light tracking-wide text-st-text-muted/70 animate-fade-in"
+          className="mt-5 text-[11px] font-normal tracking-wide text-st-text-muted/70 animate-fade-in"
           style={{ animationDelay: "0.3s" }}
         >
           A free 30-minute conversation &mdash; no brief document required.
@@ -112,10 +108,10 @@ export default function Hero({ onAskAi }: HeroProps) {
         >
           {PROOF.map((p) => (
             <div key={p.label}>
-              <div className="font-display text-2xl leading-none tracking-[-0.02em] text-white md:text-3xl">
+              <div className="font-display text-2xl leading-none tracking-[-0.02em] text-st-text md:text-3xl">
                 {p.figure}
               </div>
-              <div className="mt-2 text-[10px] font-light tracking-[0.14em] uppercase leading-snug text-st-text-muted">
+              <div className="mt-2 text-[10px] font-medium tracking-[0.14em] uppercase leading-snug text-st-text-muted">
                 {p.label}
               </div>
             </div>

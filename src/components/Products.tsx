@@ -114,26 +114,26 @@ function ProductCard({
     >
       <div className="card group relative cursor-pointer overflow-hidden rounded-xl p-6 sm:p-7">
         <div className="relative z-10 flex h-full flex-col">
-          <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-lg bg-white/[0.04] text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
+          <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-lg bg-st-surface text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
             {ICONS[product.icon]}
           </div>
-          <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
+          <h3 className="mb-2 text-sm font-medium tracking-wide text-st-text md:text-base">
             {product.title}
           </h3>
-          <p className="mb-5 flex-1 text-sm font-light leading-[1.7] text-st-text-muted">
+          <p className="mb-5 flex-1 text-sm font-normal leading-[1.7] text-st-text-muted">
             {product.description}
           </p>
           <div className="flex flex-wrap items-center gap-1.5">
             {product.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-md bg-white/[0.03] px-2 py-0.5 text-[10px] font-light tracking-wide text-st-text-muted"
+                className="rounded-md bg-st-surface px-2 py-0.5 text-[10px] font-medium tracking-wide text-st-text-muted"
               >
                 {tag}
               </span>
             ))}
             {hasDetails && (
-              <span className="ml-auto text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
+              <span className="ml-auto text-[10px] font-medium tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
                 Details →
               </span>
             )}
@@ -175,7 +175,7 @@ export default function Products() {
           details={expanded.details!}
           tags={expanded.tags}
           header={
-            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.08] text-st-gold-light">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-st-surface text-st-gold-light">
               {ICONS[expanded.icon]}
             </div>
           }
@@ -202,13 +202,13 @@ function SectionHeader({
       ref={ref}
       className={`mb-16 text-center ${isInView ? "reveal visible" : "reveal"}`}
     >
-      <span className="mb-3 inline-block text-[10px] font-light tracking-[0.2em] uppercase text-st-text-muted">
+      <span className="mb-3 inline-block text-[10px] font-medium tracking-[0.2em] uppercase text-st-text-muted">
         {label}
       </span>
-      <h2 className="mb-4 font-display text-2xl tracking-[-0.02em] text-white sm:text-3xl md:text-5xl lg:text-6xl">
+      <h2 className="mb-4 font-display text-2xl tracking-[-0.02em] text-st-text sm:text-3xl md:text-5xl lg:text-6xl">
         {title}
       </h2>
-      <p className="mx-auto max-w-lg text-[15px] font-light leading-[1.7] text-st-text-muted md:text-base">
+      <p className="mx-auto max-w-lg text-[15px] font-normal leading-[1.7] text-st-text-muted md:text-base">
         {subtitle}
       </p>
     </div>

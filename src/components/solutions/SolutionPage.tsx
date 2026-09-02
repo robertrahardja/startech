@@ -98,7 +98,7 @@ function GrantsCallout() {
             <h3 className="text-base font-medium tracking-wide text-st-gold-light sm:text-lg">
               Pay up to 50% less with government grants
             </h3>
-            <p className="text-[13px] font-light text-st-gold-light/60">
+            <p className="text-[13px] font-normal text-st-gold-light/60">
               Singapore SMEs are eligible for multiple grants that stack together
             </p>
           </div>
@@ -112,10 +112,10 @@ function GrantsCallout() {
                 Up to 50% off
               </span>
             </div>
-            <h4 className="mb-1.5 text-sm font-medium text-white">
+            <h4 className="mb-1.5 text-sm font-medium text-st-text">
               Productivity Solutions Grant (PSG)
             </h4>
-            <p className="text-[12px] font-light leading-relaxed text-st-text-muted">
+            <p className="text-[12px] font-normal leading-relaxed text-st-text-muted">
               Pre-approved IT solutions and equipment for SMEs.
               Covers software, deployment, and training costs.
               Most Singapore-registered businesses with at least
@@ -130,10 +130,10 @@ function GrantsCallout() {
                 S$10,000 credit
               </span>
             </div>
-            <h4 className="mb-1.5 text-sm font-medium text-white">
+            <h4 className="mb-1.5 text-sm font-medium text-st-text">
               SkillsFuture Enterprise Credit (SFEC)
             </h4>
-            <p className="text-[12px] font-light leading-relaxed text-st-text-muted">
+            <p className="text-[12px] font-normal leading-relaxed text-st-text-muted">
               One-time S$10,000 credit for employers to upskill
               employees and adopt digital solutions. Can be used
               on top of PSG for additional savings.
@@ -142,26 +142,26 @@ function GrantsCallout() {
         </div>
 
         {/* Additional grants */}
-        <div className="mt-4 rounded-lg border border-white/[0.06] bg-white/[0.02] p-4">
-          <h4 className="mb-2 text-[13px] font-medium text-white">
+        <div className="mt-4 rounded-lg border border-st-border bg-st-surface p-4">
+          <h4 className="mb-2 text-[13px] font-medium text-st-text">
             Other grants you may qualify for
           </h4>
-          <div className="grid grid-cols-1 gap-2 text-[12px] font-light text-st-text-muted sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2 text-[12px] font-normal text-st-text-muted sm:grid-cols-2">
             <div className="flex items-start gap-2">
               <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-st-gold-light/40" />
-              <span><span className="text-white/80">Enterprise Development Grant (EDG)</span> — up to 70% for business transformation projects</span>
+              <span><span className="text-st-text/80">Enterprise Development Grant (EDG)</span> — up to 70% for business transformation projects</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-st-gold-light/40" />
-              <span><span className="text-white/80">Digital Leaders Programme</span> — for advanced AI and automation adoption</span>
+              <span><span className="text-st-text/80">Digital Leaders Programme</span> — for advanced AI and automation adoption</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-st-gold-light/40" />
-              <span><span className="text-white/80">CIT Rebate (Budget 2026)</span> — S$2,000 corporate tax rebate for all companies</span>
+              <span><span className="text-st-text/80">CIT Rebate (Budget 2026)</span> — S$2,000 corporate tax rebate for all companies</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-st-gold-light/40" />
-              <span><span className="text-white/80">400% Tax Deduction</span> — on qualifying AI and automation investments (EIS)</span>
+              <span><span className="text-st-text/80">400% Tax Deduction</span> — on qualifying AI and automation investments (EIS)</span>
             </div>
           </div>
         </div>
@@ -170,7 +170,7 @@ function GrantsCallout() {
           <svg className="h-4 w-4 shrink-0 text-st-gold-light/70" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <p className="text-[13px] font-light text-st-gold-light/80">
+          <p className="text-[13px] font-normal text-st-gold-light/80">
             We handle the full grant application process for you at no extra charge — eligibility check, paperwork, and submission.
           </p>
         </div>
@@ -252,12 +252,12 @@ function SolutionHero({
         className={`relative mx-auto max-w-4xl px-6 text-center sm:px-8 ${isInView ? "reveal visible" : "reveal"}`}
       >
         {/* Breadcrumb */}
-        <nav className="mb-6 flex items-center justify-center gap-2 text-[11px] font-light tracking-wide text-st-text-muted">
-          <Link href="/" className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center transition-colors duration-300 hover:text-white">
+        <nav className="mb-6 flex items-center justify-center gap-2 text-[11px] font-medium tracking-wide text-st-text-muted">
+          <Link href="/" className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center transition-colors duration-300 hover:text-st-text">
             Home
           </Link>
           <span className="text-st-text-muted/40">/</span>
-          <Link href="/solutions" className="inline-flex min-h-[44px] items-center transition-colors duration-300 hover:text-white">
+          <Link href="/solutions" className="inline-flex min-h-[44px] items-center transition-colors duration-300 hover:text-st-text">
             Solutions
           </Link>
           <span className="text-st-text-muted/40">/</span>
@@ -272,17 +272,17 @@ function SolutionHero({
         </span>
 
         {/* Icon */}
-        <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/[0.04] text-st-text-muted">
+        <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-st-surface text-st-text-muted">
           {icon}
         </div>
 
         {/* Title */}
-        <h1 className="mb-4 font-display text-3xl tracking-[-0.02em] text-white sm:text-4xl md:text-5xl lg:text-6xl">
+        <h1 className="mb-4 font-display text-3xl tracking-[-0.02em] text-st-text sm:text-4xl md:text-5xl lg:text-6xl">
           {solution.title}
         </h1>
 
         {/* Tagline */}
-        <p className="mx-auto mb-8 max-w-2xl text-base font-light leading-relaxed text-st-text-muted sm:text-lg">
+        <p className="mx-auto mb-8 max-w-2xl text-base font-normal leading-relaxed text-st-text-muted sm:text-lg">
           {solution.tagline}
         </p>
 
@@ -290,13 +290,13 @@ function SolutionHero({
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
           <button
             onClick={onAskAi}
-            className="hero-btn-primary relative overflow-hidden rounded-xl px-7 py-3 text-sm font-light tracking-wide text-white transition-all duration-500"
+            className="hero-btn-primary relative overflow-hidden rounded-xl px-7 py-3 text-sm font-normal tracking-wide text-st-text transition-all duration-500"
           >
             <span className="relative z-10">Get a Free Demo</span>
           </button>
           <Link
             href="/solutions"
-            className="hero-btn-secondary relative overflow-hidden rounded-xl px-7 py-3 text-sm font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white"
+            className="hero-btn-secondary relative overflow-hidden rounded-xl px-7 py-3 text-sm font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
           >
             <span className="relative z-10">View All Solutions</span>
           </Link>
@@ -371,10 +371,10 @@ function StepCard({
       <span className="mb-3 block font-display text-2xl text-st-gold-light/30">
         {STEP_NUMBERS[index]}
       </span>
-      <h3 className="mb-2 text-sm font-medium tracking-wide text-white">
+      <h3 className="mb-2 text-sm font-medium tracking-wide text-st-text">
         {step.title}
       </h3>
-      <p className="text-[13px] font-light leading-relaxed text-st-text-muted">
+      <p className="text-[13px] font-normal leading-relaxed text-st-text-muted">
         {step.description}
       </p>
     </div>
@@ -413,7 +413,7 @@ function FeaturesSection({ features }: { features: string[] }) {
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
               </svg>
-              <span className="text-[13px] font-light leading-relaxed text-st-text-muted">
+              <span className="text-[13px] font-normal leading-relaxed text-st-text-muted">
                 {feature}
               </span>
             </div>
@@ -457,14 +457,14 @@ function PricingSection({
               >
                 {tierMeta.label}
               </span>
-              <div className="mb-0.5 text-[11px] font-light tracking-wide text-st-text-muted">
+              <div className="mb-0.5 text-[11px] font-medium tracking-wide text-st-text-muted">
                 Estimated from
               </div>
-              <div className="mb-2 font-display text-3xl text-white sm:text-4xl">
+              <div className="mb-2 font-display text-3xl text-st-text sm:text-4xl">
                 S${solution.priceFrom}
                 <span className="text-base text-st-text-muted">/mo</span>
               </div>
-              <p className="text-[11px] font-light text-st-text-muted/60">
+              <p className="text-[11px] font-medium text-st-text-muted/60">
                 Standard pricing before grants
               </p>
             </div>
@@ -474,29 +474,29 @@ function PricingSection({
               <span className="mb-3 inline-block rounded-full bg-st-gold/20 px-3 py-1 text-[10px] font-medium tracking-[0.15em] uppercase text-st-gold-light">
                 With PSG Grant
               </span>
-              <div className="mb-0.5 text-[11px] font-light tracking-wide text-st-gold-light/60">
+              <div className="mb-0.5 text-[11px] font-medium tracking-wide text-st-gold-light/60">
                 You could pay as low as
               </div>
               <div className="mb-2 font-display text-3xl text-st-gold-light sm:text-4xl">
                 S${solution.pricePsg}
                 <span className="text-base text-st-gold-light/60">/mo</span>
               </div>
-              <p className="text-[12px] font-light text-st-gold-light/70">
+              <p className="text-[12px] font-normal text-st-gold-light/70">
                 Save S${savings}/mo with 50% PSG subsidy
               </p>
             </div>
           </div>
 
           {/* Disclaimer and details */}
-          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 text-[12px] font-light leading-relaxed text-st-text-muted">
+          <div className="rounded-lg border border-st-border bg-st-surface p-4 text-[12px] font-normal leading-relaxed text-st-text-muted">
             <p className="mb-2">
-              <span className="text-white/80">These are estimated prices.</span>{" "}
+              <span className="text-st-text/80">These are estimated prices.</span>{" "}
               Actual pricing depends on your specific requirements, number of
               users, data volume, integration complexity, and customisation.
               We provide a detailed quote after understanding your needs.
             </p>
             <p className="mb-2">
-              <span className="text-white/80">Government grants can significantly
+              <span className="text-st-text/80">Government grants can significantly
               reduce your cost.</span>{" "}
               PSG covers up to 50% of qualifying costs. SFEC provides an
               additional S$10,000 credit. Multiple grants can be stacked.
@@ -528,23 +528,23 @@ function CtaSection({
         ref={ref}
         className={`mx-auto max-w-2xl px-6 text-center sm:px-8 ${isInView ? "reveal visible" : "reveal"}`}
       >
-        <h2 className="mb-4 font-display text-2xl text-white sm:text-3xl md:text-4xl">
+        <h2 className="mb-4 font-display text-2xl text-st-text sm:text-3xl md:text-4xl">
           Ready to get started?
         </h2>
-        <p className="mb-8 text-sm font-light leading-relaxed text-st-text-muted sm:text-base">
+        <p className="mb-8 text-sm font-normal leading-relaxed text-st-text-muted sm:text-base">
           Book a free demo of {solution.title} and see how it works with your
           actual data. No commitment, no credit card required.
         </p>
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
           <button
             onClick={onAskAi}
-            className="hero-btn-primary relative overflow-hidden rounded-xl px-8 py-3.5 text-sm font-light tracking-wide text-white transition-all duration-500"
+            className="hero-btn-primary relative overflow-hidden rounded-xl px-8 py-3.5 text-sm font-normal tracking-wide text-st-text transition-all duration-500"
           >
             <span className="relative z-10">Get a Free Demo</span>
           </button>
           <a
             href="/#contact"
-            className="hero-btn-secondary relative overflow-hidden rounded-xl px-8 py-3.5 text-sm font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white"
+            className="hero-btn-secondary relative overflow-hidden rounded-xl px-8 py-3.5 text-sm font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
           >
             <span className="relative z-10">Contact Us</span>
           </a>

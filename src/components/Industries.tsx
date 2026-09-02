@@ -127,15 +127,15 @@ function IndustryCard({
     >
       <div className="card group relative cursor-pointer overflow-hidden rounded-xl p-6 sm:p-7">
         <div className="relative z-10 flex h-full flex-col">
-          <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
+          <h3 className="mb-2 text-sm font-medium tracking-wide text-st-text md:text-base">
             {industry.name}
           </h3>
-          <p className="flex-1 text-sm font-light leading-[1.7] text-st-text-muted">
+          <p className="flex-1 text-sm font-normal leading-[1.7] text-st-text-muted">
             {industry.description}
           </p>
           {hasDetails && (
             <div className="mt-4 flex items-center justify-end">
-              <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
+              <span className="text-[10px] font-medium tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
                 Details →
               </span>
             </div>

@@ -9,9 +9,9 @@ interface DemoRendererProps {
 }
 
 const inputClass =
-  "w-full min-h-[44px] rounded-lg border border-white/20 bg-white/[0.05] px-3.5 py-3 text-[13px] font-light text-white placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-white/40";
+  "w-full min-h-[44px] rounded-lg border border-st-border bg-st-surface px-3.5 py-3 text-[13px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-st-border";
 const labelClass =
-  "mb-1.5 block text-[11px] font-light tracking-wide text-white/60";
+  "mb-1.5 block text-[11px] font-medium tracking-wide text-st-text/60";
 
 function buildPlainText(result: Record<string, unknown>): string {
   const title = result.title as string;
@@ -110,17 +110,17 @@ export default function JobPostingWriterDemo(props: DemoRendererProps) {
         <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
           {/* Header */}
           <div className="mb-4 border-b border-st-border pb-4">
-            <h3 className="text-[16px] font-light text-white">{title}</h3>
-            <p className="mt-1 text-[13px] font-light text-st-text-muted">
+            <h3 className="text-[16px] font-normal text-st-text">{title}</h3>
+            <p className="mt-1 text-[13px] font-normal text-st-text-muted">
               {company} &middot; {loc}
             </p>
-            <span className="mt-2 inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-light tracking-wide text-st-text-muted">
+            <span className="mt-2 inline-block rounded-full bg-st-surface px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-st-text-muted">
               {employmentType}
             </span>
           </div>
 
           {/* Summary */}
-          <p className="mb-5 text-[13px] font-light leading-relaxed text-white/80">
+          <p className="mb-5 text-[13px] font-normal leading-relaxed text-st-text/80">
             {summary}
           </p>
 
@@ -129,14 +129,14 @@ export default function JobPostingWriterDemo(props: DemoRendererProps) {
             (section) =>
               section.items.length > 0 && (
                 <div key={section.heading} className="mb-4">
-                  <h4 className="mb-2 text-[12px] font-light tracking-wide text-st-text-muted">
+                  <h4 className="mb-2 text-[12px] font-normal tracking-wide text-st-text-muted">
                     {section.heading}
                   </h4>
                   <ul className="space-y-1.5">
                     {section.items.map((item, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2 text-[13px] font-light text-white/80"
+                        className="flex items-start gap-2 text-[13px] font-normal text-st-text/80"
                       >
                         <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-st-text-muted" />
                         {item}
@@ -150,30 +150,30 @@ export default function JobPostingWriterDemo(props: DemoRendererProps) {
           {/* Salary */}
           {salaryRange && (
             <div className="mt-4 border-t border-st-border pt-3">
-              <p className="text-[13px] font-light text-st-text-muted">
+              <p className="text-[13px] font-normal text-st-text-muted">
                 Salary Range:{" "}
-                <span className="text-white">{salaryRange}</span>
+                <span className="text-st-text">{salaryRange}</span>
               </p>
             </div>
           )}
         </div>
 
         {error && (
-          <p className="text-[13px] font-light text-red-400/80">{error}</p>
+          <p className="text-[13px] font-normal text-red-400/80">{error}</p>
         )}
 
         <div className="flex gap-3">
           <button
             type="button"
             onClick={handleCopy}
-            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white"
+            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
           >
             {copied ? "Copied!" : "Copy to Clipboard"}
           </button>
           <button
             type="button"
             onClick={clearResult}
-            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white"
+            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
           >
             Try Again
           </button>
@@ -184,7 +184,7 @@ export default function JobPostingWriterDemo(props: DemoRendererProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-light leading-relaxed text-st-gold-light/80">
+      <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-normal leading-relaxed text-st-gold-light/80">
         <p className="mb-2 font-medium text-st-gold-light">How to use this demo</p>
         <p>Enter the job title, your company name, work location, and list the key skills and experience required. The AI will generate a complete, optimized job listing with summary, responsibilities, requirements, benefits, and a salary range in SGD.</p>
         <p className="mt-2 text-[12px] text-st-gold-light/60">Tip: Include your industry and company culture for more tailored results. The AI follows Singapore job market conventions and MOM guidelines.</p>
@@ -234,13 +234,13 @@ export default function JobPostingWriterDemo(props: DemoRendererProps) {
       </div>
 
       {error && (
-        <p className="text-[13px] font-light text-red-400/80">{error}</p>
+        <p className="text-[13px] font-normal text-red-400/80">{error}</p>
       )}
 
       <button
         type="submit"
         disabled={isLoading || !jobTitle.trim() || !companyName.trim()}
-        className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-light tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50 disabled:opacity-40"
+        className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-normal tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50 disabled:opacity-40"
       >
         {isLoading ? "Generating..." : "Generate"}
       </button>

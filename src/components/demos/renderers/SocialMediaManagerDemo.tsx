@@ -9,9 +9,9 @@ interface DemoRendererProps {
 }
 
 const inputClass =
-  "w-full min-h-[44px] rounded-lg border border-white/20 bg-white/[0.05] px-3.5 py-3 text-[13px] font-light text-white placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-white/40";
+  "w-full min-h-[44px] rounded-lg border border-st-border bg-st-surface px-3.5 py-3 text-[13px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-st-border";
 const labelClass =
-  "mb-1.5 block text-[11px] font-light tracking-wide text-white/60";
+  "mb-1.5 block text-[11px] font-medium tracking-wide text-st-text/60";
 
 interface SocialPost {
   platform: string;
@@ -50,10 +50,10 @@ export default function SocialMediaManagerDemo(props: DemoRendererProps) {
       <div className="animate-fade-in-up space-y-4">
         {/* Topic summary */}
         <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
-          <h3 className="mb-2 text-[15px] font-light text-white">
+          <h3 className="mb-2 text-[15px] font-normal text-st-text">
             Content Strategy
           </h3>
-          <p className="text-[13px] font-light leading-[1.7] text-st-text-muted">
+          <p className="text-[13px] font-normal leading-[1.7] text-st-text-muted">
             {topicSummary}
           </p>
         </div>
@@ -66,10 +66,10 @@ export default function SocialMediaManagerDemo(props: DemoRendererProps) {
                 key={platform}
                 type="button"
                 onClick={() => setActiveTab(i)}
-                className={`flex-1 rounded-md px-3 py-2 text-[12px] font-light tracking-wide transition-all duration-300 ${
+                className={`flex-1 rounded-md px-3 py-2 text-[12px] font-normal tracking-wide transition-all duration-300 ${
                   activeTab === i
-                    ? "bg-white/[0.08] text-white"
-                    : "text-st-text-muted hover:text-white"
+                    ? "bg-st-surface text-st-text"
+                    : "text-st-text-muted hover:text-st-text"
                 }`}
               >
                 {platform}
@@ -80,8 +80,8 @@ export default function SocialMediaManagerDemo(props: DemoRendererProps) {
           {activePost && (
             <div className="space-y-4">
               {/* Post content */}
-              <div className="rounded-lg border border-st-border/50 bg-white/[0.02] p-4">
-                <p className="whitespace-pre-wrap text-[13px] font-light leading-[1.7] text-white">
+              <div className="rounded-lg border border-st-border/50 bg-st-surface p-4">
+                <p className="whitespace-pre-wrap text-[13px] font-normal leading-[1.7] text-st-text">
                   {activePost.content}
                 </p>
               </div>
@@ -92,7 +92,7 @@ export default function SocialMediaManagerDemo(props: DemoRendererProps) {
                   {activePost.hashtags.map((tag, i) => (
                     <span
                       key={i}
-                      className="rounded-full bg-white/[0.05] px-2.5 py-1 text-[11px] font-light text-st-text-muted"
+                      className="rounded-full bg-st-surface px-2.5 py-1 text-[11px] font-medium text-st-text-muted"
                     >
                       {tag.startsWith("#") ? tag : `#${tag}`}
                     </span>
@@ -103,17 +103,17 @@ export default function SocialMediaManagerDemo(props: DemoRendererProps) {
               {/* Meta info */}
               <div className="flex items-center justify-between border-t border-st-border pt-3">
                 <div className="flex gap-4">
-                  <span className="text-[11px] font-light text-st-text-muted">
+                  <span className="text-[11px] font-medium text-st-text-muted">
                     {activePost.character_count} characters
                   </span>
-                  <span className="text-[11px] font-light text-st-text-muted">
+                  <span className="text-[11px] font-medium text-st-text-muted">
                     Best time: {activePost.best_posting_time}
                   </span>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleCopy(activePost.content, activeTab)}
-                  className="text-[11px] font-light text-st-text-muted transition-colors duration-300 hover:text-white"
+                  className="text-[11px] font-medium text-st-text-muted transition-colors duration-300 hover:text-st-text"
                 >
                   {copied === activeTab ? "Copied" : "Copy"}
                 </button>
@@ -123,14 +123,14 @@ export default function SocialMediaManagerDemo(props: DemoRendererProps) {
         </div>
 
         {error && (
-          <p className="text-[13px] font-light text-red-400/80">{error}</p>
+          <p className="text-[13px] font-normal text-red-400/80">{error}</p>
         )}
 
         <div className="flex gap-3">
           <button
             type="button"
             onClick={clearResult}
-            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white"
+            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
           >
             Try Again
           </button>
@@ -141,7 +141,7 @@ export default function SocialMediaManagerDemo(props: DemoRendererProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-light leading-relaxed text-st-gold-light/80">
+      <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-normal leading-relaxed text-st-gold-light/80">
         <p className="mb-2 font-medium text-st-gold-light">How to use this demo</p>
         <p>Describe what you want to promote — a new product, service, event, sale, or company announcement. Include key details like features, prices, dates, or target audience. The AI will generate ready-to-post content tailored to LinkedIn, Instagram, Facebook, and X/Twitter.</p>
         <p className="mt-2 text-[12px] text-st-gold-light/60">Each platform gets content optimized for its audience and format — LinkedIn is professional, Instagram is visual and casual, X is concise. Hashtags and best posting times are included.</p>
@@ -158,13 +158,13 @@ export default function SocialMediaManagerDemo(props: DemoRendererProps) {
       </div>
 
       {error && (
-        <p className="text-[13px] font-light text-red-400/80">{error}</p>
+        <p className="text-[13px] font-normal text-red-400/80">{error}</p>
       )}
 
       <button
         type="submit"
         disabled={isLoading || !topic.trim()}
-        className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-light tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50 disabled:opacity-40"
+        className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-normal tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50 disabled:opacity-40"
       >
         {isLoading ? "Generating..." : "Generate Posts"}
       </button>
