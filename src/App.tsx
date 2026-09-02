@@ -1,62 +1,30 @@
-import { useState, useCallback, useEffect, useMemo } from "react";
+import { useState, useCallback } from "react";
 import Nav from "./components/Nav";
 import HomePage from "./pages/HomePage";
+import ScrollProgress from "./components/ScrollProgress";
+import AskButton from "./components/AskButton";
 import Footer from "./components/Footer";
 import AskStartech from "./components/AskStartech";
-import AiIcon from "./components/AiIcon";
 import SolutionsIndex from "./components/solutions/SolutionsIndex";
 import SolutionPage from "./components/solutions/SolutionPage";
-import { getSolutionBySlug } from "./components/solutions/solutionsData";
+import { useCurrentPage } from "./lib/router";
 
 /**
- * Simple pathname-based router.
- * Listens to popstate events (dispatched by Link component and browser back/forward).
+ * Application shell: chrome, the chat panel, and whichever page the current
+ * URL resolves to. Route resolution lives in lib/router, page content in
+ * pages/ and components/ — this file only composes them.
  */
-function usePathname(): string {
-  const [pathname, setPathname] = useState(window.location.pathname);
-
-  useEffect(() => {
-    const handlePopState = () => setPathname(window.location.pathname);
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, []);
-
-  return pathname;
-}
-
 export default function App() {
   const [chatOpen, setChatOpen] = useState(false);
-  const pathname = usePathname();
+  const page = useCurrentPage();
 
-  const toggleChat = useCallback(() => {
-    setChatOpen((prev) => !prev);
-  }, []);
-
-  const openChat = useCallback(() => {
-    setChatOpen(true);
-  }, []);
-
-  // Determine which page to render
-  const page = useMemo(() => {
-    if (pathname === "/solutions") {
-      return { type: "solutions-index" as const };
-    }
-
-    const solutionMatch = pathname.match(/^\/solutions\/([a-z0-9-]+)$/);
-    if (solutionMatch) {
-      const solution = getSolutionBySlug(solutionMatch[1]);
-      if (solution) {
-        return { type: "solution-page" as const, solution };
-      }
-    }
-
-    return { type: "home" as const };
-  }, [pathname]);
+  const toggleChat = useCallback(() => setChatOpen((prev) => !prev), []);
+  const openChat = useCallback(() => setChatOpen(true), []);
+  const closeChat = useCallback(() => setChatOpen(false), []);
 
   return (
     <div className="min-h-screen bg-st-bg text-st-text">
-      {/* Scroll progress — driven by the CSS scroll timeline, no listener. */}
-      <div className="scroll-progress" aria-hidden="true" />
+      <ScrollProgress />
       <Nav onAskAi={openChat} />
 
       <main>
@@ -73,16 +41,9 @@ export default function App() {
 
       <Footer />
 
-      {/* Floating AI button */}
-      <button
-        onClick={toggleChat}
-        aria-label="Ask StarTech AI"
-        className="star-whirl hero-btn-primary fixed bottom-4 right-4 z-40 flex h-11 w-11 items-center justify-center !rounded-full text-white/90 opacity-90 transition-all duration-500 hover:opacity-100 sm:bottom-6 sm:right-6 sm:h-12 sm:w-12 sm:opacity-100"
-      >
-        <AiIcon className="h-4 w-4" />
-      </button>
+      <AskButton onClick={toggleChat} />
 
-      <AskStartech isOpen={chatOpen} onClose={() => setChatOpen(false)} />
+      <AskStartech isOpen={chatOpen} onClose={closeChat} />
     </div>
   );
 }
