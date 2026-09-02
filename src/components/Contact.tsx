@@ -62,8 +62,8 @@ export default function Contact() {
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <SectionHeader
           label="Contact"
-          title="Start a conversation"
-          subtitle="Free 30-minute consultation. We'll identify your highest-impact opportunities and outline a path forward."
+          title="Thirty minutes, and an honest answer"
+          subtitle="Tell us what the process costs you today. We will come back with what software can and cannot fix — including when the answer is that you do not need us yet."
         />
 
         <div
@@ -87,10 +87,27 @@ export default function Contact() {
               />
             </div>
 
-            <div className="border-t border-st-border pt-6">
-              <p className="text-[13px] font-normal leading-[1.7] text-st-text-muted">
-                No commitment required. We provide a custom ROI analysis
-                and implementation roadmap for your business.
+            {/* The close restates each of the three 10s once — the work, the
+                person, the company — then asks. Kept to plain fact: anything
+                that reads as a technique here would undo the rest. */}
+            <div className="space-y-4 border-t border-st-border pt-6">
+              <CloseLine label="The work">
+                Production systems in Singapore, Indonesia and Japan. Every
+                figure on this page can be walked through line by line.
+              </CloseLine>
+              <CloseLine label="The person">
+                You deal with the principal directly, on every call and every
+                line of the core. Twenty years across business and engineering.
+              </CloseLine>
+              <CloseLine label="The company">
+                StarTech Innovation Pte Ltd, UEN 202110461R, Singapore
+                registered since 2021. PSG paperwork prepared at no charge.
+              </CloseLine>
+
+              <p className="pt-3 text-[13.5px] leading-[1.7] text-st-text-muted">
+                No commitment, no obligation to proceed, and the discovery
+                output is yours whether or not you continue with us. That
+                seems fair enough either way.
               </p>
             </div>
           </div>
@@ -161,6 +178,25 @@ export default function Contact() {
         </div>
       </div>
     </section>
+  );
+}
+
+function CloseLine({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <div className="text-[10px] font-medium tracking-[0.16em] uppercase text-st-blue-light">
+        {label}
+      </div>
+      <p className="mt-1.5 text-[13.5px] font-normal leading-[1.65] text-st-text-muted">
+        {children}
+      </p>
+    </div>
   );
 }
 
