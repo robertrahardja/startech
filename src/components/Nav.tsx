@@ -7,11 +7,11 @@ interface NavProps {
 }
 
 const NAV_LINKS = [
-  { label: "Products", href: "/#products" },
+  { label: "Work", href: "/#work" },
+  { label: "Practices", href: "/#products" },
   { label: "Solutions", href: "/solutions" },
-  { label: "AI", href: "/#ai-capabilities" },
   { label: "Industries", href: "/#industries" },
-  { label: "Approach", href: "/#approach" },
+  { label: "How we work", href: "/#approach" },
   { label: "Contact", href: "/#contact" },
 ];
 

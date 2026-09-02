@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useMemo } from "react";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Products from "./components/Products";
+import CaseStudies from "./components/CaseStudies";
 import AiCapabilities from "./components/AiCapabilities";
 import Industries from "./components/Industries";
 import Approach from "./components/Approach";
@@ -66,6 +67,7 @@ export default function App() {
         {page.type === "home" && (
           <>
             <Hero onAskAi={openChat} />
+            <CaseStudies />
             <Products />
             <AiCapabilities />
             <Industries />

@@ -5,115 +5,59 @@ import ExpandedDetailCard from "./ExpandedDetailCard";
 
 const PRODUCTS: Product[] = [
   {
-    title: "Enterprise ERP",
+    title: "AI Implementation",
     description:
-      "Full enterprise resource planning — financials, HR, inventory, procurement, and manufacturing — on Java Spring Boot and PostgreSQL.",
+      "Retrieval over your own documents, domain-tuned models, and automation pipelines — with the guardrails and source attribution that make the output usable in a regulated business.",
     details: [
-      "Multi-module: GL, AP, AR, payroll, and fixed assets",
-      "Real-time inventory with barcode and RFID",
-      "Procurement workflow with approval chains",
-      "Manufacturing BOM and production scheduling",
+      "Retrieval-augmented generation with vector search over your proprietary data",
+      "Multi-provider routing behind an abstraction layer — swap models without touching product code",
+      "Confidence scoring with source attribution, so answers can be checked",
+      "Guardrails for hallucination prevention and compliance review",
     ],
-    icon: "erp",
-    tags: ["Spring Boot", "PostgreSQL", "React"],
+    icon: "brain",
+    tags: ["Claude", "OpenAI", "RAG", "Vectorize"],
     span: "wide",
   },
   {
-    title: "AI Decision Engine",
+    title: "Enterprise Software",
     description:
-      "Business intelligence powered by GPT-4. Upload data, ask questions, get actionable insights with confidence scoring.",
+      "Full ERP and line-of-business systems — financials, HR, inventory, procurement and manufacturing — built to be audited, not just demoed.",
     details: [
-      "Natural language queries over any data source",
-      "RAG pipeline with vector embeddings",
-      "Confidence scoring with source attribution",
-      "Automated report generation and delivery",
+      "General ledger, AP, AR, payroll and fixed assets",
+      "Multi-tenant, multi-currency, role-based access, audit-ready logging",
+      "Singapore payroll compliance engine verified scenario-by-scenario against CPF Board tables",
+      "Integrates with Xero, QuickBooks, Sheets and Excel",
     ],
-    icon: "brain",
-    tags: ["OpenAI", "RAG", "AWS"],
+    icon: "erp",
+    tags: ["Java 21", "Spring Boot", "PostgreSQL"],
     span: "default",
   },
   {
-    title: "Startup Valuation",
+    title: "Financial Systems",
     description:
-      "DCF modelling, comparable analysis, and AI-powered projections for startup and venture capital due diligence.",
+      "Accounting engines, document AI, valuation and reconciliation for operators who answer to a regulator.",
     details: [
-      "DCF with Monte Carlo simulation",
-      "Comparable analysis with live market data",
-      "AI growth projections by sector benchmarks",
-      "Cap table modelling and waterfall analysis",
+      "Automated reconciliation across accounts and currencies, with deterministic dedupe",
+      "Bank statement ingestion — including formats that carry no transfer identifier",
+      "KYC and AML workflows, MAS and OJK reporting",
+      "DCF and comparable analysis with Monte Carlo simulation",
     ],
     icon: "chart",
-    tags: ["Finance", "Analytics"],
+    tags: ["D1", "PostgreSQL", "Workers"],
     span: "default",
   },
   {
-    title: "Insurance Scanner",
+    title: "Healthcare & Public Sector",
     description:
-      "AI document processing for insurance claims. Extract key terms, flag risks, reconcile across policies automatically.",
+      "Patient platforms, medical records and citizen services for high-volume, high-assurance environments where the data rules come first.",
     details: [
-      "Extracts clauses, limits, and exclusions from PDFs",
-      "Cross-policy reconciliation for gaps and overlaps",
-      "Risk scoring for underwriter review",
-      "Batch processing for portfolio-level analysis",
-    ],
-    icon: "scan",
-    tags: ["Claude Vision", "Document AI"],
-    span: "default",
-  },
-  {
-    title: "Education Platform",
-    description:
-      "Learning management with AI tutoring, adaptive assessments, spaced repetition, and multi-language delivery.",
-    details: [
-      "AI tutor adapting to each student's level",
-      "Spaced repetition for long-term retention",
-      "Auto-generated quizzes from course material",
-      "Voice delivery in 50+ languages",
-    ],
-    icon: "edu",
-    tags: ["LMS", "AI Tutor", "ElevenLabs"],
-    span: "tall",
-  },
-  {
-    title: "Healthcare IT",
-    description:
-      "Hospital management — patient records, scheduling, billing, and AI-assisted triage for Indonesian healthcare providers.",
-    details: [
-      "Electronic medical records with role-based access",
-      "Scheduling with SMS and WhatsApp reminders",
-      "AI-assisted triage by symptom severity",
-      "BPJS insurance claim integration",
+      "Data residency decided at architecture time, not retrofitted after review",
+      "Patient-owned custodian model — never a claim to be the provider's record system",
+      "Multilingual delivery across English, Chinese, Malay and Bahasa Indonesia",
+      "High-availability infrastructure for critical services",
     ],
     icon: "health",
-    tags: ["Healthcare", "AWS"],
-    span: "default",
-  },
-  {
-    title: "Crypto Exchange",
-    description:
-      "Full cryptocurrency trading platform with real-time pricing, wallet management, and regulatory compliance tools.",
-    details: [
-      "Order matching with sub-millisecond latency",
-      "Multi-currency wallet, cold and hot storage",
-      "Built-in KYC and AML compliance",
-      "Real-time price feeds and WebSocket charting",
-    ],
-    icon: "exchange",
-    tags: ["Web3", "Finance"],
-    span: "default",
-  },
-  {
-    title: "AI Avatar Studio",
-    description:
-      "Personalised video content at scale. AI presenters for training, marketing, and multilingual customer engagement.",
-    details: [
-      "Avatar creation from a single photo or video",
-      "Script-to-video with automatic lip sync",
-      "Multi-language voice cloning via ElevenLabs",
-      "Batch rendering for personalised outreach",
-    ],
-    icon: "video",
-    tags: ["HeyGen", "ElevenLabs"],
+    tags: ["PDPA", "BPJS", "Cloudflare"],
     span: "wide",
   },
 ];
@@ -227,9 +171,9 @@ export default function Products() {
     <section id="products" className="relative py-28 sm:py-36">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <SectionHeader
-          label="Products"
-          title="What we build"
-          subtitle="Production software that solves real problems — from enterprise ERP to AI-powered decision tools."
+          label="Practices"
+          title="Four practices, one delivery team"
+          subtitle="We go deep in four areas rather than wide across twenty. Each one is led personally by the principal and staffed with specialists as the work demands."
         />
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">

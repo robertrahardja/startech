@@ -1,141 +1,126 @@
-import { useState, useEffect } from "react";
 import AiIcon from "./AiIcon";
 
 interface HeroProps {
   onAskAi: () => void;
 }
 
-const ROTATING_WORDS = [
-  "AI Implementation",
-  "Enterprise Software",
-  "Financial Systems",
-  "Healthcare IT",
-  "Education Platforms",
+/** Proof points shown under the fold-line. Every figure is verifiable. */
+const PROOF = [
+  { figure: "7,060", label: "automated tests" },
+  { figure: "484", label: "calculator classes" },
+  { figure: "2", label: "jurisdictions" },
+  { figure: "20+", label: "years building" },
 ];
 
 export default function Hero({ onAskAi }: HeroProps) {
-  const [wordIndex, setWordIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
-        setIsAnimating(false);
-      }, 400);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden px-6"
+      className="relative flex min-h-[92vh] items-center overflow-hidden px-6 pt-28 pb-20"
     >
       {/* Breathing glow */}
       <div className="pointer-events-none absolute inset-0">
         <div className="glow-breathe absolute top-0 left-1/2 h-[700px] w-[900px] -translate-x-1/2 -translate-y-1/3 rounded-full bg-st-blue/[0.06] blur-[160px]" />
-        <div className="glow-breathe absolute bottom-1/4 right-0 h-[400px] w-[500px] rounded-full bg-st-gold/[0.02] blur-[120px]" style={{ animationDelay: "3s" }} />
+        <div
+          className="glow-breathe absolute bottom-1/4 right-0 h-[400px] w-[500px] rounded-full bg-st-gold/[0.02] blur-[120px]"
+          style={{ animationDelay: "3s" }}
+        />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-4xl text-center">
-        {/* Logo */}
-        <div className="mb-14 flex justify-center animate-fade-in">
-          <img
-            src="/assets/startech-logo-full.png"
-            alt="StarTech Innovation"
-            className="h-20 w-auto sm:h-24 md:h-32"
-          />
+      <div className="relative z-10 mx-auto w-full max-w-5xl">
+        {/* Eyebrow */}
+        <div
+          className="mb-8 flex items-center gap-3 animate-fade-in"
+          style={{ animationDelay: "0.05s" }}
+        >
+          <span className="h-px w-8 bg-st-gold/60" />
+          <span className="text-[10px] font-light tracking-[0.22em] uppercase text-st-text-muted">
+            Singapore &middot; Software house
+          </span>
         </div>
 
-        {/* Main headline with rotating word */}
-        <div className="mb-6 animate-fade-in-up">
-          <h1 className="font-display text-3xl leading-[1.2] tracking-[-0.03em] text-white sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
-            Engineering your business in
-          </h1>
-          <div className="mt-2 h-[1.4em] overflow-hidden text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
-            <span
-              key={wordIndex}
-              className={`inline-block font-display italic leading-[1.4] tracking-[-0.03em] ${
-                isAnimating ? "word-rotate-exit" : "word-rotate-enter"
-              }`}
-            >
-              {ROTATING_WORDS[wordIndex]}
-            </span>
-          </div>
-        </div>
+        {/* Headline */}
+        <h1
+          className="max-w-3xl font-display text-4xl leading-[1.08] tracking-[-0.03em] text-white animate-fade-in-up sm:text-5xl md:text-6xl lg:text-7xl"
+          style={{ textWrap: "balance" }}
+        >
+          The engineer you bring in when the{" "}
+          <span className="italic gradient-text">last vendor failed</span>.
+        </h1>
 
-        {/* Tagline */}
+        {/* Sub */}
         <p
-          className="mx-auto mb-3 font-display text-lg italic tracking-[-0.01em] text-st-text-muted/70 sm:text-xl animate-fade-in-up"
-          style={{ animationDelay: "0.2s" }}
+          className="mt-8 max-w-xl text-base font-light leading-[1.7] text-st-text-muted animate-fade-in-up md:text-lg"
+          style={{ animationDelay: "0.15s" }}
         >
-          Business. Finance. Tech.
+          We rebuild the operational systems that off-the-shelf tools and
+          offshore teams couldn&apos;t. Every project is led personally by the
+          principal &mdash; and we work natively across Singapore and Indonesian
+          compliance.
         </p>
-
-        {/* Gold glimmer line */}
-        <div
-          className="mx-auto mb-10 h-px w-24 gold-glimmer animate-fade-in"
-          style={{ animationDelay: "0.4s" }}
-        />
-
-        {/* Description */}
-        <div
-          className="mx-auto mb-12 max-w-md animate-fade-in-up"
-          style={{ animationDelay: "0.3s" }}
-        >
-          <p className="text-base font-light leading-[1.7] text-st-text-muted md:text-lg">
-            Enterprise AI implementation and software engineering
-            for organisations across Singapore and Southeast Asia.
-            Strategy to production in 90 days.
-          </p>
-        </div>
 
         {/* CTAs */}
         <div
-          className="mb-16 flex flex-col items-center justify-center gap-3 sm:flex-row animate-fade-in-up"
-          style={{ animationDelay: "0.45s" }}
+          className="mt-12 flex flex-col items-stretch gap-3 animate-fade-in-up sm:flex-row sm:items-center"
+          style={{ animationDelay: "0.25s" }}
         >
-          <button
-            onClick={onAskAi}
-            className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-4 text-[13px] font-light tracking-wide text-white transition-all duration-500 active:scale-[0.97]"
-          >
-            <span className="relative z-10 flex items-center gap-2.5">
-              <AiIcon className="h-3.5 w-3.5 text-st-gold-light transition-all duration-500 group-hover:text-st-gold" />
-              Ask about us
-            </span>
-          </button>
           <a
             href="#contact"
+            className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-4 text-center text-[13px] font-light tracking-wide text-white transition-all duration-500 active:scale-[0.97]"
+          >
+            <span className="relative z-10 flex items-center justify-center gap-2.5">
+              Send me your failed project
+              <svg
+                className="h-3.5 w-3.5 text-st-gold-light transition-all duration-500 group-hover:translate-x-0.5 group-hover:text-st-gold"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.5}
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                />
+              </svg>
+            </span>
+          </a>
+
+          <button
+            onClick={onAskAi}
             className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-4 text-[13px] font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white"
           >
-            <span className="relative z-10">Get in touch</span>
-          </a>
+            <span className="relative z-10 flex items-center justify-center gap-2.5">
+              <AiIcon className="h-3.5 w-3.5" />
+              Ask about our work
+            </span>
+          </button>
         </div>
 
-        {/* Trust signals */}
-        <div
-          className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 animate-fade-in-up"
-          style={{ animationDelay: "0.6s" }}
+        <p
+          className="mt-5 text-[11px] font-light tracking-wide text-st-text-muted/70 animate-fade-in"
+          style={{ animationDelay: "0.3s" }}
         >
-          <span className="text-[10px] font-light tracking-[0.2em] uppercase text-st-text-muted">
-            Singapore
-          </span>
-          <span className="h-3 w-px bg-st-text-muted/30" />
-          <span className="text-[10px] font-light tracking-[0.2em] uppercase text-st-text-muted">
-            20+ years
-          </span>
-          <span className="h-3 w-px bg-st-text-muted/30" />
-          <span className="text-[10px] font-light tracking-[0.2em] uppercase text-st-text-muted">
-            Indonesia
-          </span>
-        </div>
-      </div>
+          A free 30-minute review. We&apos;ll tell you honestly whether
+          it&apos;s salvageable &mdash; even when the answer is no.
+        </p>
 
-      {/* Scroll line */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
-        <div className="line-grow h-12 w-px bg-gradient-to-b from-transparent via-st-text-muted/10 to-st-text-muted/20" />
+        {/* Proof strip */}
+        <div
+          className="mt-16 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-6 border-t border-st-border pt-8 animate-fade-in sm:grid-cols-4"
+          style={{ animationDelay: "0.4s" }}
+        >
+          {PROOF.map((p) => (
+            <div key={p.label}>
+              <div className="font-display text-2xl leading-none tracking-[-0.02em] text-white md:text-3xl">
+                {p.figure}
+              </div>
+              <div className="mt-2 text-[10px] font-light tracking-[0.14em] uppercase leading-snug text-st-text-muted">
+                {p.label}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

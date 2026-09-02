@@ -33,3 +33,6 @@ build/
 
 # Cloudflare
 .wrangler/
+
+# Local working documents
+.lavish/
