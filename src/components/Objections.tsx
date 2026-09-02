@@ -1,5 +1,4 @@
 import { useState } from "react";
-import SectionCta from "./SectionCta";
 import { useInView } from "../hooks/useInView";
 import { haptic } from "../lib/haptics";
 
@@ -159,11 +158,6 @@ export default function Objections() {
             );
           })}
         </div>
-
-        <SectionCta
-          prompt="If yours is not on the list, say it on the call."
-          action="Ask us directly"
-        />
       </div>
     </section>
   );

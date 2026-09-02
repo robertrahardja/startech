@@ -1,5 +1,4 @@
 import { useState } from "react";
-import SectionCta from "./SectionCta";
 import { useInView } from "../hooks/useInView";
 import { SectionHeader } from "./Products";
 import ExpandedDetailCard from "./ExpandedDetailCard";
@@ -92,11 +91,6 @@ export default function Industries() {
             <IndustryCard key={industry.name} industry={industry} index={i} onExpand={setExpanded} />
           ))}
         </div>
-
-        <SectionCta
-          prompt="Your sector not listed? The regulatory shape usually rhymes with one of these."
-          action="Tell us about yours"
-        />
       </div>
 
       {expanded && (

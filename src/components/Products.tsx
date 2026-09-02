@@ -1,5 +1,4 @@
 import { useState } from "react";
-import SectionCta from "./SectionCta";
 import { useSnapRail, useTapGuard } from "../hooks/useSnapRail";
 import { haptic } from "../lib/haptics";
 import { useInView } from "../hooks/useInView";
@@ -199,11 +198,6 @@ export default function Products() {
             </button>
           ))}
         </div>
-
-        <SectionCta
-          prompt="Most engagements start in one practice and grow into a second."
-          action="Start with one"
-        />
       </div>
 
       {expanded && (
