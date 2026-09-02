@@ -18,9 +18,14 @@ export default function Hero({ onAskAi }: HeroProps) {
       id="hero"
       className="relative flex min-h-[92vh] items-center overflow-hidden px-6 pt-28 pb-20"
     >
-      {/* Soft tint behind the headline — barely there, keeps the paper warm */}
+      {/* Ambient light, echoing the indigo wave on the back of the card:
+          one cool source top-left, a soft pink counterpoint bottom-right. */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-32 left-1/2 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-st-blue/[0.05] blur-[140px]" />
+        <div className="glow-breathe absolute -top-40 -left-20 h-[620px] w-[900px] rounded-full bg-st-blue/[0.13] blur-[150px]" />
+        <div
+          className="glow-breathe absolute bottom-0 right-0 h-[420px] w-[560px] rounded-full bg-st-pink/[0.05] blur-[130px]"
+          style={{ animationDelay: "3s" }}
+        />
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-5xl">
@@ -29,7 +34,7 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="mb-8 flex items-center gap-3 animate-fade-in"
           style={{ animationDelay: "0.05s" }}
         >
-          <span className="h-px w-8 bg-st-gold/60" />
+          <span className="brand-rule h-px w-10" />
           <span className="text-[10px] font-medium tracking-[0.22em] uppercase text-st-text-muted">
             Singapore &middot; Since 2021 &middot; SG + Indonesia
           </span>
@@ -37,11 +42,33 @@ export default function Hero({ onAskAi }: HeroProps) {
 
         {/* Headline */}
         <h1
-          className="max-w-3xl font-display text-4xl leading-[1.08] tracking-[-0.03em] text-st-text animate-fade-in-up sm:text-5xl md:text-6xl lg:text-7xl"
+          className="max-w-3xl font-display text-4xl leading-[1.08] tracking-[-0.03em] text-st-text sm:text-5xl md:text-6xl lg:text-7xl"
           style={{ textWrap: "balance" }}
         >
-          We speak <span className="italic gradient-text">business</span> and{" "}
-          <span className="italic gradient-text">tech</span>.
+          <span className="rise inline-block" style={{ animationDelay: "0.05s" }}>
+            We
+          </span>{" "}
+          <span className="rise inline-block" style={{ animationDelay: "0.12s" }}>
+            speak
+          </span>{" "}
+          <span
+            className="rise gradient-text inline-block italic"
+            style={{ animationDelay: "0.2s" }}
+          >
+            business
+          </span>{" "}
+          <span className="rise inline-block" style={{ animationDelay: "0.3s" }}>
+            and
+          </span>{" "}
+          <span
+            className="rise gradient-text inline-block italic"
+            style={{ animationDelay: "0.38s" }}
+          >
+            tech
+          </span>
+          <span className="rise inline-block" style={{ animationDelay: "0.46s" }}>
+            .
+          </span>
         </h1>
 
         {/* Sub */}
@@ -106,8 +133,12 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="mt-16 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-6 border-t border-st-border pt-8 animate-fade-in sm:grid-cols-4"
           style={{ animationDelay: "0.4s" }}
         >
-          {PROOF.map((p) => (
-            <div key={p.label}>
+          {PROOF.map((p, i) => (
+            <div
+              key={p.label}
+              className="figure-in"
+              style={{ animationDelay: `${0.55 + i * 0.09}s` }}
+            >
               <div className="font-display text-2xl leading-none tracking-[-0.02em] text-st-text md:text-3xl">
                 {p.figure}
               </div>

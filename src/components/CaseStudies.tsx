@@ -88,7 +88,7 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
   return (
     <div
       ref={ref}
-      className={`group relative border-t border-st-border pt-8 transition-all duration-700 ${
+      className={`group reveal-scroll relative border-t border-st-border pt-8 transition-all duration-700 ${
         isInView ? "reveal visible" : "reveal"
       }`}
       style={{ transitionDelay: `${index * 90}ms` }}
@@ -108,7 +108,7 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
 
           <div className="mt-6 space-y-5">
             <div>
-              <div className="mb-1.5 text-[10px] font-medium tracking-[0.16em] uppercase text-st-gold/80">
+              <div className="mb-1.5 text-[10px] font-medium tracking-[0.16em] uppercase text-st-pink">
                 Before
               </div>
               <p className="text-sm font-normal leading-[1.75] text-st-text-muted">
@@ -116,7 +116,7 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
               </p>
             </div>
             <div>
-              <div className="mb-1.5 text-[10px] font-medium tracking-[0.16em] uppercase text-st-blue-light/80">
+              <div className="mb-1.5 text-[10px] font-medium tracking-[0.16em] uppercase text-st-blue-light">
                 What we built
               </div>
               <p className="text-sm font-normal leading-[1.75] text-st-text-muted">
@@ -128,8 +128,8 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
 
         {/* Right rail: the number, then the checkable details */}
         <div className="lg:pt-1">
-          <div className="rounded-xl border border-st-border bg-st-surface p-5">
-            <div className="font-display text-4xl leading-none tracking-[-0.02em] text-st-text">
+          <div className="metric-tile rounded-xl border border-st-border bg-st-bg-card p-5 transition-all duration-500">
+            <div className="gradient-text font-display text-4xl leading-none tracking-[-0.02em]">
               {study.metric.figure}
             </div>
             <div className="mt-2.5 text-[11px] font-medium leading-snug text-st-text-muted">
@@ -169,7 +169,7 @@ export default function CaseStudies() {
           }`}
         >
           <div className="mb-4 flex items-center gap-3">
-            <span className="h-px w-8 bg-st-gold/60" />
+            <span className="brand-rule h-px w-10" />
             <span className="text-[10px] font-medium tracking-[0.22em] uppercase text-st-text-muted">
               Selected work
             </span>

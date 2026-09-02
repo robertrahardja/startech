@@ -2,24 +2,29 @@
 
 /* ─── Theme Tokens ────────────────────────────────────────────────────────── */
 @theme {
-  /* Warm, unbleached canvas — white cards, hairline rules, near-black text.
-     Sector convention for finance and professional services: the page is
-     paper, the accent is spent only where something is actionable. */
-  --color-st-bg: #faf9f7;
-  --color-st-bg-elevated: #f4f2ee;
-  --color-st-bg-card: #ffffff;
-  --color-st-surface: #f4f2ee;
-  --color-st-border: #e6e3dd;
-  --color-st-border-hover: #cfcbc2;
-  --color-st-text: #16161a;
-  --color-st-text-muted: #5f5f6b;
-  --color-st-blue: #3a55d9;
-  --color-st-blue-light: #4f6bf7;
-  --color-st-pink: #8b5cf6;
-  --color-st-accent: #3a55d9;
-  /* Darkened from the dark-theme #d4a853 so it clears AA on white. */
-  --color-st-gold: #a97c2f;
-  --color-st-gold-light: #8a6425;
+  /* Sampled from the printed business card: true black ground, a luminous
+     blue→pink gradient, and the deep indigo glow from the reverse. The card
+     is the brand — the site should feel like it was printed from the same
+     press, not like a different company. */
+  --color-st-bg: #000000;
+  --color-st-bg-elevated: #08080d;
+  --color-st-bg-card: #0b0b12;
+  --color-st-surface: rgba(255, 255, 255, 0.035);
+  --color-st-border: rgba(255, 255, 255, 0.10);
+  --color-st-border-hover: rgba(255, 255, 255, 0.22);
+  --color-st-text: #ffffff;
+  --color-st-text-muted: #9a9aa8;
+
+  /* Gradient endpoints, sampled straight off the logo blob. */
+  --color-st-blue: #0a68f9;
+  --color-st-blue-light: #5b8dfb;
+  --color-st-pink: #e19cdc;
+  --color-st-accent: #0a68f9;
+  /* The indigo of the reverse-side wave — used for ambient glow only. */
+  --color-st-glow: #0a1a49;
+
+  --color-st-gold: #d4a853;
+  --color-st-gold-light: #e7c47a;
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
@@ -61,7 +66,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(22, 22, 26, 0.18);
+    background: rgba(255, 255, 255, 0.14);
     border-radius: 2px;
   }
 }
@@ -127,10 +132,12 @@
 
 @keyframes glow-breathe {
   0%, 100% {
-    opacity: 0.03;
+    opacity: 0.55;
+    transform: scale(1);
   }
   50% {
-    opacity: 0.06;
+    opacity: 1;
+    transform: scale(1.06);
   }
 }
 
@@ -143,27 +150,69 @@
     border: 1px solid var(--color-st-border);
   }
 
+  /* Brand gradient for display words. Starts at the logo's blue, passes
+     through a violet midpoint, lands on its pink — then drifts, slowly, so
+     the word reads as lit rather than animated. Every stop clears 4.5:1 on
+     black, so the text stays legible at any point in the cycle. */
   .gradient-text {
     background: linear-gradient(
-      135deg,
-      var(--color-st-blue) 0%,
-      var(--color-st-pink) 100%
+      100deg,
+      #4a8bfb 0%,
+      #8f7ae8 38%,
+      #e19cdc 62%,
+      #4a8bfb 100%
     );
+    background-size: 220% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: gradient-drift 14s ease-in-out infinite;
+  }
+
+  @keyframes gradient-drift {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+  }
+
+  /* Metric tile — a faint inner light, brightening on hover. */
+  .metric-tile:hover {
+    border-color: rgba(10, 104, 249, 0.35);
+    box-shadow: 0 0 40px rgba(10, 104, 249, 0.10) inset,
+                0 4px 30px rgba(10, 104, 249, 0.08);
+  }
+
+  /* Hairline rule that fades out — the card's vertical divider, horizontal. */
+  .brand-rule {
+    background: linear-gradient(
+      90deg,
+      var(--color-st-blue) 0%,
+      var(--color-st-pink) 55%,
+      transparent 100%
+    );
+  }
+
+  /* Section headings get a faint gradient underline on reveal. */
+  .rule-grow {
+    transform-origin: left;
+    animation: rule-grow 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes rule-grow {
+    from { transform: scaleX(0); opacity: 0; }
+    to   { transform: scaleX(1); opacity: 1; }
   }
 
   .card {
     background: var(--color-st-bg-card);
     border: 1px solid var(--color-st-border);
-    box-shadow: 0 1px 2px rgba(22, 22, 26, 0.04);
     transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
   }
 
   .card:hover {
     border-color: var(--color-st-border-hover);
-    box-shadow: 0 4px 18px rgba(22, 22, 26, 0.07);
+    /* Light appears to come from the card itself, as on the card's reverse. */
+    box-shadow: 0 0 0 1px rgba(10, 104, 249, 0.10),
+                0 8px 40px rgba(10, 104, 249, 0.10);
     transform: translateY(-1px);
   }
 
@@ -192,13 +241,13 @@
   .nav-shimmer-wrap {
     background: linear-gradient(
       90deg,
-      #5f5f6b 0%,
-      #5f5f6b 35%,
-      #a97c2f 46%,
-      #8a6425 50%,
-      #a97c2f 54%,
-      #5f5f6b 65%,
-      #5f5f6b 100%
+      #9a9aa8 0%,
+      #9a9aa8 35%,
+      #5b8dfb 46%,
+      #e19cdc 50%,
+      #5b8dfb 54%,
+      #9a9aa8 65%,
+      #9a9aa8 100%
     );
     background-size: 300% 100%;
     background-position: 110% 0;
@@ -209,7 +258,7 @@
   }
 
   .nav-shimmer-link:hover {
-    -webkit-text-fill-color: var(--color-st-text);
+    -webkit-text-fill-color: #ffffff;
   }
 
   @keyframes nav-shimmer-once {
@@ -233,7 +282,7 @@
     inset: 0;
     border-radius: 0.75rem;
     pointer-events: none;
-    box-shadow: 0 0 18px 3px rgba(58, 85, 217, 0.18);
+    box-shadow: 0 0 20px 4px rgba(10, 104, 249, 0.28);
     opacity: 0;
     animation: ask-us-outer-glow 1s ease 2.1s 1 both;
   }
@@ -252,7 +301,7 @@
       box-shadow: none;
     }
     35% {
-      box-shadow: 0 0 20px 4px rgba(58, 85, 217, 0.28);
+      box-shadow: 0 0 22px 5px rgba(10, 104, 249, 0.35);
     }
     100% {
       box-shadow: none;
@@ -371,28 +420,34 @@
   /* Primary button — solid accent fill. The one place the brand colour
      is spent at full strength, so the main action is unmistakable. */
   .hero-btn-primary {
-    background: var(--color-st-blue);
-    border: 1px solid var(--color-st-blue);
+    background: linear-gradient(
+      110deg,
+      var(--color-st-blue) 0%,
+      #8f7ae8 55%,
+      var(--color-st-pink) 100%
+    );
+    border: none;
     color: #ffffff;
-    box-shadow: 0 1px 2px rgba(22, 22, 26, 0.08);
+    box-shadow: 0 2px 20px rgba(10, 104, 249, 0.22);
   }
 
   .hero-btn-primary:hover {
-    background: #2f47bd;
-    border-color: #2f47bd;
-    box-shadow: 0 2px 10px rgba(58, 85, 217, 0.22);
+    box-shadow: 0 3px 30px rgba(10, 104, 249, 0.38),
+                0 0 60px rgba(225, 156, 220, 0.12);
+    filter: brightness(1.06);
   }
 
   /* Secondary button — hairline outline on paper. */
   .hero-btn-secondary {
-    background: var(--color-st-bg-card);
+    background: transparent;
     border: 1px solid var(--color-st-border);
-    color: var(--color-st-text);
+    color: var(--color-st-text-muted);
   }
 
   .hero-btn-secondary:hover {
     border-color: var(--color-st-border-hover);
-    background: var(--color-st-bg-elevated);
+    background: var(--color-st-surface);
+    color: var(--color-st-text);
   }
 
   /* Star whirl entrance — spins in once then rests */
@@ -443,15 +498,15 @@
 
   @keyframes step-shimmer {
     0% {
-      box-shadow: 0 0 0 0 rgba(58, 85, 217, 0);
+      box-shadow: 0 0 0 0 rgba(10, 104, 249, 0);
       border-color: var(--color-st-border);
     }
     40% {
-      box-shadow: 0 0 14px 2px rgba(58, 85, 217, 0.18);
-      border-color: rgba(58, 85, 217, 0.35);
+      box-shadow: 0 0 16px 2px rgba(10, 104, 249, 0.30);
+      border-color: rgba(10, 104, 249, 0.45);
     }
     100% {
-      box-shadow: 0 0 0 0 rgba(58, 85, 217, 0);
+      box-shadow: 0 0 0 0 rgba(10, 104, 249, 0);
     }
   }
 
@@ -517,4 +572,166 @@
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
     }
   }
+}
+
+/* ─── Reduced motion ──────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .gradient-text,
+  .glow-breathe,
+  .nav-shimmer-wrap,
+  .ask-us-glow,
+  .ask-us-glow::after,
+  .rule-grow,
+  .line-grow {
+    animation: none !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ─── Motion system ───────────────────────────────────────────────────────────
+   Three rules govern every effect below:
+   1. Only transform / opacity / filter are animated, so work stays on the
+      compositor and never blocks scrolling on a mid-range phone.
+   2. Anything hover-triggered is wrapped in @media (hover: hover) — a touch
+      device has no hover, and these otherwise fire on tap and stick.
+   3. Ambient/decorative motion is reduced on small screens and removed
+      entirely under prefers-reduced-motion (see the block at the end).
+   ------------------------------------------------------------------------- */
+@layer utilities {
+
+  /* Scroll progress bar — the brand gradient, driven by the document
+     scroll timeline. No scroll listener, no main-thread work. */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    background: linear-gradient(90deg, #4a8bfb 0%, #8f7ae8 50%, #e19cdc 100%);
+    z-index: 60;
+    pointer-events: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      animation: scale-x linear;
+      animation-timeline: scroll(root block);
+    }
+  }
+
+  @keyframes scale-x {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* Reveal on enter, driven by the element's own view timeline where
+     supported. Falls back to the existing IntersectionObserver .reveal. */
+  @supports (animation-timeline: view()) {
+    /* Where the view timeline exists it drives the reveal, and the JS
+       .reveal opacity is neutralised so the two cannot fight — otherwise a
+       card whose observer never fires would stay invisible. */
+    .reveal-scroll.reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .reveal-scroll {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 26%;
+    }
+  }
+
+  @keyframes reveal-in {
+    from { opacity: 0; transform: translateY(26px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Hero headline: words rise in sequence, once, on load. */
+  .rise {
+    animation: rise 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Proof figures count into place with a soft blur-off. */
+  .figure-in {
+    animation: figure-in 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes figure-in {
+    from { opacity: 0; transform: translateY(10px); filter: blur(6px); }
+    to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+
+  /* Link underline that draws from the left. Pointer devices only. */
+  @media (hover: hover) and (pointer: fine) {
+    .link-draw {
+      background-image: linear-gradient(90deg, #4a8bfb, #e19cdc);
+      background-size: 0% 1px;
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      transition: background-size 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .link-draw:hover {
+      background-size: 100% 1px;
+    }
+
+    /* Cards lift only where there is a real cursor. */
+    .card:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Touch: replace hover affordance with a crisp press state. */
+  @media (hover: none) {
+    .card:active,
+    .metric-tile:active {
+      transform: scale(0.995);
+      border-color: rgba(10, 104, 249, 0.35);
+    }
+  }
+}
+
+/* Ambient glow is expensive to composite at phone sizes — shrink the blur
+   radius and slow the cycle rather than removing the brand feel entirely. */
+@media (max-width: 640px) {
+  .glow-breathe {
+    animation-duration: 10s;
+  }
+}
+
+/* ─── Reduced motion (authoritative) ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal,
+  .reveal-scroll,
+  .rise,
+  .figure-in {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .scroll-progress { display: none; }
 }

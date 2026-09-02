@@ -61,7 +61,7 @@ export default function Nav({ onAskAi }: NavProps) {
               className="mb-4 flex items-center justify-center"
             >
               <img
-                src="/assets/startech-logo-light.svg"
+                src="/assets/startech-logo-full.png"
                 alt="StarTech Innovation"
                 className="h-32 w-auto"
               />
@@ -107,9 +107,9 @@ export default function Nav({ onAskAi }: NavProps) {
             className="flex min-h-[44px] min-w-[44px] items-center"
           >
             <img
-              src="/assets/startech-logo-light.svg"
+              src="/assets/startech-logo-full.png"
               alt="StarTech Innovation"
-              className="h-7 w-auto opacity-100 lg:h-9"
+              className="h-7 w-auto opacity-90 transition-opacity duration-300 hover:opacity-100 lg:h-9"
             />
           </Link>
 

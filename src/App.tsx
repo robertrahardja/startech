@@ -55,6 +55,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-st-bg text-st-text">
+      {/* Scroll progress — driven by the CSS scroll timeline, no listener. */}
+      <div className="scroll-progress" aria-hidden="true" />
       <Nav onAskAi={openChat} />
 
       <main>
