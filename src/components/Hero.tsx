@@ -86,7 +86,8 @@ export default function Hero({ onAskAi }: HeroProps) {
           software that behaves the way your business actually works.
         </p>
 
-        {/* CTAs */}
+        {/* CTAs — one primary action and two ways in for someone not ready
+            to book yet. Each label names what the click does. */}
         <div
           className="mt-9 flex flex-col items-stretch gap-3 animate-fade-in-up sm:mt-12 sm:flex-row sm:items-center"
           style={{ animationDelay: "0.25s" }}
@@ -96,7 +97,7 @@ export default function Hero({ onAskAi }: HeroProps) {
             className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-center text-[15px] font-medium tracking-wide text-st-text transition-all duration-500 active:scale-[0.97] sm:py-4 sm:text-[13px]"
           >
             <span className="relative z-10 flex items-center justify-center gap-2.5">
-              Tell me about your business
+              Book the 30 minutes
               <svg
                 className="h-3.5 w-3.5 text-white/80 transition-all duration-500 group-hover:translate-x-0.5 group-hover:text-white"
                 fill="none"
@@ -113,13 +114,22 @@ export default function Hero({ onAskAi }: HeroProps) {
             </span>
           </a>
 
+          <a
+            href="#work"
+            className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-center text-[15px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:py-4 sm:text-[13px]"
+          >
+            <span className="relative z-10 flex items-center justify-center gap-2.5">
+              See the work
+            </span>
+          </a>
+
           <button
             onClick={onAskAi}
             className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-[15px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:py-4 sm:text-[13px]"
           >
             <span className="relative z-10 flex items-center justify-center gap-2.5">
               <AiIcon className="h-3.5 w-3.5" />
-              Ask about our work
+              Ask a question
             </span>
           </button>
         </div>
@@ -128,8 +138,9 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="mt-5 text-[12.5px] font-normal leading-relaxed tracking-wide text-st-text-muted/70 animate-fade-in sm:text-[11px]"
           style={{ animationDelay: "0.3s" }}
         >
-          A free 30-minute conversation &mdash; no brief document required.
-          If software isn&apos;t the answer, we&apos;ll say so.
+          Free, and no brief document required &mdash; bring the process that
+          costs you the most time. If software isn&apos;t the answer,
+          we&apos;ll say so.
         </p>
 
         {/* Proof strip */}
