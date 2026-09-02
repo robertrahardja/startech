@@ -19,12 +19,17 @@ export default function AskButton({ onClick, hidden = false }: AskButtonProps) {
       onClick={onClick}
       aria-label="Ask StarTech AI"
       style={{
-        // Lifted clear of the sticky CTA bar rather than hidden: the
-        // star-whirl animation uses fill-mode both, so an opacity utility
-        // here loses to the keyframes.
-        transform: hidden ? "translateY(-5.25rem)" : undefined,
+        // The CTA bar occupies this corner and already offers the primary
+        // action, so the button retires while it is up rather than stacking
+        // on top of it. Set inline because .star-whirl's keyframes would
+        // otherwise win over a utility class.
+        transform: hidden ? "translateY(6rem) scale(0.85)" : undefined,
+        opacity: hidden ? 0 : undefined,
+        pointerEvents: hidden ? "none" : undefined,
       }}
-      className="ask-fab star-whirl hero-btn-primary fixed bottom-4 right-4 z-40 flex h-11 w-11 items-center justify-center !rounded-full text-white/90 opacity-90 transition-transform duration-500 hover:opacity-100 sm:bottom-6 sm:right-6 sm:h-12 sm:w-12 sm:opacity-100"
+      tabIndex={hidden ? -1 : 0}
+      aria-hidden={hidden}
+      className="ask-fab star-whirl hero-btn-primary fixed bottom-4 right-4 z-40 flex h-11 w-11 items-center justify-center !rounded-full text-white/90 opacity-90 transition-all duration-500 hover:opacity-100 sm:bottom-6 sm:right-6 sm:h-12 sm:w-12 sm:opacity-100"
     >
       <AiIcon className="h-4 w-4" />
     </button>

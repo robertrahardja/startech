@@ -79,18 +79,18 @@ export default function StickyCta({ onVisibilityChange }: StickyCtaProps) {
       aria-hidden={!visible}
     >
       <div className="mx-auto max-w-[1800px] px-4 pb-4 sm:px-8 sm:pb-6">
-        <div className="sticky-cta flex items-center justify-between gap-4 rounded-2xl px-5 py-3.5 sm:px-6 sm:py-4">
+        <div className="sticky-cta flex items-center justify-center gap-4 rounded-2xl p-3 sm:justify-between sm:px-6 sm:py-4">
+          {/* Copy only where there is room for it. On a phone the button
+              already carries the offer, and a squeezed line beside it just
+              crowds the bar. */}
           <p className="hidden text-[13.5px] leading-snug text-st-text-muted sm:block">
             Thirty minutes, and an honest answer about what is worth building.
-          </p>
-          <p className="text-[13.5px] leading-snug text-st-text-muted sm:hidden">
-            Thirty minutes, no brief needed.
           </p>
 
           <a
             href="#contact"
             tabIndex={visible ? 0 : -1}
-            className="hero-btn-primary group relative flex min-h-[44px] flex-none items-center overflow-hidden rounded-xl px-5 text-[13px] font-medium tracking-wide text-white transition-all duration-500 active:scale-[0.97] sm:px-6"
+            className="hero-btn-primary group relative flex min-h-[46px] w-full items-center justify-center overflow-hidden rounded-xl px-5 text-[14px] font-medium tracking-wide text-white transition-all duration-500 active:scale-[0.97] sm:w-auto sm:flex-none sm:px-6 sm:text-[13px]"
           >
             <span className="relative z-10 flex items-center gap-2">
               Book the 30 minutes
