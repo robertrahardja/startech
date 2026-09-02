@@ -1,4 +1,5 @@
 import { useInView } from "../hooks/useInView";
+import SectionCta from "./SectionCta";
 
 /**
  * The qualifying step, immediately after the hero.
@@ -85,6 +86,11 @@ export default function Qualify() {
           </p>
         </div>
 
+
+        <SectionCta
+          prompt="Not sure which one you are? That is a reasonable thing to work out on a call rather than alone."
+          action="Book the 30 minutes"
+        />
       </div>
     </section>
   );

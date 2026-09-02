@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import SectionCta from "./SectionCta";
 import { useInView } from "../hooks/useInView";
 import { SectionHeader } from "./Products";
 import type { TimelineStep } from "../types";
@@ -238,6 +239,11 @@ export default function Approach() {
             </div>
           </div>
         </div>
+
+        <SectionCta
+          prompt="Week one is discovery, and you keep the output whether or not you continue with us."
+          action="Book week one"
+        />
       </div>
     </section>
   );

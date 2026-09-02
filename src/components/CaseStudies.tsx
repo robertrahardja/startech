@@ -1,4 +1,5 @@
 import { useInView } from "../hooks/useInView";
+import SectionCta from "./SectionCta";
 import { CASES, type CaseStudy } from "./caseStudiesData";
 
 function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
@@ -114,6 +115,11 @@ export default function CaseStudies() {
           confidentiality. Figures are drawn from the delivered systems and can
           be walked through in detail on a call.
         </p>
+
+        <SectionCta
+          prompt="Every number here can be walked through in detail — the architecture, the bugs, the parts that went wrong."
+          action="Ask about any of it"
+        />
       </div>
     </section>
   );

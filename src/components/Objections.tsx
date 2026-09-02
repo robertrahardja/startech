@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SectionCta from "./SectionCta";
 import { useInView } from "../hooks/useInView";
 import { haptic } from "../lib/haptics";
 
@@ -156,6 +157,11 @@ export default function Objections() {
             );
           })}
         </div>
+
+        <SectionCta
+          prompt="If the one holding you back is not on this list, say it on the call — we would rather hear it than guess."
+          action="Book the 30 minutes"
+        />
       </div>
     </section>
   );
