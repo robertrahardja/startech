@@ -83,7 +83,7 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="mt-6 max-w-2xl text-[1.0625rem] font-normal leading-[1.55] text-st-text-muted animate-fade-in-up sm:mt-8 sm:text-base sm:leading-[1.7] md:text-lg"
           style={{ animationDelay: "0.15s" }}
         >
-          Share your workflows. We&apos;ll build the custom software that
+          We help map your operations, then build the custom software that
           secures your competitive advantage.
         </p>
 
