@@ -16,7 +16,7 @@ export default function Hero({ onAskAi }: HeroProps) {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[92vh] items-center overflow-hidden px-6 pt-24 pb-16 sm:pt-28 sm:pb-20"
+      className="relative flex min-h-[92vh] items-center overflow-hidden px-6 pt-24 pb-16 sm:px-8 sm:pt-28 sm:pb-20"
     >
       {/* Ambient light, echoing the indigo wave on the back of the card:
           one cool source top-left, a soft pink counterpoint bottom-right. */}
@@ -28,7 +28,8 @@ export default function Hero({ onAskAi }: HeroProps) {
         />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-5xl">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+      <div>
         {/* Eyebrow */}
         <div
           className="mb-8 flex items-center gap-3 animate-fade-in"
@@ -45,7 +46,7 @@ export default function Hero({ onAskAi }: HeroProps) {
 
         {/* Headline */}
         <h1
-          className="max-w-3xl font-display text-[2.75rem] leading-[1.05] tracking-[-0.03em] text-st-text sm:text-5xl md:text-6xl lg:text-7xl"
+          className="max-w-4xl font-display text-[2.75rem] leading-[1.05] tracking-[-0.03em] text-st-text sm:text-5xl md:text-6xl lg:text-7xl"
           style={{ textWrap: "balance" }}
         >
           <span className="rise inline-block" style={{ animationDelay: "0.05s" }}>
@@ -76,7 +77,7 @@ export default function Hero({ onAskAi }: HeroProps) {
 
         {/* Sub */}
         <p
-          className="mt-6 max-w-xl text-[1.0625rem] font-normal leading-[1.55] text-st-text-muted animate-fade-in-up sm:mt-8 sm:text-base sm:leading-[1.7] md:text-lg"
+          className="mt-6 max-w-2xl text-[1.0625rem] font-normal leading-[1.55] text-st-text-muted animate-fade-in-up sm:mt-8 sm:text-base sm:leading-[1.7] md:text-lg"
           style={{ animationDelay: "0.15s" }}
         >
           Most developers need your ledger explained. We already know what a
@@ -133,7 +134,7 @@ export default function Hero({ onAskAi }: HeroProps) {
 
         {/* Proof strip */}
         <div
-          className="mt-11 grid max-w-2xl grid-cols-2 gap-x-6 gap-y-7 border-t border-st-border pb-16 pt-7 animate-fade-in sm:mt-16 sm:grid-cols-4 sm:gap-x-8 sm:pb-0 sm:pt-8"
+          className="mt-11 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-7 border-t border-st-border pb-16 pt-7 animate-fade-in sm:mt-16 sm:grid-cols-4 sm:gap-x-8 sm:pb-0 sm:pt-8"
           style={{ animationDelay: "0.4s" }}
         >
           {PROOF.map((p, i) => (
@@ -151,6 +152,47 @@ export default function Hero({ onAskAi }: HeroProps) {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* The business card, as an object. Large screens only: it fills the
+          right column that would otherwise be dead space, and it is the
+          clearest possible statement of who this is. */}
+      <div className="hidden lg:block">
+        <div className="hero-card card-tilt mx-auto w-full max-w-md p-9">
+          <div className="flex items-start justify-between gap-6">
+            <img
+              src="/assets/startech-logo-full.png"
+              alt=""
+              className="h-16 w-auto"
+            />
+            <span className="brand-rule mt-2 h-px w-12" />
+          </div>
+
+          <div className="mt-10">
+            <div className="font-display text-3xl leading-tight tracking-[-0.02em] text-st-text">
+              Robert Rahardja
+            </div>
+            <div className="mt-1.5 text-[13px] font-normal tracking-wide text-st-text-muted">
+              Managing Director
+            </div>
+          </div>
+
+          <div className="mt-8 gradient-text font-display text-xl tracking-[-0.01em]">
+            Business. Finance. Tech.
+          </div>
+
+          <dl className="mt-10 space-y-2.5 border-t border-st-border pt-6 text-[12.5px]">
+            <div className="flex justify-between gap-4">
+              <dt className="text-st-text-muted">Singapore</dt>
+              <dd className="text-st-text-muted/80">UEN 202110461R</dd>
+            </div>
+            <div className="flex justify-between gap-4">
+              <dt className="text-st-text-muted">Working in</dt>
+              <dd className="text-st-text-muted/80">EN &middot; 中文 &middot; MS &middot; ID</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
       </div>
     </section>
   );

@@ -101,7 +101,8 @@ export default function Nav({ onAskAi }: NavProps) {
             : "bg-transparent"
         }`}
       >
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-8">
+        <nav className="mx-auto flex w-full max-w-[1800px] items-center justify-between px-6 py-5 sm:px-8">
+          <div className="mx-auto flex w-full max-w-7xl items-center justify-between">
           <Link
             href="/"
             className="flex min-h-[44px] min-w-[44px] items-center"
@@ -149,6 +150,7 @@ export default function Nav({ onAskAi }: NavProps) {
             <span className="block h-px w-4 bg-st-text-muted/60" />
             <span className="block h-px w-4 bg-st-text-muted/60" />
           </button>
+          </div>
         </nav>
       </header>
     </>
