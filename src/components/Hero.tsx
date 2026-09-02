@@ -83,9 +83,8 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="mt-6 max-w-2xl text-[1.0625rem] font-normal leading-[1.55] text-st-text-muted animate-fade-in-up sm:mt-8 sm:text-base sm:leading-[1.7] md:text-lg"
           style={{ animationDelay: "0.15s" }}
         >
-          We don&apos;t just write code; we understand operations. Tell us how
-          your business actually runs, and we&apos;ll build the software to
-          power it.
+          Share your workflows. We&apos;ll build the custom software that
+          secures your competitive advantage.
         </p>
 
         {/* CTAs — one primary action and two ways in for someone not ready
