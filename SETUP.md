@@ -1,12 +1,18 @@
 # Startech Innovation - Contact Form Setup
 
-This guide explains how to set up the contact form email functionality using Resend and Cloudflare Pages Functions.
+This guide explains how to set up the contact form email functionality using
+Resend.
+
+> **Outdated in places.** This was written for Cloudflare Pages Functions; the
+> site now runs on a Cloudflare Worker with `[assets]`. The Resend steps still
+> apply, but for hosting, mail routing and deployment see
+> [docs/OPERATIONS.md](docs/OPERATIONS.md), which reflects the live setup.
 
 ## Overview
 
 The contact form uses:
 - **Resend** - Modern email API for sending transactional emails
-- **Cloudflare Pages Functions** - Serverless functions that handle form submissions
+- **Cloudflare Workers** - the Worker in `worker/` handles form submissions
 
 ## Setup Steps
 
