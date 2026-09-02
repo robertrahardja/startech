@@ -161,7 +161,7 @@ export default function Objections() {
         </div>
 
         <SectionCta
-          prompt="If the one holding you back is not on this list, say it on the call — we would rather hear it than guess."
+          prompt="If yours is not on the list, say it on the call."
           action="Book the 30 minutes"
         />
       </div>

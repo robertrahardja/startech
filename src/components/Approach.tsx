@@ -241,7 +241,7 @@ export default function Approach() {
         </div>
 
         <SectionCta
-          prompt="Week one is discovery, and you keep the output whether or not you continue with us."
+          prompt="Week one is discovery, and the output is yours either way."
           action="Book week one"
         />
       </div>

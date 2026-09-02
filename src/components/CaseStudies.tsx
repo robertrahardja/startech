@@ -117,7 +117,7 @@ export default function CaseStudies() {
         </p>
 
         <SectionCta
-          prompt="Every number here can be walked through in detail — the architecture, the bugs, the parts that went wrong."
+          prompt="Every number here can be walked through in detail, bugs included."
           action="Ask about any of it"
         />
       </div>

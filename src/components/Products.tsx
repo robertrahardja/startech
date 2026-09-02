@@ -201,7 +201,7 @@ export default function Products() {
         </div>
 
         <SectionCta
-          prompt="Most engagements start in one practice and grow into a second. Tell us which problem is loudest right now."
+          prompt="Most engagements start in one practice and grow into a second."
           action="Start with one"
         />
       </div>
