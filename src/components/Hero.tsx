@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import AiIcon from "./AiIcon";
 import { usePointerGlow } from "../hooks/usePointerGlow";
 
@@ -31,7 +32,33 @@ export default function Hero({ onAskAi }: HeroProps) {
         />
       </div>
 
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+      <div className="relative z-10 mx-auto w-full max-w-7xl">
+        {/* Masthead — the mark and name at size, above the fold. Desktop only:
+            on a phone the header logo already covers identity, and this much
+            vertical space before the headline would push it off screen. */}
+        <div className="mb-14 hidden items-center gap-6 animate-fade-in lg:flex">
+          <div
+            className="logo-3d h-24 w-28 shrink-0"
+            style={{ "--mark-mask": "url(/assets/startech-mark.svg)" } as CSSProperties}
+          >
+            <img
+              src="/assets/startech-mark.svg"
+              alt=""
+              aria-hidden="true"
+              className="h-full w-full object-contain"
+            />
+          </div>
+          <div>
+            <div className="font-display text-5xl leading-none tracking-[-0.02em] text-st-text">
+              StarTech
+            </div>
+            <div className="mt-2.5 text-[11px] font-medium tracking-[0.42em] uppercase text-st-text-muted">
+              Innovation
+            </div>
+          </div>
+        </div>
+
+      <div className="grid w-full items-center gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
       <div>
         {/* Eyebrow */}
         <div
@@ -206,6 +233,7 @@ export default function Hero({ onAskAi }: HeroProps) {
             </div>
           </dl>
         </div>
+      </div>
       </div>
       </div>
     </section>

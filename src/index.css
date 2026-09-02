@@ -318,6 +318,116 @@
     }
   }
 
+  /* ── Masthead mark ────────────────────────────────────────────────────────
+     The logo is a flat SVG, so the dimensionality comes from lighting it
+     rather than from geometry: a coloured glow behind it, a specular
+     highlight sweeping across it, and a slow orbit in 3D space. All of it is
+     transform, opacity and filter, so nothing leaves the compositor. */
+  .logo-3d {
+    position: relative;
+    perspective: 900px;
+    transform-style: preserve-3d;
+    /* The rotation pushes corners outside the box — do not clip them. */
+    overflow: visible;
+  }
+
+  .logo-3d img {
+    overflow: visible;
+  }
+
+  /* The light the mark appears to sit in. */
+  .logo-3d::before {
+    content: "";
+    position: absolute;
+    inset: -35%;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 42% 38%,
+      rgba(10, 104, 249, 0.30),
+      rgba(225, 156, 220, 0.14) 45%,
+      transparent 70%
+    );
+    filter: blur(28px);
+    animation: logo-halo 7s ease-in-out 2 forwards;
+    pointer-events: none;
+  }
+
+  .logo-3d img {
+    position: relative;
+    animation: logo-orbit 11s cubic-bezier(0.45, 0, 0.55, 1) 1 forwards;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  /* The specular pass — a narrow band of light crossing the mark. */
+  .logo-3d::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      104deg,
+      transparent 38%,
+      rgba(255, 255, 255, 0.42) 48%,
+      rgba(255, 255, 255, 0.06) 54%,
+      transparent 62%
+    );
+    mix-blend-mode: overlay;
+    animation: logo-sheen 6.5s ease-in-out 2 forwards;
+    pointer-events: none;
+    -webkit-mask-image: var(--mark-mask);
+    mask-image: var(--mark-mask);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+
+  /* Rotates on two axes at different periods, so the motion never repeats
+     the same pose twice in a row and reads as an object turning in space. */
+  @keyframes logo-orbit {
+    0% {
+      transform: rotateY(-16deg) rotateX(7deg) translateZ(0) scale(1);
+    }
+    25% {
+      transform: rotateY(4deg) rotateX(-3deg) translateZ(22px) scale(1.03);
+    }
+    50% {
+      transform: rotateY(17deg) rotateX(6deg) translateZ(8px) scale(1.01);
+    }
+    75% {
+      transform: rotateY(2deg) rotateX(-5deg) translateZ(24px) scale(1.035);
+    }
+    /* Comes to rest slightly turned, so the mark keeps a sense of depth once
+       the motion stops rather than snapping back to flat. */
+    100% {
+      transform: rotateY(-7deg) rotateX(3deg) translateZ(6px) scale(1.01);
+    }
+  }
+
+  @keyframes logo-halo {
+    0%   { opacity: 0.55; transform: scale(1); }
+    50%  { opacity: 1;    transform: scale(1.12); }
+    100% { opacity: 0.7;  transform: scale(1.04); }
+  }
+
+  @keyframes logo-sheen {
+    0%, 62%, 100% { opacity: 0; transform: translateX(-55%); }
+    18%           { opacity: 1; }
+    45%           { opacity: 0; transform: translateX(55%); }
+  }
+
+  /* Replays on hover: the motion is an entrance, not a permanent loop, but
+     the mark should still respond if someone points at it. */
+  @media (hover: hover) and (pointer: fine) {
+    .logo-3d:hover img {
+      animation: logo-orbit 11s cubic-bezier(0.45, 0, 0.55, 1) 1 forwards;
+    }
+
+    .logo-3d:hover::after {
+      animation: logo-sheen 6.5s ease-in-out 1 forwards;
+    }
+  }
+
   /* Metric tile — a faint inner light, brightening on hover. */
   .metric-tile:hover {
     border-color: rgba(10, 104, 249, 0.35);
@@ -958,9 +1068,16 @@
     transition: none;
   }
 
-  .btn-spark {
+  .btn-spark,
+  .logo-3d img,
+  .logo-3d::before,
+  .logo-3d::after {
     animation: none !important;
   }
+
+  /* A flat, still mark under reduced motion — the shape still reads. */
+  .logo-3d img { transform: none; }
+  .logo-3d::after { opacity: 0; }
 
   .reveal,
   .reveal-scroll,
