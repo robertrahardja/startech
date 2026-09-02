@@ -1,7 +1,6 @@
 import Hero from "../components/Hero";
 import CaseStudies from "../components/CaseStudies";
 import Products from "../components/Products";
-import AiCapabilities from "../components/AiCapabilities";
 import Industries from "../components/Industries";
 import Approach from "../components/Approach";
 import Contact from "../components/Contact";
@@ -24,7 +23,6 @@ export default function HomePage({ onAskAi }: HomePageProps) {
       <Hero onAskAi={onAskAi} />
       <CaseStudies />
       <Products />
-      <AiCapabilities />
       <Industries />
       <Approach />
       <Contact />

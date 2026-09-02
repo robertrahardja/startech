@@ -160,7 +160,7 @@ export default function CaseStudies() {
   const [ref, isInView] = useInView({ threshold: 0.1 });
 
   return (
-    <section id="work" className="relative py-28 sm:py-36">
+    <section id="work" className="relative py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <div
           ref={ref}

@@ -25,8 +25,8 @@ export default function Footer() {
             <Link href="/solutions" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text-muted">
               Solutions
             </Link>
-            <Link href="/#ai-capabilities" className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center px-3 transition-colors duration-300 hover:text-st-text-muted">
-              AI
+            <Link href="/#work" className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center px-3 transition-colors duration-300 hover:text-st-text-muted">
+              Work
             </Link>
             <Link href="/#industries" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text-muted">
               Industries
