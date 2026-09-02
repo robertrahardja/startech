@@ -242,7 +242,7 @@ export default function Approach() {
 
         <SectionCta
           prompt="Week one is discovery, and the output is yours either way."
-          action="Book week one"
+          action="Start a conversation"
         />
       </div>
     </section>

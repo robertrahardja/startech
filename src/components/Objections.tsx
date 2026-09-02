@@ -162,7 +162,7 @@ export default function Objections() {
 
         <SectionCta
           prompt="If yours is not on the list, say it on the call."
-          action="Book the 30 minutes"
+          action="Ask us directly"
         />
       </div>
     </section>

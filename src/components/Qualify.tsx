@@ -89,7 +89,7 @@ export default function Qualify() {
 
         <SectionCta
           prompt="Not sure which one you are? That is worth working out on a call."
-          action="Book the 30 minutes"
+          action="Talk it through"
         />
       </div>
     </section>

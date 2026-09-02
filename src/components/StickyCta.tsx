@@ -84,7 +84,7 @@ export default function StickyCta({ onVisibilityChange }: StickyCtaProps) {
               already carries the offer, and a squeezed line beside it just
               crowds the bar. */}
           <p className="hidden text-[13.5px] leading-snug text-st-text-muted sm:block">
-            A thirty-minute call, and a clear view of what to build first.
+            Thirty minutes on your process, and a clear view of what to build first.
           </p>
 
           <a
@@ -93,7 +93,7 @@ export default function StickyCta({ onVisibilityChange }: StickyCtaProps) {
             className="hero-btn-primary group relative flex min-h-[46px] w-full items-center justify-center overflow-hidden rounded-xl px-5 text-[14px] font-medium tracking-wide text-white transition-all duration-500 active:scale-[0.97] sm:w-auto sm:flex-none sm:px-6 sm:text-[13px]"
           >
             <span className="relative z-10 flex items-center gap-2">
-              Book the 30 minutes
+              Let&apos;s talk
               <svg
                 className="h-3.5 w-3.5 text-white/80 transition-transform duration-500 group-hover:translate-x-0.5"
                 fill="none"

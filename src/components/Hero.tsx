@@ -100,7 +100,7 @@ export default function Hero({ onAskAi }: HeroProps) {
             className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-center text-[15px] font-medium tracking-wide text-st-text transition-all duration-500 active:scale-[0.97] sm:py-4 sm:text-[13px]"
           >
             <span className="relative z-10 flex items-center justify-center gap-2.5">
-              Book the 30 minutes
+              Let&apos;s talk
               <svg
                 className="h-3.5 w-3.5 text-white/80 transition-all duration-500 group-hover:translate-x-0.5 group-hover:text-white"
                 fill="none"
