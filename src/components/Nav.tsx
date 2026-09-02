@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import AiIcon from "./AiIcon";
 import Link from "./solutions/Link";
+import { AI_CHAT_ENABLED } from "../lib/features";
 
 interface NavProps {
   onAskAi: () => void;
@@ -77,18 +78,28 @@ export default function Nav({ onAskAi }: NavProps) {
               </Link>
             ))}
             <div className="mt-2 h-px w-12 bg-st-surface" />
-            <button
-              onClick={() => {
-                setMobileOpen(false);
-                onAskAi();
-              }}
-              className="hero-btn-primary group relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text transition-all duration-500"
-            >
-              <span className="relative z-10 flex items-center gap-2.5">
-                <AiIcon className="h-3.5 w-3.5 text-white/80" />
-                Ask us
-              </span>
-            </button>
+            {AI_CHAT_ENABLED ? (
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  onAskAi();
+                }}
+                className="hero-btn-primary group relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text transition-all duration-500"
+              >
+                <span className="relative z-10 flex items-center gap-2.5">
+                  <AiIcon className="h-3.5 w-3.5 text-white/80" />
+                  Ask us
+                </span>
+              </button>
+            ) : (
+              <Link
+                href="/#contact"
+                onClick={() => setMobileOpen(false)}
+                className="hero-btn-primary group relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-medium tracking-wide text-white transition-all duration-500"
+              >
+                <span className="relative z-10">Let&apos;s talk</span>
+              </Link>
+            )}
           </div>
         </div>
       )}
@@ -128,15 +139,24 @@ export default function Nav({ onAskAi }: NavProps) {
               ))}
             </div>
             <div className="ask-us-glow relative ml-4 rounded-xl">
-              <button
-                onClick={onAskAi}
-                className="hero-btn-primary group relative overflow-hidden rounded-xl px-5 py-2.5 text-sm font-medium tracking-wide text-white transition-all duration-500 lg:text-base"
-              >
-                <span className="ask-us-text-shimmer relative z-10 flex items-center gap-2">
-                  <AiIcon className="h-3 w-3 text-white/80 transition-all duration-500 group-hover:text-white" />
-                  Ask us
-                </span>
-              </button>
+              {AI_CHAT_ENABLED ? (
+                <button
+                  onClick={onAskAi}
+                  className="hero-btn-primary group relative overflow-hidden rounded-xl px-5 py-2.5 text-sm font-medium tracking-wide text-white transition-all duration-500 lg:text-base"
+                >
+                  <span className="ask-us-text-shimmer relative z-10 flex items-center gap-2">
+                    <AiIcon className="h-3 w-3 text-white/80 transition-all duration-500 group-hover:text-white" />
+                    Ask us
+                  </span>
+                </button>
+              ) : (
+                <Link
+                  href="/#contact"
+                  className="hero-btn-primary group relative flex items-center overflow-hidden rounded-xl px-5 py-2.5 text-sm font-medium tracking-wide text-white transition-all duration-500 lg:text-base"
+                >
+                  <span className="relative z-10">Let&apos;s talk</span>
+                </Link>
+              )}
             </div>
           </div>
 

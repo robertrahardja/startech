@@ -18,6 +18,8 @@ interface Env {
   ELEVENLABS_API_KEY: string;
   RESEND_API_KEY: string;
   ENVIRONMENT: string;
+  /** "true" turns the chat and speech endpoints back on. Absent means off. */
+  ENABLE_AI_CHAT?: string;
   DB: D1Database;
 }
 
@@ -617,11 +619,20 @@ export default {
     let response: Response;
     try {
       switch (url.pathname) {
+        // Chat and speech are disabled in production while the upstream
+        // OpenAI account returns 429 on every call. Answer with a clear 503
+        // rather than letting the handler surface it as a 502.
         case "/api/chat":
-          response = await handleChat(request, env);
+          response =
+            env.ENABLE_AI_CHAT === "true"
+              ? await handleChat(request, env)
+              : jsonError("AI chat is temporarily unavailable.", 503);
           break;
         case "/api/tts":
-          response = await handleTts(request, env);
+          response =
+            env.ENABLE_AI_CHAT === "true"
+              ? await handleTts(request, env)
+              : jsonError("Speech is temporarily unavailable.", 503);
           break;
         case "/api/contact":
           response = await handleContact(request, env);

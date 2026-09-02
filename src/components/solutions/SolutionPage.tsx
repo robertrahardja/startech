@@ -1,4 +1,5 @@
 import { useInView } from "../../hooks/useInView";
+import { AI_CHAT_ENABLED } from "../../lib/features";
 import { SectionHeader } from "../Products";
 import DemoSection from "../demos/DemoSection";
 import Link from "./Link";
@@ -289,7 +290,7 @@ function SolutionHero({
         {/* CTA buttons */}
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
           <button
-            onClick={onAskAi}
+            onClick={AI_CHAT_ENABLED ? onAskAi : () => { window.location.href = "/#contact"; }}
             className="hero-btn-primary relative overflow-hidden rounded-xl px-7 py-3 text-sm font-normal tracking-wide text-st-text transition-all duration-500"
           >
             <span className="relative z-10">Get a Free Demo</span>
@@ -537,7 +538,7 @@ function CtaSection({
         </p>
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
           <button
-            onClick={onAskAi}
+            onClick={AI_CHAT_ENABLED ? onAskAi : () => { window.location.href = "/#contact"; }}
             className="hero-btn-primary relative overflow-hidden rounded-xl px-8 py-3.5 text-sm font-normal tracking-wide text-st-text transition-all duration-500"
           >
             <span className="relative z-10">Get a Free Demo</span>

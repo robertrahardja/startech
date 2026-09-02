@@ -9,6 +9,7 @@ import AskStartech from "./components/AskStartech";
 import SolutionsIndex from "./components/solutions/SolutionsIndex";
 import SolutionPage from "./components/solutions/SolutionPage";
 import { useCurrentPage } from "./lib/router";
+import { AI_CHAT_ENABLED } from "./lib/features";
 
 /**
  * Application shell: chrome, the chat panel, and whichever page the current
@@ -58,9 +59,13 @@ export default function App() {
 
       <StickyCta onVisibilityChange={setCtaBarUp} />
 
-      <AskButton onClick={toggleChat} hidden={ctaBarUp} />
+      {AI_CHAT_ENABLED && (
+        <AskButton onClick={toggleChat} hidden={ctaBarUp} />
+      )}
 
-      <AskStartech isOpen={chatOpen} onClose={closeChat} />
+      {AI_CHAT_ENABLED && (
+        <AskStartech isOpen={chatOpen} onClose={closeChat} />
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { useInView } from "../../hooks/useInView";
+import { AI_CHAT_ENABLED } from "../../lib/features";
 import { SectionHeader } from "../Products";
 import Link from "./Link";
 import {
@@ -110,10 +111,12 @@ export default function SolutionsIndex({ onAskAi }: { onAskAi: () => void }) {
             AI solution, complete with a grant application plan.
           </p>
           <button
-            onClick={onAskAi}
+            onClick={AI_CHAT_ENABLED ? onAskAi : () => { window.location.href = "/#contact"; }}
             className="hero-btn-primary relative overflow-hidden rounded-xl px-8 py-3.5 text-sm font-normal tracking-wide text-st-text transition-all duration-500"
           >
-            <span className="relative z-10">Talk to Our AI Advisor</span>
+            <span className="relative z-10">
+              {AI_CHAT_ENABLED ? "Talk to Our AI Advisor" : "Talk to us"}
+            </span>
           </button>
         </div>
       </section>
@@ -157,7 +160,7 @@ function IndexHero({ onAskAi }: { onAskAi: () => void }) {
 
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
           <button
-            onClick={onAskAi}
+            onClick={AI_CHAT_ENABLED ? onAskAi : () => { window.location.href = "/#contact"; }}
             className="hero-btn-primary relative overflow-hidden rounded-xl px-7 py-3 text-sm font-normal tracking-wide text-st-text transition-all duration-500"
           >
             <span className="relative z-10">Get a Free Consultation</span>

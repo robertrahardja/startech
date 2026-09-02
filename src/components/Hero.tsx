@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import AiIcon from "./AiIcon";
 import { usePointerGlow } from "../hooks/usePointerGlow";
+import { AI_CHAT_ENABLED } from "../lib/features";
 
 interface HeroProps {
   onAskAi: () => void;
@@ -152,16 +153,18 @@ export default function Hero({ onAskAi }: HeroProps) {
             </span>
           </a>
 
-          <button
-            onClick={onAskAi}
-            onPointerMove={onPointerMove}
-            className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-[15px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:py-4 sm:text-[13px]"
-          >
-            <span className="relative z-10 flex items-center justify-center gap-2.5">
-              <AiIcon className="btn-spark h-3.5 w-3.5" />
-              Ask a question
-            </span>
-          </button>
+          {AI_CHAT_ENABLED && (
+            <button
+              onClick={onAskAi}
+              onPointerMove={onPointerMove}
+              className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-[15px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:py-4 sm:text-[13px]"
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2.5">
+                <AiIcon className="btn-spark h-3.5 w-3.5" />
+                Ask a question
+              </span>
+            </button>
+          )}
         </div>
 
         <p
