@@ -552,17 +552,99 @@
     filter: brightness(1.06);
   }
 
-  /* Secondary button — hairline outline on paper. */
+  /* Secondary buttons — glass panels rather than outlines. A bare hairline
+     on black reads as an empty rectangle; a faint fill and an inner top
+     highlight give the button an edge to catch light, the way the primary
+     does with its gradient. */
   .hero-btn-secondary {
-    background: transparent;
-    border: 1px solid var(--color-st-border);
-    color: var(--color-st-text-muted);
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.07) 0%,
+        rgba(255, 255, 255, 0.025) 100%
+      );
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: var(--color-st-text);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.09),
+      0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+
+  /* A gradient hairline sweeps the top edge on hover — the same light the
+     hero card uses, at a fraction of the strength. */
+  .hero-btn-secondary::after {
+    content: "";
+    position: absolute;
+    inset-inline: 18%;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(91, 141, 251, 0.85),
+      rgba(225, 156, 220, 0.85),
+      transparent
+    );
+    opacity: 0;
+    transition: opacity 450ms ease;
+    pointer-events: none;
   }
 
   .hero-btn-secondary:hover {
-    border-color: var(--color-st-border-hover);
-    background: var(--color-st-surface);
-    color: var(--color-st-text);
+    border-color: rgba(255, 255, 255, 0.26);
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.11) 0%,
+        rgba(255, 255, 255, 0.045) 100%
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 4px 18px rgba(10, 104, 249, 0.14);
+  }
+
+  .hero-btn-secondary:hover::after {
+    opacity: 1;
+  }
+
+  .hero-btn-secondary:active {
+    transform: translateY(1px);
+  }
+
+  /* A soft light follows the cursor across the button. Pointer devices only:
+     on touch there is no cursor to follow, and the press state does the job. */
+  @media (hover: hover) and (pointer: fine) {
+    .hero-btn-secondary::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        180px circle at var(--mx, 50%) var(--my, 50%),
+        rgba(91, 141, 251, 0.16),
+        transparent 60%
+      );
+      opacity: 0;
+      transition: opacity 400ms ease;
+      pointer-events: none;
+    }
+
+    .hero-btn-secondary:hover::before {
+      opacity: 1;
+    }
+
+    /* The sparkle icon turns once as the button is entered. */
+    .hero-btn-secondary:hover .btn-spark {
+      animation: btn-spark 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+
+  @keyframes btn-spark {
+    from { transform: rotate(0deg) scale(1); }
+    50%  { transform: rotate(90deg) scale(1.18); }
+    to   { transform: rotate(180deg) scale(1); }
   }
 
   /* Star whirl entrance — spins in once then rests */
@@ -837,6 +919,15 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .hero-btn-secondary::before,
+  .hero-btn-secondary::after {
+    transition: none;
+  }
+
+  .btn-spark {
+    animation: none !important;
   }
 
   .reveal,
