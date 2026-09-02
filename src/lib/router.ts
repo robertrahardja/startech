@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { getSolutionBySlug } from "../components/solutions/solutionsData";
 import type { Solution } from "../components/solutions/solutionsData";
+import { parseLocalePath, type Locale } from "../i18n/locales";
 
 /** Which page a pathname resolves to. */
 export type Page =
@@ -50,8 +51,17 @@ function usePathname(): string {
   return pathname;
 }
 
-/** The page for the current URL. */
-export function useCurrentPage(): Page {
+/**
+ * The page and language for the current URL.
+ *
+ * The locale prefix is stripped before the route is resolved, so every route
+ * exists once and is simply rendered in whichever language the prefix names.
+ */
+export function useCurrentPage(): { page: Page; locale: Locale } {
   const pathname = usePathname();
-  return useMemo(() => resolvePage(pathname), [pathname]);
+
+  return useMemo(() => {
+    const { locale, path } = parseLocalePath(pathname);
+    return { page: resolvePage(path), locale };
+  }, [pathname]);
 }

@@ -1,4 +1,5 @@
 import { useInView } from "../hooks/useInView";
+import { useI18n } from "../i18n";
 
 /**
  * The qualifying step, immediately after the hero.
@@ -36,6 +37,7 @@ const FITS = [
 
 
 export default function Qualify() {
+  const { t } = useI18n();
   const [ref, isInView] = useInView({ threshold: 0.1 });
 
   return (
@@ -50,11 +52,11 @@ export default function Qualify() {
           <div className="mb-4 flex items-center gap-3">
             <span className="brand-rule h-px w-10" />
             <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-st-text-muted sm:text-[10px] sm:tracking-[0.22em]">
-              What we take on
+              {t.qualify.eyebrow}
             </span>
           </div>
           <h2 className="font-display text-3xl leading-[1.2] tracking-[-0.03em] text-st-text sm:text-4xl md:text-5xl">
-            Where we do our best work.
+            {t.qualify.title}
           </h2>
           <p className="mt-5 text-base font-normal leading-[1.7] text-st-text-muted">
             Most of our work starts in one of these. If yours looks different,

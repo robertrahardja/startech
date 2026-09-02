@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useI18n } from "../i18n";
 import { useInView } from "../hooks/useInView";
 import { haptic } from "../lib/haptics";
 
@@ -65,6 +66,7 @@ const OBJECTIONS: Objection[] = [
 ];
 
 export default function Objections() {
+  const { t } = useI18n();
   const [open, setOpen] = useState<string | null>(OBJECTIONS[0].id);
   const [ref, isInView] = useInView({ threshold: 0.1 });
 
@@ -80,11 +82,11 @@ export default function Objections() {
           <div className="mb-4 flex items-center gap-3">
             <span className="brand-rule h-px w-10" />
             <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-st-text-muted sm:text-[10px] sm:tracking-[0.22em]">
-              Straight answers
+              {t.objections.eyebrow}
             </span>
           </div>
           <h2 className="font-display text-3xl leading-[1.2] tracking-[-0.03em] text-st-text sm:text-4xl md:text-5xl">
-            Questions worth asking first.
+            {t.objections.title}
           </h2>
           <p className="mt-5 text-base font-normal leading-[1.7] text-st-text-muted">
             The ones we get asked most, answered plainly &mdash; including

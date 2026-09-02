@@ -1,9 +1,11 @@
 import { useState, useCallback } from "react";
+import { useI18n } from "../i18n";
 import { useInView } from "../hooks/useInView";
 import { SectionHeader } from "./Products";
 import type { ContactFormData } from "../types";
 
 export default function Contact() {
+  const { t } = useI18n();
   const [ref, isInView] = useInView({ threshold: 0.1 });
   const [form, setForm] = useState<ContactFormData>({
     name: "",
@@ -61,9 +63,9 @@ export default function Contact() {
     <section id="contact" className="relative py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <SectionHeader
-          label="Contact"
-          title="Thirty minutes, and an honest answer"
-          subtitle="Tell us what the process costs you today, and we will come back with what is worth building."
+          label={t.contact.eyebrow}
+          title={t.contact.title}
+          subtitle={t.contact.sub}
         />
 
         <div
@@ -76,12 +78,12 @@ export default function Contact() {
           <div className="card rounded-2xl p-7 sm:p-8">
             <div className="space-y-5">
               <ContactDetail
-                label="Email"
+                label={t.contact.email}
                 value="info@startech-innovation.com"
                 href="mailto:info@startech-innovation.com"
               />
               <ContactDetail
-                label="Phone"
+                label={t.contact.phone}
                 value="+65 9069 3236"
                 href="tel:+6590693236"
               />
@@ -154,7 +156,7 @@ export default function Contact() {
                 disabled={status === "sending"}
                 className="hero-btn-primary relative w-full overflow-hidden rounded-xl px-4 py-3.5 text-[13px] font-normal tracking-wide text-st-text transition-all duration-500 disabled:opacity-40"
               >
-                {status === "sending" ? "Sending..." : "Send message"}
+                {status === "sending" ? "Sending..." : "{t.contact.send}"}
               </button>
             )}
           </form>

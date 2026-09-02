@@ -1,4 +1,5 @@
 import { useInView } from "../hooks/useInView";
+import { useI18n } from "../i18n";
 import { CASES, type CaseStudy } from "./caseStudiesData";
 
 function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
@@ -76,6 +77,7 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
 }
 
 export default function CaseStudies() {
+  const { t } = useI18n();
   const [ref, isInView] = useInView({ threshold: 0.1 });
 
   return (
@@ -90,11 +92,11 @@ export default function CaseStudies() {
           <div className="mb-4 flex items-center gap-3">
             <span className="brand-rule h-px w-10" />
             <span className="text-[10px] font-medium tracking-[0.22em] uppercase text-st-text-muted">
-              Selected work
+              {t.work.eyebrow}
             </span>
           </div>
           <h2 className="font-display text-3xl leading-[1.2] tracking-[-0.03em] text-st-text sm:text-4xl md:text-5xl">
-            Systems running in production.
+            {t.work.title}
           </h2>
           <p className="mt-5 text-base font-normal leading-[1.7] text-st-text-muted">
             Four builds, described the way a business owner would describe them

@@ -2,20 +2,17 @@ import type { CSSProperties } from "react";
 import AiIcon from "./AiIcon";
 import { usePointerGlow } from "../hooks/usePointerGlow";
 import { AI_CHAT_ENABLED } from "../lib/features";
+import { useI18n } from "../i18n";
+import { fullStop, setsSolid } from "../i18n/locales";
 
 interface HeroProps {
   onAskAi: () => void;
 }
 
-/** Proof points shown under the fold-line. Every figure is verifiable. */
-const PROOF = [
-  { figure: "20+", label: "years, both sides" },
-  { figure: "7,060", label: "tests that must pass" },
-  { figure: "2", label: "jurisdictions" },
-  { figure: "4", label: "languages" },
-];
-
 export default function Hero({ onAskAi }: HeroProps) {
+  const { t, locale } = useI18n();
+  // Japanese and Chinese set solid; Korean and Latin scripts keep spaces.
+  const gap = setsSolid(locale) ? null : " ";
   const onPointerMove = usePointerGlow();
 
   return (
@@ -68,10 +65,8 @@ export default function Hero({ onAskAi }: HeroProps) {
         >
           <span className="brand-rule h-px w-10" />
           <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-st-text-muted sm:text-[10px] sm:tracking-[0.22em]">
-            <span className="sm:hidden">Singapore &middot; Working worldwide</span>
-            <span className="hidden sm:inline">
-              Singapore &middot; Since 2021 &middot; Working worldwide
-            </span>
+            <span className="sm:hidden">{t.hero.eyebrowShort}</span>
+            <span className="hidden sm:inline">{t.hero.eyebrowFull}</span>
           </span>
         </div>
 
@@ -80,29 +75,32 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="max-w-4xl font-display text-[2.75rem] leading-[1.05] tracking-[-0.03em] text-st-text sm:text-5xl md:text-6xl lg:text-7xl"
           style={{ textWrap: "balance" }}
         >
+          {/* Four parts rather than five words: CJK locales do not put spaces
+              between words and order the clause differently, so the catalogue
+              supplies each fragment and the spacing comes from the locale. */}
           <span className="rise inline-block" style={{ animationDelay: "0.05s" }}>
-            We
-          </span>{" "}
-          <span className="rise inline-block" style={{ animationDelay: "0.12s" }}>
-            speak
-          </span>{" "}
+            {t.hero.headlineLead}
+          </span>
+          {gap}
           <span
             className="rise gradient-text inline-block italic"
-            style={{ animationDelay: "0.2s" }}
+            style={{ animationDelay: "0.18s" }}
           >
-            business
-          </span>{" "}
+            {t.hero.headlineBusiness}
+          </span>
+          {gap}
           <span className="rise inline-block" style={{ animationDelay: "0.3s" }}>
-            and
-          </span>{" "}
+            {t.hero.headlineAnd}
+          </span>
+          {gap}
           <span
             className="rise gradient-text inline-block italic"
             style={{ animationDelay: "0.38s" }}
           >
-            tech
+            {t.hero.headlineTech}
           </span>
           <span className="rise inline-block" style={{ animationDelay: "0.46s" }}>
-            .
+            {fullStop(locale)}
           </span>
         </h1>
 
@@ -111,8 +109,7 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="mt-6 max-w-2xl text-[1.0625rem] font-normal leading-[1.55] text-st-text-muted animate-fade-in-up sm:mt-8 sm:text-base sm:leading-[1.7] md:text-lg"
           style={{ animationDelay: "0.15s" }}
         >
-          We build the custom software that secures your competitive
-          advantage.
+          {t.hero.sub}
         </p>
 
         {/* CTAs — one primary action and two ways in for someone not ready
@@ -126,7 +123,7 @@ export default function Hero({ onAskAi }: HeroProps) {
             className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-center text-[15px] font-medium tracking-wide text-st-text transition-all duration-500 active:scale-[0.97] sm:py-4 sm:text-[13px]"
           >
             <span className="relative z-10 flex items-center justify-center gap-2.5">
-              Let&apos;s talk
+              {t.hero.ctaPrimary}
               <svg
                 className="h-3.5 w-3.5 text-white/80 transition-all duration-500 group-hover:translate-x-0.5 group-hover:text-white"
                 fill="none"
@@ -149,7 +146,7 @@ export default function Hero({ onAskAi }: HeroProps) {
             className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-center text-[15px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:py-4 sm:text-[13px]"
           >
             <span className="relative z-10 flex items-center justify-center gap-2.5">
-              See the work
+              {t.hero.ctaWork}
             </span>
           </a>
 
@@ -161,7 +158,7 @@ export default function Hero({ onAskAi }: HeroProps) {
             >
               <span className="relative z-10 flex items-center justify-center gap-2.5">
                 <AiIcon className="btn-spark h-3.5 w-3.5" />
-                Ask a question
+                {t.hero.ctaAsk}
               </span>
             </button>
           )}
@@ -171,9 +168,7 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="mt-5 text-[12.5px] font-normal leading-relaxed tracking-wide text-st-text-muted/70 animate-fade-in sm:text-[11px]"
           style={{ animationDelay: "0.3s" }}
         >
-          Free, and no brief document required &mdash; bring the process that
-          costs you the most time. If software isn&apos;t the answer,
-          we&apos;ll say so.
+          {t.hero.note}
         </p>
 
         {/* Proof strip */}
@@ -181,7 +176,12 @@ export default function Hero({ onAskAi }: HeroProps) {
           className="mt-11 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-7 border-t border-st-border pb-16 pt-7 animate-fade-in sm:mt-16 sm:grid-cols-4 sm:gap-x-8 sm:pb-0 sm:pt-8"
           style={{ animationDelay: "0.4s" }}
         >
-          {PROOF.map((p, i) => (
+          {[
+            { figure: t.hero.proof.yearsFigure, label: t.hero.proof.yearsLabel },
+            { figure: t.hero.proof.testsFigure, label: t.hero.proof.testsLabel },
+            { figure: t.hero.proof.jurisdictionsFigure, label: t.hero.proof.jurisdictionsLabel },
+            { figure: t.hero.proof.languagesFigure, label: t.hero.proof.languagesLabel },
+          ].map((p, i) => (
             <div
               key={p.label}
               className="figure-in"
@@ -217,21 +217,21 @@ export default function Hero({ onAskAi }: HeroProps) {
               Robert Rahardja
             </div>
             <div className="mt-1.5 text-[13px] font-normal tracking-wide text-st-text-muted">
-              Managing Director
+              {t.hero.card.role}
             </div>
           </div>
 
           <div className="mt-8 gradient-text font-display text-xl tracking-[-0.01em]">
-            Business. Finance. Tech.
+            {t.hero.card.tagline}
           </div>
 
           <dl className="mt-10 space-y-2.5 border-t border-st-border pt-6 text-[12.5px]">
             <div className="flex justify-between gap-4">
-              <dt className="text-st-text-muted">Singapore</dt>
-              <dd className="text-st-text-muted/80">UEN 202110461R</dd>
+              <dt className="text-st-text-muted">{t.hero.card.country}</dt>
+              <dd className="text-st-text-muted/80">{t.hero.card.uen}</dd>
             </div>
             <div className="flex justify-between gap-4">
-              <dt className="text-st-text-muted">Working in</dt>
+              <dt className="text-st-text-muted">{t.hero.card.workingIn}</dt>
               <dd className="text-st-text-muted/80">EN &middot; 中文 &middot; MS &middot; ID</dd>
             </div>
           </dl>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useI18n } from "../i18n";
 import { useInView } from "../hooks/useInView";
 import { SectionHeader } from "./Products";
 import ExpandedDetailCard from "./ExpandedDetailCard";
@@ -75,14 +76,15 @@ const INDUSTRIES = [
 type Industry = (typeof INDUSTRIES)[number];
 
 export default function Industries() {
+  const { t } = useI18n();
   const [expanded, setExpanded] = useState<Industry | null>(null);
 
   return (
     <section id="industries" className="relative py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <SectionHeader
-          label="Industries"
-          title="Domain expertise"
+          label={t.industries.eyebrow}
+          title={t.industries.title}
           subtitle="Deep understanding of your industry's regulatory, operational, and technical requirements."
         />
 

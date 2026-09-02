@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useI18n } from "../i18n";
 import { useInView } from "../hooks/useInView";
 import { SectionHeader } from "./Products";
 import type { TimelineStep } from "../types";
@@ -64,6 +65,7 @@ const STEPS: TimelineStep[] = [
 ];
 
 export default function Approach() {
+  const { t } = useI18n();
   const [active, setActive] = useState(0);
   const [sectionRef, isInView] = useInView({ threshold: 0.15 });
   const touchStart = useRef(0);
@@ -88,8 +90,8 @@ export default function Approach() {
     <section id="approach" className="relative py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <SectionHeader
-          label="Approach"
-          title="Strategy to production in 90 days"
+          label={t.approach.eyebrow}
+          title={t.approach.title}
           subtitle="A proven process refined across enterprise deployments. We implement, not just advise."
         />
 

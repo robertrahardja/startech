@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useI18n } from "../i18n";
 import { useSnapRail, useTapGuard } from "../hooks/useSnapRail";
 import { haptic } from "../lib/haptics";
 import { useInView } from "../hooks/useInView";
@@ -154,6 +155,7 @@ function ProductCard({
 }
 
 export default function Products() {
+  const { t } = useI18n();
   const [expanded, setExpanded] = useState<Product | null>(null);
   const { railRef, active, goTo } = useSnapRail(PRODUCTS.length);
 
@@ -161,8 +163,8 @@ export default function Products() {
     <section id="products" className="relative py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <SectionHeader
-          label="Practices"
-          title="Four practices, one delivery team"
+          label={t.practices.eyebrow}
+          title={t.practices.title}
           subtitle="We go deep in four areas rather than wide across twenty. Each one is led personally by the principal and staffed with specialists as the work demands."
         />
 

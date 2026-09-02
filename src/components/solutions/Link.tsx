@@ -1,4 +1,5 @@
 import type { ReactNode, MouseEvent } from "react";
+import { useI18n } from "../../i18n";
 
 interface LinkProps {
   href: string;
@@ -22,23 +23,33 @@ export default function Link({
   className,
   onClick,
 }: LinkProps) {
+  const { path: localise } = useI18n();
+
+  // Internal paths carry the active locale prefix, so navigating inside a
+  // translated site never drops the visitor back into English. Hash-only and
+  // external links are left alone.
+  const href_ =
+    href.startsWith("http") || href.startsWith("#")
+      ? href
+      : localise(href);
+
   function handleClick(e: MouseEvent<HTMLAnchorElement>) {
     // External links: let the browser handle it
-    if (href.startsWith("http")) {
+    if (href_.startsWith("http")) {
       onClick?.();
       return;
     }
 
     // Pure hash link on the same page (e.g. #products)
-    if (href.startsWith("#")) {
+    if (href_.startsWith("#")) {
       onClick?.();
       return;
     }
 
     // Parse path and hash from href (e.g. "/#contact" or "/solutions")
-    const hashIndex = href.indexOf("#");
-    const path = hashIndex >= 0 ? href.slice(0, hashIndex) : href;
-    const hash = hashIndex >= 0 ? href.slice(hashIndex) : "";
+    const hashIndex = href_.indexOf("#");
+    const path = hashIndex >= 0 ? href_.slice(0, hashIndex) : href_;
+    const hash = hashIndex >= 0 ? href_.slice(hashIndex) : "";
     const normalizedPath = path || "/";
 
     // Same page + hash: let the browser handle native hash scroll
@@ -52,7 +63,7 @@ export default function Link({
 
     // Navigate to the path if it changed
     if (window.location.pathname !== normalizedPath) {
-      window.history.pushState({}, "", href);
+      window.history.pushState({}, "", href_);
       window.dispatchEvent(new PopStateEvent("popstate"));
     }
 
@@ -71,7 +82,7 @@ export default function Link({
   }
 
   return (
-    <a href={href} className={className} onClick={handleClick}>
+    <a href={href_} className={className} onClick={handleClick}>
       {children}
     </a>
   );

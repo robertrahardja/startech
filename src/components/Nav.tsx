@@ -2,21 +2,25 @@ import { useState, useEffect } from "react";
 import AiIcon from "./AiIcon";
 import Link from "./solutions/Link";
 import { AI_CHAT_ENABLED } from "../lib/features";
+import { useI18n } from "../i18n";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 interface NavProps {
   onAskAi: () => void;
 }
 
+/** Keyed rather than literal, so the labels follow the active language. */
 const NAV_LINKS = [
-  { label: "Work", href: "/#work" },
-  { label: "Practices", href: "/#products" },
-  { label: "Solutions", href: "/solutions" },
-  { label: "Industries", href: "/#industries" },
-  { label: "How we work", href: "/#approach" },
-  { label: "Contact", href: "/#contact" },
-];
+  { key: "work", href: "/#work" },
+  { key: "practices", href: "/#products" },
+  { key: "solutions", href: "/solutions" },
+  { key: "industries", href: "/#industries" },
+  { key: "approach", href: "/#approach" },
+  { key: "contact", href: "/#contact" },
+] as const;
 
 export default function Nav({ onAskAi }: NavProps) {
+  const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -45,7 +49,7 @@ export default function Nav({ onAskAi }: NavProps) {
           <div className="flex items-center justify-end px-6 py-5">
             <button
               onClick={() => setMobileOpen(false)}
-              aria-label="Close menu"
+              aria-label={t.nav.closeMenu}
               className="flex h-11 w-11 items-center justify-center rounded-md"
             >
               <svg className="h-4 w-4 text-st-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,10 +78,11 @@ export default function Nav({ onAskAi }: NavProps) {
                 onClick={() => setMobileOpen(false)}
                 className="font-display text-2xl text-st-text transition-colors duration-300 hover:text-st-text-muted"
               >
-                {link.label}
+                {t.nav[link.key]}
               </Link>
             ))}
             <div className="mt-2 h-px w-12 bg-st-surface" />
+            <LanguageSwitcher />
             {AI_CHAT_ENABLED ? (
               <button
                 onClick={() => {
@@ -97,7 +102,7 @@ export default function Nav({ onAskAi }: NavProps) {
                 onClick={() => setMobileOpen(false)}
                 className="hero-btn-primary group relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-medium tracking-wide text-white transition-all duration-500"
               >
-                <span className="relative z-10">Let&apos;s talk</span>
+                <span className="relative z-10">{t.nav.letsTalk}</span>
               </Link>
             )}
           </div>
@@ -134,11 +139,12 @@ export default function Nav({ onAskAi }: NavProps) {
                   href={link.href}
                   className="nav-shimmer-link rounded-md px-4 py-2 text-sm font-normal tracking-wide transition-colors duration-300 lg:text-base"
                 >
-                  {link.label}
+                  {t.nav[link.key]}
                 </Link>
               ))}
             </div>
-            <div className="ask-us-glow relative ml-4 rounded-xl">
+            <LanguageSwitcher className="ml-2" />
+            <div className="ask-us-glow relative ml-2 rounded-xl">
               {AI_CHAT_ENABLED ? (
                 <button
                   onClick={onAskAi}
@@ -154,7 +160,7 @@ export default function Nav({ onAskAi }: NavProps) {
                   href="/#contact"
                   className="hero-btn-primary group relative flex items-center overflow-hidden rounded-xl px-5 py-2.5 text-sm font-medium tracking-wide text-white transition-all duration-500 lg:text-base"
                 >
-                  <span className="relative z-10">Let&apos;s talk</span>
+                  <span className="relative z-10">{t.nav.letsTalk}</span>
                 </Link>
               )}
             </div>
@@ -163,7 +169,7 @@ export default function Nav({ onAskAi }: NavProps) {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen(true)}
-            aria-label="Open menu"
+            aria-label={t.nav.openMenu}
             className="ml-auto flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-md md:hidden"
           >
             <span className="block h-px w-4 bg-st-text-muted/60" />

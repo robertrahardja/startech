@@ -9,6 +9,8 @@ import AskStartech from "./components/AskStartech";
 import SolutionsIndex from "./components/solutions/SolutionsIndex";
 import SolutionPage from "./components/solutions/SolutionPage";
 import { useCurrentPage } from "./lib/router";
+import { I18nProvider } from "./i18n";
+import LanguageHint from "./components/LanguageHint";
 import { AI_CHAT_ENABLED } from "./lib/features";
 
 /**
@@ -19,7 +21,7 @@ import { AI_CHAT_ENABLED } from "./lib/features";
 export default function App() {
   const [chatOpen, setChatOpen] = useState(false);
   const [ctaBarUp, setCtaBarUp] = useState(false);
-  const page = useCurrentPage();
+  const { page, locale } = useCurrentPage();
 
   // A deep link like /#products arrives before React has rendered the
   // section, so the browser finds no such element and stays at the top.
@@ -39,8 +41,10 @@ export default function App() {
   const closeChat = useCallback(() => setChatOpen(false), []);
 
   return (
+    <I18nProvider locale={locale}>
     <div className="min-h-screen bg-st-bg text-st-text">
       <ScrollProgress />
+      <LanguageHint />
       <Nav onAskAi={openChat} />
 
       <main>
@@ -67,5 +71,6 @@ export default function App() {
         <AskStartech isOpen={chatOpen} onClose={closeChat} />
       )}
     </div>
+    </I18nProvider>
   );
 }
