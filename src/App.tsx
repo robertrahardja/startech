@@ -77,7 +77,7 @@ export default function App() {
       <button
         onClick={toggleChat}
         aria-label="Ask StarTech AI"
-        className="star-whirl hero-btn-primary fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center !rounded-full text-st-gold-light/60 transition-colors duration-500 hover:text-st-gold-light"
+        className="star-whirl hero-btn-primary fixed bottom-4 right-4 z-40 flex h-11 w-11 items-center justify-center !rounded-full text-white/90 opacity-90 transition-all duration-500 hover:opacity-100 sm:bottom-6 sm:right-6 sm:h-12 sm:w-12 sm:opacity-100"
       >
         <AiIcon className="h-4 w-4" />
       </button>
