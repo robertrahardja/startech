@@ -318,18 +318,6 @@
     }
   }
 
-  /* The hero mark drifts almost imperceptibly, so a large static logo does
-     not read as a placeholder image. Transform only, so it composites. */
-  .logo-float {
-    animation: logo-float 9s ease-in-out infinite;
-    filter: drop-shadow(0 0 60px rgba(10, 104, 249, 0.18));
-  }
-
-  @keyframes logo-float {
-    0%, 100% { transform: translateY(0) scale(1); }
-    50%      { transform: translateY(-10px) scale(1.015); }
-  }
-
   /* Metric tile — a faint inner light, brightening on hover. */
   .metric-tile:hover {
     border-color: rgba(10, 104, 249, 0.35);
@@ -970,8 +958,7 @@
     transition: none;
   }
 
-  .btn-spark,
-  .logo-float {
+  .btn-spark {
     animation: none !important;
   }
 
