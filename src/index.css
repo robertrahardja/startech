@@ -37,6 +37,13 @@
 
 /* ─── Base Layer ──────────────────────────────────────────────────────────── */
 @layer base {
+  /* The header is fixed, so an anchor jump would otherwise drop the section
+     heading underneath it. Reserve its height on every scroll target. */
+  :target,
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;

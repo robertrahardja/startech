@@ -20,7 +20,7 @@ export default function Footer() {
 
           <div className="flex flex-wrap justify-center gap-1 text-[11px] font-medium tracking-wide text-st-text-muted">
             <Link href="/#products" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text">
-              Products
+              Practices
             </Link>
             <Link href="/solutions" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text">
               Solutions
