@@ -1,7 +1,4 @@
 {
   "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
-  "entry": ["src/main.tsx", "worker/index.ts"],
-  "audit": {
-    "healthBaseline": "fallow-health-baseline.json"
-  }
+  "entry": ["src/main.tsx", "worker/index.ts"]
 }
