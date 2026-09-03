@@ -165,7 +165,7 @@ export default function Hero({ onAskAi }: HeroProps) {
         </div>
 
         <p
-          className="mt-5 text-[12.5px] font-normal leading-relaxed tracking-wide text-st-text-muted/70 animate-fade-in sm:text-[11px]"
+          className="mt-5 text-[12.5px] font-normal leading-relaxed tracking-wide text-st-text-muted/85 animate-fade-in sm:text-[11px]"
           style={{ animationDelay: "0.3s" }}
         >
           {t.hero.note}

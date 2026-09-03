@@ -22,7 +22,12 @@
   --color-st-border: #595966;
   --color-st-border-hover: #7a7a8a;
   --color-st-text: #ffffff;
-  --color-st-text-muted: #9a9aa8;
+  /* Secondary text. Raised from #9a9aa8: the token itself passed AA, but it
+     is used faded (text-st-text-muted/40 through /90) in ~29 places, and
+     below 80% those landed at 2.1-3.8:1 — the "hard to read on mobile"
+     report. At this value the common /60 and /70 fades clear 4.5:1 on the
+     card fill, so the tonal hierarchy survives without costing legibility. */
+  --color-st-text-muted: #c2c2cc;
 
   /* Gradient endpoints, sampled straight off the logo blob. */
   --color-st-blue: #0a68f9;
@@ -1202,4 +1207,113 @@
 @media (prefers-reduced-motion: reduce) {
   .swipe-hint { animation: none; }
   .pressable:active { transform: none; }
+}
+
+/* ─── Mobile type scale ─────────────────────────────────────────────────────
+   The composition was set at desktop, where 10-13px labels read as fine
+   detail. On a phone the same values are simply small: 144 of 178 text
+   elements measured under 16px, the largest group at 10px, which is roughly
+   half a comfortable reading size held at arm's length.
+
+   Scaling here rather than editing 325 hardcoded utilities keeps the desktop
+   composition exactly as designed and lifts the phone in one place. Each step
+   maps to the next size up the existing scale, so the type hierarchy is
+   preserved — the whole scale shifts, nothing collapses into anything else.
+
+   Applied by pixel value, so it follows the design system rather than
+   guessing per component. */
+@media (max-width: 767px) {
+  .text-\[10px\] { font-size: 12px; }
+  .text-\[11px\] { font-size: 13px; }
+  .text-\[12px\] { font-size: 14px; }
+  .text-\[13px\] { font-size: 15px; }
+  .text-\[14px\] { font-size: 16px; }
+  .text-\[15px\] { font-size: 16px; }
+
+  /* Long-form copy benefits from a slightly looser measure once it is bigger. */
+  p.text-\[13px\], p.text-\[14px\], p.text-\[15px\] { line-height: 1.75; }
+}
+
+/* ─── Reading motion ────────────────────────────────────────────────────────
+   Added with the mobile type scale. Larger text left more room between
+   elements, and these fill it with motion that tracks reading rather than
+   decorating it. Follows the three rules of the motion system above:
+   compositor-only properties, no hover on touch, and fully disabled under
+   prefers-reduced-motion.
+
+   All of it is scroll-driven — no observers, no listeners, no main-thread
+   work while the user is scrolling. */
+@layer utilities {
+
+  /* Body copy settles into place as it enters the viewport: a short rise and
+     a slight blur clearing, which reads as text coming into focus. Ends well
+     before the element is centred so it is fully legible while being read. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .read-in {
+        animation: read-in linear both;
+        animation-timeline: view();
+        animation-range: entry 5% cover 32%;
+      }
+    }
+  }
+
+  @keyframes read-in {
+    from {
+      opacity: 0.55;
+      transform: translate3d(0, 12px, 0);
+      filter: blur(1.5px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      filter: blur(0);
+    }
+  }
+
+  /* Section rules draw themselves as the section arrives, which gives the
+     eye a starting edge for the block of text beneath. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .rule-draw {
+        transform-origin: 0 50%;
+        animation: rule-draw linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 26%;
+      }
+    }
+  }
+
+  @keyframes rule-draw {
+    from { transform: scaleX(0); opacity: 0; }
+    to   { transform: scaleX(1); opacity: 1; }
+  }
+
+  /* Eyebrow labels track in slightly as they appear. Letter-spacing is not
+     compositor-friendly, so the effect is carried on transform alone. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .label-in {
+        animation: label-in linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 22%;
+      }
+    }
+  }
+
+  @keyframes label-in {
+    from { opacity: 0; transform: translate3d(-6px, 0, 0); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .read-in,
+  .rule-draw,
+  .label-in {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }

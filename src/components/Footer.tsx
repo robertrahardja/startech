@@ -48,7 +48,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 text-center text-[10px] font-medium tracking-wide text-st-text-muted/60">
+        <div className="mt-10 text-center text-[11px] font-medium tracking-wide text-st-text-muted/80">
           &copy; {year} {t.footer.rights}
         </div>
       </div>

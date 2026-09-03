@@ -92,7 +92,7 @@ function ProductCard({
               </span>
             ))}
             {hasDetails && (
-              <span className="ml-auto text-[10px] font-medium tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
+              <span className="ml-auto text-[11px] font-medium tracking-[0.15em] uppercase text-st-text-muted/80 transition-colors duration-300 group-hover:text-st-gold-light">
                 Details →
               </span>
             )}

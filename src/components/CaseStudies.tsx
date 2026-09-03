@@ -29,18 +29,18 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
 
           <div className="mt-6 space-y-5">
             <div>
-              <div className="mb-1.5 text-[10px] font-medium tracking-[0.16em] uppercase text-st-pink">
+              <div className="label-in mb-1.5 text-[10px] font-medium tracking-[0.16em] uppercase text-st-pink">
                 {t.work.before}
               </div>
-              <p className="text-sm font-normal leading-[1.75] text-st-text-muted">
+              <p className="read-in text-sm font-normal leading-[1.75] text-st-text-muted">
                 {study.before}
               </p>
             </div>
             <div>
-              <div className="mb-1.5 text-[10px] font-medium tracking-[0.16em] uppercase text-st-blue-light">
+              <div className="label-in mb-1.5 text-[10px] font-medium tracking-[0.16em] uppercase text-st-blue-light">
                 {t.work.built}
               </div>
-              <p className="text-sm font-normal leading-[1.75] text-st-text-muted">
+              <p className="read-in text-sm font-normal leading-[1.75] text-st-text-muted">
                 {study.built}
               </p>
             </div>

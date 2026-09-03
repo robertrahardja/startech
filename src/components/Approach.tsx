@@ -51,7 +51,7 @@ export default function Approach() {
                   <div
                     className={`step-box flex h-10 w-10 items-center justify-center rounded-lg text-sm font-medium transition-all duration-400 sm:h-11 sm:w-11 ${
                       i === active
-                        ? "border border-st-blue/40 bg-st-blue/10 text-st-blue"
+                        ? "border border-st-blue/40 bg-st-blue/10 text-st-blue-light"
                         : i < active
                           ? "border border-st-border bg-st-surface text-st-text-muted"
                           : "border border-st-border bg-st-surface text-st-text-muted/70"
@@ -62,7 +62,7 @@ export default function Approach() {
                   </div>
                   <span
                     className={`text-[11px] font-medium tracking-[0.1em] uppercase transition-colors duration-400 ${
-                      i === active ? "text-st-blue" : "text-st-text-muted/60"
+                      i === active ? "text-st-blue-light" : "text-st-text-muted/80"
                     }`}
                   >
                     {DAY_LABELS[i]}
@@ -97,7 +97,7 @@ export default function Approach() {
               {/* Header */}
               <div className="mb-6 flex items-start justify-between">
                 <div>
-                  <span className="mb-2 inline-block text-sm font-normal tracking-[0.2em] uppercase text-st-blue sm:text-base">
+                  <span className="mb-2 inline-block text-sm font-normal tracking-[0.2em] uppercase text-st-blue-light sm:text-base">
                     {step.week}
                   </span>
                   <h3 className="text-xl font-medium tracking-wide text-st-text sm:text-2xl">
@@ -105,7 +105,7 @@ export default function Approach() {
                   </h3>
                 </div>
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-st-border bg-st-surface">
-                  <span className="font-display text-lg text-st-blue">
+                  <span className="font-display text-lg text-st-blue-light">
                     {String(active + 1).padStart(2, "0")}
                   </span>
                 </div>
@@ -130,7 +130,7 @@ export default function Approach() {
                 <span className="text-[11px] font-medium tracking-[0.15em] uppercase text-st-text-muted">
                   Deliverable
                 </span>
-                <p className="mt-1.5 text-[15px] font-normal leading-[1.6] text-st-blue">
+                <p className="mt-1.5 text-[15px] font-normal leading-[1.6] text-st-blue-light">
                   {step.deliverable}
                 </p>
               </div>

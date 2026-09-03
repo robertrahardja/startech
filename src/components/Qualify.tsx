@@ -32,7 +32,7 @@ export default function Qualify() {
         >
           <div className="mb-4 flex items-center gap-3">
             <span className="brand-rule h-px w-10" />
-            <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-st-text-muted sm:text-[10px] sm:tracking-[0.22em]">
+            <span className="label-in text-[11px] font-medium tracking-[0.2em] uppercase text-st-text-muted sm:text-[10px] sm:tracking-[0.22em]">
               {t.qualify.eyebrow}
             </span>
           </div>
