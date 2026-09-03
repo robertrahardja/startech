@@ -8,6 +8,38 @@ import {
 } from "../i18n/locales";
 
 /**
+ * Language list for the mobile menu.
+ *
+ * A dropdown is the wrong shape inside a full-screen menu: it opens over the
+ * items beneath it, and the menu's own scroll container clips it. The sheet
+ * has room, so the languages are simply laid out as a row of choices.
+ */
+export function LanguageRow() {
+  const { locale } = useI18n();
+  const { path } = parseLocalePath(window.location.pathname);
+
+  return (
+    <nav aria-label="Language" className="flex flex-wrap justify-center gap-x-1 gap-y-1 px-6">
+      {LOCALES.map((code) => (
+        <a
+          key={code}
+          href={localePath(code, path)}
+          hrefLang={LOCALE_META[code].htmlLang}
+          aria-current={code === locale ? "true" : undefined}
+          className={`flex min-h-[44px] items-center rounded-lg px-3 text-[13px] transition-colors duration-200 ${
+            code === locale
+              ? "text-st-blue-light"
+              : "text-st-text-muted active:text-st-text"
+          }`}
+        >
+          {LOCALE_META[code].label}
+        </a>
+      ))}
+    </nav>
+  );
+}
+
+/**
  * Language menu.
  *
  * Switching keeps the visitor where they are: the current route is preserved

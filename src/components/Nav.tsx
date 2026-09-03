@@ -3,7 +3,7 @@ import AiIcon from "./AiIcon";
 import Link from "./solutions/Link";
 import { AI_CHAT_ENABLED } from "../lib/features";
 import { useI18n } from "../i18n";
-import LanguageSwitcher from "./LanguageSwitcher";
+import LanguageSwitcher, { LanguageRow } from "./LanguageSwitcher";
 
 interface NavProps {
   onAskAi: () => void;
@@ -58,8 +58,9 @@ export default function Nav({ onAskAi }: NavProps) {
             </button>
           </div>
 
-          {/* Logo + Links — centered */}
-          <div className="flex flex-1 flex-col items-center justify-center gap-8">
+          {/* Links fill the sheet; the CTA and language row anchor the foot,
+              so seven languages cannot push the menu into overflow. */}
+          <div className="flex flex-1 flex-col items-center justify-center gap-7 overflow-y-auto py-4">
             <Link
               href="/"
               onClick={() => setMobileOpen(false)}
@@ -81,8 +82,6 @@ export default function Nav({ onAskAi }: NavProps) {
                 {t.nav[link.key]}
               </Link>
             ))}
-            <div className="mt-2 h-px w-12 bg-st-surface" />
-            <LanguageSwitcher />
             {AI_CHAT_ENABLED ? (
               <button
                 onClick={() => {
@@ -100,11 +99,17 @@ export default function Nav({ onAskAi }: NavProps) {
               <Link
                 href="/#contact"
                 onClick={() => setMobileOpen(false)}
-                className="hero-btn-primary group relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-medium tracking-wide text-white transition-all duration-500"
+                className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-3.5 text-[15px] font-medium tracking-wide text-white transition-all duration-500"
               >
                 <span className="relative z-10">{t.nav.letsTalk}</span>
               </Link>
             )}
+          </div>
+
+          {/* Language choice sits at the foot, out of the reading order but
+              within thumb reach. */}
+          <div className="border-t border-st-border pb-8 pt-5">
+            <LanguageRow />
           </div>
         </div>
       )}
