@@ -16,25 +16,6 @@ import { useI18n } from "../i18n";
  * range on the first call, a firm number after discovery.
  */
 
-const FITS = [
-  {
-    headline: "Your operation runs on spreadsheets and messages",
-    body: "Inventory in one place, payments in another, decisions in a chat thread. It worked at ten people and it is now the thing holding you back.",
-  },
-  {
-    headline: "A vendor already tried and it did not work",
-    body: "You paid for a system your team will not use. You are wary of starting again, and you want to know what will be different this time.",
-  },
-  {
-    headline: "You operate across borders",
-    body: "A Japanese exporter shipping worldwide. A European or American company with an Asian entity. A Singapore business hiring in Indonesia. Different currencies, tax regimes and filing calendars in one system — and no single supplier who understands both ends without being taught.",
-  },
-  {
-    headline: "The numbers have to be right, not roughly right",
-    body: "Money, payroll, claims — the places where close enough is not good enough, and being wrong costs more than being late.",
-  },
-];
-
 
 export default function Qualify() {
   const { t } = useI18n();
@@ -66,7 +47,7 @@ export default function Qualify() {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
-          {FITS.map((fit, i) => (
+          {t.qualify.fits.map((fit, i) => (
             <FitCard key={fit.headline} fit={fit} index={i} />
           ))}
         </div>

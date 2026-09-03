@@ -6,64 +6,13 @@ import { useInView } from "../hooks/useInView";
 import type { Product } from "../types";
 import ExpandedDetailCard from "./ExpandedDetailCard";
 
-const PRODUCTS: Product[] = [
-  {
-    title: "AI Implementation",
-    description:
-      "Retrieval over your own documents, domain-tuned models, and automation pipelines — with the guardrails and source attribution that make the output usable in a regulated business.",
-    details: [
-      "Retrieval-augmented generation with vector search over your proprietary data",
-      "Multi-provider routing behind an abstraction layer — swap models without touching product code",
-      "Confidence scoring with source attribution, so answers can be checked",
-      "Guardrails for hallucination prevention and compliance review",
-    ],
-    icon: "brain",
-    tags: ["Claude", "OpenAI", "RAG", "Vectorize"],
-    span: "wide",
-  },
-  {
-    title: "Enterprise Software",
-    description:
-      "Full ERP and line-of-business systems — financials, HR, inventory, procurement and manufacturing — built to be audited, not just demoed.",
-    details: [
-      "General ledger, AP, AR, payroll and fixed assets",
-      "Multi-tenant, multi-currency, role-based access, audit-ready logging",
-      "Singapore payroll compliance engine verified scenario-by-scenario against CPF Board tables",
-      "Integrates with Xero, QuickBooks, Sheets and Excel",
-    ],
-    icon: "erp",
-    tags: ["Java 21", "Spring Boot", "PostgreSQL"],
-    span: "default",
-  },
-  {
-    title: "Financial Systems",
-    description:
-      "Accounting engines, document AI, valuation and reconciliation for operators who answer to a regulator.",
-    details: [
-      "Automated reconciliation across accounts and currencies, with deterministic dedupe",
-      "Bank statement ingestion — including formats that carry no transfer identifier",
-      "KYC and AML workflows, multi-jurisdiction regulatory reporting",
-      "DCF and comparable analysis with Monte Carlo simulation",
-    ],
-    icon: "chart",
-    tags: ["D1", "PostgreSQL", "Workers"],
-    span: "default",
-  },
-  {
-    title: "Healthcare & Public Sector",
-    description:
-      "Patient platforms, medical records and citizen services for high-volume, high-assurance environments where the data rules come first.",
-    details: [
-      "Data residency decided at architecture time, not retrofitted after review",
-      "Patient-owned custodian model — never a claim to be the provider's record system",
-      "Multilingual delivery across English, Chinese, Malay and Bahasa Indonesia",
-      "High-availability infrastructure for critical services",
-    ],
-    icon: "health",
-    tags: ["PDPA", "BPJS", "Cloudflare"],
-    span: "wide",
-  },
-];
+/** Structure only — icon, tags and span. The words live in the catalogue. */
+const PRODUCT_META = [
+  { icon: "brain", tags: ["Claude", "OpenAI", "RAG", "Vectorize"], span: "wide" },
+  { icon: "erp", tags: ["Java 21", "Spring Boot", "PostgreSQL"], span: "default" },
+  { icon: "chart", tags: ["D1", "PostgreSQL", "Workers"], span: "default" },
+  { icon: "health", tags: ["PDPA", "BPJS", "Cloudflare"], span: "wide" },
+] as const;
 
 const ICONS: Record<string, React.ReactNode> = {
   erp: (
@@ -157,7 +106,7 @@ function ProductCard({
 export default function Products() {
   const { t } = useI18n();
   const [expanded, setExpanded] = useState<Product | null>(null);
-  const { railRef, active, goTo } = useSnapRail(PRODUCTS.length);
+  const { railRef, active, goTo } = useSnapRail(t.practices.items.length);
 
   return (
     <section id="products" className="relative py-20 sm:py-24">
@@ -174,8 +123,13 @@ export default function Products() {
           ref={railRef}
           className="snap-rail grid-cols-1 gap-3 sm:grid sm:grid-cols-2 sm:gap-3 lg:grid-cols-3"
         >
-          {PRODUCTS.map((product, i) => (
-            <div key={product.title} className="snap-item" data-snap-index={i}>
+          {t.practices.items.map((copy, i) => {
+            const product = {
+              ...copy,
+              ...PRODUCT_META[i],
+            } as unknown as Product;
+            return (
+            <div key={copy.title} className="snap-item" data-snap-index={i}>
               <ProductCard
                 product={product}
                 index={i}
@@ -183,16 +137,17 @@ export default function Products() {
                 railRef={railRef}
               />
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Position indicator — phones only, where the rail exists. */}
         <div className="mt-4 flex items-center justify-center sm:hidden">
-          {PRODUCTS.map((product, i) => (
+          {t.practices.items.map((copy, i) => (
             <button
-              key={product.title}
+              key={copy.title}
               onClick={() => goTo(i)}
-              aria-label={`Show ${product.title}`}
+              aria-label={copy.title}
               aria-current={i === active}
               className="flex h-11 w-11 items-center justify-center"
             >

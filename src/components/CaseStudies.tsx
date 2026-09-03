@@ -1,6 +1,6 @@
 import { useInView } from "../hooks/useInView";
 import { useI18n } from "../i18n";
-import { CASES, type CaseStudy } from "./caseStudiesData";
+import type { CaseStudy } from "./caseStudiesData";
 
 function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
   const [ref, isInView] = useInView({ threshold: 0.1 });
@@ -106,8 +106,8 @@ export default function CaseStudies() {
         </div>
 
         <div className="space-y-14">
-          {CASES.map((study, i) => (
-            <CaseCard key={study.id} study={study} index={i} />
+          {t.work.cases.map((study, i) => (
+            <CaseCard key={study.title} study={study} index={i} />
           ))}
         </div>
 

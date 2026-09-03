@@ -2,67 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import { useI18n } from "../i18n";
 import { useInView } from "../hooks/useInView";
 import { SectionHeader } from "./Products";
-import type { TimelineStep } from "../types";
 
 const DAY_LABELS = ["Day 14", "Day 28", "Day 56", "Day 77", "Day 90"];
-
-const STEPS: TimelineStep[] = [
-  {
-    week: "Week 1–2",
-    title: "Discovery & AI Readiness",
-    items: [
-      "Business goals and pain point analysis",
-      "Current systems and data assessment",
-      "Highest-impact AI opportunity identification",
-      "Success metrics and KPI definition",
-    ],
-    deliverable: "AI Opportunity Report & ROI Projections",
-  },
-  {
-    week: "Week 3–4",
-    title: "Solution Architecture",
-    items: [
-      "AI solution architecture design",
-      "Model and platform selection",
-      "System integration planning",
-      "Data pipeline and security protocols",
-    ],
-    deliverable: "Technical Architecture & Implementation Plan",
-  },
-  {
-    week: "Week 5–8",
-    title: "Proof of Concept",
-    items: [
-      "Working prototype with real data",
-      "AI model training and fine-tuning",
-      "Core feature implementation",
-      "User testing and feedback",
-    ],
-    deliverable: "Working PoC with Core Capabilities",
-  },
-  {
-    week: "Week 9–11",
-    title: "Production Deployment",
-    items: [
-      "Production-ready system scaling",
-      "Security, monitoring, and backup",
-      "Load testing and performance tuning",
-      "Staff training and documentation",
-    ],
-    deliverable: "Production System Ready for Users",
-  },
-  {
-    week: "Week 12+",
-    title: "Optimisation & Support",
-    items: [
-      "Performance monitoring and feedback",
-      "Continuous model improvement",
-      "Feature enhancements",
-      "Ongoing technical support",
-    ],
-    deliverable: "Performance Reports & Recommendations",
-  },
-];
 
 export default function Approach() {
   const { t } = useI18n();
@@ -71,7 +12,7 @@ export default function Approach() {
   const touchStart = useRef(0);
 
   const go = (dir: 1 | -1) => {
-    setActive((p) => Math.max(0, Math.min(STEPS.length - 1, p + dir)));
+    setActive((p) => Math.max(0, Math.min(t.approach.items.length - 1, p + dir)));
   };
 
   // Keyboard nav
@@ -84,7 +25,7 @@ export default function Approach() {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
 
-  const step = STEPS[active];
+  const step = t.approach.items[active];
 
   return (
     <section id="approach" className="relative py-20 sm:py-24">
@@ -101,7 +42,7 @@ export default function Approach() {
         >
           {/* Progress steps */}
           <div className="mb-10 flex items-start justify-center">
-            {STEPS.map((s, i) => (
+            {t.approach.items.map((s, i) => (
               <div key={s.week} className="flex items-start">
                 <button
                   onClick={() => setActive(i)}
@@ -128,7 +69,7 @@ export default function Approach() {
                   </span>
                 </button>
                 {/* Connector line */}
-                {i < STEPS.length - 1 && (
+                {i < t.approach.items.length - 1 && (
                   <div
                     className={`mt-5 h-px w-6 self-start transition-colors duration-400 sm:w-10 md:w-14 sm:mt-[22px] ${
                       i < active ? "bg-st-blue/40" : "bg-st-border"
@@ -209,7 +150,7 @@ export default function Approach() {
 
               {/* Dot indicators */}
               <div className="flex">
-                {STEPS.map((_, i) => (
+                {t.approach.items.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setActive(i)}
@@ -230,7 +171,7 @@ export default function Approach() {
 
               <button
                 onClick={() => go(1)}
-                disabled={active === STEPS.length - 1}
+                disabled={active === t.approach.items.length - 1}
                 className="flex h-11 w-11 items-center justify-center rounded-lg border border-st-border text-st-text-muted transition-all hover:border-st-border hover:text-st-text disabled:cursor-default disabled:opacity-20 disabled:hover:border-st-border disabled:hover:text-st-text-muted"
               >
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">

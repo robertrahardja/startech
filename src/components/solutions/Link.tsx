@@ -17,6 +17,28 @@ interface LinkProps {
  * 3. Internal paths (/solutions) - pushState navigation
  * 4. External links (http...) - native behaviour
  */
+/**
+ * Splits an href into the parts navigation needs, and says whether the
+ * browser should simply be left to handle it.
+ *
+ * Pulled out of the click handler: parsing and navigating are separate
+ * concerns, and having both inline made the handler hard to follow.
+ */
+function parseHref(href: string) {
+  if (href.startsWith("http") || href.startsWith("#")) {
+    return { native: true as const };
+  }
+
+  const hashIndex = href.indexOf("#");
+  const path = hashIndex >= 0 ? href.slice(0, hashIndex) : href;
+
+  return {
+    native: false as const,
+    path: path || "/",
+    hash: hashIndex >= 0 ? href.slice(hashIndex) : "",
+  };
+}
+
 export default function Link({
   href,
   children,
@@ -34,26 +56,19 @@ export default function Link({
       : localise(href);
 
   function handleClick(e: MouseEvent<HTMLAnchorElement>) {
-    // External links: let the browser handle it
-    if (href_.startsWith("http")) {
+    const target = parseHref(href_);
+
+    // External and hash-only links: the browser already does the right thing.
+    if (target.native) {
       onClick?.();
       return;
     }
 
-    // Pure hash link on the same page (e.g. #products)
-    if (href_.startsWith("#")) {
-      onClick?.();
-      return;
-    }
+    const { path: normalizedPath, hash } = target;
+    const samePage = window.location.pathname === normalizedPath;
 
-    // Parse path and hash from href (e.g. "/#contact" or "/solutions")
-    const hashIndex = href_.indexOf("#");
-    const path = hashIndex >= 0 ? href_.slice(0, hashIndex) : href_;
-    const hash = hashIndex >= 0 ? href_.slice(hashIndex) : "";
-    const normalizedPath = path || "/";
-
-    // Same page + hash: let the browser handle native hash scroll
-    if (window.location.pathname === normalizedPath && hash) {
+    // Same page plus a hash: leave the native scroll alone.
+    if (samePage && hash) {
       onClick?.();
       return;
     }
@@ -62,7 +77,7 @@ export default function Link({
     onClick?.();
 
     // Navigate to the path if it changed
-    if (window.location.pathname !== normalizedPath) {
+    if (!samePage) {
       window.history.pushState({}, "", href_);
       window.dispatchEvent(new PopStateEvent("popstate"));
     }

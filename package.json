@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "worker:dev": "wrangler dev",
     "worker:deploy": "npm run build && wrangler deploy",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "check:locales": "node scripts/check-locales.mjs"
   },
   "repository": {
     "type": "git",
