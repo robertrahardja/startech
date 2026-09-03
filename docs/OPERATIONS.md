@@ -1,7 +1,25 @@
 # Operations
 
 Where this site lives, how mail reaches you, and how to deploy it.
-Written 2026-09-02. Verified against the live services on that date.
+Written 2026-09-02, extended 2026-09-03. Verified against the live services
+on those dates.
+
+## Open items
+
+Picked up where this left off:
+
+- **No locale has had a native review.** Six languages are live and
+  reachable. Every catalogue file says so in its header. Worth doing before
+  pointing campaign traffic at a specific language — see
+  [Languages](#languages).
+- **`/solutions/*` is English only** — 219 strings, and the data file needs
+  restructuring before they have anywhere to live.
+- **Three DNS problems are unfixed**: two SPF records (an RFC 7208 violation
+  causing permerror), no DKIM, no DMARC — see
+  [Known DNS problems](#known-dns-problems).
+- **AI chat is off in production.** The OpenAI account returns 429 on every
+  call. Gated behind `VITE_ENABLE_AI_CHAT`, not deleted — see
+  [AI chat](#ai-chat--currently-disabled).
 
 ## Hosting
 
@@ -189,6 +207,102 @@ Worker now rewrites `<html lang>` and appends the alternates with
 curl -s https://startech-innovation.com/ja/ | grep -oP '(?<=<html lang=")[^"]*'
 curl -s https://startech-innovation.com/ja/ | grep -c 'rel="alternate"'   # 8
 ```
+
+## Design and performance
+
+Decisions here were measured, not estimated. Each records the number so a
+future change can tell whether it is an improvement or a regression.
+
+### Contrast on the dark palette
+
+The brand ground is true black, sampled from the printed business card. That
+makes contrast the thing most easily got wrong: separations that read fine on
+a calibrated monitor in a dark room vanish on a phone at reduced brightness
+or outdoors. Both problems below were reported from a real phone after
+passing desktop review.
+
+Two rules hold the palette together:
+
+- **Borders carry every boundary.** A fill this dark cannot reach the 3:1 a
+  UI boundary needs (WCAG 1.4.11) without ceasing to be the brand colour, so
+  the border does the work. `--color-st-border` is `#595966` (3.05:1) and
+  `--color-st-field` is `#6b6b7a` (4.01:1). Card fills sit at 1.11-1.17:1 —
+  enough to register as a distinct surface, never relied on as an edge.
+- **Do not fade text below 80%.** `--color-st-text-muted` passes AA on its
+  own, but it is used at `/40` through `/90` in about 29 places. Below 80%
+  those land at 2.1-3.8:1. The token was raised to `#c2c2cc` so the common
+  `/60` and `/70` fades clear 4.5:1; anything deeper is for decorative
+  separators only, never copy.
+
+The deep brand blue `#0a68f9` measures 3.73:1 as text and must not be used
+for it — `st-blue-light` (5.69:1) is the text colour. The deep blue stays for
+fills, borders and gradients, where contrast rules do not apply.
+
+**Measure from painted pixels, not computed styles.** `getComputedStyle`
+returns `oklab()` for these colours, and parsing that by hand produced wildly
+wrong numbers several times. Screenshot the element and read the pixels.
+
+### Mobile type
+
+The scale was set at desktop, where 10-13px labels read as fine detail. On a
+phone the same values are simply small: 144 of 178 text elements measured
+under 16px, the largest group at 10px.
+
+A `max-width: 767px` block at the end of `src/index.css` maps each small step
+up to the next size on the existing scale. Scaling there rather than editing
+325 hardcoded utilities keeps the desktop composition untouched and moves the
+whole hierarchy together. The mobile floor is 12px.
+
+Anything sized in `ch` tracks this automatically; anything in `px` does not.
+
+### Bundle
+
+Two things kept the entry bundle at 428KB, both fixed by how they are
+imported. Keep them that way:
+
+- **Routes are lazy.** `SolutionsIndex`, `SolutionPage` and the chat panel
+  are `React.lazy` in `App.tsx`. Static-importing any of them puts every
+  solution page back in the first download. The homepage stays in the main
+  chunk deliberately — nearly every visitor sees it first.
+- **Only the active locale loads.** `src/i18n/index.tsx` exposes
+  `loadCatalogue()`, called in `main.tsx` before the first render. The locale
+  is known from the URL at startup, so there is no loading state and no flash
+  of English. English stays static so the app can always render without a
+  network round trip, and a failed chunk degrades to English rather than a
+  blank page.
+
+Result: 428KB -> 264KB raw, 147KB -> 89KB over the wire, first paint
+1279ms -> 1100ms on a throttled phone.
+
+### Fonts
+
+Self-hosted from `public/fonts/`, with `@font-face` at the top of
+`src/index.css`. Only the Latin subsets ship, which is all the site used;
+Inter is variable, so one file covers weights 300-600.
+
+This is **not** a speed optimisation — measured at 995ms against 989ms for
+Google Fonts over 11 runs. It is for independence from a third party, no font
+requests leaving the origin, and a CSP that no longer needs
+`fonts.googleapis.com` or `fonts.gstatic.com`.
+
+**Do not add `<link rel="preload">` for them.** It was tried: 62KB of woff2
+on the critical path competed with the JS bundle and pushed first paint from
+989ms to 1390ms. `font-display: swap` already shows text immediately in the
+fallback face.
+
+The Worker gives `/fonts/` a one-year immutable cache, since these filenames
+are not content-hashed the way the bundle's are.
+
+### Measuring any of this
+
+There is no perf script in the repo; these were one-off measurements with
+Playwright driving the Chromium already in `~/.cache/ms-playwright`. Two
+things that repeatedly produced wrong conclusions:
+
+- **Take a median of several runs.** A single throttled run once showed a
+  20% improvement as a 70% regression.
+- **Measure a real deployment, not `vite preview`.** Preview served the dev
+  server, whose module graph looks nothing like the built bundle.
 
 ## Deploying
 
