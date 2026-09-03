@@ -128,6 +128,68 @@ npx wrangler secret put ENABLE_AI_CHAT   # value: true
 npx wrangler versions upload
 ```
 
+## Languages
+
+The site ships in seven: English (unprefixed), plus `/ja/`, `/ko/`,
+`/zh-Hans/`, `/zh-Hant/`, `/es/` and `/pt/`.
+
+**The six translations have not had a native review.** Every catalogue file
+says so in its header. Get them reviewed before advertising a locale.
+
+`/solutions/*` is still English only — 219 strings in
+`src/components/solutions/solutionsData.ts`, which is a flat array with the
+copy baked in and no place for translations to live. Translating it means
+restructuring that file and its four consumers first.
+
+### Where the strings live
+
+`src/i18n/en.ts` is the source of truth and defines `Messages`, the shape
+every other catalogue must satisfy. It is deliberately not `as const`:
+literal types would force each translation to equal the English string.
+
+### Checks
+
+```bash
+npm run check:i18n        # locales + untranslated; no server needed
+npm run check:rendered    # needs a server; see below
+```
+
+Three guards, each catching what the others cannot:
+
+- `check:locales` — wrong scripts in a catalogue. Written after Cyrillic
+  twice reached the Japanese file; that survives a build, a typecheck and a
+  screenshot review by anyone who does not read the language.
+- `check:untranslated` — values still identical to English.
+- `check:rendered` — loads each locale in a browser and diffs the visible
+  text against the English catalogue. The other two read the catalogues, so
+  they are blind to a component that renders an English literal without
+  going through them — which is how the contact form, the case-study
+  headings, "Ask us" and every footer link shipped untranslated.
+
+`check:rendered` needs a running server, so it is not part of `check:i18n`:
+
+```bash
+npm run build && npm run preview -- --port 4321 &
+npm run check:rendered
+BASE=https://startech-innovation.com npm run check:rendered   # or any deploy
+```
+
+It drives the Chromium already in `~/.cache/ms-playwright`; override with
+`CHROME_PATH`.
+
+### lang and hreflang
+
+The app is an SPA — one `index.html` answers every route — so React could
+only set these after boot, and crawlers read the markup as delivered. The
+Worker now rewrites `<html lang>` and appends the alternates with
+`HTMLRewriter` as the response streams (`withLocaleMarkup` in
+`worker/index.ts`). Verify after any deploy:
+
+```bash
+curl -s https://startech-innovation.com/ja/ | grep -oP '(?<=<html lang=")[^"]*'
+curl -s https://startech-innovation.com/ja/ | grep -c 'rel="alternate"'   # 8
+```
+
 ## Deploying
 
 Credentials are per-project on purpose. Several Cloudflare accounts exist on
