@@ -21,12 +21,14 @@
     <!-- The mark alone: the wordmark is unreadable at favicon size. -->
     <link rel="icon" type="image/svg+xml" href="/assets/startech-mark.svg" />
     <link rel="alternate icon" href="/assets/startech-logo-full.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fonts are self-hosted (see @font-face in src/index.css), which
+         removes the render-blocking Google Fonts stylesheet.
+
+         Deliberately NOT preloaded: preloading put 62KB of woff2 on the
+         critical path, where it competed with the JS bundle for bandwidth on
+         a throttled connection and pushed first paint from 989ms to 1390ms.
+         font-display: swap already shows the text immediately in the fallback
+         face, so the fonts can arrive whenever they arrive. -->
   </head>
   <body>
     <div id="root"></div>

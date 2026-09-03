@@ -32,7 +32,7 @@ const SECURITY_HEADERS: Record<string, string> = {
   "Permissions-Policy": "camera=(), microphone=(self), geolocation=()",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
   "Content-Security-Policy":
-    "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; media-src 'self' blob:; frame-ancestors 'none'",
+    "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; media-src 'self' blob:; frame-ancestors 'none'",
 };
 
 // ─── Rate Limiting (in-memory, per-isolate) ─────────────────────────────────
@@ -631,6 +631,13 @@ export default {
       for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
         headers.set(key, value);
       }
+      // Font filenames are not content-hashed the way the bundle's are, so
+      // they need an explicit long cache. They only change when the typeface
+      // itself is replaced, at which point the filename changes too.
+      if (url.pathname.startsWith("/fonts/")) {
+        headers.set("Cache-Control", "public, max-age=31536000, immutable");
+      }
+
       const asset = new Response(assetResponse.body, {
         status: assetResponse.status,
         statusText: assetResponse.statusText,
