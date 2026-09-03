@@ -22,6 +22,7 @@ export const pt: Messages = {
     openMenu: "Abrir menu",
     closeMenu: "Fechar menu",
     language: "Idioma",
+    ask: "Fale conosco",
   },
 
   hero: {

@@ -20,6 +20,7 @@ export const en = {
     openMenu: "Open menu",
     closeMenu: "Close menu",
     language: "Language",
+    ask: "Ask us",
   },
 
   hero: {

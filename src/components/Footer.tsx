@@ -1,6 +1,8 @@
 import Link from "./solutions/Link";
+import { useI18n } from "../i18n";
 
 export default function Footer() {
+  const { t } = useI18n();
   const year = new Date().getFullYear();
 
   return (
@@ -14,25 +16,25 @@ export default function Footer() {
               className="h-6 w-auto opacity-70"
             />
             <p className="text-center text-[11px] font-medium leading-relaxed text-st-text-muted sm:text-left">
-              Singapore
+              {t.footer.location}
             </p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-1 text-[11px] font-medium tracking-wide text-st-text-muted">
             <Link href="/#products" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text">
-              Practices
+              {t.nav.practices}
             </Link>
             <Link href="/solutions" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text">
-              Solutions
+              {t.nav.solutions}
             </Link>
             <Link href="/#work" className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center px-3 transition-colors duration-300 hover:text-st-text">
-              Work
+              {t.nav.work}
             </Link>
             <Link href="/#industries" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text">
-              Industries
+              {t.nav.industries}
             </Link>
             <Link href="/#contact" className="inline-flex min-h-[44px] items-center px-3 transition-colors duration-300 hover:text-st-text">
-              Contact
+              {t.nav.contact}
             </Link>
           </div>
 
@@ -47,7 +49,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 text-center text-[10px] font-medium tracking-wide text-st-text-muted/60">
-          &copy; {year} StarTech Innovation Pte. Ltd.
+          &copy; {year} {t.footer.rights}
         </div>
       </div>
     </footer>

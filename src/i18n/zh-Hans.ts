@@ -22,6 +22,7 @@ export const zhHans: Messages = {
     openMenu: "打开菜单",
     closeMenu: "关闭菜单",
     language: "语言",
+    ask: "咨询我们",
   },
 
   hero: {

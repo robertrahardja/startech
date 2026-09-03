@@ -22,6 +22,7 @@ export const ja: Messages = {
     openMenu: "メニューを開く",
     closeMenu: "メニューを閉じる",
     language: "言語",
+    ask: "質問する",
   },
 
   hero: {

@@ -22,6 +22,7 @@ export const zhHant: Messages = {
     openMenu: "開啟選單",
     closeMenu: "關閉選單",
     language: "語言",
+    ask: "諮詢我們",
   },
 
   hero: {

@@ -44,7 +44,7 @@ export default function Contact() {
         const data = await res.json();
 
         if (!res.ok || !data.success) {
-          throw new Error(data.error || "Failed to send message.");
+          throw new Error(data.error || t.contact.error);
         }
 
         setStatus("success");
@@ -52,7 +52,7 @@ export default function Contact() {
       } catch (err) {
         setStatus("error");
         setErrorMsg(
-          err instanceof Error ? err.message : "Something went wrong."
+          err instanceof Error ? err.message : t.contact.error
         );
       }
     },
@@ -91,8 +91,7 @@ export default function Contact() {
 
             <div className="border-t border-st-border pt-6">
               <p className="text-[13.5px] leading-[1.7] text-st-text-muted">
-                No commitment, and the discovery output is yours whether or not
-                you continue with us.
+                {t.contact.reassurance}
               </p>
             </div>
           </div>
@@ -101,7 +100,7 @@ export default function Contact() {
           <form onSubmit={handleSubmit} className="space-y-5">
             <FormField
               name="name"
-              label="Name"
+              label={t.contact.name}
               type="text"
               required
               value={form.name}
@@ -109,7 +108,7 @@ export default function Contact() {
             />
             <FormField
               name="email"
-              label="Email"
+              label={t.contact.email}
               type="email"
               required
               value={form.email}
@@ -117,7 +116,7 @@ export default function Contact() {
             />
             <FormField
               name="phone"
-              label="Phone"
+              label={t.contact.phone}
               type="tel"
               value={form.phone}
               onChange={handleChange}
@@ -127,7 +126,8 @@ export default function Contact() {
                 htmlFor="message"
                 className="mb-1.5 block text-[11px] font-medium tracking-wide text-st-text-muted"
               >
-                Message <span className="text-st-text-muted/70">*</span>
+                {t.contact.message}{" "}
+                <span className="text-st-text-muted/70">*</span>
               </label>
               <textarea
                 id="message"
@@ -138,7 +138,7 @@ export default function Contact() {
                 onChange={handleChange}
                 maxLength={5000}
                 className="w-full min-h-[46px] rounded-lg border border-st-field bg-st-field-bg px-3.5 py-3 text-[14px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-all duration-300 hover:border-st-border-hover focus:border-st-blue-light focus:bg-st-bg-elevated focus:ring-2 focus:ring-st-blue/25"
-                placeholder="Tell us about your project..."
+                placeholder={t.contact.messagePlaceholder}
               />
             </div>
 
@@ -148,7 +148,7 @@ export default function Contact() {
 
             {status === "success" ? (
               <div className="rounded-lg border border-emerald-500/10 px-4 py-3 text-[13px] font-normal text-emerald-400/80">
-                Thank you. We'll be in touch shortly.
+                {t.contact.success}
               </div>
             ) : (
               <button
@@ -156,7 +156,7 @@ export default function Contact() {
                 disabled={status === "sending"}
                 className="hero-btn-primary relative w-full overflow-hidden rounded-xl px-4 py-3.5 text-[13px] font-normal tracking-wide text-st-text transition-all duration-500 disabled:opacity-40"
               >
-                {status === "sending" ? "Sending..." : "{t.contact.send}"}
+                {status === "sending" ? t.contact.sending : t.contact.send}
               </button>
             )}
           </form>

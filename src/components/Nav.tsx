@@ -92,7 +92,7 @@ export default function Nav({ onAskAi }: NavProps) {
               >
                 <span className="relative z-10 flex items-center gap-2.5">
                   <AiIcon className="h-3.5 w-3.5 text-white/80" />
-                  Ask us
+                  {t.nav.ask}
                 </span>
               </button>
             ) : (
@@ -157,7 +157,7 @@ export default function Nav({ onAskAi }: NavProps) {
                 >
                   <span className="ask-us-text-shimmer relative z-10 flex items-center gap-2">
                     <AiIcon className="h-3 w-3 text-white/80 transition-all duration-500 group-hover:text-white" />
-                    Ask us
+                    {t.nav.ask}
                   </span>
                 </button>
               ) : (

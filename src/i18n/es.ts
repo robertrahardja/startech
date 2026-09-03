@@ -23,6 +23,7 @@ export const es: Messages = {
     openMenu: "Abrir menú",
     closeMenu: "Cerrar menú",
     language: "Idioma",
+    ask: "Consúltanos",
   },
 
   hero: {

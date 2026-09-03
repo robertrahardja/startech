@@ -14,7 +14,8 @@
     "typecheck": "tsc --noEmit",
     "check:locales": "node scripts/check-locales.mjs",
     "check:untranslated": "node scripts/check-untranslated.mjs",
-    "check:i18n": "npm run check:locales && npm run check:untranslated"
+    "check:i18n": "npm run check:locales && npm run check:untranslated",
+    "check:rendered": "node scripts/check-rendered.mjs"
   },
   "repository": {
     "type": "git",
@@ -41,6 +42,7 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
+    "playwright": "^1.49.1",
     "tailwindcss": "^4.1.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",

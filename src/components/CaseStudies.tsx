@@ -3,6 +3,7 @@ import { useI18n } from "../i18n";
 import type { CaseStudy } from "./caseStudiesData";
 
 function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
+  const { t } = useI18n();
   const [ref, isInView] = useInView({ threshold: 0.1 });
 
   return (
@@ -29,7 +30,7 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
           <div className="mt-6 space-y-5">
             <div>
               <div className="mb-1.5 text-[10px] font-medium tracking-[0.16em] uppercase text-st-pink">
-                Before
+                {t.work.before}
               </div>
               <p className="text-sm font-normal leading-[1.75] text-st-text-muted">
                 {study.before}
@@ -37,7 +38,7 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
             </div>
             <div>
               <div className="mb-1.5 text-[10px] font-medium tracking-[0.16em] uppercase text-st-blue-light">
-                What we built
+                {t.work.built}
               </div>
               <p className="text-sm font-normal leading-[1.75] text-st-text-muted">
                 {study.built}
@@ -110,9 +111,7 @@ export default function CaseStudies() {
         </div>
 
         <p className="mt-16 max-w-2xl border-t border-st-border pt-8 text-[12.5px] font-normal leading-[1.7] text-st-text-muted/80">
-          Client names are withheld where the engagement is covered by
-          confidentiality. Figures are drawn from the delivered systems and can
-          be walked through in detail on a call.
+          {t.work.disclaimer}
         </p>
       </div>
     </section>

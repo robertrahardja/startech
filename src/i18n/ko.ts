@@ -21,6 +21,7 @@ export const ko: Messages = {
     openMenu: "메뉴 열기",
     closeMenu: "메뉴 닫기",
     language: "언어",
+    ask: "문의하기",
   },
 
   hero: {
