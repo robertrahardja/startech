@@ -28,6 +28,13 @@ const ALLOWED = {
 /** Always wrong, in every language. */
 const FORBIDDEN = /[\p{Script=Cyrillic}\p{Script=Arabic}\p{Script=Hebrew}\p{Script=Devanagari}\p{Script=Thai}]/u;
 
+/**
+ * Values that are legitimately identical across languages: proper nouns,
+ * registration numbers, and figures. Anything else appearing in English on a
+ * translated page means a string is still hardcoded in a component.
+ */
+const SHARED_WITH_ENGLISH = /^(StarTech|UEN |7[.,]060|20\+|[0-9]+$)/;
+
 let failures = 0;
 
 for (const file of readdirSync(DIR)) {

@@ -18,7 +18,7 @@ export default function Industries() {
         <SectionHeader
           label={t.industries.eyebrow}
           title={t.industries.title}
-          subtitle="Deep understanding of your industry's regulatory, operational, and technical requirements."
+          subtitle={t.industries.sub}
         />
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">

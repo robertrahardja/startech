@@ -33,7 +33,7 @@ export default function Approach() {
         <SectionHeader
           label={t.approach.eyebrow}
           title={t.approach.title}
-          subtitle="A proven process refined across enterprise deployments. We implement, not just advise."
+          subtitle={t.approach.sub}
         />
 
         <div

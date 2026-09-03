@@ -114,7 +114,7 @@ export default function Products() {
         <SectionHeader
           label={t.practices.eyebrow}
           title={t.practices.title}
-          subtitle="We go deep in four areas rather than wide across twenty. Each one is led personally by the principal and staffed with specialists as the work demands."
+          subtitle={t.practices.sub}
         />
 
         {/* One swipeable rail on phones, a grid from sm: up. The rail is

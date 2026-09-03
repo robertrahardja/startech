@@ -40,9 +40,7 @@ export default function Qualify() {
             {t.qualify.title}
           </h2>
           <p className="mt-5 text-base font-normal leading-[1.7] text-st-text-muted">
-            Most of our work starts in one of these. If yours looks different,
-            it is still worth a call &mdash; the shape of the problem matters
-            more than the industry it sits in.
+            {t.qualify.sub}
           </p>
         </div>
 
@@ -60,11 +58,8 @@ export default function Qualify() {
             would take. */}
         <div className="mt-10 max-w-3xl border-t border-st-border pt-7">
           <p className="text-[14px] leading-[1.8] text-st-text-muted/75">
-            <span className="text-st-text-muted">On price:</span> you will get
-            a range on the first call and a firm number after discovery, not a
-            figure invented from an email. And if an off-the-shelf tool already
-            does the job, we will tell you which one &mdash; that is a cheaper
-            answer than anything we could build you.
+            <span className="text-st-text-muted">{t.qualify.pricingLead}</span>{" "}
+            {t.qualify.pricing.replace(t.qualify.pricingLead, "").trim()}
           </p>
         </div>
       </div>

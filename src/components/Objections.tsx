@@ -41,8 +41,7 @@ export default function Objections() {
             {t.objections.title}
           </h2>
           <p className="mt-5 text-base font-normal leading-[1.7] text-st-text-muted">
-            The ones we get asked most, answered plainly &mdash; including
-            where the honest answer is that you should wait.
+            {t.objections.sub}
           </p>
         </div>
 

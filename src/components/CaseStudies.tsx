@@ -99,9 +99,7 @@ export default function CaseStudies() {
             {t.work.title}
           </h2>
           <p className="mt-5 text-base font-normal leading-[1.7] text-st-text-muted">
-            Four builds, described the way a business owner would describe them
-            &mdash; what the company was actually doing beforehand, and what went
-            wrong on the way.
+            {t.work.sub}
           </p>
         </div>
 
