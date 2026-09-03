@@ -12,12 +12,6 @@ export interface ContactFormData {
   message: string;
 }
 
-export interface ContactResponse {
-  success: boolean;
-  message?: string;
-  error?: string;
-}
-
 export interface Product {
   title: string;
   description: string;
@@ -27,31 +21,10 @@ export interface Product {
   span?: "wide" | "tall" | "default";
 }
 
-export interface Industry {
-  name: string;
-  icon: string;
-  description: string;
-}
-
-export interface TimelineStep {
-  week: string;
-  title: string;
-  items: string[];
-  deliverable: string;
-}
-
 export interface DemoLead {
   email: string;
   name?: string;
   company?: string;
-}
-
-export interface DemoRequest {
-  type: string;
-  email: string;
-  name?: string;
-  company?: string;
-  input: Record<string, string>;
 }
 
 export interface DemoResponse {
@@ -60,4 +33,3 @@ export interface DemoResponse {
   error?: string;
 }
 
-export type DemoPhase = "preview" | "customize" | "custom_result";
