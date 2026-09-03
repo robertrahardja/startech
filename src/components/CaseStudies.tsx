@@ -49,33 +49,34 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
 
         {/* Right rail: the number, then the checkable details */}
         <div className="lg:pt-1">
-          {/* The result panel.
+          {/* The result panel: two columns.
 
-              This is the headline outcome of the case study, so it is set as
-              a stat block rather than a line of text: the figure centred and
-              large, an eyebrow above naming what it is, and the caption
-              beneath as a short label.
+              A figure column sized to its content, and a text column beside
+              it carrying the label and the caption. A vertical divider marks
+              the split, so the two read as related halves of one panel rather
+              than a heading stacked over a number.
 
-              Earlier versions ran the figure and caption side by side, which
-              left a wide, half-empty box sitting between two blocks of dense
-              copy — the layout is a single column on a phone, so a horizontal
-              pair could never fill it. Centred and stacked, the panel fills
-              its container at every width and reads as the summary it is.
-
-              The gradient rule ties it to the brand marks used elsewhere. */}
-          <div className="metric-tile relative overflow-hidden rounded-xl border border-st-border bg-st-bg-card px-5 py-7 text-center transition-all duration-500">
+              The figure column has a minimum width, so a one-character "2"
+              and a five-character "7,060" both anchor the same left edge and
+              the text column starts at the same place in every card. */}
+          <div className="metric-tile relative flex items-stretch gap-5 overflow-hidden rounded-xl border border-st-border bg-st-bg-card p-5 transition-all duration-500">
             <div className="brand-rule absolute inset-x-0 top-0 h-px" />
 
-            <div className="text-[10px] font-medium tracking-[0.18em] uppercase text-st-text-muted/70">
-              {t.work.result}
+            <div className="flex min-w-[4.5rem] shrink-0 items-center justify-center">
+              <span className="gradient-text font-display text-5xl leading-none tracking-[-0.03em]">
+                {study.metric.figure}
+              </span>
             </div>
 
-            <div className="gradient-text mt-3 font-display text-5xl leading-none tracking-[-0.03em] sm:text-6xl">
-              {study.metric.figure}
-            </div>
+            <div className="w-px shrink-0 bg-st-border" aria-hidden="true" />
 
-            <div className="mx-auto mt-3 max-w-[24ch] text-[12px] font-medium leading-[1.6] text-balance text-st-text-muted">
-              {study.metric.caption}
+            <div className="flex min-w-0 flex-1 flex-col justify-center py-1">
+              <div className="text-[10px] font-medium tracking-[0.18em] uppercase text-st-text-muted/70">
+                {t.work.result}
+              </div>
+              <div className="mt-2 text-[12.5px] font-medium leading-[1.55] text-st-text-muted">
+                {study.metric.caption}
+              </div>
             </div>
           </div>
 
