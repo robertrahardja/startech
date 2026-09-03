@@ -59,7 +59,7 @@ export default function ExpandedDetailCard({
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-lg text-white/40 transition-colors hover:bg-white/[0.08] hover:text-white"
+          className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-lg text-st-text/40 transition-colors hover:bg-st-surface hover:text-st-text"
         >
           <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -70,11 +70,11 @@ export default function ExpandedDetailCard({
         {header}
 
         {/* Title */}
-        <h3 className="mb-4 text-xl font-medium tracking-wide text-white sm:text-2xl">
+        <h3 className="mb-4 text-xl font-medium tracking-wide text-st-text sm:text-2xl">
           {title}
         </h3>
 
-        <p className="mb-8 text-base leading-[1.9] text-white/80 sm:text-lg">
+        <p className="mb-8 text-base leading-[1.9] text-st-text/80 sm:text-lg">
           {description}
         </p>
 
@@ -85,7 +85,7 @@ export default function ExpandedDetailCard({
           {details.map((detail) => (
             <li
               key={detail}
-              className="flex items-start gap-3.5 text-base leading-[1.8] text-white/85 sm:text-lg"
+              className="flex items-start gap-3.5 text-base leading-[1.8] text-st-text/85 sm:text-lg"
             >
               <span className="mt-[12px] h-px w-5 shrink-0 bg-st-gold-light/40" />
               {detail}
@@ -99,7 +99,7 @@ export default function ExpandedDetailCard({
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-md bg-white/[0.06] px-3.5 py-1.5 text-sm tracking-wide text-white/65"
+                className="rounded-md bg-st-surface px-3.5 py-1.5 text-sm tracking-wide text-st-text/65"
               >
                 {tag}
               </span>

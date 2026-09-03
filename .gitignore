@@ -33,3 +33,12 @@ build/
 
 # Cloudflare
 .wrangler/
+
+# Local working documents
+.lavish/
+
+# direnv — scoped deploy credentials
+.envrc.local
+
+# wrangler reads .env from cwd; it holds scoped credentials
+.env

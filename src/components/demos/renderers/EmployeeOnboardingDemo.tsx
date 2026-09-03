@@ -9,9 +9,9 @@ interface DemoRendererProps {
 }
 
 const inputClass =
-  "w-full min-h-[44px] rounded-lg border border-white/20 bg-white/[0.05] px-3.5 py-3 text-[13px] font-light text-white placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-white/40";
+  "w-full min-h-[44px] rounded-lg border border-st-border bg-st-surface px-3.5 py-3 text-[13px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-st-border";
 const labelClass =
-  "mb-1.5 block text-[11px] font-light tracking-wide text-white/60";
+  "mb-1.5 block text-[11px] font-medium tracking-wide text-st-text/60";
 
 interface ChecklistItem {
   task: string;
@@ -64,10 +64,10 @@ export default function EmployeeOnboardingDemo(props: DemoRendererProps) {
                 key={tab}
                 type="button"
                 onClick={() => setActiveTab(i)}
-                className={`flex-1 rounded-md px-3 py-2 text-[12px] font-light tracking-wide transition-all duration-300 ${
+                className={`flex-1 rounded-md px-3 py-2 text-[12px] font-normal tracking-wide transition-all duration-300 ${
                   activeTab === i
-                    ? "bg-white/[0.08] text-white"
-                    : "text-st-text-muted hover:text-white"
+                    ? "bg-st-surface text-st-text"
+                    : "text-st-text-muted hover:text-st-text"
                 }`}
               >
                 {tab}
@@ -77,8 +77,8 @@ export default function EmployeeOnboardingDemo(props: DemoRendererProps) {
 
           {/* Offer Letter */}
           {activeTab === 0 && (
-            <div className="rounded-lg border border-st-border/50 bg-white/[0.02] p-5">
-              <p className="whitespace-pre-wrap text-[13px] font-light leading-[1.7] text-white">
+            <div className="rounded-lg border border-st-border/50 bg-st-surface p-5">
+              <p className="whitespace-pre-wrap text-[13px] font-normal leading-[1.7] text-st-text">
                 {offerLetterPreview}
               </p>
             </div>
@@ -86,8 +86,8 @@ export default function EmployeeOnboardingDemo(props: DemoRendererProps) {
 
           {/* NDA */}
           {activeTab === 1 && (
-            <div className="rounded-lg border border-st-border/50 bg-white/[0.02] p-5">
-              <p className="whitespace-pre-wrap text-[13px] font-light leading-[1.7] text-white">
+            <div className="rounded-lg border border-st-border/50 bg-st-surface p-5">
+              <p className="whitespace-pre-wrap text-[13px] font-normal leading-[1.7] text-st-text">
                 {ndaPreview}
               </p>
             </div>
@@ -98,27 +98,27 @@ export default function EmployeeOnboardingDemo(props: DemoRendererProps) {
             <div className="space-y-4">
               {Object.entries(grouped).map(([category, items]) => (
                 <div key={category}>
-                  <h4 className="mb-2 text-[12px] font-light tracking-wide text-st-text-muted">
+                  <h4 className="mb-2 text-[12px] font-normal tracking-wide text-st-text-muted">
                     {category}
                   </h4>
                   <div className="overflow-x-auto">
-                    <table className="w-full text-[13px] font-light">
+                    <table className="w-full text-[13px] font-normal">
                       <thead>
                         <tr className="border-b border-st-border text-left text-st-text-muted">
-                          <th className="pb-2 pr-4 font-light">Task</th>
-                          <th className="pb-2 pr-4 font-light">Owner</th>
-                          <th className="pb-2 font-light">Due By</th>
+                          <th className="pb-2 pr-4 font-normal">Task</th>
+                          <th className="pb-2 pr-4 font-normal">Owner</th>
+                          <th className="pb-2 font-normal">Due By</th>
                         </tr>
                       </thead>
                       <tbody>
                         {items.map((item, i) => (
                           <tr
                             key={i}
-                            className={i % 2 === 1 ? "bg-white/[0.02]" : ""}
+                            className={i % 2 === 1 ? "bg-st-surface" : ""}
                           >
-                            <td className="py-2 pr-4 text-white">{item.task}</td>
-                            <td className="py-2 pr-4 text-white">{item.owner}</td>
-                            <td className="py-2 text-white">{item.due_by}</td>
+                            <td className="py-2 pr-4 text-st-text">{item.task}</td>
+                            <td className="py-2 pr-4 text-st-text">{item.owner}</td>
+                            <td className="py-2 text-st-text">{item.due_by}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -131,14 +131,14 @@ export default function EmployeeOnboardingDemo(props: DemoRendererProps) {
         </div>
 
         {error && (
-          <p className="text-[13px] font-light text-red-400/80">{error}</p>
+          <p className="text-[13px] font-normal text-red-400/80">{error}</p>
         )}
 
         <div className="flex gap-3">
           <button
             type="button"
             onClick={clearResult}
-            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white"
+            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
           >
             Try Again
           </button>
@@ -149,7 +149,7 @@ export default function EmployeeOnboardingDemo(props: DemoRendererProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-light leading-relaxed text-st-gold-light/80">
+      <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-normal leading-relaxed text-st-gold-light/80">
         <p className="mb-2 font-medium text-st-gold-light">How to use this demo</p>
         <p>Enter the new employee&apos;s details — full name, job title, department, start date, and monthly salary in SGD. The AI will generate Singapore-compliant documents: an offer letter (with CPF, probation, and notice period), an NDA, and a first-week onboarding checklist.</p>
         <p className="mt-2 text-[12px] text-st-gold-light/60">The generated documents follow Singapore Employment Act standards. These are previews — the full version produces legally reviewed, company-branded documents.</p>
@@ -210,13 +210,13 @@ export default function EmployeeOnboardingDemo(props: DemoRendererProps) {
       </div>
 
       {error && (
-        <p className="text-[13px] font-light text-red-400/80">{error}</p>
+        <p className="text-[13px] font-normal text-red-400/80">{error}</p>
       )}
 
       <button
         type="submit"
         disabled={isLoading || !employeeName.trim() || !jobTitle.trim()}
-        className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-light tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50 disabled:opacity-40"
+        className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-normal tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50 disabled:opacity-40"
       >
         {isLoading ? "Generating..." : "Generate Onboarding Pack"}
       </button>

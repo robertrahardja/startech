@@ -1,122 +1,18 @@
 import { useState } from "react";
+import { useI18n } from "../i18n";
+import { useSnapRail, useTapGuard } from "../hooks/useSnapRail";
+import { haptic } from "../lib/haptics";
 import { useInView } from "../hooks/useInView";
 import type { Product } from "../types";
 import ExpandedDetailCard from "./ExpandedDetailCard";
 
-const PRODUCTS: Product[] = [
-  {
-    title: "Enterprise ERP",
-    description:
-      "Full enterprise resource planning — financials, HR, inventory, procurement, and manufacturing — on Java Spring Boot and PostgreSQL.",
-    details: [
-      "Multi-module: GL, AP, AR, payroll, and fixed assets",
-      "Real-time inventory with barcode and RFID",
-      "Procurement workflow with approval chains",
-      "Manufacturing BOM and production scheduling",
-    ],
-    icon: "erp",
-    tags: ["Spring Boot", "PostgreSQL", "React"],
-    span: "wide",
-  },
-  {
-    title: "AI Decision Engine",
-    description:
-      "Business intelligence powered by GPT-4. Upload data, ask questions, get actionable insights with confidence scoring.",
-    details: [
-      "Natural language queries over any data source",
-      "RAG pipeline with vector embeddings",
-      "Confidence scoring with source attribution",
-      "Automated report generation and delivery",
-    ],
-    icon: "brain",
-    tags: ["OpenAI", "RAG", "AWS"],
-    span: "default",
-  },
-  {
-    title: "Startup Valuation",
-    description:
-      "DCF modelling, comparable analysis, and AI-powered projections for startup and venture capital due diligence.",
-    details: [
-      "DCF with Monte Carlo simulation",
-      "Comparable analysis with live market data",
-      "AI growth projections by sector benchmarks",
-      "Cap table modelling and waterfall analysis",
-    ],
-    icon: "chart",
-    tags: ["Finance", "Analytics"],
-    span: "default",
-  },
-  {
-    title: "Insurance Scanner",
-    description:
-      "AI document processing for insurance claims. Extract key terms, flag risks, reconcile across policies automatically.",
-    details: [
-      "Extracts clauses, limits, and exclusions from PDFs",
-      "Cross-policy reconciliation for gaps and overlaps",
-      "Risk scoring for underwriter review",
-      "Batch processing for portfolio-level analysis",
-    ],
-    icon: "scan",
-    tags: ["Claude Vision", "Document AI"],
-    span: "default",
-  },
-  {
-    title: "Education Platform",
-    description:
-      "Learning management with AI tutoring, adaptive assessments, spaced repetition, and multi-language delivery.",
-    details: [
-      "AI tutor adapting to each student's level",
-      "Spaced repetition for long-term retention",
-      "Auto-generated quizzes from course material",
-      "Voice delivery in 50+ languages",
-    ],
-    icon: "edu",
-    tags: ["LMS", "AI Tutor", "ElevenLabs"],
-    span: "tall",
-  },
-  {
-    title: "Healthcare IT",
-    description:
-      "Hospital management — patient records, scheduling, billing, and AI-assisted triage for Indonesian healthcare providers.",
-    details: [
-      "Electronic medical records with role-based access",
-      "Scheduling with SMS and WhatsApp reminders",
-      "AI-assisted triage by symptom severity",
-      "BPJS insurance claim integration",
-    ],
-    icon: "health",
-    tags: ["Healthcare", "AWS"],
-    span: "default",
-  },
-  {
-    title: "Crypto Exchange",
-    description:
-      "Full cryptocurrency trading platform with real-time pricing, wallet management, and regulatory compliance tools.",
-    details: [
-      "Order matching with sub-millisecond latency",
-      "Multi-currency wallet, cold and hot storage",
-      "Built-in KYC and AML compliance",
-      "Real-time price feeds and WebSocket charting",
-    ],
-    icon: "exchange",
-    tags: ["Web3", "Finance"],
-    span: "default",
-  },
-  {
-    title: "AI Avatar Studio",
-    description:
-      "Personalised video content at scale. AI presenters for training, marketing, and multilingual customer engagement.",
-    details: [
-      "Avatar creation from a single photo or video",
-      "Script-to-video with automatic lip sync",
-      "Multi-language voice cloning via ElevenLabs",
-      "Batch rendering for personalised outreach",
-    ],
-    icon: "video",
-    tags: ["HeyGen", "ElevenLabs"],
-    span: "wide",
-  },
-];
+/** Structure only — icon, tags and span. The words live in the catalogue. */
+const PRODUCT_META = [
+  { icon: "brain", tags: ["Claude", "OpenAI", "RAG", "Vectorize"], span: "wide" },
+  { icon: "erp", tags: ["Java 21", "Spring Boot", "PostgreSQL"], span: "default" },
+  { icon: "chart", tags: ["D1", "PostgreSQL", "Workers"], span: "default" },
+  { icon: "health", tags: ["PDPA", "BPJS", "Cloudflare"], span: "wide" },
+] as const;
 
 const ICONS: Record<string, React.ReactNode> = {
   erp: (
@@ -134,29 +30,9 @@ const ICONS: Record<string, React.ReactNode> = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
     </svg>
   ),
-  scan: (
-    <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-    </svg>
-  ),
-  edu: (
-    <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.906 59.906 0 0112 3.493a59.903 59.903 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15v-3.75m0 0h10.5" />
-    </svg>
-  ),
   health: (
     <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-    </svg>
-  ),
-  exchange: (
-    <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
-    </svg>
-  ),
-  video: (
-    <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25z" />
     </svg>
   ),
 };
@@ -165,12 +41,21 @@ function ProductCard({
   product,
   index,
   onExpand,
+  railRef,
 }: {
   product: Product;
   index: number;
   onExpand: (product: Product) => void;
+  railRef: React.RefObject<HTMLDivElement | null>;
 }) {
   const [ref, isInView] = useInView({ threshold: 0.1 });
+  const hasDetails = product.details && product.details.length > 0;
+
+  // Pointer-based so a swipe across the rail does not open the card.
+  const tap = useTapGuard(() => {
+    haptic("select");
+    onExpand(product);
+  }, railRef);
 
   const spanClass =
     product.span === "wide"
@@ -179,37 +64,35 @@ function ProductCard({
         ? "md:row-span-2"
         : "";
 
-  const hasDetails = product.details && product.details.length > 0;
-
   return (
     <div
       ref={ref}
-      className={`product-card ${spanClass} ${isInView ? "reveal visible" : "reveal"}`}
+      className={`product-card pressable h-full ${spanClass} ${isInView ? "reveal visible" : "reveal"}`}
       style={{ transitionDelay: `${index * 60}ms` }}
-      onClick={hasDetails ? () => onExpand(product) : undefined}
+      {...(hasDetails ? tap : {})}
     >
-      <div className="card group relative cursor-pointer overflow-hidden rounded-xl p-6 sm:p-7">
+      <div className="card group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-xl p-6 sm:p-7">
         <div className="relative z-10 flex h-full flex-col">
-          <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-lg bg-white/[0.04] text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
+          <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-lg bg-st-surface text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
             {ICONS[product.icon]}
           </div>
-          <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
+          <h3 className="mb-2 text-sm font-medium tracking-wide text-st-text md:text-base">
             {product.title}
           </h3>
-          <p className="mb-5 flex-1 text-sm font-light leading-[1.7] text-st-text-muted">
+          <p className="mb-5 flex-1 text-sm font-normal leading-[1.7] text-st-text-muted">
             {product.description}
           </p>
           <div className="flex flex-wrap items-center gap-1.5">
             {product.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-md bg-white/[0.03] px-2 py-0.5 text-[10px] font-light tracking-wide text-st-text-muted"
+                className="rounded-md bg-st-surface px-2 py-0.5 text-[10px] font-medium tracking-wide text-st-text-muted"
               >
                 {tag}
               </span>
             ))}
             {hasDetails && (
-              <span className="ml-auto text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
+              <span className="ml-auto text-[10px] font-medium tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
                 Details →
               </span>
             )}
@@ -221,25 +104,55 @@ function ProductCard({
 }
 
 export default function Products() {
+  const { t } = useI18n();
   const [expanded, setExpanded] = useState<Product | null>(null);
+  const { railRef, active, goTo } = useSnapRail(t.practices.items.length);
 
   return (
-    <section id="products" className="relative py-28 sm:py-36">
+    <section id="products" className="relative py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <SectionHeader
-          label="Products"
-          title="What we build"
-          subtitle="Production software that solves real problems — from enterprise ERP to AI-powered decision tools."
+          label={t.practices.eyebrow}
+          title={t.practices.title}
+          subtitle={t.practices.sub}
         />
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {PRODUCTS.map((product, i) => (
-            <ProductCard
-              key={product.title}
-              product={product}
-              index={i}
-              onExpand={setExpanded}
-            />
+        {/* One swipeable rail on phones, a grid from sm: up. The rail is
+            native scroll-snap; only the dots are wired up in JS. */}
+        <div
+          ref={railRef}
+          className="snap-rail grid-cols-1 gap-3 sm:grid sm:grid-cols-2 sm:gap-3 lg:grid-cols-3"
+        >
+          {t.practices.items.map((copy, i) => {
+            const product = {
+              ...copy,
+              ...PRODUCT_META[i],
+            } as unknown as Product;
+            return (
+            <div key={copy.title} className="snap-item" data-snap-index={i}>
+              <ProductCard
+                product={product}
+                index={i}
+                onExpand={setExpanded}
+                railRef={railRef}
+              />
+            </div>
+            );
+          })}
+        </div>
+
+        {/* Position indicator — phones only, where the rail exists. */}
+        <div className="mt-4 flex items-center justify-center sm:hidden">
+          {t.practices.items.map((copy, i) => (
+            <button
+              key={copy.title}
+              onClick={() => goTo(i)}
+              aria-label={copy.title}
+              aria-current={i === active}
+              className="flex h-11 w-11 items-center justify-center"
+            >
+              <span className="rail-dot" data-active={i === active} />
+            </button>
           ))}
         </div>
       </div>
@@ -251,7 +164,7 @@ export default function Products() {
           details={expanded.details!}
           tags={expanded.tags}
           header={
-            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.08] text-st-gold-light">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-st-surface text-st-gold-light">
               {ICONS[expanded.icon]}
             </div>
           }
@@ -276,15 +189,15 @@ function SectionHeader({
   return (
     <div
       ref={ref}
-      className={`mb-16 text-center ${isInView ? "reveal visible" : "reveal"}`}
+      className={`mb-10 text-center sm:mb-14 ${isInView ? "reveal visible" : "reveal"}`}
     >
-      <span className="mb-3 inline-block text-[10px] font-light tracking-[0.2em] uppercase text-st-text-muted">
+      <span className="mb-3 inline-block text-[10px] font-medium tracking-[0.2em] uppercase text-st-text-muted">
         {label}
       </span>
-      <h2 className="mb-4 font-display text-2xl tracking-[-0.02em] text-white sm:text-3xl md:text-5xl lg:text-6xl">
+      <h2 className="mb-4 font-display text-2xl tracking-[-0.02em] text-st-text sm:text-3xl md:text-5xl lg:text-6xl">
         {title}
       </h2>
-      <p className="mx-auto max-w-lg text-[15px] font-light leading-[1.7] text-st-text-muted md:text-base">
+      <p className="mx-auto max-w-3xl text-balance text-[15px] font-normal leading-[1.7] text-st-text-muted md:text-base">
         {subtitle}
       </p>
     </div>

@@ -9,9 +9,9 @@ interface DemoRendererProps {
 }
 
 const inputClass =
-  "w-full min-h-[44px] rounded-lg border border-white/20 bg-white/[0.05] px-3.5 py-3 text-[13px] font-light text-white placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-white/40";
+  "w-full min-h-[44px] rounded-lg border border-st-border bg-st-surface px-3.5 py-3 text-[13px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-st-border";
 const labelClass =
-  "mb-1.5 block text-[11px] font-light tracking-wide text-white/60";
+  "mb-1.5 block text-[11px] font-medium tracking-wide text-st-text/60";
 
 export default function AppointmentBookingDemo(props: DemoRendererProps) {
   const { onSubmit, isLoading, result, error, clearResult } = props;
@@ -58,59 +58,59 @@ export default function AppointmentBookingDemo(props: DemoRendererProps) {
                 />
               </svg>
             </div>
-            <h3 className="text-[15px] font-light text-white">
+            <h3 className="text-[15px] font-normal text-st-text">
               Appointment Confirmed
             </h3>
           </div>
 
-          <div className="space-y-3 text-[13px] font-light">
+          <div className="space-y-3 text-[13px] font-normal">
             <div className="flex justify-between">
               <span className="text-st-text-muted">Service</span>
-              <span className="text-white">{svc}</span>
+              <span className="text-st-text">{svc}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-st-text-muted">Date</span>
-              <span className="text-white">{confirmedDate}</span>
+              <span className="text-st-text">{confirmedDate}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-st-text-muted">Time</span>
-              <span className="text-white">{confirmedTime}</span>
+              <span className="text-st-text">{confirmedTime}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-st-text-muted">Duration</span>
-              <span className="text-white">{duration} minutes</span>
+              <span className="text-st-text">{duration} minutes</span>
             </div>
           </div>
         </div>
 
         {/* Reminder card */}
         <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
-          <p className="mb-2 text-[11px] font-light tracking-wide text-st-text-muted">
+          <p className="mb-2 text-[11px] font-medium tracking-wide text-st-text-muted">
             Reminder Message
           </p>
-          <p className="text-[13px] font-light leading-relaxed text-white">
+          <p className="text-[13px] font-normal leading-relaxed text-st-text">
             {reminder}
           </p>
         </div>
 
         {/* Confirmation text */}
         <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
-          <p className="mb-2 text-[11px] font-light tracking-wide text-st-text-muted">
+          <p className="mb-2 text-[11px] font-medium tracking-wide text-st-text-muted">
             Confirmation Text
           </p>
-          <p className="text-[13px] font-light leading-relaxed text-white/80">
+          <p className="text-[13px] font-normal leading-relaxed text-st-text/80">
             {confirmation}
           </p>
         </div>
 
         {error && (
-          <p className="text-[13px] font-light text-red-400/80">{error}</p>
+          <p className="text-[13px] font-normal text-red-400/80">{error}</p>
         )}
 
         <button
           type="button"
           onClick={clearResult}
-          className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white"
+          className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
         >
           Try Again
         </button>
@@ -120,7 +120,7 @@ export default function AppointmentBookingDemo(props: DemoRendererProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-light leading-relaxed text-st-gold-light/80">
+      <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-normal leading-relaxed text-st-gold-light/80">
         <p className="mb-2 font-medium text-st-gold-light">How to use this demo</p>
         <p>Enter the type of business (e.g. dental clinic, hair salon, car workshop), the specific service the customer wants, and their preferred date and time. The AI will generate a realistic booking confirmation with a reminder message.</p>
         <p className="mt-2 text-[12px] text-st-gold-light/60">Use natural language for dates and times — &apos;next Tuesday&apos;, &apos;afternoon&apos;, &apos;3pm on 20 Jan&apos; all work. The AI will pick the best available slot.</p>
@@ -170,7 +170,7 @@ export default function AppointmentBookingDemo(props: DemoRendererProps) {
       </div>
 
       {error && (
-        <p className="text-[13px] font-light text-red-400/80">{error}</p>
+        <p className="text-[13px] font-normal text-red-400/80">{error}</p>
       )}
 
       <button
@@ -182,7 +182,7 @@ export default function AppointmentBookingDemo(props: DemoRendererProps) {
           !preferredDate.trim() ||
           !preferredTime.trim()
         }
-        className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-light tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50 disabled:opacity-40"
+        className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-normal tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50 disabled:opacity-40"
       >
         {isLoading ? "Generating..." : "Generate"}
       </button>

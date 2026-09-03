@@ -1,78 +1,54 @@
-import { useState, useCallback, useEffect, useMemo } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Nav from "./components/Nav";
-import Hero from "./components/Hero";
-import Products from "./components/Products";
-import AiCapabilities from "./components/AiCapabilities";
-import Industries from "./components/Industries";
-import Approach from "./components/Approach";
-import Contact from "./components/Contact";
+import HomePage from "./pages/HomePage";
+import ScrollProgress from "./components/ScrollProgress";
+import AskButton from "./components/AskButton";
+import StickyCta from "./components/StickyCta";
 import Footer from "./components/Footer";
 import AskStartech from "./components/AskStartech";
-import AiIcon from "./components/AiIcon";
 import SolutionsIndex from "./components/solutions/SolutionsIndex";
 import SolutionPage from "./components/solutions/SolutionPage";
-import { getSolutionBySlug } from "./components/solutions/solutionsData";
+import { useCurrentPage } from "./lib/router";
+import { I18nProvider } from "./i18n";
+import LanguageHint from "./components/LanguageHint";
+import { AI_CHAT_ENABLED } from "./lib/features";
 
 /**
- * Simple pathname-based router.
- * Listens to popstate events (dispatched by Link component and browser back/forward).
+ * Application shell: chrome, the chat panel, and whichever page the current
+ * URL resolves to. Route resolution lives in lib/router, page content in
+ * pages/ and components/ — this file only composes them.
  */
-function usePathname(): string {
-  const [pathname, setPathname] = useState(window.location.pathname);
-
-  useEffect(() => {
-    const handlePopState = () => setPathname(window.location.pathname);
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, []);
-
-  return pathname;
-}
-
 export default function App() {
   const [chatOpen, setChatOpen] = useState(false);
-  const pathname = usePathname();
+  const [ctaBarUp, setCtaBarUp] = useState(false);
+  const { page, locale } = useCurrentPage();
 
-  const toggleChat = useCallback(() => {
-    setChatOpen((prev) => !prev);
+  // A deep link like /#products arrives before React has rendered the
+  // section, so the browser finds no such element and stays at the top.
+  // Re-run the jump once the page exists.
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+
+    const frame = requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView();
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
-  const openChat = useCallback(() => {
-    setChatOpen(true);
-  }, []);
-
-  // Determine which page to render
-  const page = useMemo(() => {
-    if (pathname === "/solutions") {
-      return { type: "solutions-index" as const };
-    }
-
-    const solutionMatch = pathname.match(/^\/solutions\/([a-z0-9-]+)$/);
-    if (solutionMatch) {
-      const solution = getSolutionBySlug(solutionMatch[1]);
-      if (solution) {
-        return { type: "solution-page" as const, solution };
-      }
-    }
-
-    return { type: "home" as const };
-  }, [pathname]);
+  const toggleChat = useCallback(() => setChatOpen((prev) => !prev), []);
+  const openChat = useCallback(() => setChatOpen(true), []);
+  const closeChat = useCallback(() => setChatOpen(false), []);
 
   return (
+    <I18nProvider locale={locale}>
     <div className="min-h-screen bg-st-bg text-st-text">
+      <ScrollProgress />
+      <LanguageHint />
       <Nav onAskAi={openChat} />
 
       <main>
-        {page.type === "home" && (
-          <>
-            <Hero onAskAi={openChat} />
-            <Products />
-            <AiCapabilities />
-            <Industries />
-            <Approach />
-            <Contact />
-          </>
-        )}
+        {page.type === "home" && <HomePage onAskAi={openChat} />}
 
         {page.type === "solutions-index" && (
           <SolutionsIndex onAskAi={openChat} />
@@ -85,16 +61,16 @@ export default function App() {
 
       <Footer />
 
-      {/* Floating AI button */}
-      <button
-        onClick={toggleChat}
-        aria-label="Ask StarTech AI"
-        className="star-whirl hero-btn-primary fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center !rounded-full text-st-gold-light/60 transition-colors duration-500 hover:text-st-gold-light"
-      >
-        <AiIcon className="h-4 w-4" />
-      </button>
+      <StickyCta onVisibilityChange={setCtaBarUp} />
 
-      <AskStartech isOpen={chatOpen} onClose={() => setChatOpen(false)} />
+      {AI_CHAT_ENABLED && (
+        <AskButton onClick={toggleChat} hidden={ctaBarUp} />
+      )}
+
+      {AI_CHAT_ENABLED && (
+        <AskStartech isOpen={chatOpen} onClose={closeChat} />
+      )}
     </div>
+    </I18nProvider>
   );
 }

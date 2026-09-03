@@ -2,18 +2,33 @@
 
 /* ─── Theme Tokens ────────────────────────────────────────────────────────── */
 @theme {
-  --color-st-bg: #09090b;
-  --color-st-bg-elevated: #0f0f13;
-  --color-st-bg-card: #141419;
-  --color-st-surface: rgba(255, 255, 255, 0.03);
-  --color-st-border: rgba(255, 255, 255, 0.06);
-  --color-st-border-hover: rgba(255, 255, 255, 0.12);
-  --color-st-text: #e4e4e7;
-  --color-st-text-muted: #71717a;
-  --color-st-blue: #4f6bf7;
-  --color-st-blue-light: #818cf8;
-  --color-st-pink: #c084fc;
-  --color-st-accent: #6366f1;
+  /* Sampled from the printed business card: true black ground, a luminous
+     blue→pink gradient, and the deep indigo glow from the reverse. The card
+     is the brand — the site should feel like it was printed from the same
+     press, not like a different company. */
+  --color-st-bg: #000000;
+  --color-st-bg-elevated: #08080d;
+  --color-st-bg-card: #0b0b12;
+  --color-st-surface: rgba(255, 255, 255, 0.035);
+  --color-st-border: rgba(255, 255, 255, 0.10);
+  --color-st-border-hover: rgba(255, 255, 255, 0.22);
+  --color-st-text: #ffffff;
+  --color-st-text-muted: #9a9aa8;
+
+  /* Gradient endpoints, sampled straight off the logo blob. */
+  --color-st-blue: #0a68f9;
+  --color-st-blue-light: #5b8dfb;
+  --color-st-pink: #e19cdc;
+  --color-st-accent: #0a68f9;
+  /* The indigo of the reverse-side wave — used for ambient glow only. */
+  --color-st-glow: #0a1a49;
+
+  /* Form fields need to read as inputs against a black page. A 10%-white
+     hairline disappears; these sit at roughly 22% with a faint fill so the
+     box is visible before it is focused. */
+  --color-st-field: rgba(255, 255, 255, 0.22);
+  --color-st-field-bg: rgba(255, 255, 255, 0.04);
+
   --color-st-gold: #d4a853;
   --color-st-gold-light: #e7c47a;
 
@@ -28,10 +43,27 @@
 
 /* ─── Base Layer ──────────────────────────────────────────────────────────── */
 @layer base {
+  /* The header is fixed, so an anchor jump would otherwise drop the section
+     heading underneath it. Reserve its height on every scroll target. */
+  :target,
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Upper bound for the whole page. max-w-7xl (1280px) is the section
+     container; on a 2560px display that leaves the content stranded in the
+     middle of a very wide black field. Capping the body and centring it keeps
+     the composition intact and the ambient glows framing it, rather than
+     stretched across the desk. */
+  #root {
+    max-width: 1800px;
+    margin-inline: auto;
   }
 
   body {
@@ -57,7 +89,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.14);
     border-radius: 2px;
   }
 }
@@ -123,10 +155,12 @@
 
 @keyframes glow-breathe {
   0%, 100% {
-    opacity: 0.03;
+    opacity: 0.55;
+    transform: scale(1);
   }
   50% {
-    opacity: 0.06;
+    opacity: 1;
+    transform: scale(1.06);
   }
 }
 
@@ -139,15 +173,287 @@
     border: 1px solid var(--color-st-border);
   }
 
+  /* Brand gradient for display words. Starts at the logo's blue, passes
+     through a violet midpoint, lands on its pink — then drifts, slowly, so
+     the word reads as lit rather than animated. Every stop clears 4.5:1 on
+     black, so the text stays legible at any point in the cycle. */
   .gradient-text {
     background: linear-gradient(
-      135deg,
-      var(--color-st-blue) 0%,
-      var(--color-st-pink) 100%
+      100deg,
+      #4a8bfb 0%,
+      #8f7ae8 38%,
+      #e19cdc 62%,
+      #4a8bfb 100%
     );
+    background-size: 220% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: gradient-drift 14s ease-in-out infinite;
+  }
+
+  @keyframes gradient-drift {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+  }
+
+  /* ── Hero card ────────────────────────────────────────────────────────────
+     The hero is the business card: a panel on black whose edge catches the
+     brand gradient. A conic gradient sweeps the border once on load — the
+     light passing over a printed edge — then settles to a static hairline.
+     The sweep is a rotating pseudo-element behind a masked inset, so nothing
+     but transform animates. */
+  .hero-card {
+    position: relative;
+    isolation: isolate;
+    border-radius: 1.5rem;
+    background: linear-gradient(180deg, #08080f 0%, #050509 100%);
+  }
+
+  /* The moving light. Sits behind the panel and is clipped by it. */
+  .hero-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--sweep, 0deg),
+      transparent 0deg,
+      transparent 200deg,
+      rgba(10, 104, 249, 0.7) 280deg,
+      rgba(225, 156, 220, 0.9) 320deg,
+      rgba(10, 104, 249, 0.5) 345deg,
+      transparent 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    animation: card-sweep 2.4s cubic-bezier(0.4, 0, 0.2, 1) 0.3s 1 both;
+    z-index: -1;
+  }
+
+  /* The resting hairline, revealed as the sweep finishes. */
+  .hero-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    opacity: 0;
+    animation: fade-to-1 900ms ease 2.1s both;
+    pointer-events: none;
+  }
+
+  @property --sweep {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @keyframes card-sweep {
+    from { --sweep: 0deg; }
+    to   { --sweep: 360deg; }
+  }
+
+  @keyframes fade-to-1 {
+    to { opacity: 1; }
+  }
+
+  /* The card responds to the cursor like a physical object: a small tilt
+     toward the pointer, and the light sweeping across its edge. Pointer
+     devices only — there is no hover on a phone, and the card is hidden
+     below lg: anyway. */
+  @media (hover: hover) and (pointer: fine) {
+    .card-tilt {
+      transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+      transform-style: preserve-3d;
+    }
+
+    .card-tilt:hover {
+      transform: perspective(1200px) rotateX(2deg) rotateY(-3deg) translateY(-4px);
+    }
+  }
+
+  /* The persistent CTA bar. Frosted rather than solid so the page reads
+     through it, with the brand gradient as a hairline along the top edge. */
+  .sticky-cta {
+    background: rgba(8, 8, 14, 0.82);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow:
+      0 -1px 0 rgba(255, 255, 255, 0.05) inset,
+      0 12px 40px rgba(0, 0, 0, 0.55);
+    position: relative;
+  }
+
+  .sticky-cta::before {
+    content: "";
+    position: absolute;
+    inset-inline: 12%;
+    top: -1px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(91, 141, 251, 0.7),
+      rgba(225, 156, 220, 0.7),
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  /* The Ask button is position:fixed, so on a display wider than the page cap
+     it would drift out to the screen edge, away from the content. Past the
+     cap, pin it to the content column's right edge instead. */
+  @media (min-width: 1800px) {
+    .ask-fab {
+      right: calc((100vw - 1800px) / 2 + 1.5rem);
+    }
+  }
+
+  /* ── Masthead mark ────────────────────────────────────────────────────────
+     The logo is a flat SVG, so the dimensionality comes from lighting it
+     rather than from geometry: a coloured glow behind it, a specular
+     highlight sweeping across it, and a slow orbit in 3D space. All of it is
+     transform, opacity and filter, so nothing leaves the compositor. */
+  .logo-3d {
+    position: relative;
+    perspective: 900px;
+    transform-style: preserve-3d;
+    /* The rotation pushes corners outside the box — do not clip them. */
+    overflow: visible;
+  }
+
+  .logo-3d img {
+    overflow: visible;
+  }
+
+  /* The light the mark appears to sit in. */
+  .logo-3d::before {
+    content: "";
+    position: absolute;
+    inset: -35%;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle at 42% 38%,
+      rgba(10, 104, 249, 0.30),
+      rgba(225, 156, 220, 0.14) 45%,
+      transparent 70%
+    );
+    filter: blur(28px);
+    animation: logo-halo 7s ease-in-out 2 forwards;
+    pointer-events: none;
+  }
+
+  .logo-3d img {
+    position: relative;
+    animation: logo-orbit 11s cubic-bezier(0.45, 0, 0.55, 1) 1 forwards;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  /* The specular pass — a narrow band of light crossing the mark. */
+  .logo-3d::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      104deg,
+      transparent 38%,
+      rgba(255, 255, 255, 0.42) 48%,
+      rgba(255, 255, 255, 0.06) 54%,
+      transparent 62%
+    );
+    mix-blend-mode: overlay;
+    animation: logo-sheen 6.5s ease-in-out 2 forwards;
+    pointer-events: none;
+    -webkit-mask-image: var(--mark-mask);
+    mask-image: var(--mark-mask);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+
+  /* Rotates on two axes at different periods, so the motion never repeats
+     the same pose twice in a row and reads as an object turning in space. */
+  @keyframes logo-orbit {
+    0% {
+      transform: rotateY(-16deg) rotateX(7deg) translateZ(0) scale(1);
+    }
+    25% {
+      transform: rotateY(4deg) rotateX(-3deg) translateZ(22px) scale(1.03);
+    }
+    50% {
+      transform: rotateY(17deg) rotateX(6deg) translateZ(8px) scale(1.01);
+    }
+    75% {
+      transform: rotateY(2deg) rotateX(-5deg) translateZ(24px) scale(1.035);
+    }
+    /* Comes to rest slightly turned, so the mark keeps a sense of depth once
+       the motion stops rather than snapping back to flat. */
+    100% {
+      transform: rotateY(-7deg) rotateX(3deg) translateZ(6px) scale(1.01);
+    }
+  }
+
+  @keyframes logo-halo {
+    0%   { opacity: 0.55; transform: scale(1); }
+    50%  { opacity: 1;    transform: scale(1.12); }
+    100% { opacity: 0.7;  transform: scale(1.04); }
+  }
+
+  @keyframes logo-sheen {
+    0%, 62%, 100% { opacity: 0; transform: translateX(-55%); }
+    18%           { opacity: 1; }
+    45%           { opacity: 0; transform: translateX(55%); }
+  }
+
+  /* Replays on hover: the motion is an entrance, not a permanent loop, but
+     the mark should still respond if someone points at it. */
+  @media (hover: hover) and (pointer: fine) {
+    .logo-3d:hover img {
+      animation: logo-orbit 11s cubic-bezier(0.45, 0, 0.55, 1) 1 forwards;
+    }
+
+    .logo-3d:hover::after {
+      animation: logo-sheen 6.5s ease-in-out 1 forwards;
+    }
+  }
+
+  /* Metric tile — a faint inner light, brightening on hover. */
+  .metric-tile:hover {
+    border-color: rgba(10, 104, 249, 0.35);
+    box-shadow: 0 0 40px rgba(10, 104, 249, 0.10) inset,
+                0 4px 30px rgba(10, 104, 249, 0.08);
+  }
+
+  /* Hairline rule that fades out — the card's vertical divider, horizontal. */
+  .brand-rule {
+    background: linear-gradient(
+      90deg,
+      var(--color-st-blue) 0%,
+      var(--color-st-pink) 55%,
+      transparent 100%
+    );
+  }
+
+  /* Section headings get a faint gradient underline on reveal. */
+  .rule-grow {
+    transform-origin: left;
+    animation: rule-grow 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes rule-grow {
+    from { transform: scaleX(0); opacity: 0; }
+    to   { transform: scaleX(1); opacity: 1; }
   }
 
   .card {
@@ -158,7 +464,9 @@
 
   .card:hover {
     border-color: var(--color-st-border-hover);
-    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.15);
+    /* Light appears to come from the card itself, as on the card's reverse. */
+    box-shadow: 0 0 0 1px rgba(10, 104, 249, 0.10),
+                0 8px 40px rgba(10, 104, 249, 0.10);
     transform: translateY(-1px);
   }
 
@@ -187,13 +495,13 @@
   .nav-shimmer-wrap {
     background: linear-gradient(
       90deg,
-      #71717a 0%,
-      #71717a 35%,
-      #e7c47a 46%,
-      #ffd992 50%,
-      #e7c47a 54%,
-      #71717a 65%,
-      #71717a 100%
+      #9a9aa8 0%,
+      #9a9aa8 35%,
+      #5b8dfb 46%,
+      #e19cdc 50%,
+      #5b8dfb 54%,
+      #9a9aa8 65%,
+      #9a9aa8 100%
     );
     background-size: 300% 100%;
     background-position: 110% 0;
@@ -204,7 +512,7 @@
   }
 
   .nav-shimmer-link:hover {
-    -webkit-text-fill-color: white;
+    -webkit-text-fill-color: #ffffff;
   }
 
   @keyframes nav-shimmer-once {
@@ -228,7 +536,7 @@
     inset: 0;
     border-radius: 0.75rem;
     pointer-events: none;
-    box-shadow: 0 0 18px 3px rgba(231, 196, 122, 0.25);
+    box-shadow: 0 0 20px 4px rgba(10, 104, 249, 0.28);
     opacity: 0;
     animation: ask-us-outer-glow 1s ease 2.1s 1 both;
   }
@@ -245,31 +553,30 @@
   @keyframes ask-us-btn-bright {
     0% {
       box-shadow: none;
-      border-color: rgba(255, 255, 255, 0.06);
     }
     35% {
-      box-shadow: 0 0 24px 6px rgba(255, 217, 146, 0.4), 0 0 8px 2px rgba(255, 217, 146, 0.25), inset 0 0 16px rgba(255, 217, 146, 0.12);
-      border-color: rgba(255, 217, 146, 0.5);
+      box-shadow: 0 0 22px 5px rgba(10, 104, 249, 0.35);
     }
     100% {
       box-shadow: none;
-      border-color: rgba(255, 255, 255, 0.06);
     }
   }
 
+  /* The Ask-us button is now a solid accent fill, so its label stays white.
+     The old colour-cycling shimmer fought that and left dark text on blue. */
   .ask-us-text-shimmer {
-    animation: ask-us-text-bright 1s ease 2.1s 1 both;
+    animation: none;
   }
 
   @keyframes ask-us-text-bright {
     0% {
-      color: #71717a;
+      color: var(--color-st-text-muted);
     }
     35% {
-      color: #ffd992;
+      color: var(--color-st-blue);
     }
     100% {
-      color: #71717a;
+      color: var(--color-st-text-muted);
     }
   }
 
@@ -364,80 +671,127 @@
     }
   }
 
-  /* Hero primary button — glass with gold shimmer on hover */
+  /* Primary button — solid accent fill. The one place the brand colour
+     is spent at full strength, so the main action is unmistakable. */
   .hero-btn-primary {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 0 0 rgba(212, 168, 83, 0);
-  }
-
-  .hero-btn-primary::before {
-    content: "";
-    position: absolute;
-    inset: 0;
     background: linear-gradient(
-      105deg,
-      transparent 30%,
-      rgba(212, 168, 83, 0.08) 45%,
-      rgba(231, 196, 122, 0.15) 50%,
-      rgba(212, 168, 83, 0.08) 55%,
-      transparent 70%
+      110deg,
+      var(--color-st-blue) 0%,
+      #8f7ae8 55%,
+      var(--color-st-pink) 100%
     );
-    transform: translateX(-100%);
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 2px 20px rgba(10, 104, 249, 0.22);
   }
 
   .hero-btn-primary:hover {
-    border-color: rgba(212, 168, 83, 0.25);
-    box-shadow:
-      0 0 20px rgba(212, 168, 83, 0.08),
-      0 0 60px rgba(212, 168, 83, 0.04);
-    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 3px 30px rgba(10, 104, 249, 0.38),
+                0 0 60px rgba(225, 156, 220, 0.12);
+    filter: brightness(1.06);
   }
 
-  .hero-btn-primary:hover::before {
-    transform: translateX(100%);
-  }
-
-  /* Hero secondary button — glass with soft white glow on hover */
+  /* Secondary buttons — glass panels rather than outlines. A bare hairline
+     on black reads as an empty rectangle; a faint fill and an inner top
+     highlight give the button an edge to catch light, the way the primary
+     does with its gradient. */
   .hero-btn-secondary {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.07) 0%,
+        rgba(255, 255, 255, 0.025) 100%
+      );
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: var(--color-st-text);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.09),
+      0 1px 2px rgba(0, 0, 0, 0.4);
   }
 
-  .hero-btn-secondary::before {
+  /* A gradient hairline sweeps the top edge on hover — the same light the
+     hero card uses, at a fraction of the strength. */
+  .hero-btn-secondary::after {
     content: "";
     position: absolute;
-    inset: 0;
+    inset-inline: 18%;
+    top: 0;
+    height: 1px;
     background: linear-gradient(
-      105deg,
-      transparent 30%,
-      rgba(255, 255, 255, 0.04) 45%,
-      rgba(255, 255, 255, 0.08) 50%,
-      rgba(255, 255, 255, 0.04) 55%,
-      transparent 70%
+      90deg,
+      transparent,
+      rgba(91, 141, 251, 0.85),
+      rgba(225, 156, 220, 0.85),
+      transparent
     );
-    transform: translateX(-100%);
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    transition: opacity 450ms ease;
+    pointer-events: none;
   }
 
   .hero-btn-secondary:hover {
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 24px rgba(255, 255, 255, 0.03);
-    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.26);
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.11) 0%,
+        rgba(255, 255, 255, 0.045) 100%
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 4px 18px rgba(10, 104, 249, 0.14);
   }
 
-  .hero-btn-secondary:hover::before {
-    transform: translateX(100%);
+  .hero-btn-secondary:hover::after {
+    opacity: 1;
+  }
+
+  .hero-btn-secondary:active {
+    transform: translateY(1px);
+  }
+
+  /* A soft light follows the cursor across the button. Pointer devices only:
+     on touch there is no cursor to follow, and the press state does the job. */
+  @media (hover: hover) and (pointer: fine) {
+    .hero-btn-secondary::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        180px circle at var(--mx, 50%) var(--my, 50%),
+        rgba(91, 141, 251, 0.16),
+        transparent 60%
+      );
+      opacity: 0;
+      transition: opacity 400ms ease;
+      pointer-events: none;
+    }
+
+    .hero-btn-secondary:hover::before {
+      opacity: 1;
+    }
+
+    /* The sparkle icon turns once as the button is entered. */
+    .hero-btn-secondary:hover .btn-spark {
+      animation: btn-spark 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+
+  @keyframes btn-spark {
+    from { transform: rotate(0deg) scale(1); }
+    50%  { transform: rotate(90deg) scale(1.18); }
+    to   { transform: rotate(180deg) scale(1); }
   }
 
   /* Star whirl entrance — spins in once then rests */
+  /* `backwards`, not `both`: this is a one-shot entrance, and `both` keeps
+     the final keyframe applied forever — which pins transform and beats any
+     later inline style, such as lifting the button clear of the CTA bar. */
   .star-whirl {
-    animation: star-whirl 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: star-whirl 1.2s cubic-bezier(0.16, 1, 0.3, 1) backwards;
   }
 
   @keyframes star-whirl {
@@ -483,15 +837,15 @@
 
   @keyframes step-shimmer {
     0% {
-      box-shadow: 0 0 0 0 rgba(212, 168, 83, 0);
-      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 0 0 rgba(10, 104, 249, 0);
+      border-color: var(--color-st-border);
     }
     40% {
-      box-shadow: 0 0 16px 2px rgba(212, 168, 83, 0.25);
-      border-color: rgba(212, 168, 83, 0.4);
+      box-shadow: 0 0 16px 2px rgba(10, 104, 249, 0.30);
+      border-color: rgba(10, 104, 249, 0.45);
     }
     100% {
-      box-shadow: 0 0 0 0 rgba(212, 168, 83, 0);
+      box-shadow: 0 0 0 0 rgba(10, 104, 249, 0);
     }
   }
 
@@ -557,4 +911,285 @@
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
     }
   }
+}
+
+/* ─── Reduced motion ──────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .gradient-text,
+  .glow-breathe,
+  .nav-shimmer-wrap,
+  .ask-us-glow,
+  .ask-us-glow::after,
+  .rule-grow,
+  .line-grow {
+    animation: none !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ─── Motion system ───────────────────────────────────────────────────────────
+   Three rules govern every effect below:
+   1. Only transform / opacity / filter are animated, so work stays on the
+      compositor and never blocks scrolling on a mid-range phone.
+   2. Anything hover-triggered is wrapped in @media (hover: hover) — a touch
+      device has no hover, and these otherwise fire on tap and stick.
+   3. Ambient/decorative motion is reduced on small screens and removed
+      entirely under prefers-reduced-motion (see the block at the end).
+   ------------------------------------------------------------------------- */
+@layer utilities {
+
+  /* Scroll progress bar — the brand gradient, driven by the document
+     scroll timeline. No scroll listener, no main-thread work. */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    background: linear-gradient(90deg, #4a8bfb 0%, #8f7ae8 50%, #e19cdc 100%);
+    z-index: 60;
+    pointer-events: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      animation: scale-x linear;
+      animation-timeline: scroll(root block);
+    }
+  }
+
+  @keyframes scale-x {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* Reveal on enter, driven by the element's own view timeline where
+     supported. Falls back to the existing IntersectionObserver .reveal. */
+  @supports (animation-timeline: view()) {
+    /* Where the view timeline exists it drives the reveal, and the JS
+       .reveal opacity is neutralised so the two cannot fight — otherwise a
+       card whose observer never fires would stay invisible. */
+    .reveal-scroll.reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .reveal-scroll {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 26%;
+    }
+  }
+
+  @keyframes reveal-in {
+    from { opacity: 0; transform: translateY(26px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Hero headline: words rise in sequence, once, on load. */
+  .rise {
+    animation: rise 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Proof figures count into place with a soft blur-off. */
+  .figure-in {
+    animation: figure-in 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes figure-in {
+    from { opacity: 0; transform: translateY(10px); filter: blur(6px); }
+    to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+
+  /* Link underline that draws from the left. Pointer devices only. */
+  @media (hover: hover) and (pointer: fine) {
+    .link-draw {
+      background-image: linear-gradient(90deg, #4a8bfb, #e19cdc);
+      background-size: 0% 1px;
+      background-position: 0 100%;
+      background-repeat: no-repeat;
+      transition: background-size 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .link-draw:hover {
+      background-size: 100% 1px;
+    }
+
+    /* Cards lift only where there is a real cursor. */
+    .card:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Touch: replace hover affordance with a crisp press state. */
+  @media (hover: none) {
+    .card:active,
+    .metric-tile:active {
+      transform: scale(0.995);
+      border-color: rgba(10, 104, 249, 0.35);
+    }
+  }
+}
+
+/* Ambient glow is expensive to composite at phone sizes — shrink the blur
+   radius and slow the cycle rather than removing the brand feel entirely. */
+@media (max-width: 640px) {
+  .glow-breathe {
+    animation-duration: 10s;
+  }
+}
+
+/* ─── Reduced motion (authoritative) ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hero-btn-secondary::before,
+  .hero-btn-secondary::after {
+    transition: none;
+  }
+
+  .btn-spark,
+  .logo-3d img,
+  .logo-3d::before,
+  .logo-3d::after {
+    animation: none !important;
+  }
+
+  /* A flat, still mark under reduced motion — the shape still reads. */
+  .logo-3d img { transform: none; }
+  .logo-3d::after { opacity: 0; }
+
+  .reveal,
+  .reveal-scroll,
+  .rise,
+  .figure-in {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .scroll-progress { display: none; }
+}
+
+/* ─── Touch ───────────────────────────────────────────────────────────────────
+   Mobile gets real gestures, not just a narrower layout. Three principles:
+   1. Scrolling and snapping are CSS, never JS — the compositor keeps them at
+      frame rate on hardware a scroll listener would stutter on.
+   2. Every touchable thing answers instantly: a press state that fires on
+      touchstart, not on the 300ms-late click.
+   3. Nothing depends on hover, and nothing traps the page scroll.
+   ------------------------------------------------------------------------- */
+@layer utilities {
+
+  /* Horizontal snap rail. Children become full-width cards on a phone and the
+     rail disappears entirely at sm:, where a grid is the better shape. */
+  .snap-rail {
+    display: flex;
+    gap: 0.875rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 1.5rem;
+    padding: 0.25rem 1.5rem 1.25rem;
+    margin: 0 -1.5rem;
+    /* Let the browser own horizontal panning; keeps vertical scroll free. */
+    touch-action: pan-x pan-y;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .snap-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .snap-item {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    flex: 0 0 86%;
+    max-width: 26rem;
+  }
+
+  @media (min-width: 640px) {
+    .snap-rail {
+      display: grid;
+      overflow: visible;
+      margin: 0;
+      padding: 0;
+    }
+
+    .snap-item {
+      flex: initial;
+      max-width: none;
+    }
+  }
+
+  /* Press feedback. Scale is compositor-only, so it lands immediately even
+     while the page is still settling. */
+  .pressable {
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 140ms cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 220ms ease;
+    touch-action: manipulation;
+  }
+
+  .pressable:active {
+    transform: scale(0.975);
+  }
+
+  @media (hover: none) {
+    .pressable:active {
+      border-color: rgba(10, 104, 249, 0.45);
+    }
+  }
+
+  /* Drag affordance under a snap rail: dots that track the active card. */
+  .rail-dot {
+    height: 0.375rem;
+    width: 0.375rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.18);
+    transition: width 300ms cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 300ms ease;
+  }
+
+  .rail-dot[data-active="true"] {
+    width: 1.25rem;
+    background: linear-gradient(90deg, #4a8bfb, #e19cdc);
+  }
+
+  /* A hint that a rail can be swiped — nudges once, then stops for good. */
+  .swipe-hint {
+    animation: swipe-hint 1.6s cubic-bezier(0.4, 0, 0.2, 1) 1.4s 2 both;
+  }
+
+  @keyframes swipe-hint {
+    0%, 100% { transform: translateX(0); }
+    35%      { transform: translateX(-14px); }
+    70%      { transform: translateX(0); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swipe-hint { animation: none; }
+  .pressable:active { transform: none; }
 }

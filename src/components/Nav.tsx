@@ -1,21 +1,26 @@
 import { useState, useEffect } from "react";
 import AiIcon from "./AiIcon";
 import Link from "./solutions/Link";
+import { AI_CHAT_ENABLED } from "../lib/features";
+import { useI18n } from "../i18n";
+import LanguageSwitcher, { LanguageRow } from "./LanguageSwitcher";
 
 interface NavProps {
   onAskAi: () => void;
 }
 
+/** Keyed rather than literal, so the labels follow the active language. */
 const NAV_LINKS = [
-  { label: "Products", href: "/#products" },
-  { label: "Solutions", href: "/solutions" },
-  { label: "AI", href: "/#ai-capabilities" },
-  { label: "Industries", href: "/#industries" },
-  { label: "Approach", href: "/#approach" },
-  { label: "Contact", href: "/#contact" },
-];
+  { key: "work", href: "/#work" },
+  { key: "practices", href: "/#products" },
+  { key: "solutions", href: "/solutions" },
+  { key: "industries", href: "/#industries" },
+  { key: "approach", href: "/#approach" },
+  { key: "contact", href: "/#contact" },
+] as const;
 
 export default function Nav({ onAskAi }: NavProps) {
+  const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -44,7 +49,7 @@ export default function Nav({ onAskAi }: NavProps) {
           <div className="flex items-center justify-end px-6 py-5">
             <button
               onClick={() => setMobileOpen(false)}
-              aria-label="Close menu"
+              aria-label={t.nav.closeMenu}
               className="flex h-11 w-11 items-center justify-center rounded-md"
             >
               <svg className="h-4 w-4 text-st-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -53,15 +58,16 @@ export default function Nav({ onAskAi }: NavProps) {
             </button>
           </div>
 
-          {/* Logo + Links — centered */}
-          <div className="flex flex-1 flex-col items-center justify-center gap-8">
+          {/* Links fill the sheet; the CTA and language row anchor the foot,
+              so seven languages cannot push the menu into overflow. */}
+          <div className="flex flex-1 flex-col items-center justify-center gap-7 overflow-y-auto py-4">
             <Link
               href="/"
               onClick={() => setMobileOpen(false)}
               className="mb-4 flex items-center justify-center"
             >
               <img
-                src="/assets/startech-logo-full.png"
+                src="/assets/startech-logo-full.svg"
                 alt="StarTech Innovation"
                 className="h-32 w-auto"
               />
@@ -71,24 +77,39 @@ export default function Nav({ onAskAi }: NavProps) {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileOpen(false)}
-                className="font-display text-2xl text-white transition-colors duration-300 hover:text-st-text-muted"
+                className="font-display text-2xl text-st-text transition-colors duration-300 hover:text-st-text-muted"
               >
-                {link.label}
+                {t.nav[link.key]}
               </Link>
             ))}
-            <div className="mt-2 h-px w-12 bg-white/10" />
-            <button
-              onClick={() => {
-                setMobileOpen(false);
-                onAskAi();
-              }}
-              className="hero-btn-primary group relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-light tracking-wide text-white transition-all duration-500"
-            >
-              <span className="relative z-10 flex items-center gap-2.5">
-                <AiIcon className="h-3.5 w-3.5 text-st-gold-light" />
-                Ask us
-              </span>
-            </button>
+            {AI_CHAT_ENABLED ? (
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  onAskAi();
+                }}
+                className="hero-btn-primary group relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text transition-all duration-500"
+              >
+                <span className="relative z-10 flex items-center gap-2.5">
+                  <AiIcon className="h-3.5 w-3.5 text-white/80" />
+                  {t.nav.ask}
+                </span>
+              </button>
+            ) : (
+              <Link
+                href="/#contact"
+                onClick={() => setMobileOpen(false)}
+                className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-3.5 text-[15px] font-medium tracking-wide text-white transition-all duration-500"
+              >
+                <span className="relative z-10">{t.nav.letsTalk}</span>
+              </Link>
+            )}
+          </div>
+
+          {/* Language choice sits at the foot, out of the reading order but
+              within thumb reach. */}
+          <div className="border-t border-st-border pb-8 pt-5">
+            <LanguageRow />
           </div>
         </div>
       )}
@@ -101,15 +122,16 @@ export default function Nav({ onAskAi }: NavProps) {
             : "bg-transparent"
         }`}
       >
-        <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-8">
+        <nav className="mx-auto flex w-full max-w-[1800px] items-center justify-between px-6 py-5 sm:px-8">
+          <div className="mx-auto flex w-full max-w-7xl items-center justify-between">
           <Link
             href="/"
-            className="hidden min-h-[44px] min-w-[44px] items-center md:flex"
+            className="flex min-h-[44px] min-w-[44px] items-center"
           >
             <img
-              src="/assets/startech-logo-full.png"
+              src="/assets/startech-logo-full.svg"
               alt="StarTech Innovation"
-              className="h-7 w-auto opacity-70 transition-opacity duration-300 hover:opacity-90 lg:h-9"
+              className="h-7 w-auto opacity-90 transition-opacity duration-300 hover:opacity-100 lg:h-9"
             />
           </Link>
 
@@ -120,35 +142,46 @@ export default function Nav({ onAskAi }: NavProps) {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="nav-shimmer-link rounded-md px-4 py-2 text-sm font-light tracking-wide transition-colors duration-300 lg:text-base"
+                  className="nav-shimmer-link rounded-md px-4 py-2 text-sm font-normal tracking-wide transition-colors duration-300 lg:text-base"
                 >
-                  {link.label}
+                  {t.nav[link.key]}
                 </Link>
               ))}
             </div>
-            <div className="ask-us-glow relative ml-4 rounded-xl">
-              <button
-                onClick={onAskAi}
-                className="hero-btn-primary group relative overflow-hidden rounded-xl px-5 py-2.5 text-sm font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white lg:text-base"
-              >
-                <span className="ask-us-text-shimmer relative z-10 flex items-center gap-2">
-                  <AiIcon className="h-3 w-3 text-st-gold-light transition-all duration-500 group-hover:text-st-gold" />
-                  Ask us
-                </span>
-              </button>
+            <LanguageSwitcher className="ml-2" />
+            <div className="ask-us-glow relative ml-2 rounded-xl">
+              {AI_CHAT_ENABLED ? (
+                <button
+                  onClick={onAskAi}
+                  className="hero-btn-primary group relative overflow-hidden rounded-xl px-5 py-2.5 text-sm font-medium tracking-wide text-white transition-all duration-500 lg:text-base"
+                >
+                  <span className="ask-us-text-shimmer relative z-10 flex items-center gap-2">
+                    <AiIcon className="h-3 w-3 text-white/80 transition-all duration-500 group-hover:text-white" />
+                    {t.nav.ask}
+                  </span>
+                </button>
+              ) : (
+                <Link
+                  href="/#contact"
+                  className="hero-btn-primary group relative flex items-center overflow-hidden rounded-xl px-5 py-2.5 text-sm font-medium tracking-wide text-white transition-all duration-500 lg:text-base"
+                >
+                  <span className="relative z-10">{t.nav.letsTalk}</span>
+                </Link>
+              )}
             </div>
           </div>
 
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen(true)}
-            aria-label="Open menu"
+            aria-label={t.nav.openMenu}
             className="ml-auto flex h-11 w-11 flex-col items-center justify-center gap-1.5 rounded-md md:hidden"
           >
             <span className="block h-px w-4 bg-st-text-muted/60" />
             <span className="block h-px w-4 bg-st-text-muted/60" />
             <span className="block h-px w-4 bg-st-text-muted/60" />
           </button>
+          </div>
         </nav>
       </header>
     </>

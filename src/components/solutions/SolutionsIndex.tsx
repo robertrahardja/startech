@@ -1,4 +1,5 @@
 import { useInView } from "../../hooks/useInView";
+import { AI_CHAT_ENABLED } from "../../lib/features";
 import { SectionHeader } from "../Products";
 import Link from "./Link";
 import {
@@ -102,18 +103,20 @@ export default function SolutionsIndex({ onAskAi }: { onAskAi: () => void }) {
       {/* Bottom CTA */}
       <section className="py-20 sm:py-28">
         <div className="mx-auto max-w-2xl px-6 text-center sm:px-8">
-          <h2 className="mb-4 font-display text-2xl text-white sm:text-3xl md:text-4xl">
+          <h2 className="mb-4 font-display text-2xl text-st-text sm:text-3xl md:text-4xl">
             Not sure which solution fits?
           </h2>
-          <p className="mb-8 text-sm font-light leading-relaxed text-st-text-muted sm:text-base">
+          <p className="mb-8 text-sm font-normal leading-relaxed text-st-text-muted sm:text-base">
             Tell us about your business challenge and we will recommend the right
             AI solution, complete with a grant application plan.
           </p>
           <button
-            onClick={onAskAi}
-            className="hero-btn-primary relative overflow-hidden rounded-xl px-8 py-3.5 text-sm font-light tracking-wide text-white transition-all duration-500"
+            onClick={AI_CHAT_ENABLED ? onAskAi : () => { window.location.href = "/#contact"; }}
+            className="hero-btn-primary relative overflow-hidden rounded-xl px-8 py-3.5 text-sm font-normal tracking-wide text-st-text transition-all duration-500"
           >
-            <span className="relative z-10">Talk to Our AI Advisor</span>
+            <span className="relative z-10">
+              {AI_CHAT_ENABLED ? "Talk to Our AI Advisor" : "Talk to us"}
+            </span>
           </button>
         </div>
       </section>
@@ -134,44 +137,44 @@ function IndexHero({ onAskAi }: { onAskAi: () => void }) {
         className={`relative mx-auto max-w-4xl px-6 text-center sm:px-8 ${isInView ? "reveal visible" : "reveal"}`}
       >
         {/* Breadcrumb */}
-        <nav className="mb-6 flex items-center justify-center gap-2 text-[11px] font-light tracking-wide text-st-text-muted">
-          <Link href="/" className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center transition-colors duration-300 hover:text-white">
+        <nav className="mb-6 flex items-center justify-center gap-2 text-[11px] font-medium tracking-wide text-st-text-muted">
+          <Link href="/" className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center transition-colors duration-300 hover:text-st-text">
             Home
           </Link>
           <span className="text-st-text-muted/40">/</span>
           <span className="text-st-text-muted/60">Solutions</span>
         </nav>
 
-        <span className="mb-4 inline-block text-[10px] font-light tracking-[0.2em] uppercase text-st-text-muted">
+        <span className="mb-4 inline-block text-[10px] font-medium tracking-[0.2em] uppercase text-st-text-muted">
           13 AI Solutions for SMEs
         </span>
 
-        <h1 className="mb-4 font-display text-3xl tracking-[-0.02em] text-white sm:text-4xl md:text-5xl lg:text-6xl">
+        <h1 className="mb-4 font-display text-3xl tracking-[-0.02em] text-st-text sm:text-4xl md:text-5xl lg:text-6xl">
           AI Solutions
         </h1>
 
-        <p className="mx-auto mb-8 max-w-2xl text-base font-light leading-relaxed text-st-text-muted sm:text-lg">
+        <p className="mx-auto mb-8 max-w-2xl text-base font-normal leading-relaxed text-st-text-muted sm:text-lg">
           Production-ready AI tools designed for Singapore SMEs. Government grant
           eligible. Deploy in days, not months.
         </p>
 
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
           <button
-            onClick={onAskAi}
-            className="hero-btn-primary relative overflow-hidden rounded-xl px-7 py-3 text-sm font-light tracking-wide text-white transition-all duration-500"
+            onClick={AI_CHAT_ENABLED ? onAskAi : () => { window.location.href = "/#contact"; }}
+            className="hero-btn-primary relative overflow-hidden rounded-xl px-7 py-3 text-sm font-normal tracking-wide text-st-text transition-all duration-500"
           >
             <span className="relative z-10">Get a Free Consultation</span>
           </button>
           <a
             href="/#contact"
-            className="hero-btn-secondary relative overflow-hidden rounded-xl px-7 py-3 text-sm font-light tracking-wide text-st-text-muted transition-all duration-500 hover:text-white"
+            className="hero-btn-secondary relative overflow-hidden rounded-xl px-7 py-3 text-sm font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
           >
             <span className="relative z-10">Contact Us</span>
           </a>
         </div>
 
         {/* Grant callout */}
-        <div className="mt-10 inline-flex items-center gap-2 rounded-full border border-st-gold/15 bg-st-gold/5 px-4 py-2 text-[11px] font-light text-st-gold-light">
+        <div className="mt-10 inline-flex items-center gap-2 rounded-full border border-st-gold/15 bg-st-gold/5 px-4 py-2 text-[11px] font-medium text-st-gold-light">
           <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -233,7 +236,7 @@ function SolutionCard({
         <div className="flex h-full flex-col">
           {/* Top row: icon + badge */}
           <div className="mb-4 flex items-center justify-between">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/[0.04] text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-st-surface text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
               {ICONS[solution.icon]}
             </div>
             <span
@@ -244,40 +247,40 @@ function SolutionCard({
           </div>
 
           {/* Title */}
-          <h3 className="mb-2 text-sm font-medium tracking-wide text-white md:text-base">
+          <h3 className="mb-2 text-sm font-medium tracking-wide text-st-text md:text-base">
             {solution.title}
           </h3>
 
           {/* Tagline */}
-          <p className="mb-4 flex-1 text-[13px] font-light leading-relaxed text-st-text-muted">
+          <p className="mb-4 flex-1 text-[13px] font-normal leading-relaxed text-st-text-muted">
             {solution.tagline}
           </p>
 
           {/* Pricing row */}
           <div className="flex items-end justify-between border-t border-st-border pt-4">
             <div>
-              <div className="text-[10px] font-light text-st-text-muted/60">
+              <div className="text-[10px] font-medium text-st-text-muted/60">
                 From
               </div>
-              <div className="text-sm font-medium text-white">
+              <div className="text-sm font-medium text-st-text">
                 S${solution.priceFrom}
-                <span className="text-[11px] font-light text-st-text-muted">/mo</span>
+                <span className="text-[11px] font-medium text-st-text-muted">/mo</span>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-[10px] font-light text-st-gold-light/60">
+              <div className="text-[10px] font-medium text-st-gold-light/60">
                 With PSG
               </div>
               <div className="text-sm font-medium text-st-gold-light">
                 S${solution.pricePsg}
-                <span className="text-[11px] font-light text-st-gold-light/60">/mo</span>
+                <span className="text-[11px] font-medium text-st-gold-light/60">/mo</span>
               </div>
             </div>
           </div>
 
           {/* View arrow */}
           <div className="mt-3 flex items-center justify-end">
-            <span className="text-[10px] font-light tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
+            <span className="text-[10px] font-medium tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
               Learn more
               <svg
                 className="ml-1 inline h-3 w-3"
