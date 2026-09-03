@@ -2,12 +2,6 @@ import { createContext, useContext, useEffect, useMemo } from "react";
 import type { ReactNode } from "react";
 import { en } from "./en";
 import type { Messages } from "./en";
-import { ja } from "./ja";
-import { ko } from "./ko";
-import { zhHans } from "./zh-Hans";
-import { zhHant } from "./zh-Hant";
-import { es } from "./es";
-import { pt } from "./pt";
 import {
   DEFAULT_LOCALE,
   LOCALES,
@@ -19,15 +13,46 @@ import {
 
 const SITE = "https://startech-innovation.com";
 
-const CATALOGUES: Record<Locale, Messages> = {
-  en,
-  ja,
-  ko,
-  "zh-Hans": zhHans,
-  "zh-Hant": zhHant,
-  es,
-  pt,
+/**
+ * Catalogue loaders.
+ *
+ * All seven used to be imported statically, so every visitor downloaded
+ * roughly 160KB of translations to read one language. Each non-English
+ * catalogue is now its own chunk, fetched before the first render by
+ * loadCatalogue() below — the locale is known from the URL at startup, so
+ * there is no loading state and no flash of English.
+ *
+ * English stays static: it is the default, and the app must be able to render
+ * without waiting on a network request.
+ */
+const LOADERS: Record<Exclude<Locale, "en">, () => Promise<Messages>> = {
+  ja: () => import("./ja").then((m) => m.ja),
+  ko: () => import("./ko").then((m) => m.ko),
+  "zh-Hans": () => import("./zh-Hans").then((m) => m.zhHans),
+  "zh-Hant": () => import("./zh-Hant").then((m) => m.zhHant),
+  es: () => import("./es").then((m) => m.es),
+  pt: () => import("./pt").then((m) => m.pt),
 };
+
+/** Catalogues resolved so far. English is always available. */
+const CATALOGUES: Partial<Record<Locale, Messages>> = { en };
+
+/**
+ * Resolves one locale's strings, caching the result. Call before rendering:
+ * the provider reads synchronously and falls back to English if a catalogue
+ * is somehow missing, which would otherwise show English under a translated
+ * URL.
+ */
+export async function loadCatalogue(locale: Locale): Promise<void> {
+  if (CATALOGUES[locale]) return;
+  const load = LOADERS[locale as Exclude<Locale, "en">];
+  if (!load) return;
+  try {
+    CATALOGUES[locale] = await load();
+  } catch {
+    // A failed chunk should degrade to English, not a blank page.
+  }
+}
 
 interface I18nValue {
   locale: Locale;
@@ -85,7 +110,7 @@ export function I18nProvider({
   const value = useMemo<I18nValue>(
     () => ({
       locale,
-      t: CATALOGUES[locale],
+      t: CATALOGUES[locale] ?? en,
       path: (to: string) => localePath(locale, to),
     }),
     [locale]
