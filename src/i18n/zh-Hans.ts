@@ -89,6 +89,7 @@ export const zhHans: Messages = {
     sub: "四个项目，用业务负责人的角度描述——客户此前实际是怎么做的，以及过程中出了什么问题。",
     before: "此前状况",
     built: "我们做了什么",
+    result: "成果",
     disclaimer:
       "涉及保密协议的项目不披露客户名称。文中数据来自已交付的系统，可在通话中详细说明。",
     cases: [

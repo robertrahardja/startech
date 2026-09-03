@@ -89,6 +89,7 @@ export const zhHant: Messages = {
     sub: "四個專案，用業務負責人的角度描述——客戶先前實際是怎麼做的，以及過程中出了什麼問題。",
     before: "先前狀況",
     built: "我們做了什麼",
+    result: "成果",
     disclaimer:
       "涉及保密協議的專案不揭露客戶名稱。文中數據來自已交付的系統，可在通話中詳細說明。",
     cases: [

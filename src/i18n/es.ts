@@ -90,6 +90,7 @@ export const es: Messages = {
     sub: "Cuatro proyectos, contados como los contaría el dueño del negocio: qué hacía la empresa antes y qué salió mal por el camino.",
     before: "Antes",
     built: "Lo que construimos",
+    result: "Resultado",
     disclaimer:
       "Omitimos el nombre del cliente cuando el acuerdo está sujeto a confidencialidad. Las cifras proceden de los sistemas entregados y podemos detallarlas en una llamada.",
     cases: [

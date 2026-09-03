@@ -87,6 +87,7 @@ export const en = {
     sub: "Four builds, described the way a business owner would describe them — what the company was actually doing beforehand, and what went wrong on the way.",
     before: "Before",
     built: "What we built",
+    result: "Result",
     disclaimer:
       "Client names are withheld where the engagement is covered by confidentiality. Figures are drawn from the delivered systems and can be walked through in detail on a call.",
     cases: [

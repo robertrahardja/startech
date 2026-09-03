@@ -49,22 +49,32 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
 
         {/* Right rail: the number, then the checkable details */}
         <div className="lg:pt-1">
-          {/* Figure beside the caption rather than above it: stacked, a
-              one-character figure like "2" left almost a whole line empty.
+          {/* The result panel.
 
-              The caption is held to a narrow measure so it wraps to two or
-              three lines and sits as a block against the figure. Run full
-              width it became one cramped line pinned to the top of the tile;
-              wrapped, the text has room to breathe and the two elements
-              balance each other. Baselines align on the first line, so the
-              figure reads with the start of the caption. The measure is set
-              in ch so it tracks the font, and balance keeps the last line
-              from ending up much shorter than the ones above it. */}
-          <div className="metric-tile flex items-baseline gap-4 rounded-xl border border-st-border bg-st-bg-card p-5 transition-all duration-500 sm:gap-5">
-            <div className="gradient-text shrink-0 font-display text-4xl leading-none tracking-[-0.02em]">
+              This is the headline outcome of the case study, so it is set as
+              a stat block rather than a line of text: the figure centred and
+              large, an eyebrow above naming what it is, and the caption
+              beneath as a short label.
+
+              Earlier versions ran the figure and caption side by side, which
+              left a wide, half-empty box sitting between two blocks of dense
+              copy — the layout is a single column on a phone, so a horizontal
+              pair could never fill it. Centred and stacked, the panel fills
+              its container at every width and reads as the summary it is.
+
+              The gradient rule ties it to the brand marks used elsewhere. */}
+          <div className="metric-tile relative overflow-hidden rounded-xl border border-st-border bg-st-bg-card px-5 py-7 text-center transition-all duration-500">
+            <div className="brand-rule absolute inset-x-0 top-0 h-px" />
+
+            <div className="text-[10px] font-medium tracking-[0.18em] uppercase text-st-text-muted/70">
+              {t.work.result}
+            </div>
+
+            <div className="gradient-text mt-3 font-display text-5xl leading-none tracking-[-0.03em] sm:text-6xl">
               {study.metric.figure}
             </div>
-            <div className="min-w-0 flex-1 max-w-[19ch] text-[11px] font-medium leading-[1.65] text-balance text-st-text-muted">
+
+            <div className="mx-auto mt-3 max-w-[24ch] text-[12px] font-medium leading-[1.6] text-balance text-st-text-muted">
               {study.metric.caption}
             </div>
           </div>
