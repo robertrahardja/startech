@@ -49,7 +49,7 @@ const page = await browser.newPage();
 let bad = 0;
 
 for (const loc of ["ja", "ko", "zh-Hans", "zh-Hant", "es", "pt"]) {
-  await page.goto(`http://localhost:4321/${loc}/`, { waitUntil: "networkidle" });
+  await page.goto(`${process.env.BASE ?? "http://localhost:4321"}/${loc}/`, { waitUntil: "networkidle" });
   const text = await page.evaluate(() => document.body.innerText);
   // Whole-string containment is not enough: English "Contact" is a substring
   // of Spanish "Contacto", which reported a leak that was not there. Require a

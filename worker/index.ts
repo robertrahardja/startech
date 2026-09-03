@@ -550,6 +550,68 @@ function escapeHtml(str: string): string {
 
 // ─── Main Request Handler ───────────────────────────────────────────────────
 
+// ─── Locale in the served HTML ──────────────────────────────────────────────
+// The app is a single-page application: one index.html is served for every
+// route, and React sets <html lang> and the hreflang links after it boots.
+// Crawlers and screen readers read the markup as delivered, so without this
+// every translated page is announced as English. HTMLRewriter patches the
+// response as it streams, so the cost is negligible and the client-side code
+// stays unchanged (it simply sets the same values again).
+
+const SITE = "https://startech-innovation.com";
+
+/** Locale prefixes, and the BCP 47 tag each one is announced as. */
+const HTML_LANG: Record<string, string> = {
+  ja: "ja",
+  ko: "ko",
+  "zh-Hans": "zh-Hans",
+  "zh-Hant": "zh-Hant",
+  es: "es",
+  pt: "pt",
+};
+
+/** The locale a pathname sits under, or "en" when it carries no prefix. */
+function localeFromPath(pathname: string): string {
+  const first = pathname.split("/")[1] ?? "";
+  return first in HTML_LANG ? first : "en";
+}
+
+/** The same route with its locale prefix removed. */
+function routeWithoutLocale(pathname: string): string {
+  const locale = localeFromPath(pathname);
+  if (locale === "en") return pathname;
+  return pathname.slice(locale.length + 1) || "/";
+}
+
+function withLocaleMarkup(response: Response, pathname: string): Response {
+  const locale = localeFromPath(pathname);
+  const route = routeWithoutLocale(pathname);
+
+  const alternates = ["en", ...Object.keys(HTML_LANG)].map((code) => {
+    const href = code === "en" ? `${SITE}${route}` : `${SITE}/${code}${route}`;
+    const tag = code === "en" ? "en" : HTML_LANG[code];
+    return `<link rel="alternate" hreflang="${tag}" href="${href}">`;
+  });
+
+  // x-default points at the unprefixed route, which serves English.
+  alternates.push(
+    `<link rel="alternate" hreflang="x-default" href="${SITE}${route}">`
+  );
+
+  return new HTMLRewriter()
+    .on("html", {
+      element(el) {
+        el.setAttribute("lang", locale === "en" ? "en" : HTML_LANG[locale]);
+      },
+    })
+    .on("head", {
+      element(el) {
+        el.append(alternates.join(""), { html: true });
+      },
+    })
+    .transform(response);
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
@@ -569,11 +631,19 @@ export default {
       for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
         headers.set(key, value);
       }
-      return new Response(assetResponse.body, {
+      const asset = new Response(assetResponse.body, {
         status: assetResponse.status,
         statusText: assetResponse.statusText,
         headers,
       });
+
+      // Only the HTML shell carries locale markup; hashed JS, CSS and images
+      // are returned untouched.
+      const type = headers.get("content-type") ?? "";
+      if (asset.ok && type.includes("text/html")) {
+        return withLocaleMarkup(asset, url.pathname);
+      }
+      return asset;
     }
 
     // Origin validation for API routes
