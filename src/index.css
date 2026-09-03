@@ -7,11 +7,20 @@
      is the brand — the site should feel like it was printed from the same
      press, not like a different company. */
   --color-st-bg: #000000;
-  --color-st-bg-elevated: #08080d;
-  --color-st-bg-card: #0b0b12;
-  --color-st-surface: rgba(255, 255, 255, 0.035);
-  --color-st-border: rgba(255, 255, 255, 0.10);
-  --color-st-border-hover: rgba(255, 255, 255, 0.22);
+  /* Card and elevated surfaces sat at 1.05-1.07:1 against the black ground.
+     That separation exists on a calibrated monitor in a dark room and
+     disappears on a phone at reduced brightness or outdoors, where whole
+     sections read as one flat black field. Lifted so the fill is a real cue,
+     while keeping the printed card's near-black character. */
+  --color-st-bg-elevated: #101017;
+  --color-st-bg-card: #16161f;
+  --color-st-surface: rgba(255, 255, 255, 0.06);
+  /* A fill this dark cannot reach 3:1 without abandoning the brand, so the
+     border carries the boundary — which is what WCAG 1.4.11 asks for. At 10%
+     white this rendered as rgb(63,63,63), about 1.99:1: the reason the
+     contact form looked like an empty black screen on a phone. */
+  --color-st-border: #595966;
+  --color-st-border-hover: #7a7a8a;
   --color-st-text: #ffffff;
   --color-st-text-muted: #9a9aa8;
 
@@ -23,11 +32,12 @@
   /* The indigo of the reverse-side wave — used for ambient glow only. */
   --color-st-glow: #0a1a49;
 
-  /* Form fields need to read as inputs against a black page. A 10%-white
-     hairline disappears; these sit at roughly 22% with a faint fill so the
-     box is visible before it is focused. */
-  --color-st-field: rgba(255, 255, 255, 0.22);
-  --color-st-field-bg: rgba(255, 255, 255, 0.04);
+  /* Form fields need to read as inputs against a black page. 22% white
+     rendered as rgb(63,63,63) — about 1.99:1, still under the 3:1 a control
+     boundary needs, so an empty form looked like blank black space. Opaque
+     values, measured rather than guessed. */
+  --color-st-field: #6b6b7a;
+  --color-st-field-bg: #131319;
 
   --color-st-gold: #d4a853;
   --color-st-gold-light: #e7c47a;
