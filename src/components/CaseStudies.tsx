@@ -49,11 +49,16 @@ function CaseCard({ study, index }: { study: CaseStudy; index: number }) {
 
         {/* Right rail: the number, then the checkable details */}
         <div className="lg:pt-1">
-          <div className="metric-tile rounded-xl border border-st-border bg-st-bg-card p-5 transition-all duration-500">
-            <div className="gradient-text font-display text-4xl leading-none tracking-[-0.02em]">
+          {/* Figure and caption sit side by side rather than stacked. Stacked,
+              a one-character figure like "2" left almost the whole first line
+              empty while the caption wrapped underneath it. The figure column
+              is sized to its own content, so "7,060" and "2" both sit tight
+              and the caption takes whatever is left. */}
+          <div className="metric-tile flex items-baseline gap-4 rounded-xl border border-st-border bg-st-bg-card p-5 transition-all duration-500">
+            <div className="gradient-text shrink-0 font-display text-4xl leading-none tracking-[-0.02em]">
               {study.metric.figure}
             </div>
-            <div className="mt-2.5 text-[11px] font-medium leading-snug text-st-text-muted">
+            <div className="min-w-0 flex-1 text-[11px] font-medium leading-snug text-st-text-muted">
               {study.metric.caption}
             </div>
           </div>
