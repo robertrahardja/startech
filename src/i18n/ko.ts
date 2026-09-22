@@ -407,6 +407,14 @@ export const ko: Messages = {
     ],
   },
 
+  capabilityDeck: {
+    eyebrow: "가져가서 검토하세요",
+    title: "제안 전체를 하나의 문서로.",
+    sub: "모든 서비스, 실적, 그리고 이 페이지의 모든 수치를 내부 공유용 자료 한 편에 담았습니다.",
+    cta: "역량 소개서 다운로드",
+    meta: "PDF · 이메일 등록 불필요",
+  },
+
   contact: {
     eyebrow: "문의",
     title: "30분, 그리고 솔직한 답변",
@@ -433,7 +441,6 @@ export const ko: Messages = {
   footer: {
     location: "싱가포르",
     rights: "StarTech Innovation Pte. Ltd.",
-    capabilityDeck: "역량 소개서 다운로드",
   },
 
   demos: {

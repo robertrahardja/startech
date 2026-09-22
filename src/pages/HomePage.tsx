@@ -15,6 +15,12 @@ import Contact from "../components/Contact";
  */
 const Showcase = lazy(() => import("../components/Showcase"));
 
+/**
+ * Also `motion`-based (the magnetic download button), same reasoning as
+ * Showcase above — lazy rather than growing the main bundle.
+ */
+const CapabilityDeck = lazy(() => import("../components/CapabilityDeck"));
+
 interface HomePageProps {
   onAskAi: () => void;
 }
@@ -28,15 +34,19 @@ interface HomePageProps {
  *   Showcase    10 #1 — try the work yourself, thirteen live demos
  *   Products    10 #1 — what we actually sell
  *   Industries  10 #3 — the company knows this domain
- *   Approach    10 #3 — and has a method, not just enthusiasm
- *   Objections  deflect — the five reasons people hesitate, answered
- *   Contact     close — book the call
+ *   Approach       10 #3 — and has a method, not just enthusiasm
+ *   Objections     deflect — the five reasons people hesitate, answered
+ *   CapabilityDeck take-away — everything above, as a document to forward
+ *   Contact        close — book the call
  *
  * The order is the argument: nothing is presented before the visitor has had
  * a chance to rule themselves out, and the close comes only after the
  * objections have been named rather than dodged. Showcase sits right after
  * the case studies, while "the work itself" is still the frame — proof you
- * can click on before the pitch turns to what we sell.
+ * can click on before the pitch turns to what we sell. CapabilityDeck sits
+ * just before Contact: the moment a visitor is convinced enough to act but
+ * not yet ready to fill in a form is exactly when "take this away and share
+ * it" is the more useful next step.
  */
 export default function HomePage({ onAskAi }: HomePageProps) {
   return (
@@ -51,6 +61,9 @@ export default function HomePage({ onAskAi }: HomePageProps) {
       <Industries />
       <Approach />
       <Objections />
+      <Suspense fallback={<div className="min-h-[20vh]" aria-hidden="true" />}>
+        <CapabilityDeck />
+      </Suspense>
       <Contact />
     </>
   );

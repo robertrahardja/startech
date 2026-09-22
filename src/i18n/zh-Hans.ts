@@ -408,6 +408,14 @@ export const zhHans: Messages = {
     ],
   },
 
+  capabilityDeck: {
+    eyebrow: "带走这份资料",
+    title: "整套方案，浓缩成一份文档。",
+    sub: "每项服务、每个案例、本页所有数据——都整理成了一份可转发给决策人的文档。",
+    cta: "下载能力介绍文档",
+    meta: "PDF · 无需留下邮箱",
+  },
+
   contact: {
     eyebrow: "联系我们",
     title: "三十分钟，一个诚实的答复",
@@ -433,7 +441,6 @@ export const zhHans: Messages = {
   footer: {
     location: "新加坡",
     rights: "StarTech Innovation Pte. Ltd.",
-    capabilityDeck: "下载能力介绍文档",
   },
 
   demos: {

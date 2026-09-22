@@ -413,6 +413,14 @@ export const ja: Messages = {
     ],
   },
 
+  capabilityDeck: {
+    eyebrow: "お持ち帰りください",
+    title: "提案内容のすべてを、一冊の資料に。",
+    sub: "各サービス、実績、そしてこのページの数字のすべてを、社内共有用の資料としてまとめました。",
+    cta: "会社案内資料をダウンロード",
+    meta: "PDF・メール登録不要",
+  },
+
   contact: {
     eyebrow: "お問い合わせ",
     title: "30分で、率直な回答を",
@@ -439,7 +447,6 @@ export const ja: Messages = {
   footer: {
     location: "シンガポール",
     rights: "StarTech Innovation Pte. Ltd.",
-    capabilityDeck: "会社案内資料をダウンロード",
   },
 
   demos: {

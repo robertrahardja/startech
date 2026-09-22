@@ -414,6 +414,14 @@ export const pt: Messages = {
     ],
   },
 
+  capabilityDeck: {
+    eyebrow: "Leve com você",
+    title: "Toda a proposta, em um único documento.",
+    sub: "Cada prática, cada prova, cada número desta página — em um material pensado para repassar a quem mais precisa aprovar.",
+    cta: "Baixar o dossiê de capacidades",
+    meta: "PDF · Sem necessidade de e-mail",
+  },
+
   contact: {
     eyebrow: "Contato",
     title: "Trinta minutos e uma resposta honesta",
@@ -440,7 +448,6 @@ export const pt: Messages = {
   footer: {
     location: "Singapura",
     rights: "StarTech Innovation Pte. Ltd.",
-    capabilityDeck: "Baixar o dossiê de capacidades",
   },
 
   demos: {

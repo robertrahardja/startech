@@ -415,6 +415,14 @@ export const es: Messages = {
     ],
   },
 
+  capabilityDeck: {
+    eyebrow: "Llévesela consigo",
+    title: "Toda la propuesta, en un solo documento.",
+    sub: "Cada servicio, cada caso, cada cifra de esta página — en un dossier pensado para reenviar a quien más tenga que dar el visto bueno.",
+    cta: "Descargar el dossier de capacidades",
+    meta: "PDF · Sin necesidad de correo",
+  },
+
   contact: {
     eyebrow: "Contacto",
     title: "Treinta minutos y una respuesta honesta",
@@ -441,7 +449,6 @@ export const es: Messages = {
   footer: {
     location: "Singapur",
     rights: "StarTech Innovation Pte. Ltd.",
-    capabilityDeck: "Descargar el dossier de capacidades",
   },
 
   demos: {
