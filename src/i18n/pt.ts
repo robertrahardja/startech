@@ -35,6 +35,7 @@ export const pt: Messages = {
     sub: "Desenvolvemos o software sob medida que protege a sua vantagem competitiva.",
     ctaPrimary: "Vamos conversar",
     ctaWork: "Ver projetos",
+    ctaDeck: "Baixar o dossiê",
     ctaAsk: "Fazer uma pergunta",
     note: "Sem custo e sem precisar preparar documento algum: basta trazer o processo que mais consome o seu tempo. Se software não for a resposta, diremos isso.",
     proof: {

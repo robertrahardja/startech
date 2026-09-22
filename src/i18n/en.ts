@@ -33,6 +33,7 @@ export const en = {
     sub: "We build the custom software that secures your competitive advantage.",
     ctaPrimary: "Let's talk",
     ctaWork: "See the work",
+    ctaDeck: "Download the deck",
     ctaAsk: "Ask a question",
     note: "Free, and no brief document required — bring the process that costs you the most time. If software isn't the answer, we'll say so.",
     proof: {
