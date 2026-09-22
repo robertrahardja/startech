@@ -112,8 +112,9 @@ export default function Hero({ onAskAi }: HeroProps) {
           {t.hero.sub}
         </p>
 
-        {/* CTAs — one primary action and several ways in for someone not
-            ready to book yet. Each label names what the click does. */}
+        {/* CTAs — one primary action and one way in for someone not ready
+            to book yet. Each label names what the click does. The deck link
+            below is quieter still: present, not competing. */}
         <div
           className="mt-9 flex flex-col items-stretch gap-3 animate-fade-in-up sm:mt-12 sm:flex-row sm:items-center"
           style={{ animationDelay: "0.25s" }}
@@ -150,30 +151,6 @@ export default function Hero({ onAskAi }: HeroProps) {
             </span>
           </a>
 
-          <a
-            href="#capability-deck"
-            onPointerMove={onPointerMove}
-            className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-center text-[15px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:py-4 sm:text-[13px]"
-          >
-            <span className="relative z-10 flex items-center justify-center gap-2.5">
-              <svg
-                className="h-3.5 w-3.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
-                />
-              </svg>
-              {t.hero.ctaDeck}
-            </span>
-          </a>
-
           {AI_CHAT_ENABLED && (
             <button
               onClick={onAskAi}
@@ -194,6 +171,14 @@ export default function Hero({ onAskAi }: HeroProps) {
         >
           {t.hero.note}
         </p>
+
+        <a
+          href="#capability-deck"
+          className="mt-3 inline-block animate-fade-in text-[12.5px] font-normal tracking-wide text-st-text-muted/70 underline-offset-2 transition-colors duration-300 hover:text-st-text-muted hover:underline sm:text-[11px]"
+          style={{ animationDelay: "0.35s" }}
+        >
+          {t.hero.ctaDeck}
+        </a>
 
         {/* Proof strip */}
         <div

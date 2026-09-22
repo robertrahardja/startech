@@ -418,9 +418,8 @@ export const pt: Messages = {
   capabilityDeck: {
     eyebrow: "Leve com você",
     title: "Toda a proposta, em um único documento.",
-    sub: "Cada prática, cada prova, cada número desta página — em um material pensado para repassar a quem mais precisa aprovar.",
+    sub: "Cada prática, cada prova, cada número desta página.",
     cta: "Baixar o dossiê de capacidades",
-    meta: "PDF · Sem necessidade de e-mail",
   },
 
   contact: {

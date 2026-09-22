@@ -419,9 +419,8 @@ export const es: Messages = {
   capabilityDeck: {
     eyebrow: "Llévesela consigo",
     title: "Toda la propuesta, en un solo documento.",
-    sub: "Cada servicio, cada caso, cada cifra de esta página — en un dossier pensado para reenviar a quien más tenga que dar el visto bueno.",
+    sub: "Cada servicio, cada caso, cada cifra de esta página.",
     cta: "Descargar el dossier de capacidades",
-    meta: "PDF · Sin necesidad de correo",
   },
 
   contact: {

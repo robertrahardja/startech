@@ -417,9 +417,8 @@ export const en = {
   capabilityDeck: {
     eyebrow: "Take it with you",
     title: "The whole pitch, in one document.",
-    sub: "Every practice, every proof point, every number on this page — in a deck built for forwarding to whoever else needs to sign off.",
+    sub: "Every practice, every proof point, every number on this page.",
     cta: "Download the capability deck",
-    meta: "PDF · No email required",
   },
 
   contact: {

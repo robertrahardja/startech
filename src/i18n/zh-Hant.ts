@@ -412,9 +412,8 @@ export const zhHant: Messages = {
   capabilityDeck: {
     eyebrow: "帶走這份資料",
     title: "整套方案，濃縮成一份文件。",
-    sub: "每項服務、每個案例、本頁所有數據——都整理成了一份可轉發給決策者的文件。",
+    sub: "每項服務、每個案例、本頁所有數據。",
     cta: "下載能力介紹文件",
-    meta: "PDF・無需留下電子郵件",
   },
 
   contact: {
