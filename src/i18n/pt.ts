@@ -440,6 +440,7 @@ export const pt: Messages = {
   footer: {
     location: "Singapura",
     rights: "StarTech Innovation Pte. Ltd.",
+    capabilityDeck: "Baixar o dossiê de capacidades",
   },
 
   demos: {

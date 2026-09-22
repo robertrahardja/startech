@@ -439,6 +439,7 @@ export const en = {
   footer: {
     location: "Singapore",
     rights: "StarTech Innovation Pte. Ltd.",
+    capabilityDeck: "Download capability deck",
   },
 
   demos: {

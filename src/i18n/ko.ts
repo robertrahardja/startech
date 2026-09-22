@@ -433,6 +433,7 @@ export const ko: Messages = {
   footer: {
     location: "싱가포르",
     rights: "StarTech Innovation Pte. Ltd.",
+    capabilityDeck: "역량 소개서 다운로드",
   },
 
   demos: {

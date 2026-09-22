@@ -433,6 +433,7 @@ export const zhHant: Messages = {
   footer: {
     location: "新加坡",
     rights: "StarTech Innovation Pte. Ltd.",
+    capabilityDeck: "下載能力介紹文件",
   },
 
   demos: {

@@ -439,6 +439,7 @@ export const ja: Messages = {
   footer: {
     location: "シンガポール",
     rights: "StarTech Innovation Pte. Ltd.",
+    capabilityDeck: "会社案内資料をダウンロード",
   },
 
   demos: {

@@ -2,7 +2,7 @@ import Link from "./solutions/Link";
 import { useI18n } from "../i18n";
 
 export default function Footer() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const year = new Date().getFullYear();
 
   return (
@@ -38,12 +38,18 @@ export default function Footer() {
             </Link>
           </div>
 
-          <div className="text-center text-[11px] font-medium text-st-text-muted sm:text-right">
+          <div className="flex flex-col items-center gap-1 text-center text-[11px] font-medium text-st-text-muted sm:items-end sm:text-right">
             <a
               href="mailto:info@startech-innovation.com"
               className="inline-flex min-h-[44px] items-center transition-colors duration-300 hover:text-st-text"
             >
               info@startech-innovation.com
+            </a>
+            <a
+              href={`/assets/startech-capability-deck-${locale}.pdf`}
+              className="inline-flex min-h-[44px] items-center transition-colors duration-300 hover:text-st-text"
+            >
+              {t.footer.capabilityDeck}
             </a>
           </div>
         </div>

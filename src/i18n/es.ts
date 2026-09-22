@@ -441,6 +441,7 @@ export const es: Messages = {
   footer: {
     location: "Singapur",
     rights: "StarTech Innovation Pte. Ltd.",
+    capabilityDeck: "Descargar el dossier de capacidades",
   },
 
   demos: {
