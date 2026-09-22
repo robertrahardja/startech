@@ -5,7 +5,8 @@
  * - POST /api/chat    — Proxies to OpenAI GPT-4o-mini with streaming SSE
  * - POST /api/tts     — Proxies to ElevenLabs text-to-speech
  * - POST /api/contact — Sends email via Resend
- * - POST /api/demo    — AI-powered product demos with lead capture
+ * - POST /api/demo    — AI-powered product demos with lead capture, backed
+ *                        by Gemini (free tier) with a Workers AI fallback
  *
  * Static assets are served by the ASSETS binding (Cloudflare Workers static assets).
  */
@@ -14,6 +15,7 @@ import { DEMO_CONFIGS, MAX_IMAGE_DATA_URL_LENGTH } from "./demo-configs";
 
 interface Env {
   ASSETS: Fetcher;
+  /** Used only by /api/chat and /api/tts now — /api/demo moved to Gemini. */
   OPENAI_API_KEY: string;
   ELEVENLABS_API_KEY: string;
   RESEND_API_KEY: string;
@@ -23,6 +25,10 @@ interface Env {
   DB: D1Database;
   /** OAuth client ID demo sign-in tokens must have been issued for. */
   GOOGLE_CLIENT_ID: string;
+  /** Primary model for /api/demo — free tier, text and vision both. */
+  GOOGLE_GEMINI_API_KEY: string;
+  /** Fallback model host for /api/demo once Gemini's free tier is spent. */
+  AI: Ai;
   /** Shared rate-limit and blocklist counters, durable across isolates. */
   RATE_LIMIT: KVNamespace;
 }
@@ -64,6 +70,42 @@ async function isRateLimited(
     expirationTtl: count === 0 ? windowSeconds : undefined,
   });
   return false;
+}
+
+/**
+ * Global daily ceiling on Gemini calls, shared across every visitor — not a
+ * per-user limit, a whole-site one. Set well under Gemini 2.0 Flash's
+ * published free-tier daily request limit rather than right up against it,
+ * since that published figure can change without notice and per-user rate
+ * limiting elsewhere already bounds any single account's contribution here.
+ */
+const GEMINI_DAILY_CEILING = 1000;
+
+/** Today's UTC date as YYYY-MM-DD — the window this ceiling resets on. */
+function todayKey(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+/**
+ * True once today's global Gemini call count has reached the ceiling —
+ * read-only, does not itself count as a call. Checked before a Gemini
+ * attempt so a day that's already spent skips straight to the Workers AI
+ * fallback instead of finding out from a failed request.
+ */
+async function isGeminiDailyCeilingReached(kv: KVNamespace): Promise<boolean> {
+  const raw = await kv.get(`ratelimit:global:gemini:${todayKey()}`);
+  const count = raw ? parseInt(raw, 10) : 0;
+  return count >= GEMINI_DAILY_CEILING;
+}
+
+/** Records one Gemini call against today's global ceiling. */
+async function recordGeminiCall(kv: KVNamespace): Promise<void> {
+  const kvKey = `ratelimit:global:gemini:${todayKey()}`;
+  const raw = await kv.get(kvKey);
+  const count = raw ? parseInt(raw, 10) : 0;
+  await kv.put(kvKey, String(count + 1), {
+    expirationTtl: count === 0 ? 26 * 3600 : undefined,
+  });
 }
 
 /** True if this IP or Google account has been manually blocklisted. */
@@ -253,6 +295,178 @@ async function verifyGoogleIdToken(
     email_verified: payload.email_verified,
     name: payload.name,
   };
+}
+
+// ─── Demo Model Calls (Gemini primary, Workers AI fallback) ────────────────
+// Every /api/demo request needs one JSON result back from a system prompt
+// plus either text or an image. Gemini is the primary model — free tier,
+// and its response_mime_type option gets the same "always valid JSON"
+// guarantee OpenAI's response_format gave before. Workers AI is the
+// fallback for when Gemini's free-tier quota for the day is spent: it's
+// already local to this Worker (no separate account), but neither its JSON
+// reliability nor its vision quality are Gemini's equal, so it only runs
+// when Gemini genuinely isn't an option, never as a co-equal alternative.
+
+const GEMINI_MODEL = "gemini-2.0-flash";
+const WORKERS_AI_TEXT_MODEL = "@cf/meta/llama-3.1-8b-instruct-fp8";
+const WORKERS_AI_VISION_MODEL = "@cf/meta/llama-3.2-11b-vision-instruct";
+
+/** Parsed out of a data: URL — Gemini and Workers AI both want the raw
+ * base64 payload and the MIME type as separate fields, not one string. */
+function splitDataUrl(dataUrl: string): { mimeType: string; base64: string } {
+  const match = dataUrl.match(/^data:([^;]+);base64,(.+)$/);
+  if (!match) throw new Error("Malformed image data URL");
+  return { mimeType: match[1], base64: match[2] };
+}
+
+/** True for the specific Gemini error shape that means "quota exhausted for
+ * now" — the only condition the caller should fall back to Workers AI for.
+ * Any other failure (bad request, genuine server error) surfaces as a real
+ * error instead of being silently masked by a lower-quality fallback. */
+function isGeminiQuotaError(status: number): boolean {
+  return status === 429;
+}
+
+interface DemoModelInput {
+  systemPrompt: string;
+  userMessage: string;
+  imageDataUrl: string | null;
+  maxTokens: number;
+}
+
+/**
+ * Calls Gemini. Returns the parsed JSON result on success, or throws — the
+ * thrown value's `status` (when present) lets the caller distinguish "quota
+ * exhausted, try the fallback" from every other kind of failure.
+ */
+async function callGemini(
+  apiKey: string,
+  input: DemoModelInput
+): Promise<Record<string, unknown>> {
+  const parts: Array<{ text: string } | { inline_data: { mime_type: string; data: string } }> = [];
+  if (input.userMessage) parts.push({ text: input.userMessage });
+  if (input.imageDataUrl) {
+    const { mimeType, base64 } = splitDataUrl(input.imageDataUrl);
+    parts.push({ inline_data: { mime_type: mimeType, data: base64 } });
+  }
+
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`,
+    {
+      method: "POST",
+      headers: {
+        "x-goog-api-key": apiKey,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: input.systemPrompt }] },
+        contents: [{ role: "user", parts }],
+        generationConfig: {
+          maxOutputTokens: input.maxTokens,
+          temperature: 0.7,
+          responseMimeType: "application/json",
+        },
+      }),
+    }
+  );
+
+  if (!res.ok) {
+    const err = new Error(`Gemini API error: ${res.status}`) as Error & { status: number };
+    err.status = res.status;
+    throw err;
+  }
+
+  const data = (await res.json()) as {
+    candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>;
+  };
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!text) throw new Error("Gemini returned no response");
+  return JSON.parse(text);
+}
+
+/**
+ * Best-effort JSON extraction from a Workers AI text response. Unlike
+ * Gemini/OpenAI, Workers AI has no native "force JSON" mode — the model is
+ * asked nicely in the prompt, but the raw response can still come back with
+ * leading/trailing prose around the object. Tries a straight parse first,
+ * then the first {...} substring, and only gives up after both fail.
+ */
+function extractJson(text: string): Record<string, unknown> {
+  try {
+    return JSON.parse(text);
+  } catch {
+    const match = text.match(/\{[\s\S]*\}/);
+    if (match) {
+      try {
+        return JSON.parse(match[0]);
+      } catch {
+        // fall through
+      }
+    }
+    throw new Error("Could not extract JSON from Workers AI response");
+  }
+}
+
+/** Calls Cloudflare Workers AI — the fallback once Gemini isn't an option. */
+async function callWorkersAi(
+  ai: Ai,
+  input: DemoModelInput
+): Promise<Record<string, unknown>> {
+  const jsonInstruction =
+    "Respond with ONLY a single valid JSON object matching the schema described above — no markdown code fences, no prose before or after it.";
+
+  if (input.imageDataUrl) {
+    const { base64 } = splitDataUrl(input.imageDataUrl);
+    const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+    const result = (await ai.run(WORKERS_AI_VISION_MODEL, {
+      prompt: `${input.systemPrompt}\n\n${jsonInstruction}\n\n${input.userMessage}`,
+      image: Array.from(bytes),
+      max_tokens: input.maxTokens,
+    })) as { response?: string };
+    if (!result.response) throw new Error("Workers AI returned no response");
+    return extractJson(result.response);
+  }
+
+  const result = (await ai.run(WORKERS_AI_TEXT_MODEL, {
+    messages: [
+      { role: "system", content: `${input.systemPrompt}\n\n${jsonInstruction}` },
+      { role: "user", content: input.userMessage },
+    ],
+    max_tokens: input.maxTokens,
+  })) as { response?: string };
+  if (!result.response) throw new Error("Workers AI returned no response");
+  return extractJson(result.response);
+}
+
+/**
+ * Runs a demo prompt against Gemini, falling back to Workers AI when
+ * Gemini's daily ceiling is already spent or a live call comes back
+ * quota-exhausted. Returns the parsed result and which provider produced
+ * it, so the caller can log which path served the request.
+ */
+async function runDemoModel(
+  env: Env,
+  input: DemoModelInput
+): Promise<{ result: Record<string, unknown>; provider: "gemini" | "workers-ai" }> {
+  const geminiAvailable =
+    !!env.GOOGLE_GEMINI_API_KEY &&
+    !!env.RATE_LIMIT &&
+    !(await isGeminiDailyCeilingReached(env.RATE_LIMIT));
+
+  if (geminiAvailable) {
+    try {
+      const result = await callGemini(env.GOOGLE_GEMINI_API_KEY, input);
+      await recordGeminiCall(env.RATE_LIMIT);
+      return { result, provider: "gemini" };
+    } catch (err) {
+      const status = (err as { status?: number }).status;
+      if (!isGeminiQuotaError(status ?? 0)) throw err;
+      // Quota exhausted specifically — fall through to Workers AI below.
+    }
+  }
+
+  const result = await callWorkersAi(env.AI, input);
+  return { result, provider: "workers-ai" };
 }
 
 // ─── StarTech System Prompt ─────────────────────────────────────────────────
@@ -513,7 +727,12 @@ async function handleDemo(
   request: Request,
   env: Env
 ): Promise<Response> {
-  if (!env.OPENAI_API_KEY) {
+  // Gemini is optional at the type level (env vars are never guaranteed
+  // present) — its absence just means every request uses the Workers AI
+  // fallback instead, which needs no separate credential. Only a missing
+  // AI binding itself would mean the endpoint has nothing to call at all,
+  // and that's a deploy-config error rather than a request-time 503.
+  if (!env.AI) {
     return jsonError("Demo service is not configured.", 503);
   }
 
@@ -636,56 +855,20 @@ async function handleDemo(
     .map(([key, val]) => `${key}: ${val}`)
     .join("\n");
 
-  // Vision calls (a photo was submitted) use gpt-4o — gpt-4o-mini's image
-  // understanding is meaningfully weaker for dense, small text like a
-  // receipt. Text-only demos keep the cheaper model unchanged.
-  const model = imageDataUrl ? "gpt-4o" : "gpt-4o-mini";
-  const userContent = imageDataUrl
-    ? [
-        ...(userMessage ? [{ type: "text" as const, text: userMessage }] : []),
-        { type: "image_url" as const, image_url: { url: imageDataUrl } },
-      ]
-    : userMessage;
-
-  // Call OpenAI (non-streaming, we need full JSON response)
-  const openaiResponse = await fetch(
-    "https://api.openai.com/v1/chat/completions",
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${env.OPENAI_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model,
-        messages: [
-          { role: "system", content: config.systemPrompt },
-          { role: "user", content: userContent },
-        ],
-        max_tokens: config.maxTokens,
-        temperature: 0.7,
-        response_format: { type: "json_object" },
-      }),
-    }
-  );
-
-  if (!openaiResponse.ok) {
-    console.error("OpenAI API error:", openaiResponse.status);
-    return jsonError("AI service temporarily unavailable.", 502);
-  }
-
   let aiResult: Record<string, unknown>;
+  let modelProvider: "gemini" | "workers-ai";
   try {
-    const data = (await openaiResponse.json()) as {
-      choices?: Array<{ message?: { content?: string } }>;
-    };
-    const content = data.choices?.[0]?.message?.content;
-    if (!content) {
-      return jsonError("AI returned no response.", 502);
-    }
-    aiResult = JSON.parse(content);
-  } catch {
-    return jsonError("Failed to parse AI response.", 502);
+    const { result, provider } = await runDemoModel(env, {
+      systemPrompt: config.systemPrompt,
+      userMessage,
+      imageDataUrl,
+      maxTokens: config.maxTokens,
+    });
+    aiResult = result;
+    modelProvider = provider;
+  } catch (err) {
+    console.error("Demo model error:", err);
+    return jsonError("AI service temporarily unavailable.", 502);
   }
 
   // Store lead in D1 (fire-and-forget for speed, but log errors)
@@ -701,8 +884,8 @@ async function handleDemo(
   try {
     if (env.DB) {
       await env.DB.prepare(
-        "INSERT INTO demo_leads (email, name, google_sub, demo_type, input_data, output_data, ip) VALUES (?, ?, ?, ?, ?, ?, ?)"
-      ).bind(email, name || null, googleSub, demoType, inputJson, outputJson, clientIpForBlock).run();
+        "INSERT INTO demo_leads (email, name, google_sub, demo_type, input_data, output_data, ip, model_provider) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+      ).bind(email, name || null, googleSub, demoType, inputJson, outputJson, clientIpForBlock, modelProvider).run();
     }
   } catch (err) {
     console.error("D1 insert error:", err);

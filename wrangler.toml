@@ -32,5 +32,11 @@ binding = "RATE_LIMIT"
 id = "2036e34038274bd6b35d9fb9b1c75758"
 preview_id = "90fbb26528aa42e8bd5cdae6bb9f153a"
 
+# Fallback model host for the demo endpoint when Gemini's free tier is
+# exhausted — free, and already local to this Worker, so no separate
+# account or key to provision.
+[ai]
+binding = "AI"
+
 [vars]
 ENVIRONMENT = "production"
