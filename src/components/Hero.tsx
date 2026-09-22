@@ -3,7 +3,14 @@ import AiIcon from "./AiIcon";
 import { usePointerGlow } from "../hooks/usePointerGlow";
 import { AI_CHAT_ENABLED } from "../lib/features";
 import { useI18n } from "../i18n";
-import { fullStop, setsSolid } from "../i18n/locales";
+import {
+  LOCALES,
+  LOCALE_META,
+  fullStop,
+  localePath,
+  parseLocalePath,
+  setsSolid,
+} from "../i18n/locales";
 
 interface HeroProps {
   onAskAi: () => void;
@@ -174,6 +181,8 @@ export default function Hero({ onAskAi }: HeroProps) {
           </a>
         </div>
 
+        <HeroLanguageStrip locale={locale} label={t.hero.languagesAvailable} />
+
         <p
           className="mt-5 text-[12.5px] font-normal leading-relaxed tracking-wide text-st-text-muted/85 animate-fade-in sm:text-[11px]"
           style={{ animationDelay: "0.3s" }}
@@ -250,5 +259,49 @@ export default function Hero({ onAskAi }: HeroProps) {
       </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * A quiet proof that the site itself is multilingual, not just a claim — the
+ * seven languages this page is actually published in, each a real link to
+ * the same page in that language. Sits below the CTAs at the same low key
+ * as the note beneath it: present as a fact, not pitched as a fourth choice.
+ */
+function HeroLanguageStrip({ locale, label }: { locale: string; label: string }) {
+  const { path } = parseLocalePath(window.location.pathname);
+
+  return (
+    <div
+      className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1.5 animate-fade-in sm:mt-7"
+      style={{ animationDelay: "0.32s" }}
+    >
+      <span className="text-[11px] font-normal tracking-wide text-st-text-muted/60 sm:text-[10.5px]">
+        {label}
+      </span>
+      <nav aria-label="Language" className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
+        {LOCALES.map((code, i) => (
+          <span key={code} className="flex items-center gap-2.5">
+            {i > 0 && (
+              <span aria-hidden="true" className="text-st-text-muted/30">
+                &middot;
+              </span>
+            )}
+            <a
+              href={localePath(code, path)}
+              hrefLang={LOCALE_META[code].htmlLang}
+              aria-current={code === locale ? "true" : undefined}
+              className={`text-[11px] font-normal tracking-wide transition-colors duration-300 sm:text-[10.5px] ${
+                code === locale
+                  ? "text-st-text-muted"
+                  : "text-st-text-muted/50 hover:text-st-text-muted"
+              }`}
+            >
+              {LOCALE_META[code].label}
+            </a>
+          </span>
+        ))}
+      </nav>
+    </div>
   );
 }

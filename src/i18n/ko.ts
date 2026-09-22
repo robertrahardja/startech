@@ -35,6 +35,7 @@ export const ko: Messages = {
     ctaPrimary: "상담 요청",
     ctaWork: "사례 보기",
     ctaDeck: "소개서 다운로드",
+    languagesAvailable: "지원 언어:",
     ctaAsk: "질문하기",
     note: "무료로 상담해 드립니다. 사전 자료는 필요하지 않습니다. 가장 많은 시간이 드는 업무를 알려주십시오. 소프트웨어가 답이 아니라면 그렇게 말씀드리겠습니다.",
     proof: {

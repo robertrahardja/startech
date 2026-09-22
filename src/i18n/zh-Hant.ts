@@ -36,6 +36,7 @@ export const zhHant: Messages = {
     ctaPrimary: "聊一聊",
     ctaWork: "查看案例",
     ctaDeck: "下載介紹文件",
+    languagesAvailable: "支援語言：",
     ctaAsk: "提出問題",
     note: "免費諮詢，不需要準備任何資料。告訴我們最耗時的那個流程就好。如果軟體不是答案，我們會直說。",
     proof: {
