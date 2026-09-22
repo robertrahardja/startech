@@ -155,6 +155,32 @@ export const ko: Messages = {
     ],
   },
 
+  showcase: {
+    eyebrow: "직접 사용해 보세요",
+    title: "13가지 구축 사례. 하나를 골라 직접 실행해 보세요.",
+    sub: "아래 카드는 모두 실제로 작동하는 AI 제품입니다. 열어보면 바로 샘플 결과가 나타나고, 그 자리에서 직접 데이터로 커스터마이즈할 수 있습니다.",
+    sampleBadge: "샘플",
+    tryIt: "체험하기",
+    seeAll: "모든 솔루션 보기",
+    disclaimer:
+      "각 샘플은 가상의 데이터를 사용합니다. 직접 데이터로 커스터마이즈하는 것은 무료이며 1분도 걸리지 않습니다.",
+    teasers: {
+      invoiceScanner: "몇 초 만에 스캔 및 항목화",
+      customerChatbot: "답변 신뢰도",
+      appointmentBooking: "자동으로 예약 및 확정",
+      quotationGenerator: "GST 포함 견적서 작성",
+      jobPostingWriter: "작성된 직무 요건",
+      inventoryTracker: "재주문이 필요한 항목",
+      socialMediaManager: "한 번에 작성된 게시물 수",
+      documentTranslator: "언어, 클릭 한 번으로 번역",
+      employeeOnboarding: "예약된 온보딩 작업",
+      salesAssistant: "자동 구성된 후속 이메일",
+      complianceChecker: "발견된 고위험 조항",
+      trainingContentGenerator: "제작된 교육 모듈",
+      financialReportBuilder: "분기 순이익 분석",
+    },
+  },
+
   practices: {
     eyebrow: "서비스",
     title: "네 개의 전문 영역, 하나의 팀",

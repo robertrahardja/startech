@@ -156,6 +156,32 @@ export const zhHant: Messages = {
     ],
   },
 
+  showcase: {
+    eyebrow: "親自試用",
+    title: "13個真實專案，選一個，親自試試看。",
+    sub: "下方每張卡片都是真實可用的AI產品，不是效果圖。點開即可看到即時範例結果，也可以用您自己的資料當場客製化。",
+    sampleBadge: "範例",
+    tryIt: "立即試用",
+    seeAll: "查看全部解決方案",
+    disclaimer:
+      "每個範例均使用虛構資料。使用您自己的資料進行客製化免費，耗時不到一分鐘。",
+    teasers: {
+      invoiceScanner: "數秒內完成掃描與逐項辨識",
+      customerChatbot: "回答信心度",
+      appointmentBooking: "自動預約並確認",
+      quotationGenerator: "已生成含稅報價單",
+      jobPostingWriter: "已撰寫的職缺要求",
+      inventoryTracker: "需要補貨的項目",
+      socialMediaManager: "同時生成的平台貼文數",
+      documentTranslator: "種語言，一鍵翻譯",
+      employeeOnboarding: "已安排的入職任務",
+      salesAssistant: "已排定的跟進郵件",
+      complianceChecker: "發現的高風險條款",
+      trainingContentGenerator: "已生成的培訓模組",
+      financialReportBuilder: "季度淨利潤解讀",
+    },
+  },
+
   practices: {
     eyebrow: "服務",
     title: "四個專業領域，一支團隊",

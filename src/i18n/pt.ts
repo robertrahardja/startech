@@ -156,6 +156,32 @@ export const pt: Messages = {
     ],
   },
 
+  showcase: {
+    eyebrow: "Experimente você mesmo",
+    title: "Treze projetos. Escolha um e coloque à prova.",
+    sub: "Cada cartão abaixo é um produto de IA que funciona de verdade, não uma maquete. Abra um, veja um resultado de amostra na hora e personalize com seus próprios dados.",
+    sampleBadge: "Amostra",
+    tryIt: "Experimentar",
+    seeAll: "Ver todas as soluções",
+    disclaimer:
+      "Cada amostra usa dados fictícios. Personalizar uma demonstração com seus próprios dados é gratuito e leva menos de um minuto.",
+    teasers: {
+      invoiceScanner: "escaneada e detalhada em segundos",
+      customerChatbot: "confiança da resposta",
+      appointmentBooking: "agendada e confirmada automaticamente",
+      quotationGenerator: "orçamento gerado, com imposto incluído",
+      jobPostingWriter: "requisitos da vaga redigidos",
+      inventoryTracker: "itens sinalizados para reposição",
+      socialMediaManager: "publicações geradas de uma vez",
+      documentTranslator: "idiomas, em um clique",
+      employeeOnboarding: "tarefas de integração agendadas",
+      salesAssistant: "e-mails de acompanhamento programados",
+      complianceChecker: "cláusulas de alto risco identificadas",
+      trainingContentGenerator: "módulos de treinamento criados",
+      financialReportBuilder: "lucro líquido trimestral, explicado",
+    },
+  },
+
   practices: {
     eyebrow: "Serviços",
     title: "Quatro áreas, um único time",

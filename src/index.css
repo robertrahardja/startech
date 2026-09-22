@@ -1364,3 +1364,39 @@
     filter: none;
   }
 }
+
+/* ─── Showcase: rotating conic border on the hero demo tile ───────────── */
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.showcase-conic-border {
+  background: conic-gradient(
+    from var(--angle),
+    var(--color-st-border) 0%,
+    var(--color-st-blue) 25%,
+    var(--color-st-pink) 50%,
+    var(--color-st-border) 75%
+  );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .showcase-conic-border {
+    animation: showcase-angle-spin 6s linear infinite;
+  }
+}
+
+@keyframes showcase-angle-spin {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase-conic-border {
+    animation: none;
+  }
+}

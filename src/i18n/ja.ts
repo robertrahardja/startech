@@ -156,6 +156,32 @@ export const ja: Messages = {
     ],
   },
 
+  showcase: {
+    eyebrow: "実際に試せます",
+    title: "13の開発事例。選んで、動かして確かめてください。",
+    sub: "以下のカードはすべて、実際に動くAI製品です。開くとすぐにサンプル結果が表示され、その場でご自身のデータに置き換えて試せます。",
+    sampleBadge: "サンプル",
+    tryIt: "試してみる",
+    seeAll: "すべてのソリューションを見る",
+    disclaimer:
+      "各サンプルは架空のデータを使用しています。ご自身のデータでのカスタマイズは無料で、1分もかかりません。",
+    teasers: {
+      invoiceScanner: "数秒でスキャン・項目化",
+      customerChatbot: "回答の確信度",
+      appointmentBooking: "自動で予約・確定",
+      quotationGenerator: "GST込みの見積書を作成",
+      jobPostingWriter: "職務要件を作成",
+      inventoryTracker: "再発注が必要な項目",
+      socialMediaManager: "同時に作成された投稿数",
+      documentTranslator: "言語、ワンクリックで翻訳",
+      employeeOnboarding: "オンボーディングタスクを設定",
+      salesAssistant: "フォローアップメールを自動作成",
+      complianceChecker: "高リスク条項を検出",
+      trainingContentGenerator: "作成された研修モジュール",
+      financialReportBuilder: "四半期純利益を解説",
+    },
+  },
+
   practices: {
     eyebrow: "サービス",
     title: "四つの専門領域、一つのチーム",

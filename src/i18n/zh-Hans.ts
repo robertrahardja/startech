@@ -156,6 +156,32 @@ export const zhHans: Messages = {
     ],
   },
 
+  showcase: {
+    eyebrow: "亲自试用",
+    title: "13个真实项目，选一个，亲自试试看。",
+    sub: "下面每张卡片都是真实可用的AI产品，不是效果图。点开即可看到即时样例结果，也可以用您自己的数据当场定制。",
+    sampleBadge: "示例",
+    tryIt: "立即试用",
+    seeAll: "查看全部解决方案",
+    disclaimer:
+      "每个示例均使用虚构数据。使用您自己的数据进行定制免费，用时不到一分钟。",
+    teasers: {
+      invoiceScanner: "几秒内完成扫描与逐项识别",
+      customerChatbot: "回答置信度",
+      appointmentBooking: "自动预约并确认",
+      quotationGenerator: "已生成含税报价单",
+      jobPostingWriter: "已撰写的岗位要求",
+      inventoryTracker: "需要补货的项目",
+      socialMediaManager: "同时生成的平台帖子数",
+      documentTranslator: "种语言，一键翻译",
+      employeeOnboarding: "已安排的入职任务",
+      salesAssistant: "已排定的跟进邮件",
+      complianceChecker: "发现的高风险条款",
+      trainingContentGenerator: "已生成的培训模块",
+      financialReportBuilder: "季度净利润解读",
+    },
+  },
+
   practices: {
     eyebrow: "服务",
     title: "四个专业领域，一支团队",

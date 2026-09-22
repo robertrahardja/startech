@@ -154,6 +154,32 @@ export const en = {
     ],
   },
 
+  showcase: {
+    eyebrow: "Try it yourself",
+    title: "Thirteen builds. Pick one, see it run.",
+    sub: "Every card below is a working AI product, not a mockup. Open one, see a real sample result instantly, then customise it with your own data.",
+    sampleBadge: "Sample",
+    tryIt: "Try it",
+    seeAll: "See every solution",
+    disclaimer:
+      "Each sample uses fictional data. Customising a demo with your own data is free and takes under a minute.",
+    teasers: {
+      invoiceScanner: "scanned & itemised in seconds",
+      customerChatbot: "answer confidence",
+      appointmentBooking: "booked and confirmed automatically",
+      quotationGenerator: "quote drafted, GST included",
+      jobPostingWriter: "role requirements written out",
+      inventoryTracker: "items flagged for reorder",
+      socialMediaManager: "platform posts drafted at once",
+      documentTranslator: "languages, one click",
+      employeeOnboarding: "onboarding tasks scheduled",
+      salesAssistant: "follow-up emails sequenced",
+      complianceChecker: "high-risk clauses caught",
+      trainingContentGenerator: "training modules built",
+      financialReportBuilder: "quarterly net profit, explained",
+    },
+  },
+
   practices: {
     eyebrow: "Practices",
     title: "Four practices, one delivery team",
