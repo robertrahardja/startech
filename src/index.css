@@ -1400,3 +1400,74 @@
     animation: none;
   }
 }
+
+/*
+ * A single diagonal light sweep, left to right, once — not a loop.
+ * Something precious catches the light once when you notice it, not on a
+ * timer. Used two ways: `.deck-shine` as a card overlay (a pale glass
+ * catch-light), `.deck-text-shine` directly on a text link's own gradient
+ * fill (a warmer gold catch-light, since a background sweep behind bare
+ * text would barely read).
+ */
+.deck-shine {
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.16) 47%,
+    rgba(255, 255, 255, 0.28) 50%,
+    rgba(255, 255, 255, 0.16) 53%,
+    transparent 70%
+  );
+  background-size: 250% 100%;
+  background-position: 150% 0;
+  opacity: 0;
+}
+
+.deck-shine.deck-shine-play {
+  animation: deck-shine-sweep 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.5s 1 both;
+}
+
+@keyframes deck-shine-sweep {
+  0% { background-position: 150% 0; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { background-position: -50% 0; opacity: 0; }
+}
+
+.deck-text-shine {
+  display: inline-block;
+  background-image: linear-gradient(
+    115deg,
+    var(--color-st-text-muted) 30%,
+    var(--color-st-text-muted) 45%,
+    var(--color-st-gold-light) 50%,
+    var(--color-st-gold-light) 55%,
+    var(--color-st-text-muted) 70%
+  );
+  background-size: 250% 100%;
+  background-position: 150% 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: filter 0.3s ease;
+}
+
+a:hover > .deck-text-shine {
+  filter: brightness(1.35);
+}
+
+.deck-text-shine.deck-shine-play {
+  animation: deck-text-shine-sweep 1.8s cubic-bezier(0.22, 1, 0.36, 1) 1.1s 1 both;
+}
+
+@keyframes deck-text-shine-sweep {
+  0% { background-position: 150% 0; }
+  100% { background-position: -50% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deck-shine.deck-shine-play,
+  .deck-text-shine.deck-shine-play {
+    animation: none;
+  }
+}

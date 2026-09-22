@@ -113,10 +113,9 @@ export default function Hero({ onAskAi }: HeroProps) {
         </p>
 
         {/* CTAs — one primary action and one way in for someone not ready
-            to book yet. Each label names what the click does. The deck link
-            below is quieter still: present, not competing. */}
+            to book yet, plus a quieter third: present, not competing. */}
         <div
-          className="mt-9 flex flex-col items-stretch gap-3 animate-fade-in-up sm:mt-12 sm:flex-row sm:items-center"
+          className="mt-9 flex flex-col items-stretch gap-3 animate-fade-in-up sm:mt-12 sm:flex-row sm:flex-wrap sm:items-center"
           style={{ animationDelay: "0.25s" }}
         >
           <a
@@ -163,6 +162,13 @@ export default function Hero({ onAskAi }: HeroProps) {
               </span>
             </button>
           )}
+
+          <a
+            href="#capability-deck"
+            className="inline-flex items-center justify-center px-2 text-center text-[13px] font-normal tracking-wide transition-colors duration-300 sm:justify-start sm:px-3 sm:text-[12.5px]"
+          >
+            <span className="deck-text-shine deck-shine-play">{t.hero.ctaDeck}</span>
+          </a>
         </div>
 
         <p
@@ -171,14 +177,6 @@ export default function Hero({ onAskAi }: HeroProps) {
         >
           {t.hero.note}
         </p>
-
-        <a
-          href="#capability-deck"
-          className="mt-3 inline-block animate-fade-in text-[12.5px] font-normal tracking-wide text-st-text-muted/70 underline-offset-2 transition-colors duration-300 hover:text-st-text-muted hover:underline sm:text-[11px]"
-          style={{ animationDelay: "0.35s" }}
-        >
-          {t.hero.ctaDeck}
-        </a>
 
         {/* Proof strip */}
         <div

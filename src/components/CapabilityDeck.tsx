@@ -33,7 +33,13 @@ export default function CapabilityDeck() {
           </p>
 
           <ConicBorderCard className="mx-auto max-w-xl">
-            <div className="flex flex-col items-center px-8 py-8 sm:px-12">
+            <div className="relative flex flex-col items-center overflow-hidden rounded-[inherit] px-8 py-8 sm:px-12">
+              {/* One-shot light sweep, not a loop — plays once when the card
+                  first comes into view, like glass catching light. */}
+              <div
+                aria-hidden="true"
+                className={`deck-shine pointer-events-none absolute inset-0 ${isInView ? "deck-shine-play" : ""}`}
+              />
               <DeckDownloadButton
                 href={`/assets/startech-capability-deck-${locale}.pdf`}
                 label={t.capabilityDeck.cta}
