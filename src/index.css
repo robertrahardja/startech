@@ -1452,7 +1452,7 @@
   transition: filter 0.3s ease;
 }
 
-a:hover > .deck-text-shine {
+a:hover .deck-text-shine {
   filter: brightness(1.35);
 }
 

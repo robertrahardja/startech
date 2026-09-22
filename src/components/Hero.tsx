@@ -165,9 +165,12 @@ export default function Hero({ onAskAi }: HeroProps) {
 
           <a
             href="#capability-deck"
-            className="inline-flex items-center justify-center px-2 text-center text-[13px] font-normal tracking-wide transition-colors duration-300 sm:justify-start sm:px-3 sm:text-[12.5px]"
+            onPointerMove={onPointerMove}
+            className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-center text-[15px] font-medium tracking-wide transition-all duration-500 sm:py-4 sm:text-[13px]"
           >
-            <span className="deck-text-shine deck-shine-play">{t.hero.ctaDeck}</span>
+            <span className="relative z-10 flex items-center justify-center gap-2.5">
+              <span className="deck-text-shine deck-shine-play">{t.hero.ctaDeck}</span>
+            </span>
           </a>
         </div>
 
