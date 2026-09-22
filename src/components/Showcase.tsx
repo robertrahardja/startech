@@ -100,7 +100,7 @@ function DemoCard({ demo, index }: { demo: ShowcaseDemo; index: number }) {
       className={`reveal-scroll transition-all duration-700 ${isInView ? "reveal visible" : "reveal"} ${isWide ? "sm:col-span-2" : ""}`}
       style={{ transitionDelay: `${Math.min(index, 8) * 70}ms` }}
     >
-      <Link href={`/solutions/${demo.slug}#try-it`} className="block h-full">
+      <Link href={`/solutions/${demo.slug}`} className="block h-full">
         <Card className="h-full p-6">
           <div className="flex h-full flex-col">
             <div className="mb-5 flex items-center justify-between">
