@@ -441,4 +441,14 @@ export const pt: Messages = {
     location: "Singapura",
     rights: "StarTech Innovation Pte. Ltd.",
   },
+
+  demos: {
+    signIn: {
+      title: "Personalizar {title}",
+      subtitle: "Entre com o Google para gerar resultados personalizados com os seus próprios dados.",
+      notConfigured: "O login ainda não está configurado — volte em breve.",
+      signedInAs: "Sessão iniciada como",
+      backToSample: "← Voltar à amostra",
+    },
+  },
 };

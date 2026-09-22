@@ -442,4 +442,14 @@ export const es: Messages = {
     location: "Singapur",
     rights: "StarTech Innovation Pte. Ltd.",
   },
+
+  demos: {
+    signIn: {
+      title: "Personalizar {title}",
+      subtitle: "Inicia sesión con Google para generar resultados personalizados con tus propios datos.",
+      notConfigured: "El inicio de sesión aún no está disponible — vuelve pronto.",
+      signedInAs: "Sesión iniciada como",
+      backToSample: "← Volver a la muestra",
+    },
+  },
 };

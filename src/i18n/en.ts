@@ -440,6 +440,16 @@ export const en = {
     location: "Singapore",
     rights: "StarTech Innovation Pte. Ltd.",
   },
+
+  demos: {
+    signIn: {
+      title: "Customize {title}",
+      subtitle: "Sign in with Google to generate custom results with your own data.",
+      notConfigured: "Sign-in isn't set up yet — check back soon.",
+      signedInAs: "Signed in as",
+      backToSample: "← Back to sample",
+    },
+  },
 };
 
 /**

@@ -12,3 +12,15 @@ ELEVENLABS_API_KEY=your-elevenlabs-key-here
 # Resend API Key (for contact form emails)
 # Get your API key from: https://resend.com/api-keys
 RESEND_API_KEY=re_your-resend-key-here
+
+# Google OAuth Client ID (for demo sign-in)
+# Create one at: https://console.cloud.google.com/apis/credentials
+# Application type: Web application. Authorized JavaScript origins must
+# include http://localhost:5173 and https://startech-innovation.com.
+#
+# This is the WORKER's copy — it checks the ID token's `aud` claim against
+# this value. The frontend needs the same value too, but as VITE_GOOGLE_
+# CLIENT_ID, which Vite only picks up from a real environment variable at
+# build time (this file isn't read by Vite), e.g.:
+#   VITE_GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com npm run dev
+GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com

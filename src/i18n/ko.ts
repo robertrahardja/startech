@@ -434,4 +434,14 @@ export const ko: Messages = {
     location: "싱가포르",
     rights: "StarTech Innovation Pte. Ltd.",
   },
+
+  demos: {
+    signIn: {
+      title: "{title} 맞춤 설정",
+      subtitle: "Google로 로그인하면 나만의 데이터로 맞춤 결과를 생성할 수 있습니다.",
+      notConfigured: "로그인 기능이 아직 준비되지 않았습니다 — 곧 다시 확인해 주세요.",
+      signedInAs: "로그인 계정:",
+      backToSample: "← 샘플로 돌아가기",
+    },
+  },
 };

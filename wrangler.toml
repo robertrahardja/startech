@@ -24,5 +24,13 @@ binding = "DB"
 database_name = "startech-demos"
 database_id = "dd762257-3eee-4e21-897f-6eb580c4f0c7"
 
+# Shared across every isolate/edge location, so demo rate limiting and the
+# manual blocklist actually hold under distributed traffic instead of
+# resetting whenever Cloudflare spins up a fresh isolate.
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "2036e34038274bd6b35d9fb9b1c75758"
+preview_id = "90fbb26528aa42e8bd5cdae6bb9f153a"
+
 [vars]
 ENVIRONMENT = "production"

@@ -440,4 +440,14 @@ export const ja: Messages = {
     location: "シンガポール",
     rights: "StarTech Innovation Pte. Ltd.",
   },
+
+  demos: {
+    signIn: {
+      title: "{title}をカスタマイズ",
+      subtitle: "Googleでサインインすると、あなた自身のデータでカスタム結果を生成できます。",
+      notConfigured: "サインインはまだ設定されていません。しばらくしてから再度お試しください。",
+      signedInAs: "サインイン中:",
+      backToSample: "← サンプルに戻る",
+    },
+  },
 };

@@ -434,4 +434,14 @@ export const zhHant: Messages = {
     location: "新加坡",
     rights: "StarTech Innovation Pte. Ltd.",
   },
+
+  demos: {
+    signIn: {
+      title: "自訂{title}",
+      subtitle: "使用 Google 登入，即可用您自己的資料產生客製化結果。",
+      notConfigured: "登入功能尚未設定，請稍後再回來查看。",
+      signedInAs: "已登入：",
+      backToSample: "← 返回範例",
+    },
+  },
 };

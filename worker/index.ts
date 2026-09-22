@@ -21,6 +21,10 @@ interface Env {
   /** "true" turns the chat and speech endpoints back on. Absent means off. */
   ENABLE_AI_CHAT?: string;
   DB: D1Database;
+  /** OAuth client ID demo sign-in tokens must have been issued for. */
+  GOOGLE_CLIENT_ID: string;
+  /** Shared rate-limit and blocklist counters, durable across isolates. */
+  RATE_LIMIT: KVNamespace;
 }
 
 // ─── Security Headers ───────────────────────────────────────────────────────
@@ -32,30 +36,43 @@ const SECURITY_HEADERS: Record<string, string> = {
   "Permissions-Policy": "camera=(), microphone=(self), geolocation=()",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
   "Content-Security-Policy":
-    "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; media-src 'self' blob:; frame-ancestors 'none'",
+    "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://accounts.google.com/gsi/client; style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style; font-src 'self'; img-src 'self' data: https://*.googleusercontent.com; connect-src 'self' https://cloudflareinsights.com https://accounts.google.com/gsi/; frame-src https://accounts.google.com/gsi/; media-src 'self' blob:; frame-ancestors 'none'",
 };
 
-// ─── Rate Limiting (in-memory, per-isolate) ─────────────────────────────────
+// ─── Rate Limiting (Cloudflare KV, shared across every isolate/edge) ────────
 // Defense-in-depth: supplement with Cloudflare WAF rate limiting rules.
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-
-function isRateLimited(
-  ip: string,
-  endpoint: string,
+//
+// A previous version of this kept counts in an in-process Map, which reset
+// every time Cloudflare spun up a fresh isolate and never saw requests
+// another edge location handled — a determined caller could bypass it just
+// by spreading requests around. KV gives every isolate the same counters.
+async function isRateLimited(
+  kv: KVNamespace,
+  key: string,
   maxRequests: number,
-  windowMs: number
-): boolean {
-  const key = `${ip}:${endpoint}`;
-  const now = Date.now();
-  const entry = rateLimitMap.get(key);
+  windowSeconds: number
+): Promise<boolean> {
+  const kvKey = `ratelimit:${key}`;
+  const raw = await kv.get(kvKey);
+  const count = raw ? parseInt(raw, 10) : 0;
 
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(key, { count: 1, resetAt: now + windowMs });
-    return false;
+  if (count >= maxRequests) return true;
+
+  // expirationTtl resets the window on the first request in it and lets KV
+  // clean the key up on its own — no separate reset bookkeeping needed.
+  await kv.put(kvKey, String(count + 1), {
+    expirationTtl: count === 0 ? windowSeconds : undefined,
+  });
+  return false;
+}
+
+/** True if this IP or Google account has been manually blocklisted. */
+async function isBlocked(kv: KVNamespace, ...identifiers: string[]): Promise<boolean> {
+  for (const id of identifiers) {
+    if (!id) continue;
+    if ((await kv.get(`blocklist:${id}`)) !== null) return true;
   }
-
-  entry.count++;
-  return entry.count > maxRequests;
+  return false;
 }
 
 // ─── Input Sanitization ─────────────────────────────────────────────────────
@@ -112,6 +129,130 @@ function jsonError(message: string, status: number): Response {
 function isRequestTooLarge(request: Request, maxBytes: number): boolean {
   const contentLength = parseInt(request.headers.get("Content-Length") || "0");
   return contentLength > maxBytes;
+}
+
+// ─── Google Identity Verification ───────────────────────────────────────────
+// The client sends whichever ID token Google Identity Services handed it.
+// That token is opaque and untrusted until we independently verify: the
+// signature (against Google's current public keys), the issuer, the
+// audience (must be this app's client ID, or a stranger's token would pass),
+// and expiry. Only the claims that survive this are used for anything.
+
+interface GoogleClaims {
+  sub: string;
+  email: string;
+  email_verified: boolean;
+  name?: string;
+}
+
+interface GoogleJwk {
+  kid: string;
+  n: string;
+  e: string;
+  kty: string;
+  alg: string;
+}
+
+let cachedJwks: { keys: GoogleJwk[]; fetchedAt: number } | null = null;
+const JWKS_CACHE_MS = 60 * 60 * 1000; // Google rotates keys infrequently.
+
+async function fetchGoogleJwks(): Promise<GoogleJwk[]> {
+  if (cachedJwks && Date.now() - cachedJwks.fetchedAt < JWKS_CACHE_MS) {
+    return cachedJwks.keys;
+  }
+  const res = await fetch("https://www.googleapis.com/oauth2/v3/certs");
+  if (!res.ok) throw new Error("Failed to fetch Google JWKS");
+  const data = (await res.json()) as { keys: GoogleJwk[] };
+  cachedJwks = { keys: data.keys, fetchedAt: Date.now() };
+  return data.keys;
+}
+
+function base64UrlToUint8Array(b64url: string): Uint8Array {
+  const b64 = b64url.replace(/-/g, "+").replace(/_/g, "/");
+  const padded = b64 + "=".repeat((4 - (b64.length % 4)) % 4);
+  const binary = atob(padded);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes;
+}
+
+function base64UrlToJson<T>(b64url: string): T {
+  const bytes = base64UrlToUint8Array(b64url);
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+/**
+ * Verifies a Google-issued OpenID Connect ID token: RS256 signature against
+ * Google's published JWKS, issuer, audience, and expiry. Returns the
+ * verified claims, or null if anything about the token doesn't check out.
+ */
+async function verifyGoogleIdToken(
+  idToken: string,
+  expectedAudience: string
+): Promise<GoogleClaims | null> {
+  const parts = idToken.split(".");
+  if (parts.length !== 3) return null;
+  const [headerB64, payloadB64, signatureB64] = parts;
+
+  let header: { alg: string; kid: string };
+  let payload: GoogleClaims & { iss: string; aud: string; exp: number };
+  try {
+    header = base64UrlToJson(headerB64);
+    payload = base64UrlToJson(payloadB64);
+  } catch {
+    return null;
+  }
+
+  if (header.alg !== "RS256") return null;
+
+  const now = Math.floor(Date.now() / 1000);
+  if (typeof payload.exp !== "number" || payload.exp <= now) return null;
+  if (payload.aud !== expectedAudience) return null;
+  if (payload.iss !== "accounts.google.com" && payload.iss !== "https://accounts.google.com") {
+    return null;
+  }
+  if (!payload.email || !payload.email_verified) return null;
+
+  let jwks: GoogleJwk[];
+  try {
+    jwks = await fetchGoogleJwks();
+  } catch {
+    return null;
+  }
+
+  const jwk = jwks.find((k) => k.kid === header.kid);
+  if (!jwk) return null;
+
+  let key: CryptoKey;
+  try {
+    key = await crypto.subtle.importKey(
+      "jwk",
+      { kty: jwk.kty, n: jwk.n, e: jwk.e, alg: "RS256", ext: true },
+      { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+      false,
+      ["verify"]
+    );
+  } catch {
+    return null;
+  }
+
+  const signedData = new TextEncoder().encode(`${headerB64}.${payloadB64}`);
+  const signature = base64UrlToUint8Array(signatureB64);
+
+  const valid = await crypto.subtle.verify(
+    "RSASSA-PKCS1-v1_5",
+    key,
+    signature,
+    signedData
+  );
+  if (!valid) return null;
+
+  return {
+    sub: payload.sub,
+    email: payload.email,
+    email_verified: payload.email_verified,
+    name: payload.name,
+  };
 }
 
 // ─── StarTech System Prompt ─────────────────────────────────────────────────
@@ -376,6 +517,10 @@ async function handleDemo(
     return jsonError("Demo service is not configured.", 503);
   }
 
+  if (!env.GOOGLE_CLIENT_ID) {
+    return jsonError("Sign-in is not configured.", 503);
+  }
+
   if (isRequestTooLarge(request, 50_000)) {
     return jsonError("Request too large.", 413);
   }
@@ -387,9 +532,7 @@ async function handleDemo(
 
   let body: {
     type?: string;
-    email?: string;
-    name?: string;
-    company?: string;
+    idToken?: string;
     input?: Record<string, string>;
   };
   try {
@@ -405,15 +548,44 @@ async function handleDemo(
     return jsonError("Invalid demo type.", 400);
   }
 
-  // Validate email
-  const email = sanitizeEmail(body.email || "");
-  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-  if (!email || !emailRegex.test(email)) {
-    return jsonError("Valid email is required.", 400);
+  // Verify identity — the email/name used below come only from this,
+  // never from anything the client claims directly.
+  if (!body.idToken || typeof body.idToken !== "string") {
+    return jsonError("Sign-in is required.", 401);
+  }
+  const claims = await verifyGoogleIdToken(body.idToken, env.GOOGLE_CLIENT_ID);
+  if (!claims) {
+    return jsonError("Sign-in could not be verified. Please sign in again.", 401);
+  }
+  const email = sanitizeEmail(claims.email);
+  const name = sanitizeString(claims.name || "", 200);
+  const googleSub = sanitizeString(claims.sub, 100);
+
+  const clientIpForBlock =
+    request.headers.get("CF-Connecting-IP") ||
+    request.headers.get("X-Forwarded-For") ||
+    "unknown";
+
+  if (env.RATE_LIMIT && (await isBlocked(env.RATE_LIMIT, clientIpForBlock, googleSub))) {
+    return jsonError("This account is not able to use demos right now.", 403);
   }
 
-  const name = sanitizeString(body.name || "", 200);
-  const company = sanitizeString(body.company || "", 200);
+  if (env.RATE_LIMIT) {
+    // Per-demoType limit: the two demos that will eventually take real-world
+    // actions (booking a calendar slot, sending an email) get a tighter cap
+    // than the pure-generation demos.
+    const strictDemoTypes = new Set(["appointment-booking", "sales-assistant"]);
+    const perTypeMax = strictDemoTypes.has(demoType) ? 3 : 5;
+    const windowSeconds = 3600;
+
+    const limited =
+      (await isRateLimited(env.RATE_LIMIT, `ip:${clientIpForBlock}:${demoType}`, perTypeMax, windowSeconds)) ||
+      (await isRateLimited(env.RATE_LIMIT, `sub:${googleSub}:${demoType}`, perTypeMax, windowSeconds));
+
+    if (limited) {
+      return jsonError("Too many requests. Please try again later.", 429);
+    }
+  }
 
   // Validate input fields
   const rawInput = body.input || {};
@@ -480,19 +652,14 @@ async function handleDemo(
   }
 
   // Store lead in D1 (fire-and-forget for speed, but log errors)
-  const clientIp =
-    request.headers.get("CF-Connecting-IP") ||
-    request.headers.get("X-Forwarded-For") ||
-    "unknown";
-
   const inputJson = JSON.stringify(sanitizedInput);
   const outputJson = JSON.stringify(aiResult);
 
   try {
     if (env.DB) {
       await env.DB.prepare(
-        "INSERT INTO demo_leads (email, name, company, demo_type, input_data, output_data, ip) VALUES (?, ?, ?, ?, ?, ?, ?)"
-      ).bind(email, name || null, company || null, demoType, inputJson, outputJson, clientIp).run();
+        "INSERT INTO demo_leads (email, name, google_sub, demo_type, input_data, output_data, ip) VALUES (?, ?, ?, ?, ?, ?, ?)"
+      ).bind(email, name || null, googleSub, demoType, inputJson, outputJson, clientIpForBlock).run();
     }
   } catch (err) {
     console.error("D1 insert error:", err);
@@ -517,12 +684,11 @@ async function handleDemo(
             <p><strong>Demo:</strong> ${escapeHtml(config.description)}</p>
             <p><strong>Email:</strong> ${escapeHtml(email)}</p>
             ${name ? `<p><strong>Name:</strong> ${escapeHtml(name)}</p>` : ""}
-            ${company ? `<p><strong>Company:</strong> ${escapeHtml(company)}</p>` : ""}
             <p><strong>Time:</strong> ${new Date().toISOString()}</p>
             <hr>
-            <p><small>StarTech AI Demo Lead Capture</small></p>
+            <p><small>StarTech AI Demo Lead Capture — verified via Google sign-in</small></p>
           `,
-          text: `Demo: ${config.description}\nEmail: ${email}\n${name ? `Name: ${name}\n` : ""}${company ? `Company: ${company}\n` : ""}`,
+          text: `Demo: ${config.description}\nEmail: ${email}\n${name ? `Name: ${name}\n` : ""}`,
         }),
       });
     } catch (err) {
@@ -668,16 +834,21 @@ export default {
       request.headers.get("X-Forwarded-For") ||
       "unknown";
 
-    // Rate limiting per endpoint
+    // Rate limiting per endpoint. /api/demo manages its own limiting inside
+    // handleDemo — it needs to key on the verified Google account as well
+    // as IP, which isn't known until the request body is parsed.
     const rateLimits: Record<string, [number, number]> = {
-      "/api/chat": [20, 60_000],
-      "/api/tts": [10, 60_000],
-      "/api/contact": [3, 60_000],
-      "/api/demo": [5, 3_600_000], // 5 per hour
+      "/api/chat": [20, 60],
+      "/api/tts": [10, 60],
+      "/api/contact": [3, 60],
     };
 
     const limits = rateLimits[url.pathname];
-    if (limits && isRateLimited(clientIp, url.pathname, limits[0], limits[1])) {
+    if (
+      limits &&
+      env.RATE_LIMIT &&
+      (await isRateLimited(env.RATE_LIMIT, `ip:${clientIp}:${url.pathname}`, limits[0], limits[1]))
+    ) {
       return new Response(
         JSON.stringify({ error: "Too many requests. Please try again later." }),
         {

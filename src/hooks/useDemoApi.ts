@@ -32,8 +32,8 @@ export function useDemoApi(demoType: string) {
 
   const submitDemo = useCallback(
     async (input: Record<string, string>) => {
-      if (!lead?.email) {
-        setError("Please enter your email first.");
+      if (!lead?.idToken) {
+        setError("Please sign in first.");
         return;
       }
 
@@ -58,9 +58,7 @@ export function useDemoApi(demoType: string) {
           },
           body: JSON.stringify({
             type: demoType,
-            email: lead.email,
-            name: lead.name,
-            company: lead.company,
+            idToken: lead.idToken,
             input,
           }),
         });
