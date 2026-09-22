@@ -10,7 +10,7 @@
  * Static assets are served by the ASSETS binding (Cloudflare Workers static assets).
  */
 
-import { DEMO_CONFIGS } from "./demo-configs";
+import { DEMO_CONFIGS, MAX_IMAGE_DATA_URL_LENGTH } from "./demo-configs";
 
 interface Env {
   ASSETS: Fetcher;
@@ -521,7 +521,12 @@ async function handleDemo(
     return jsonError("Sign-in is not configured.", 503);
   }
 
-  if (isRequestTooLarge(request, 50_000)) {
+  // Most demos never send more than a few KB of text; invoice-scanner's
+  // photo upload is the outlier, capped separately below by
+  // MAX_IMAGE_DATA_URL_LENGTH once the body is parsed. This ceiling only
+  // needs to be big enough to let that image field's own limit be the one
+  // that actually fires, plus headroom for the ID token and JSON overhead.
+  if (isRequestTooLarge(request, MAX_IMAGE_DATA_URL_LENGTH + 50_000)) {
     return jsonError("Request too large.", 413);
   }
 
@@ -587,12 +592,29 @@ async function handleDemo(
     }
   }
 
-  // Validate input fields
+  // Validate input fields. Image fields skip the usual string sanitizer —
+  // stripping control characters would corrupt base64 — but still get the
+  // same length cap and a strict shape check before anything trusts them.
   const rawInput = body.input || {};
   const sanitizedInput: Record<string, string> = {};
+  let imageDataUrl: string | null = null;
 
   for (const field of config.inputFields) {
-    const value = sanitizeString(String(rawInput[field.name] || ""), field.maxLength);
+    const raw = String(rawInput[field.name] || "");
+
+    if (field.type === "image") {
+      if (!raw) continue;
+      if (raw.length > field.maxLength) {
+        return jsonError(`${field.label} is too large.`, 413);
+      }
+      if (!/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+/]+=*$/.test(raw)) {
+        return jsonError(`${field.label} must be a JPEG, PNG, or WebP image.`, 400);
+      }
+      imageDataUrl = raw;
+      continue;
+    }
+
+    const value = sanitizeString(raw, field.maxLength);
     if (field.required && !value) {
       return jsonError(`${field.label} is required.`, 400);
     }
@@ -601,14 +623,29 @@ async function handleDemo(
     }
   }
 
-  // Build the user message from input fields
+  // No field in the schema is individually required for invoice-scanner
+  // (a photo or pasted text both satisfy it), so the per-field checks above
+  // can't catch "neither was sent" — that's checked once, here, for every
+  // demo alike.
+  if (!imageDataUrl && Object.keys(sanitizedInput).length === 0) {
+    return jsonError("Input is required.", 400);
+  }
+
+  // Build the user message from the text input fields.
   const userMessage = Object.entries(sanitizedInput)
     .map(([key, val]) => `${key}: ${val}`)
     .join("\n");
 
-  if (!userMessage) {
-    return jsonError("Input is required.", 400);
-  }
+  // Vision calls (a photo was submitted) use gpt-4o — gpt-4o-mini's image
+  // understanding is meaningfully weaker for dense, small text like a
+  // receipt. Text-only demos keep the cheaper model unchanged.
+  const model = imageDataUrl ? "gpt-4o" : "gpt-4o-mini";
+  const userContent = imageDataUrl
+    ? [
+        ...(userMessage ? [{ type: "text" as const, text: userMessage }] : []),
+        { type: "image_url" as const, image_url: { url: imageDataUrl } },
+      ]
+    : userMessage;
 
   // Call OpenAI (non-streaming, we need full JSON response)
   const openaiResponse = await fetch(
@@ -620,10 +657,10 @@ async function handleDemo(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model,
         messages: [
           { role: "system", content: config.systemPrompt },
-          { role: "user", content: userMessage },
+          { role: "user", content: userContent },
         ],
         max_tokens: config.maxTokens,
         temperature: 0.7,
@@ -652,7 +689,13 @@ async function handleDemo(
   }
 
   // Store lead in D1 (fire-and-forget for speed, but log errors)
-  const inputJson = JSON.stringify(sanitizedInput);
+  // The image itself never reaches D1 — it's a multi-megabyte blob with no
+  // abuse-review value once the AI's already extracted the fields from it,
+  // and this table is otherwise just short text. A flag is enough to know
+  // this lead came from a photo rather than pasted text.
+  const inputJson = JSON.stringify(
+    imageDataUrl ? { ...sanitizedInput, receipt_image: "[photo submitted]" } : sanitizedInput
+  );
   const outputJson = JSON.stringify(aiResult);
 
   try {
