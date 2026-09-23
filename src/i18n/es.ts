@@ -38,7 +38,7 @@ export const es: Messages = {
     ctaWork: "Ver proyectos",
     ctaDeck: "Descargar el dossier",
     languagesAvailable: "También disponible en:",
-    tapAgainToSwitch: "Toque {language} de nuevo para leer esta página en ese idioma.",
+    readInLanguage: "Leer esta página en {language}",
     ctaAsk: "Hacer una pregunta",
     note: "Sin coste y sin necesidad de preparar documentación: basta con el proceso que más tiempo le consume. Si el software no es la respuesta, se lo diremos.",
     proof: {

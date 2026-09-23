@@ -233,7 +233,7 @@ export default function Hero({ onAskAi }: HeroProps) {
         <HeroLanguageStrip
           locale={locale}
           label={t.hero.languagesAvailable}
-          tapAgainToSwitch={t.hero.tapAgainToSwitch}
+          readInLanguage={t.hero.readInLanguage}
           onPreview={previewLanguage}
         />
 
@@ -326,19 +326,24 @@ export default function Hero({ onAskAi }: HeroProps) {
  * needed, nothing navigates until you actually choose to. Touch has no
  * hover, and a tap that both previewed AND navigated would mean the preview
  * is never actually seen, just flashed through on the way to a page reload.
- * So on touch the first tap on a language previews it and holds the page
- * (armed, ready to go); tapping that same language again is the visitor
- * choosing to actually switch, and the link is left to navigate normally.
+ * So on touch a tap only previews and holds the page (armed, ready to go);
+ * an earlier version switched on a second tap of the same link, but the
+ * languages sit close enough together that a reflexive double-tap — common
+ * on touch, not malicious, just how people confirm a tap landed — would
+ * silently switch the page's language by accident. Switching now needs a
+ * separate "Read in ..." button that only appears once armed: a real,
+ * deliberately different target, not a repeat of the gesture that could
+ * misfire.
  */
 function HeroLanguageStrip({
   locale,
   label,
-  tapAgainToSwitch,
+  readInLanguage,
   onPreview,
 }: {
   locale: string;
   label: string;
-  tapAgainToSwitch: string;
+  readInLanguage: string;
   onPreview: (locale: Locale | null) => void;
 }) {
   const { path } = parseLocalePath(window.location.pathname);
@@ -369,14 +374,14 @@ function HeroLanguageStrip({
             onMouseLeave={() => onPreview(null)}
             onFocus={() => onPreview(code)}
             onBlur={() => onPreview(null)}
+            // Touch never navigates directly from this link — the links
+            // sit close together, and a reflexive double-tap (checking a
+            // tap registered, a stray second touch) would otherwise switch
+            // the page's language by accident. A tap here only previews;
+            // actually switching needs the separate "Read in ..." button
+            // below, a real second target rather than a second tap on the
+            // same small link.
             onTouchEnd={(e) => {
-              if (armed === code) {
-                // Second tap on the already-previewed language: let this
-                // one navigate normally.
-                setArmed(null);
-                return;
-              }
-              // First tap on a language: preview it, hold the page.
               e.preventDefault();
               setArmed(code);
               onPreview(code);
@@ -398,13 +403,16 @@ function HeroLanguageStrip({
       </nav>
 
       {/* Touch only in practice — a mouse never sets `armed`, since a click
-          just follows the link straight away. Tells the visitor what a
-          second tap on the same language will do, so the preview-then-
-          confirm pattern isn't just implied by the highlight alone. */}
+          on the link above already navigates immediately there. A real,
+          separate button to confirm the switch, not a second tap on the
+          same small link the first tap just landed on. */}
       {armed && (
-        <span className="w-full text-[10.5px] font-normal italic text-st-text-muted/50 sm:w-auto">
-          {tapAgainToSwitch.replace("{language}", LOCALE_META[armed].label)}
-        </span>
+        <a
+          href={localePath(armed, path)}
+          className="w-full text-[10.5px] font-medium text-st-blue-light underline underline-offset-2 sm:w-auto"
+        >
+          {readInLanguage.replace("{language}", LOCALE_META[armed].label)}
+        </a>
       )}
     </div>
   );

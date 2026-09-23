@@ -37,7 +37,7 @@ export const ja: Messages = {
     ctaWork: "実績を見る",
     ctaDeck: "資料をダウンロード",
     languagesAvailable: "対応言語：",
-    tapAgainToSwitch: "もう一度「{language}」をタップすると切り替わります。",
+    readInLanguage: "{language}でこのページを読む",
     ctaAsk: "質問する",
     note: "無料でご相談いただけます。資料のご用意も不要です。最も時間がかかっている業務をお聞かせください。ソフトウェアで解決すべきでない場合は、その旨をお伝えします。",
     proof: {
