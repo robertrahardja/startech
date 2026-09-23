@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 const SEEN_KEY = "startech-splash-seen";
-const HOLD_MS = 600;
-const FADE_MS = 500;
+const HOLD_MS = 1400;
+const FADE_MS = 900;
 
 /**
  * A black screen with the mark centred, fading away to the homepage
@@ -50,7 +50,7 @@ export default function SplashScreen() {
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[100] flex items-center justify-center bg-st-bg transition-opacity duration-500 ease-out sm:hidden ${
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-st-bg transition-opacity duration-[900ms] ease-out sm:hidden ${
         fading ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
