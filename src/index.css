@@ -1473,65 +1473,175 @@ a:hover .deck-text-shine {
 }
 
 /*
- * The headline's own "screen turning on" moment — static and scratch lines
- * that clear to nothing, masked to the letters themselves via
- * background-clip: text, so the noise only ever exists where a glyph does.
- * Sits absolutely over the real (always-correct) headline underneath and
- * plays exactly once on load; it has nothing left to render once done,
- * never re-triggers, and never touches anything outside its own box.
+ * The headline's own "screen turning on" moment — scratches and static
+ * that sit directly on the letters and clear to nothing in under a
+ * second, like an old monitor catching signal before the picture settles.
+ *
+ * Not a second copy of the text, and not a pseudo-element layered over it
+ * either — a pseudo-element's noise can only be confined to the glyphs
+ * underneath via mix-blend-mode, which turned out to tint the whole
+ * rectangular box (scanlines visible on the black background between
+ * letters, not just on them) rather than respecting glyph shapes the way
+ * background-clip: text does. background-clip: text needs real glyphs to
+ * clip to, and the only element with those is each headline span itself —
+ * so the noise lives directly in that span's own background-image, the
+ * exact same box the letters already render in. There is nothing else
+ * positioned relative to anything that could drift.
+ *
+ * .crt-word: the plain white spans. White text has no existing background,
+ * so the static/scratch layers sit on top of a solid white fill in the
+ * same background-image list, then the whole span fades from noisy to
+ * that flat white as the animation resolves.
+ *
+ * .crt-word-gradient: the two gradient-text spans already animate their
+ * own background-position for the blue→pink drift (gradient-drift, 14s,
+ * infinite) — replacing that background wholesale would lose the brand
+ * gradient. Instead the noise layers are ADDED on top of the same
+ * gradient in one background-image list, and only their opacity resolves
+ * to 0 via a second, independent animation running alongside
+ * gradient-drift rather than instead of it.
  */
-.crt-static-mask {
-  position: absolute;
-  inset: 0;
-  display: block;
-  overflow: hidden;
-  pointer-events: none;
+.crt-word {
+  position: relative;
   color: transparent;
   background-repeat: no-repeat;
   background-clip: text;
   -webkit-background-clip: text;
   background-image:
-    /* Scratches: a handful of thin diagonal streaks at fixed positions. */
+    linear-gradient(var(--color-st-text), var(--color-st-text)),
     repeating-linear-gradient(
       115deg,
       transparent 0,
-      transparent 18px,
-      rgba(255, 255, 255, 0.5) 18.5px,
-      transparent 19px,
-      transparent 54px,
-      rgba(255, 255, 255, 0.35) 54.5px,
-      transparent 55px,
-      transparent 91px,
-      rgba(255, 255, 255, 0.45) 91.5px,
-      transparent 92px
+      transparent 14px,
+      rgba(0, 0, 0, 0.95) 14px,
+      rgba(0, 0, 0, 0.95) 17px,
+      transparent 17px,
+      transparent 42px,
+      rgba(0, 0, 0, 0.85) 42px,
+      rgba(0, 0, 0, 0.85) 44px,
+      transparent 44px,
+      transparent 70px,
+      rgba(0, 0, 0, 0.9) 70px,
+      rgba(0, 0, 0, 0.9) 73px,
+      transparent 73px
     ),
-    /* Scanlines: fine horizontal banding, the CRT texture itself. */
     repeating-linear-gradient(
       to bottom,
-      rgba(255, 255, 255, 0.25) 0,
-      rgba(255, 255, 255, 0.25) 1px,
-      transparent 1px,
-      transparent 3px
+      rgba(0, 0, 0, 0.65) 0,
+      rgba(0, 0, 0, 0.65) 2px,
+      transparent 2px,
+      transparent 5px
     ),
-    /* Static: a coarse noise-like grid standing in for live tracking noise
-       without redrawing a canvas every frame. */
     repeating-conic-gradient(
       from 0deg,
-      rgba(255, 255, 255, 0.18) 0deg 90deg,
+      rgba(0, 0, 0, 0.5) 0deg 90deg,
       transparent 90deg 180deg
     );
-  background-size: 100% 100%, 100% 100%, 3px 3px;
-  animation: crt-static-clear 900ms steps(6, end) 1 both;
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    6px 6px;
+  animation: crt-word-clear 900ms steps(6, end) 1 both;
 }
 
-@keyframes crt-static-clear {
-  0% { opacity: 1; filter: contrast(1.8) brightness(1.4); }
-  70% { opacity: 0.85; }
-  100% { opacity: 0; filter: contrast(1) brightness(1); }
+/* Only the three noise layers (scratches, scanlines, static) shrink to
+   nothing; the first layer — the solid fill or, on .crt-word-gradient,
+   the brand gradient — keeps its own 100%/220% size throughout, so what's
+   left once the noise is gone is exactly the same text color that would
+   have been there without this effect at all. */
+@keyframes crt-word-clear {
+  0% {
+    background-size:
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      6px 6px;
+    filter: contrast(1.6) brightness(0.9);
+  }
+  100% {
+    background-size:
+      100% 100%,
+      0 0,
+      0 0,
+      0 0;
+    filter: contrast(1) brightness(1);
+  }
+}
+
+.crt-word-gradient {
+  background-image:
+    linear-gradient(
+      100deg,
+      #4a8bfb 0%,
+      #8f7ae8 38%,
+      #e19cdc 62%,
+      #4a8bfb 100%
+    ),
+    repeating-linear-gradient(
+      115deg,
+      transparent 0,
+      transparent 14px,
+      rgba(0, 0, 0, 0.95) 14px,
+      rgba(0, 0, 0, 0.95) 17px,
+      transparent 17px,
+      transparent 42px,
+      rgba(0, 0, 0, 0.85) 42px,
+      rgba(0, 0, 0, 0.85) 44px,
+      transparent 44px,
+      transparent 70px,
+      rgba(0, 0, 0, 0.9) 70px,
+      rgba(0, 0, 0, 0.9) 73px,
+      transparent 73px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.65) 0,
+      rgba(0, 0, 0, 0.65) 2px,
+      transparent 2px,
+      transparent 5px
+    ),
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(0, 0, 0, 0.5) 0deg 90deg,
+      transparent 90deg 180deg
+    );
+  background-size:
+    220% 100%,
+    100% 100%,
+    100% 100%,
+    6px 6px;
+  animation:
+    gradient-drift 14s ease-in-out infinite,
+    crt-word-clear-gradient 900ms steps(6, end) 1 both;
+}
+
+/* Same clearing motion as crt-word-clear, sized for this span's own first
+   layer (220% for the drifting brand gradient, not 100%) — a separate
+   keyframe rather than trying to share one across two different base
+   sizes, since a keyframe's background-size values aren't relative. */
+@keyframes crt-word-clear-gradient {
+  0% {
+    background-size:
+      220% 100%,
+      100% 100%,
+      100% 100%,
+      6px 6px;
+    filter: contrast(1.6) brightness(0.9);
+  }
+  100% {
+    background-size:
+      220% 100%,
+      0 0,
+      0 0,
+      0 0;
+    filter: contrast(1) brightness(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .crt-static-mask {
-    display: none;
+  .crt-word,
+  .crt-word-gradient {
+    animation: none;
   }
 }

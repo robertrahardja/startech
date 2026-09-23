@@ -131,61 +131,36 @@ export default function Hero({ onAskAi }: HeroProps) {
             24px margins that the margin stopped reading as a margin. A
             slightly smaller mobile size leaves visible slack at the line
             ends, so the gutter is felt rather than just technically present. */}
-        <div className="relative">
-          <h1
-            className="max-w-4xl font-display text-[3.4rem] leading-[1.02] tracking-[-0.03em] text-st-text sm:text-5xl md:text-6xl lg:text-7xl"
-            style={{ textWrap: "balance" }}
-          >
-            {/* Four parts rather than five words: CJK locales do not put spaces
-                between words and order the clause differently, so the catalogue
-                supplies each fragment and the spacing comes from the locale. */}
-            <span className="rise inline-block" style={{ animationDelay: "0.05s" }}>
-              {t.hero.headlineLead}
-            </span>
-            {gap}
-            <span
-              className="rise gradient-text inline-block italic"
-              style={{ animationDelay: "0.18s" }}
-            >
-              {t.hero.headlineBusiness}
-            </span>
-            {gap}
-            <span className="rise inline-block" style={{ animationDelay: "0.3s" }}>
-              {t.hero.headlineAnd}
-            </span>
-            {gap}
-            <span
-              className="rise gradient-text inline-block italic"
-              style={{ animationDelay: "0.38s" }}
-            >
-              {t.hero.headlineTech}
-            </span>
-            <span className="rise inline-block" style={{ animationDelay: "0.46s" }}>
-              {fullStop(locale)}
-            </span>
-          </h1>
+        <h1
+          className="max-w-4xl font-display text-[3.4rem] leading-[1.02] tracking-[-0.03em] sm:text-5xl md:text-6xl lg:text-7xl"
+          style={{ textWrap: "balance" }}
+        >
+          {/* Four parts rather than five words: CJK locales do not put spaces
+              between words and order the clause differently, so the catalogue
+              supplies each fragment and the spacing comes from the locale.
+              No entrance motion here (no rise/translate) — the scratch
+              effect below is the entrance; flying the letters in at the
+              same time as clearing static competed with it rather than
+              reading as one moment.
 
-          {/* A duplicate of the same words, masked to their exact glyph
-              shapes and showing static/scratches that clear to nothing —
-              an old screen catching signal, playing once over the headline
-              only, never the page. The real <h1> underneath is already
-              correct from the first frame; this is a layer sitting on top
-              of it that has nothing left to show once it's done. */}
-          <span
-            aria-hidden="true"
-            className="crt-static-mask max-w-4xl font-display text-[3.4rem] leading-[1.02] tracking-[-0.03em] sm:text-5xl md:text-6xl lg:text-7xl"
-            style={{ textWrap: "balance" }}
-          >
-            {t.hero.headlineLead}
-            {gap}
+              crt-word carries the scratch/static texture directly on each
+              span's own background-clip: text, not a second copy of the
+              text layered on top — there is nothing else for the noise to
+              be positioned relative to, so it cannot drift out of sync
+              with the letters it belongs to. */}
+          <span className="crt-word inline-block">{t.hero.headlineLead}</span>
+          {gap}
+          <span className="crt-word crt-word-gradient gradient-text inline-block italic">
             {t.hero.headlineBusiness}
-            {gap}
-            {t.hero.headlineAnd}
-            {gap}
-            {t.hero.headlineTech}
-            {fullStop(locale)}
           </span>
-        </div>
+          {gap}
+          <span className="crt-word inline-block">{t.hero.headlineAnd}</span>
+          {gap}
+          <span className="crt-word crt-word-gradient gradient-text inline-block italic">
+            {t.hero.headlineTech}
+          </span>
+          <span className="crt-word inline-block">{fullStop(locale)}</span>
+        </h1>
 
         {/* Sub */}
         <p
