@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 const SEEN_KEY = "startech-splash-seen";
 // Long enough to hold past the glow pulse (see .splash-glow in index.css:
-// 300ms delay + 1.1s duration) before the fade-out starts.
-const HOLD_MS = 1800;
+// 300ms delay + 3.3s duration) before the fade-out starts.
+const HOLD_MS = 3800;
 const FADE_MS = 900;
 
 /**
