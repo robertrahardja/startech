@@ -351,18 +351,16 @@ function HeroLanguageStrip({
 
   return (
     <div
-      className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 animate-fade-in sm:mt-7"
+      className="mt-6 flex items-start gap-3 animate-fade-in sm:mt-7"
       style={{ animationDelay: "0.32s" }}
     >
-      {/* The language list itself: a stable column whose own wrapping never
-          changes shape, whether or not a confirm button is showing. Earlier
-          this put the confirm button inline right after its language, which
-          read well but meant the row's own text could reflow (a language
-          moving lines) the moment a language got armed. Keeping the list
-          and the button in separate flex columns means tapping a language
-          only ever adds a button to the right — it never reshuffles the
-          list underneath it. */}
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
+      {/* Column 1: the language list. It wraps within its own column width
+          (still two lines on a phone) exactly as it always has — arming a
+          language never touches this column's own layout. Column 2 (the
+          confirm button below) sits beside it, not underneath the whole
+          block: min-w-0 lets this column actually shrink to make room for
+          column 2 instead of pushing it onto a separate row. */}
+      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1.5">
         <span className="text-[11px] font-normal tracking-wide text-st-text-muted/60 sm:text-[10.5px]">
           {label}
         </span>
@@ -391,10 +389,15 @@ function HeroLanguageStrip({
               // nothing in this list ever navigates on its own. Tapping the
               // language the page is already in has nothing to confirm —
               // "Read this page in English" while already reading it in
-              // English is nonsense — so it never arms.
+              // English is nonsense — so it clears any armed language
+              // instead of arming this one, dismissing the button if it
+              // was showing for a different language.
               onTouchEnd={(e) => {
                 e.preventDefault();
-                if (code === locale) return;
+                if (code === locale) {
+                  setArmed(null);
+                  return;
+                }
                 setArmed(code);
                 onPreview(code);
               }}
@@ -415,16 +418,18 @@ function HeroLanguageStrip({
         </nav>
       </div>
 
-      {/* Touch only in practice — a mouse never sets `armed`, since a click
-          on the link above already navigates immediately there. Its own
-          column, so it appears/disappears without ever touching the
-          language list's own layout. code !== locale guards the same
+      {/* Column 2: the confirm button. Touch only in practice — a mouse
+          never sets `armed`, since a click on the link in column 1 already
+          navigates immediately there. shrink-0 keeps it beside column 1
+          rather than being squeezed into wrapping below it; column 1's own
+          min-w-0/flex-1 is what gives this column the room to sit there
+          instead of forcing a new row. code !== locale guards the same
           "already reading it in this language" case a second way, in case
           `armed` ever holds the current locale from a stale transition. */}
       {armed && armed !== locale && (
         <a
           href={localePath(armed, path)}
-          className="pressable inline-flex items-center rounded-full bg-st-blue px-3 py-1 text-[10.5px] font-medium text-white transition-colors duration-300 hover:bg-st-blue-light sm:text-[10px]"
+          className="pressable inline-flex shrink-0 items-center rounded-full bg-st-blue px-3 py-1 text-[10.5px] font-medium text-white transition-colors duration-300 hover:bg-st-blue-light sm:text-[10px]"
         >
           {readInLanguage.replace("{language}", LOCALE_META[armed].label)}
         </a>
