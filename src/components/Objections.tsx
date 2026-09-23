@@ -45,34 +45,53 @@ export default function Objections() {
           </p>
         </div>
 
-        <div className="max-w-3xl divide-y divide-st-border border-y border-st-border">
+        <div className="max-w-3xl space-y-3">
           {t.objections.items.map((objection, i) => {
             const isOpen = open === i;
             return (
-              <div key={objection.said}>
+              <div
+                key={objection.said}
+                className={`overflow-hidden rounded-xl border transition-colors duration-[400ms] ${
+                  isOpen
+                    ? "border-st-border-hover bg-st-bg-card"
+                    : "border-st-border"
+                }`}
+              >
                 <button
                   onClick={() => {
                     haptic("select");
                     setOpen(isOpen ? null : i);
                   }}
                   aria-expanded={isOpen}
-                  className="flex w-full items-start justify-between gap-6 py-6 text-left transition-colors duration-300"
+                  className="flex w-full items-start gap-4 px-5 py-5 text-left transition-colors duration-300 sm:gap-5 sm:px-6"
                 >
                   <span
-                    className={`font-display text-lg leading-[1.35] tracking-[-0.01em] transition-colors duration-300 sm:text-xl ${
+                    aria-hidden="true"
+                    className={`gradient-text font-display text-lg leading-[1.35] tracking-[-0.02em] transition-opacity duration-300 sm:text-xl ${
+                      isOpen ? "opacity-100" : "opacity-40"
+                    }`}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+
+                  <span
+                    className={`flex-1 font-display text-lg leading-[1.35] tracking-[-0.01em] transition-colors duration-300 sm:text-xl ${
                       isOpen ? "text-st-text" : "text-st-text-muted"
                     }`}
                   >
                     &ldquo;{objection.said}&rdquo;
                   </span>
+
                   <span
                     aria-hidden="true"
-                    className={`mt-1.5 flex h-6 w-6 flex-none items-center justify-center transition-transform duration-400 ${
-                      isOpen ? "rotate-45" : ""
+                    className={`mt-0.5 flex h-8 w-8 flex-none items-center justify-center rounded-lg transition-colors duration-300 ${
+                      isOpen ? "bg-st-surface" : ""
                     }`}
                   >
                     <svg
-                      className="h-3.5 w-3.5 text-st-text-muted"
+                      className={`h-3.5 w-3.5 text-st-text-muted transition-transform duration-400 ${
+                        isOpen ? "rotate-45" : ""
+                      }`}
                       fill="none"
                       stroke="currentColor"
                       strokeWidth={1.5}
@@ -95,15 +114,18 @@ export default function Objections() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="pb-7 pr-10">
-                      <p className="text-[15px] font-normal leading-[1.75] text-st-text-muted">
-                        {objection.answer}
-                      </p>
-                      {objection.proof && (
-                        <p className="mt-4 border-l border-st-blue/40 pl-4 text-[13px] leading-[1.6] text-st-blue-light">
-                          {objection.proof}
+                    <div className="flex gap-4 px-5 pb-6 sm:gap-5 sm:px-6">
+                      <span className="w-6 flex-none sm:w-7" aria-hidden="true" />
+                      <div className="min-w-0 flex-1 border-t border-st-border/60 pr-10 pt-5">
+                        <p className="text-[15px] font-normal leading-[1.75] text-st-text-muted">
+                          {objection.answer}
                         </p>
-                      )}
+                        {objection.proof && (
+                          <p className="mt-4 border-l-2 border-st-blue/50 pl-4 text-[13px] leading-[1.6] text-st-blue-light">
+                            {objection.proof}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
