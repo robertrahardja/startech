@@ -166,10 +166,18 @@ export default function Products() {
         />
 
         {/* One swipeable rail on phones, a grid from sm: up. The rail is
-            native scroll-snap; only the dots are wired up in JS. */}
+            native scroll-snap; only the dots are wired up in JS.
+
+            The wide-screen column count follows the item count rather than
+            being fixed at 3: four practices in a 3-column grid left the
+            fourth card alone on its own row, with two card-widths of empty
+            space beside it. Three columns are only used when they divide
+            evenly. */}
         <div
           ref={railRef}
-          className="snap-rail grid-cols-1 gap-3 sm:grid sm:grid-cols-2 sm:gap-3 lg:grid-cols-3"
+          className={`snap-rail grid-cols-1 gap-3 sm:grid sm:grid-cols-2 sm:gap-3 ${
+            t.practices.items.length % 3 === 0 ? "lg:grid-cols-3" : ""
+          }`}
         >
           {t.practices.items.map((copy, i) => {
             const product = {

@@ -25,9 +25,14 @@ export default function Industries() {
         {/* One swipeable rail on phones, a grid from sm: up — same pattern
             as Products.tsx, so six near-identical cards don't turn into a
             long stack on mobile. */}
+        {/* Three columns only while the item count divides evenly by three
+            — six today. Otherwise the last row would be left with a single
+            card and two card-widths of empty space beside it. */}
         <div
           ref={railRef}
-          className="snap-rail grid-cols-1 gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3"
+          className={`snap-rail grid-cols-1 gap-3 sm:grid sm:grid-cols-2 ${
+            t.industries.items.length % 3 === 0 ? "lg:grid-cols-3" : ""
+          }`}
         >
           {t.industries.items.map((industry, i) => (
             <div key={industry.name} className="snap-item" data-snap-index={i}>
