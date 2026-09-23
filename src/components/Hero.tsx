@@ -23,23 +23,37 @@ export default function Hero({ onAskAi }: HeroProps) {
   const gap = setsSolid(locale) ? null : " ";
   const onPointerMove = usePointerGlow();
 
-  // Hovering a language in the strip below previews that language's note
-  // line in place, without switching the page's actual locale. null means
-  // "not previewing" — show the real page language.
+  // Hovering (or, on touch, tapping) a language in the strip below previews
+  // that language's note line in place, without switching the page's actual
+  // locale. null means "not previewing" — show the real page language.
   //
   // loadCatalogue() is async and getCatalogue() only reads whatever is
   // already cached, so a preview requested this render is never ready this
   // render — it has to land in state once the import actually resolves, or
   // the very first hover of each language would silently show nothing.
+  //
+  // Touch has no real "leave" — a tap fires focus with no matching blur if
+  // the page scrolls instead, which would otherwise leave the preview stuck
+  // showing another language indefinitely. A self-clearing timeout closes
+  // that (and any other stuck-preview edge case) without needing to special
+  // case touch vs. mouse at all.
   const [previewNote, setPreviewNote] = useState<string | null>(null);
   const previewRequestRef = useRef(0);
+  const previewClearTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const previewLanguage = (target: Locale | null) => {
     const requestId = ++previewRequestRef.current;
+    if (previewClearTimerRef.current) clearTimeout(previewClearTimerRef.current);
+
     if (target === null) {
       setPreviewNote(null);
       return;
     }
+
+    previewClearTimerRef.current = setTimeout(() => {
+      if (previewRequestRef.current === requestId) setPreviewNote(null);
+    }, 4000);
+
     const cached = getCatalogue(target);
     if (cached) {
       setPreviewNote(cached.hero.note);
@@ -154,15 +168,16 @@ export default function Hero({ onAskAi }: HeroProps) {
           {t.hero.sub}
         </p>
 
-        {/* CTAs — one primary action and one way in for someone not ready
-            to book yet, plus a quieter third: present, not competing. */}
+        {/* CTAs — one primary action, full weight; the rest step down in
+            size so the row reads as a hierarchy on a phone, not three
+            equally-loud blocks stacked on top of each other. */}
         <div
-          className="mt-9 flex flex-col items-stretch gap-3 animate-fade-in-up sm:mt-12 sm:flex-row sm:flex-wrap sm:items-center"
+          className="mt-8 flex flex-col items-stretch gap-2.5 animate-fade-in-up sm:mt-12 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
           style={{ animationDelay: "0.25s" }}
         >
           <a
             href="#contact"
-            className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-center text-[15px] font-medium tracking-wide text-st-text transition-all duration-500 active:scale-[0.97] sm:py-4 sm:text-[13px]"
+            className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-4 text-center text-[15px] font-medium tracking-wide text-st-text transition-all duration-500 active:scale-[0.97] sm:py-4 sm:text-[13px]"
           >
             <span className="relative z-10 flex items-center justify-center gap-2.5">
               {t.hero.ctaPrimary}
@@ -182,43 +197,46 @@ export default function Hero({ onAskAi }: HeroProps) {
             </span>
           </a>
 
-          <a
-            href="#work"
-            onPointerMove={onPointerMove}
-            className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-center text-[15px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:py-4 sm:text-[13px]"
-          >
-            <span className="relative z-10 flex items-center justify-center gap-2.5">
-              {t.hero.ctaWork}
-            </span>
-          </a>
-
-          {AI_CHAT_ENABLED && (
-            <button
-              onClick={onAskAi}
+          <div className="flex flex-col items-stretch gap-2 sm:contents">
+            <a
+              href="#work"
               onPointerMove={onPointerMove}
-              className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-[15px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:py-4 sm:text-[13px]"
+              className="hero-btn-secondary group relative overflow-hidden rounded-lg px-6 py-3 text-center text-[13.5px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
             >
               <span className="relative z-10 flex items-center justify-center gap-2.5">
-                <AiIcon className="btn-spark h-3.5 w-3.5" />
-                {t.hero.ctaAsk}
+                {t.hero.ctaWork}
               </span>
-            </button>
-          )}
+            </a>
 
-          <a
-            href="#capability-deck"
-            onPointerMove={onPointerMove}
-            className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-center text-[15px] font-medium tracking-wide transition-all duration-500 sm:py-4 sm:text-[13px]"
-          >
-            <span className="relative z-10 flex items-center justify-center gap-2.5">
-              <span className="deck-text-shine deck-shine-play">{t.hero.ctaDeck}</span>
-            </span>
-          </a>
+            {AI_CHAT_ENABLED && (
+              <button
+                onClick={onAskAi}
+                onPointerMove={onPointerMove}
+                className="hero-btn-secondary group relative overflow-hidden rounded-lg px-6 py-3 text-[13.5px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2.5">
+                  <AiIcon className="btn-spark h-3.5 w-3.5" />
+                  {t.hero.ctaAsk}
+                </span>
+              </button>
+            )}
+
+            <a
+              href="#capability-deck"
+              onPointerMove={onPointerMove}
+              className="hero-btn-secondary group relative overflow-hidden rounded-lg px-6 py-3 text-center text-[13.5px] font-medium tracking-wide transition-all duration-500 sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2.5">
+                <span className="deck-text-shine deck-shine-play">{t.hero.ctaDeck}</span>
+              </span>
+            </a>
+          </div>
         </div>
 
         <HeroLanguageStrip
           locale={locale}
           label={t.hero.languagesAvailable}
+          tapAgainToSwitch={t.hero.tapAgainToSwitch}
           onPreview={previewLanguage}
         />
 
@@ -306,17 +324,28 @@ export default function Hero({ onAskAi }: HeroProps) {
  * seven languages this page is actually published in, each a real link to
  * the same page in that language. Sits below the CTAs at the same low key
  * as the note beneath it: present as a fact, not pitched as a fourth choice.
+ *
+ * On a mouse, hovering previews the note below in that language — no click
+ * needed, nothing navigates until you actually choose to. Touch has no
+ * hover, and a tap that both previewed AND navigated would mean the preview
+ * is never actually seen, just flashed through on the way to a page reload.
+ * So on touch the first tap on a language previews it and holds the page
+ * (armed, ready to go); tapping that same language again is the visitor
+ * choosing to actually switch, and the link is left to navigate normally.
  */
 function HeroLanguageStrip({
   locale,
   label,
+  tapAgainToSwitch,
   onPreview,
 }: {
   locale: string;
   label: string;
+  tapAgainToSwitch: string;
   onPreview: (locale: Locale | null) => void;
 }) {
   const { path } = parseLocalePath(window.location.pathname);
+  const [armed, setArmed] = useState<Locale | null>(null);
 
   return (
     <div
@@ -338,18 +367,28 @@ function HeroLanguageStrip({
               href={localePath(code, path)}
               hrefLang={LOCALE_META[code].htmlLang}
               aria-current={code === locale ? "true" : undefined}
-              // Desktop only: hovering previews that language's note line
-              // below, on the page's actual locale, so touch (which has no
-              // hover) just gets the plain link — no preview to get stuck on.
-              // Keyboard focus gets the same preview, for parity.
               onMouseEnter={() => onPreview(code)}
               onMouseLeave={() => onPreview(null)}
               onFocus={() => onPreview(code)}
               onBlur={() => onPreview(null)}
+              onTouchEnd={(e) => {
+                if (armed === code) {
+                  // Second tap on the already-previewed language: let this
+                  // one navigate normally.
+                  setArmed(null);
+                  return;
+                }
+                // First tap on a language: preview it, hold the page.
+                e.preventDefault();
+                setArmed(code);
+                onPreview(code);
+              }}
               className={`text-[11px] font-normal tracking-wide transition-colors duration-300 sm:text-[10.5px] ${
                 code === locale
                   ? "text-st-text-muted"
-                  : "text-st-text-muted/50 hover:text-st-text-muted"
+                  : armed === code
+                    ? "text-st-text-muted"
+                    : "text-st-text-muted/50 hover:text-st-text-muted"
               }`}
             >
               {LOCALE_META[code].label}
@@ -357,6 +396,16 @@ function HeroLanguageStrip({
           </span>
         ))}
       </nav>
+
+      {/* Touch only in practice — a mouse never sets `armed`, since a click
+          just follows the link straight away. Tells the visitor what a
+          second tap on the same language will do, so the preview-then-
+          confirm pattern isn't just implied by the highlight alone. */}
+      {armed && (
+        <span className="w-full text-[10.5px] font-normal italic text-st-text-muted/50 sm:w-auto">
+          {tapAgainToSwitch.replace("{language}", LOCALE_META[armed].label)}
+        </span>
+      )}
     </div>
   );
 }

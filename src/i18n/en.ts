@@ -36,6 +36,7 @@ export const en = {
     ctaDeck: "Download the deck",
     ctaAsk: "Ask a question",
     languagesAvailable: "Also reading in:",
+    tapAgainToSwitch: "Tap {language} again to read this page in it.",
     note: "Free, and no brief document required — bring the process that costs you the most time. If software isn't the answer, we'll say so.",
     proof: {
       yearsFigure: "20+",
