@@ -1,5 +1,4 @@
-import { useRef } from "react";
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { useEffect, useRef } from "react";
 import { useI18n } from "../i18n";
 import { useInView } from "../hooks/useInView";
 import ConicBorderCard from "./showcase/ConicBorderCard";
@@ -52,34 +51,121 @@ export default function CapabilityDeck() {
   );
 }
 
+/** Matches the feel of the springs this used to import from `motion`. */
+const SPRING_STIFFNESS = 200;
+const SPRING_DAMPING = 15;
+/** How far the button leans toward the pointer, as a fraction of the offset. */
+const MAGNET_STRENGTH = 0.2;
+/** Below this, the spring has visually settled and the loop can stop. */
+const REST_EPSILON = 0.01;
+
 /**
  * The download CTA — a real <a href> (not a route, it leaves the SPA), with
  * the same magnetic-hover feel as the showcase's CTA but built for a link
  * rather than a click handler, since MagneticCta's onClick-only shape is
  * scoped to that section by design.
+ *
+ * The spring is integrated by hand rather than with `motion`'s useSpring.
+ * This component was the only place in the shipped app importing `motion`,
+ * and that one import produced a 129KB chunk (42KB gzip) — roughly half the
+ * size of the entire main bundle — to animate two translations on a single
+ * button. The loop below runs only while the button is actually settling,
+ * writes straight to the transform, and keeps the dependency out of the
+ * build entirely.
  */
 function DeckDownloadButton({ href, label }: { href: string; label: string }) {
   const ref = useRef<HTMLAnchorElement>(null);
-  const x = useSpring(useMotionValue(0), { stiffness: 200, damping: 15 });
-  const y = useSpring(useMotionValue(0), { stiffness: 200, damping: 15 });
+  /** Live spring state, kept in a ref so animating never triggers a render. */
+  const state = useRef({ x: 0, y: 0, vx: 0, vy: 0, tx: 0, ty: 0 });
+  const frame = useRef(0);
+
+  // Respect a reduced-motion preference: read once per interaction rather
+  // than per frame, and simply don't animate when it's set.
+  const prefersReducedMotion = useRef(false);
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    prefersReducedMotion.current = query.matches;
+
+    const onChange = (e: MediaQueryListEvent) => {
+      prefersReducedMotion.current = e.matches;
+    };
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+  }, []);
+
+  // Stop any in-flight loop when the button goes away.
+  useEffect(() => {
+    return () => {
+      if (frame.current) cancelAnimationFrame(frame.current);
+    };
+  }, []);
+
+  const tick = () => {
+    const s = state.current;
+    const element = ref.current;
+    if (!element) {
+      frame.current = 0;
+      return;
+    }
+
+    // Semi-implicit Euler at a fixed step. A fixed step (rather than the
+    // real frame delta) keeps the spring stable if a frame is ever long,
+    // which matters more here than exact time-accuracy for a 200ms nudge.
+    const dt = 1 / 60;
+    s.vx += (-SPRING_STIFFNESS * (s.x - s.tx) - SPRING_DAMPING * s.vx) * dt;
+    s.vy += (-SPRING_STIFFNESS * (s.y - s.ty) - SPRING_DAMPING * s.vy) * dt;
+    s.x += s.vx * dt;
+    s.y += s.vy * dt;
+
+    const settled =
+      Math.abs(s.x - s.tx) < REST_EPSILON &&
+      Math.abs(s.y - s.ty) < REST_EPSILON &&
+      Math.abs(s.vx) < REST_EPSILON &&
+      Math.abs(s.vy) < REST_EPSILON;
+
+    if (settled) {
+      s.x = s.tx;
+      s.y = s.ty;
+      s.vx = 0;
+      s.vy = 0;
+    }
+
+    // Clearing the transform outright at rest (rather than leaving a
+    // translate3d of ~0) drops the compositor layer the button would
+    // otherwise keep for the life of the page.
+    element.style.transform =
+      s.x === 0 && s.y === 0 ? "" : `translate3d(${s.x}px, ${s.y}px, 0)`;
+
+    frame.current = settled ? 0 : requestAnimationFrame(tick);
+  };
+
+  const start = () => {
+    if (!frame.current) frame.current = requestAnimationFrame(tick);
+  };
 
   return (
-    <motion.a
+    <a
       ref={ref}
       href={href}
-      style={{ x, y }}
       onPointerMove={(e) => {
-        const r = ref.current!.getBoundingClientRect();
-        x.set((e.clientX - (r.left + r.width / 2)) * 0.2);
-        y.set((e.clientY - (r.top + r.height / 2)) * 0.2);
+        // Coarse pointers don't hover, so there's no magnet to apply —
+        // and on touch this would fire mid-tap and shift the target.
+        if (e.pointerType !== "mouse" || prefersReducedMotion.current) return;
+        const el = ref.current;
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        state.current.tx = (e.clientX - (r.left + r.width / 2)) * MAGNET_STRENGTH;
+        state.current.ty = (e.clientY - (r.top + r.height / 2)) * MAGNET_STRENGTH;
+        start();
       }}
       onPointerLeave={() => {
-        x.set(0);
-        y.set(0);
+        state.current.tx = 0;
+        state.current.ty = 0;
+        start();
       }}
       className="relative inline-flex items-center overflow-hidden rounded-lg border border-st-gold/30 bg-st-gold/15 px-5 py-2.5 text-[13px] font-normal tracking-wide text-st-gold-light transition-colors duration-500 hover:bg-st-gold/25 hover:border-st-gold/50"
     >
       {label}
-    </motion.a>
+    </a>
   );
 }

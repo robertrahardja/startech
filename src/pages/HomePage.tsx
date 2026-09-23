@@ -9,9 +9,13 @@ import Objections from "../components/Objections";
 import Contact from "../components/Contact";
 
 /**
- * `motion`-based (the magnetic download button) — libraries no other
- * homepage section needs — so it loads on demand rather than growing the
- * main bundle for every visitor.
+ * Kept lazy and gated behind DeferredMount below: it sits eight sections
+ * down, so most visits never reach it.
+ *
+ * It used to pull in `motion` for the magnetic download button, which made
+ * this a 129KB chunk on its own; that spring is now a few lines of rAF in
+ * the component itself, so the chunk is small — but deferring a section
+ * this far down the page is still the right default.
  */
 const CapabilityDeck = lazy(() => import("../components/CapabilityDeck"));
 
