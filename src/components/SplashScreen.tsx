@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 
 const SEEN_KEY = "startech-splash-seen";
-const HOLD_MS = 1400;
+// Long enough to hold past the shine sweep (500ms delay + 1.3s duration,
+// see .splash-shine in index.css) before the fade-out starts — the shine
+// finishing mid-fade would read as cut off rather than complete.
+const HOLD_MS = 2000;
 const FADE_MS = 900;
 
 /**
@@ -60,11 +63,13 @@ export default function SplashScreen() {
         fading ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      <img
-        src="/assets/startech-logo-full.svg"
-        alt=""
-        className="w-1/2"
-      />
+      <div className="splash-shine relative w-1/2">
+        <img
+          src="/assets/startech-logo-full.svg"
+          alt=""
+          className="w-full"
+        />
+      </div>
     </div>
   );
 }

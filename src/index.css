@@ -1472,3 +1472,46 @@ a:hover .deck-text-shine {
   }
 }
 
+/*
+ * A single diagonal band of light sweeping across the splash logo once,
+ * like light catching brushed metal — not a loop, and not clipped to the
+ * wordmark's letterforms the way the deck link's shine is, since this
+ * sits over a bitmap-shaped SVG (mark + text as one image) rather than
+ * real text background-clip: text could grab. mix-blend-mode: screen only
+ * brightens what's already there, so it reads as a reflection passing
+ * over the gradient blob and the white type rather than a rectangle
+ * painted on top of the black around them.
+ */
+.splash-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.55) 48%,
+    rgba(255, 255, 255, 0.85) 50%,
+    rgba(255, 255, 255, 0.55) 52%,
+    transparent 65%
+  );
+  background-size: 250% 100%;
+  background-position: 150% 0;
+  opacity: 0;
+  animation: splash-shine-sweep 1.3s cubic-bezier(0.22, 1, 0.36, 1) 500ms 1 both;
+}
+
+@keyframes splash-shine-sweep {
+  0% { background-position: 150% 0; opacity: 0; }
+  12% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { background-position: -50% 0; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-shine::after {
+    display: none;
+  }
+}
+
