@@ -106,10 +106,32 @@
 /* ─── Base Layer ──────────────────────────────────────────────────────────── */
 @layer base {
   /* The header is fixed, so an anchor jump would otherwise drop the section
-     heading underneath it. Reserve its height on every scroll target. */
+     heading underneath it. Reserve its height on every scroll target.
+     .snap-section is CapabilityDeck's DeferredMount sentinel (see
+     pages/HomePage.tsx) — the one section boundary that isn't itself a
+     <section id="...">, so it needs the same offset via its own class. */
   :target,
-  section[id] {
+  section[id],
+  .snap-section {
     scroll-margin-top: 5.5rem;
+  }
+
+  /* Section-to-section scroll snap, phones only — desktop sections often
+     run taller than the viewport (Case Studies, Products), where forcing a
+     snap point on every scroll gesture would fight a visitor trying to
+     read mid-section rather than help them navigate. Proximity, not
+     mandatory: it pulls into alignment near a boundary but never traps a
+     scroll that's genuinely headed into the middle of a tall section — a
+     visitor can still stop and read anywhere. */
+  @media (max-width: 639px) {
+    html {
+      scroll-snap-type: y proximity;
+    }
+
+    section[id],
+    .snap-section {
+      scroll-snap-align: start;
+    }
   }
 
   html {

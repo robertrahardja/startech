@@ -66,9 +66,11 @@ function DeferredMount({
   // hero's "Download the deck" link points at #capability-deck, and that
   // target has to exist before the real section does, or scrolling to it
   // finds nothing, never triggers the observer, and the anchor link goes
-  // nowhere.
+  // nowhere. snap-section makes it a scroll-snap stop on mobile too (see
+  // index.css), same as every other top-level section — without it, the
+  // snap sequence would skip straight from Objections to Contact.
   return (
-    <div id={id} ref={ref}>
+    <div id={id} ref={ref} className="snap-section">
       {shouldMount ? children : null}
     </div>
   );
