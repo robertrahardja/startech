@@ -1471,3 +1471,67 @@ a:hover .deck-text-shine {
     animation: none;
   }
 }
+
+/*
+ * The headline's own "screen turning on" moment — static and scratch lines
+ * that clear to nothing, masked to the letters themselves via
+ * background-clip: text, so the noise only ever exists where a glyph does.
+ * Sits absolutely over the real (always-correct) headline underneath and
+ * plays exactly once on load; it has nothing left to render once done,
+ * never re-triggers, and never touches anything outside its own box.
+ */
+.crt-static-mask {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+  color: transparent;
+  background-repeat: no-repeat;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image:
+    /* Scratches: a handful of thin diagonal streaks at fixed positions. */
+    repeating-linear-gradient(
+      115deg,
+      transparent 0,
+      transparent 18px,
+      rgba(255, 255, 255, 0.5) 18.5px,
+      transparent 19px,
+      transparent 54px,
+      rgba(255, 255, 255, 0.35) 54.5px,
+      transparent 55px,
+      transparent 91px,
+      rgba(255, 255, 255, 0.45) 91.5px,
+      transparent 92px
+    ),
+    /* Scanlines: fine horizontal banding, the CRT texture itself. */
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.25) 0,
+      rgba(255, 255, 255, 0.25) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    /* Static: a coarse noise-like grid standing in for live tracking noise
+       without redrawing a canvas every frame. */
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(255, 255, 255, 0.18) 0deg 90deg,
+      transparent 90deg 180deg
+    );
+  background-size: 100% 100%, 100% 100%, 3px 3px;
+  animation: crt-static-clear 900ms steps(6, end) 1 both;
+}
+
+@keyframes crt-static-clear {
+  0% { opacity: 1; filter: contrast(1.8) brightness(1.4); }
+  70% { opacity: 0.85; }
+  100% { opacity: 0; filter: contrast(1) brightness(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crt-static-mask {
+    display: none;
+  }
+}
