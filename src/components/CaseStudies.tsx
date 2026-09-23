@@ -257,9 +257,7 @@ export default function CaseStudies() {
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <div
           ref={ref}
-          className={`mb-16 max-w-2xl transition-all duration-700 ${
-            isInView ? "reveal visible" : "reveal"
-          }`}
+          className={`mb-16 max-w-2xl ${isInView ? "reveal visible" : "reveal"}`}
         >
           <div className="mb-4 flex items-center gap-3">
             <span className="brand-rule h-px w-10" />
