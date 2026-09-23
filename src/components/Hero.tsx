@@ -116,11 +116,11 @@ export default function Hero({ onAskAi }: HeroProps) {
       <div>
         {/* Eyebrow */}
         <div
-          className="mb-8 flex items-center gap-3 animate-fade-in"
+          className="mb-6 flex items-center gap-2.5 animate-fade-in sm:mb-8 sm:gap-3"
           style={{ animationDelay: "0.05s" }}
         >
-          <span className="brand-rule h-px w-10" />
-          <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-st-text-muted sm:text-[10px] sm:tracking-[0.22em]">
+          <span className="brand-rule h-px w-8 sm:w-10" />
+          <span className="whitespace-nowrap text-[10px] font-medium tracking-[0.08em] uppercase text-st-text-muted sm:text-[10px] sm:tracking-[0.22em]">
             <span className="sm:hidden">{t.hero.eyebrowShort}</span>
             <span className="hidden sm:inline">{t.hero.eyebrowFull}</span>
           </span>
@@ -197,13 +197,13 @@ export default function Hero({ onAskAi }: HeroProps) {
             </span>
           </a>
 
-          <div className="flex flex-col items-stretch gap-2 sm:contents">
+          <div className="flex flex-row flex-wrap items-stretch gap-2 sm:contents">
             <a
               href="#work"
               onPointerMove={onPointerMove}
-              className="hero-btn-secondary group relative overflow-hidden rounded-lg px-6 py-3 text-center text-[13.5px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
+              className="hero-btn-secondary group relative flex-1 overflow-hidden rounded-lg px-4 py-2.5 text-center text-[12.5px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:flex-none sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
             >
-              <span className="relative z-10 flex items-center justify-center gap-2.5">
+              <span className="relative z-10 flex items-center justify-center gap-2">
                 {t.hero.ctaWork}
               </span>
             </a>
@@ -212,9 +212,9 @@ export default function Hero({ onAskAi }: HeroProps) {
               <button
                 onClick={onAskAi}
                 onPointerMove={onPointerMove}
-                className="hero-btn-secondary group relative overflow-hidden rounded-lg px-6 py-3 text-[13.5px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
+                className="hero-btn-secondary group relative flex-1 overflow-hidden rounded-lg px-4 py-2.5 text-[12.5px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:flex-none sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
               >
-                <span className="relative z-10 flex items-center justify-center gap-2.5">
+                <span className="relative z-10 flex items-center justify-center gap-2">
                   <AiIcon className="btn-spark h-3.5 w-3.5" />
                   {t.hero.ctaAsk}
                 </span>
@@ -224,9 +224,9 @@ export default function Hero({ onAskAi }: HeroProps) {
             <a
               href="#capability-deck"
               onPointerMove={onPointerMove}
-              className="hero-btn-secondary group relative overflow-hidden rounded-lg px-6 py-3 text-center text-[13.5px] font-medium tracking-wide transition-all duration-500 sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
+              className="hero-btn-secondary group relative flex-1 overflow-hidden rounded-lg px-4 py-2.5 text-center text-[12.5px] font-medium tracking-wide transition-all duration-500 sm:flex-none sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
             >
-              <span className="relative z-10 flex items-center justify-center gap-2.5">
+              <span className="relative z-10 flex items-center justify-center gap-2">
                 <span className="deck-text-shine deck-shine-play">{t.hero.ctaDeck}</span>
               </span>
             </a>
@@ -355,45 +355,42 @@ function HeroLanguageStrip({
       <span className="text-[11px] font-normal tracking-wide text-st-text-muted/60 sm:text-[10.5px]">
         {label}
       </span>
-      <nav aria-label="Language" className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
-        {LOCALES.map((code, i) => (
-          <span key={code} className="flex items-center gap-2.5">
-            {i > 0 && (
-              <span aria-hidden="true" className="text-st-text-muted/30">
-                &middot;
-              </span>
-            )}
-            <a
-              href={localePath(code, path)}
-              hrefLang={LOCALE_META[code].htmlLang}
-              aria-current={code === locale ? "true" : undefined}
-              onMouseEnter={() => onPreview(code)}
-              onMouseLeave={() => onPreview(null)}
-              onFocus={() => onPreview(code)}
-              onBlur={() => onPreview(null)}
-              onTouchEnd={(e) => {
-                if (armed === code) {
-                  // Second tap on the already-previewed language: let this
-                  // one navigate normally.
-                  setArmed(null);
-                  return;
-                }
-                // First tap on a language: preview it, hold the page.
-                e.preventDefault();
-                setArmed(code);
-                onPreview(code);
-              }}
-              className={`text-[11px] font-normal tracking-wide transition-colors duration-300 sm:text-[10.5px] ${
-                code === locale
+      <nav aria-label="Language" className="flex flex-wrap items-center gap-y-1.5">
+        {LOCALES.map((code) => (
+          <a
+            key={code}
+            href={localePath(code, path)}
+            hrefLang={LOCALE_META[code].htmlLang}
+            aria-current={code === locale ? "true" : undefined}
+            onMouseEnter={() => onPreview(code)}
+            onMouseLeave={() => onPreview(null)}
+            onFocus={() => onPreview(code)}
+            onBlur={() => onPreview(null)}
+            onTouchEnd={(e) => {
+              if (armed === code) {
+                // Second tap on the already-previewed language: let this
+                // one navigate normally.
+                setArmed(null);
+                return;
+              }
+              // First tap on a language: preview it, hold the page.
+              e.preventDefault();
+              setArmed(code);
+              onPreview(code);
+            }}
+            // The separator lives on the link itself (not a sibling span), so
+            // wrapping the row can never strand a lone dot at a line start —
+            // it travels with whichever word ends up starting the new line.
+            className={`text-[11px] font-normal tracking-wide transition-colors duration-300 before:mx-2 before:text-st-text-muted/30 before:content-['·'] first:before:content-none first:before:mx-0 sm:text-[10.5px] ${
+              code === locale
+                ? "text-st-text-muted"
+                : armed === code
                   ? "text-st-text-muted"
-                  : armed === code
-                    ? "text-st-text-muted"
-                    : "text-st-text-muted/50 hover:text-st-text-muted"
-              }`}
-            >
-              {LOCALE_META[code].label}
-            </a>
-          </span>
+                  : "text-st-text-muted/50 hover:text-st-text-muted"
+            }`}
+          >
+            {LOCALE_META[code].label}
+          </a>
         ))}
       </nav>
 
