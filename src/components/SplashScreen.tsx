@@ -5,10 +5,16 @@ const HOLD_MS = 1400;
 const FADE_MS = 900;
 
 /**
- * A black screen with the mark centred, fading away to the homepage
- * underneath. Mobile only (sm:hidden — desktop never had a first-load
- * moment this was solving) and only once per browser: a returning visitor
- * has already seen it, so there is nothing left for it to introduce.
+ * A black screen with the full lockup (mark + "StarTech Innovation")
+ * centred, fading away to the homepage underneath. Mobile only
+ * (sm:hidden — desktop never had a first-load moment this was solving)
+ * and only once per browser: a returning visitor has already seen it, so
+ * there is nothing left for it to introduce.
+ *
+ * The logo is the whole point of this screen, so it's sized to fill the
+ * width — the same 24px gutter every other section on the page uses
+ * (px-6), not a small centred icon. startech-logo-full.svg carries both
+ * the mark and the wordmark in one asset — no separate text needed.
  *
  * Renders on top of the real page from the first frame rather than
  * blocking on anything — the homepage underneath is already there,
@@ -50,14 +56,14 @@ export default function SplashScreen() {
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[100] flex items-center justify-center bg-st-bg transition-opacity duration-[900ms] ease-out sm:hidden ${
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-st-bg px-6 transition-opacity duration-[900ms] ease-out sm:hidden ${
         fading ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
       <img
-        src="/assets/startech-mark.svg"
+        src="/assets/startech-logo-full.svg"
         alt=""
-        className="h-14 w-14"
+        className="w-full"
       />
     </div>
   );
