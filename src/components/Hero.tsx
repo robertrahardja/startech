@@ -364,56 +364,64 @@ function HeroLanguageStrip({
           last line at odd widths: the browser balances line lengths
           instead of packing every line as full as it'll go. */}
       <nav aria-label="Language" className="text-balance">
-        {LOCALES.map((code) => (
-          <a
-            key={code}
-            href={localePath(code, path)}
-            hrefLang={LOCALE_META[code].htmlLang}
-            aria-current={code === locale ? "true" : undefined}
-            onMouseEnter={() => onPreview(code)}
-            onMouseLeave={() => onPreview(null)}
-            onFocus={() => onPreview(code)}
-            onBlur={() => onPreview(null)}
-            // Touch never navigates directly from this link — the links
-            // sit close together, and a reflexive double-tap (checking a
-            // tap registered, a stray second touch) would otherwise switch
-            // the page's language by accident. A tap here only previews;
-            // actually switching needs the separate "Read in ..." button
-            // below, a real second target rather than a second tap on the
-            // same small link.
-            onTouchEnd={(e) => {
-              e.preventDefault();
-              setArmed(code);
-              onPreview(code);
-            }}
-            // The separator lives on the link itself (not a sibling span), so
-            // wrapping the row can never strand a lone dot at a line start —
-            // it travels with whichever word ends up starting the new line.
-            className={`inline-block text-[11px] font-normal leading-[1.9] tracking-wide transition-colors duration-300 before:mx-2 before:text-st-text-muted/30 before:content-['·'] first:before:content-none first:before:mx-0 sm:text-[10.5px] ${
-              code === locale
-                ? "text-st-text-muted"
-                : armed === code
+        {LOCALES.map((code, i) => (
+          <span key={code} className="inline-block whitespace-nowrap">
+            <a
+              href={localePath(code, path)}
+              hrefLang={LOCALE_META[code].htmlLang}
+              aria-current={code === locale ? "true" : undefined}
+              onMouseEnter={() => onPreview(code)}
+              onMouseLeave={() => onPreview(null)}
+              onFocus={() => onPreview(code)}
+              onBlur={() => onPreview(null)}
+              // Touch never navigates directly from this link — the links
+              // sit close together, and a reflexive double-tap (checking a
+              // tap registered, a stray second touch) would otherwise switch
+              // the page's language by accident. A tap here only previews;
+              // actually switching needs the separate "Read in ..." button
+              // that appears right after it, a real second target rather
+              // than a second tap on the same small link.
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                setArmed(code);
+                onPreview(code);
+              }}
+              // The separator lives on the link itself, and each link is
+              // now wrapped in its own <span> (so the "Read in..." button
+              // can travel with its language instead of wrapping onto a
+              // line by itself) — first:before:content-none no longer
+              // means "first language overall" once every <a> is its
+              // parent span's only/first child, so the true first item is
+              // singled out by index instead.
+              className={`text-[11px] font-normal tracking-wide transition-colors duration-300 before:mx-2 before:text-st-text-muted/30 before:content-['·'] sm:text-[10.5px] ${
+                i === 0 ? "before:content-none before:mx-0" : ""
+              } ${
+                code === locale
                   ? "text-st-text-muted"
-                  : "text-st-text-muted/50 hover:text-st-text-muted"
-            }`}
-          >
-            {LOCALE_META[code].label}
-          </a>
+                  : armed === code
+                    ? "text-st-text-muted"
+                    : "text-st-text-muted/50 hover:text-st-text-muted"
+              }`}
+            >
+              {LOCALE_META[code].label}
+            </a>
+
+            {/* Touch only in practice — a mouse never sets `armed`, since a
+                click on the link above already navigates immediately
+                there. Sits right after the armed language, on the same
+                line, so it reads as "this one, confirmed" rather than a
+                detached instruction elsewhere on the page. */}
+            {armed === code && (
+              <a
+                href={localePath(code, path)}
+                className="ml-2 text-[11px] font-medium text-st-blue-light underline underline-offset-2 sm:text-[10.5px]"
+              >
+                {readInLanguage.replace("{language}", LOCALE_META[code].label)}
+              </a>
+            )}
+          </span>
         ))}
       </nav>
-
-      {/* Touch only in practice — a mouse never sets `armed`, since a click
-          on the link above already navigates immediately there. A real,
-          separate button to confirm the switch, not a second tap on the
-          same small link the first tap just landed on. */}
-      {armed && (
-        <a
-          href={localePath(armed, path)}
-          className="w-full text-[10.5px] font-medium text-st-blue-light underline underline-offset-2 sm:w-auto"
-        >
-          {readInLanguage.replace("{language}", LOCALE_META[armed].label)}
-        </a>
-      )}
     </div>
   );
 }
