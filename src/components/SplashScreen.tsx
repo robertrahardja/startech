@@ -63,7 +63,7 @@ export default function SplashScreen() {
       <img
         src="/assets/startech-logo-full.svg"
         alt=""
-        className="w-full"
+        className="w-1/2"
       />
     </div>
   );
