@@ -1,4 +1,5 @@
 import { useInView } from "../hooks/useInView";
+import { useSnapRail } from "../hooks/useSnapRail";
 import { useI18n } from "../i18n";
 
 /**
@@ -20,6 +21,7 @@ import { useI18n } from "../i18n";
 export default function Qualify() {
   const { t } = useI18n();
   const [ref, isInView] = useInView({ threshold: 0.1 });
+  const { railRef, active, goTo } = useSnapRail(t.qualify.fits.length);
 
   return (
     <section id="fit" className="relative py-20 sm:py-24">
@@ -44,9 +46,32 @@ export default function Qualify() {
           </p>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2">
+        {/* One swipeable rail on phones, a 2-column grid from sm: up — same
+            pattern as the practice cards in Products.tsx, so a long stack
+            of cards never turns into a scroll-heavy wall on mobile. */}
+        <div
+          ref={railRef}
+          className="snap-rail grid-cols-1 gap-3 sm:grid sm:grid-cols-2"
+        >
           {t.qualify.fits.map((fit, i) => (
-            <FitCard key={fit.headline} fit={fit} index={i} />
+            <div key={fit.headline} className="snap-item" data-snap-index={i}>
+              <FitCard fit={fit} index={i} />
+            </div>
+          ))}
+        </div>
+
+        {/* Position indicator — phones only, where the rail exists. */}
+        <div className="mt-4 flex items-center justify-center sm:hidden">
+          {t.qualify.fits.map((fit, i) => (
+            <button
+              key={fit.headline}
+              onClick={() => goTo(i)}
+              aria-label={fit.headline}
+              aria-current={i === active}
+              className="flex h-11 w-11 items-center justify-center"
+            >
+              <span className="rail-dot" data-active={i === active} />
+            </button>
           ))}
         </div>
 
@@ -79,7 +104,7 @@ function FitCard({
   return (
     <div
       ref={ref}
-      className={`card pressable rounded-xl p-7 ${
+      className={`card pressable h-full rounded-xl p-7 ${
         isInView ? "reveal visible" : "reveal"
       }`}
       style={{ transitionDelay: `${index * 70}ms` }}
