@@ -5,6 +5,7 @@ import ScrollProgress from "./components/ScrollProgress";
 import AskButton from "./components/AskButton";
 import StickyCta from "./components/StickyCta";
 import Footer from "./components/Footer";
+import SplashScreen from "./components/SplashScreen";
 import { useCurrentPage } from "./lib/router";
 import { I18nProvider } from "./i18n";
 import LanguageHint from "./components/LanguageHint";
@@ -58,6 +59,7 @@ export default function App() {
   return (
     <I18nProvider locale={locale}>
     <div className="min-h-screen bg-st-bg text-st-text">
+      {page.type === "home" && <SplashScreen />}
       <ScrollProgress />
       <LanguageHint />
       <Nav onAskAi={openChat} />
