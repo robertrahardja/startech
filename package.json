@@ -6,7 +6,7 @@
   "description": "StarTech Innovation - AI-First Corporate Website",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx && node scripts/prerender.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "worker:dev": "wrangler dev",

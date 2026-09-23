@@ -16,7 +16,11 @@ import {
  */
 export function LanguageRow() {
   const { locale } = useI18n();
-  const { path } = parseLocalePath(window.location.pathname);
+  // typeof window check, not a bare reference: this also runs during
+  // prerendering (see scripts/prerender.mjs), where there is no window.
+  const { path } = parseLocalePath(
+    typeof window === "undefined" ? "/" : window.location.pathname
+  );
 
   return (
     <nav aria-label="Language" className="flex flex-wrap justify-center gap-x-1 gap-y-1 px-6">
@@ -59,7 +63,11 @@ export default function LanguageSwitcher({
   const ref = useRef<HTMLDivElement>(null);
 
   // The route beneath the current locale, so the switch preserves the page.
-  const { path } = parseLocalePath(window.location.pathname);
+  // typeof window check, not a bare reference: this also runs during
+  // prerendering (see scripts/prerender.mjs), where there is no window.
+  const { path } = parseLocalePath(
+    typeof window === "undefined" ? "/" : window.location.pathname
+  );
 
   useEffect(() => {
     if (!open) return;
