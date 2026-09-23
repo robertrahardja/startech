@@ -205,7 +205,15 @@ function TierSection({ tier }: { tier: SolutionTier }) {
           subtitle={TIER_DESCRIPTIONS[tier]}
         />
 
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Three columns only when this tier's count divides evenly by
+            three; otherwise two, so the last row never holds a single card
+            with two card-widths of space beside it. Each tier is counted
+            separately, since they're rendered as independent grids. */}
+        <div
+          className={`grid grid-cols-1 gap-3 sm:grid-cols-2 ${
+            solutions.length % 3 === 0 ? "lg:grid-cols-3" : ""
+          }`}
+        >
           {solutions.map((solution, i) => (
             <SolutionCard key={solution.slug} solution={solution} index={i} />
           ))}
