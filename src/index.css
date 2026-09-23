@@ -943,36 +943,6 @@
     }
   }
 
-  /* ─── Product Cards ──────────────────────────────────────────────────────── */
-
-  .product-card {
-    cursor: pointer;
-  }
-
-  /* ─── Expanded card glow (once) ──────────────────────────────────────── */
-
-  .expanded-card-glow {
-    animation: card-glow 3s ease forwards;
-  }
-
-  @keyframes card-glow {
-    0% {
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-    }
-    15% {
-      box-shadow:
-        0 0 60px 10px rgba(212, 168, 83, 0.25),
-        0 0 120px 20px rgba(212, 168, 83, 0.1);
-    }
-    45% {
-      box-shadow:
-        0 0 40px 5px rgba(212, 168, 83, 0.15),
-        0 0 80px 10px rgba(212, 168, 83, 0.05);
-    }
-    100% {
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-    }
-  }
 }
 
 /* ─── Reduced motion ──────────────────────────────────────────────────────── */
