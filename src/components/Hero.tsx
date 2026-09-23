@@ -132,7 +132,7 @@ export default function Hero({ onAskAi }: HeroProps) {
             slightly smaller mobile size leaves visible slack at the line
             ends, so the gutter is felt rather than just technically present. */}
         <h1
-          className="max-w-4xl font-display text-[2.4rem] leading-[1.08] tracking-[-0.03em] text-st-text sm:text-5xl md:text-6xl lg:text-7xl"
+          className="max-w-4xl font-display text-[3.4rem] leading-[1.02] tracking-[-0.03em] text-st-text sm:text-5xl md:text-6xl lg:text-7xl"
           style={{ textWrap: "balance" }}
         >
           {/* Four parts rather than five words: CJK locales do not put spaces
