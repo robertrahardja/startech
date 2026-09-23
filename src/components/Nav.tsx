@@ -34,26 +34,49 @@ export default function Nav({ onAskAi }: NavProps) {
   useEffect(() => {
     lastY.current = window.scrollY;
 
-    const handleScroll = () => {
+    // Scroll fires far more often than the screen refreshes, and this
+    // handler's work ends in state updates that re-render the whole header
+    // (and its children). Coalesce to one read per frame, and let the
+    // functional updates below no-op when the value hasn't actually
+    // changed, so a continuous scroll doesn't re-render on every event.
+    let frame = 0;
+
+    const measure = () => {
+      frame = 0;
       const y = window.scrollY;
-      setScrolled(y > 40);
+
+      setScrolled((prev) => (prev === y > 40 ? prev : y > 40));
 
       // Ignore the top of the page entirely — the bar should never hide
       // itself before a visitor has even started reading, and overscroll
       // bounce near y=0 on iOS would otherwise flicker it.
+      let hidden: boolean | null = null;
       if (y < 80) {
-        setNavHidden(false);
+        hidden = false;
       } else if (y > lastY.current) {
-        setNavHidden(true);
+        hidden = true;
       } else if (y < lastY.current) {
-        setNavHidden(false);
+        hidden = false;
+      }
+
+      if (hidden !== null) {
+        const next = hidden;
+        setNavHidden((prev) => (prev === next ? prev : next));
       }
 
       lastY.current = y;
     };
 
+    const handleScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(measure);
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
   // A menu you just opened should never be the thing that then hides
