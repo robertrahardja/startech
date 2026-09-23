@@ -1,8 +1,8 @@
-import type { CSSProperties } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import AiIcon from "./AiIcon";
 import { usePointerGlow } from "../hooks/usePointerGlow";
 import { AI_CHAT_ENABLED } from "../lib/features";
-import { useI18n } from "../i18n";
+import { getCatalogue, loadCatalogue, useI18n } from "../i18n";
 import {
   LOCALES,
   LOCALE_META,
@@ -10,6 +10,7 @@ import {
   localePath,
   parseLocalePath,
   setsSolid,
+  type Locale,
 } from "../i18n/locales";
 
 interface HeroProps {
@@ -21,6 +22,40 @@ export default function Hero({ onAskAi }: HeroProps) {
   // Japanese and Chinese set solid; Korean and Latin scripts keep spaces.
   const gap = setsSolid(locale) ? null : " ";
   const onPointerMove = usePointerGlow();
+
+  // Hovering a language in the strip below previews that language's note
+  // line in place, without switching the page's actual locale. null means
+  // "not previewing" — show the real page language.
+  //
+  // loadCatalogue() is async and getCatalogue() only reads whatever is
+  // already cached, so a preview requested this render is never ready this
+  // render — it has to land in state once the import actually resolves, or
+  // the very first hover of each language would silently show nothing.
+  const [previewNote, setPreviewNote] = useState<string | null>(null);
+  const previewRequestRef = useRef(0);
+
+  const previewLanguage = (target: Locale | null) => {
+    const requestId = ++previewRequestRef.current;
+    if (target === null) {
+      setPreviewNote(null);
+      return;
+    }
+    const cached = getCatalogue(target);
+    if (cached) {
+      setPreviewNote(cached.hero.note);
+      return;
+    }
+    setPreviewNote(null);
+    void loadCatalogue(target).then(() => {
+      // A later hover may have started and finished while this one was
+      // still loading — only the most recent request should ever win.
+      if (previewRequestRef.current !== requestId) return;
+      const loaded = getCatalogue(target);
+      if (loaded) setPreviewNote(loaded.hero.note);
+    });
+  };
+
+  const noteText = previewNote ?? t.hero.note;
 
   return (
     <section
@@ -181,13 +216,17 @@ export default function Hero({ onAskAi }: HeroProps) {
           </a>
         </div>
 
-        <HeroLanguageStrip locale={locale} label={t.hero.languagesAvailable} />
+        <HeroLanguageStrip
+          locale={locale}
+          label={t.hero.languagesAvailable}
+          onPreview={previewLanguage}
+        />
 
         <p
-          className="mt-5 text-[12.5px] font-normal leading-relaxed tracking-wide text-st-text-muted/85 animate-fade-in sm:text-[11px]"
+          className="mt-5 min-h-[2.6em] text-[12.5px] font-normal leading-relaxed tracking-wide text-st-text-muted/85 transition-opacity duration-200 animate-fade-in sm:min-h-[2.2em] sm:text-[11px]"
           style={{ animationDelay: "0.3s" }}
         >
-          {t.hero.note}
+          {noteText}
         </p>
 
         {/* Proof strip */}
@@ -268,7 +307,15 @@ export default function Hero({ onAskAi }: HeroProps) {
  * the same page in that language. Sits below the CTAs at the same low key
  * as the note beneath it: present as a fact, not pitched as a fourth choice.
  */
-function HeroLanguageStrip({ locale, label }: { locale: string; label: string }) {
+function HeroLanguageStrip({
+  locale,
+  label,
+  onPreview,
+}: {
+  locale: string;
+  label: string;
+  onPreview: (locale: Locale | null) => void;
+}) {
   const { path } = parseLocalePath(window.location.pathname);
 
   return (
@@ -291,6 +338,14 @@ function HeroLanguageStrip({ locale, label }: { locale: string; label: string })
               href={localePath(code, path)}
               hrefLang={LOCALE_META[code].htmlLang}
               aria-current={code === locale ? "true" : undefined}
+              // Desktop only: hovering previews that language's note line
+              // below, on the page's actual locale, so touch (which has no
+              // hover) just gets the plain link — no preview to get stuck on.
+              // Keyboard focus gets the same preview, for parity.
+              onMouseEnter={() => onPreview(code)}
+              onMouseLeave={() => onPreview(null)}
+              onFocus={() => onPreview(code)}
+              onBlur={() => onPreview(null)}
               className={`text-[11px] font-normal tracking-wide transition-colors duration-300 sm:text-[10.5px] ${
                 code === locale
                   ? "text-st-text-muted"
