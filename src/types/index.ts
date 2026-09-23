@@ -24,7 +24,8 @@ export interface Product {
 export interface DemoLead {
   email: string;
   name?: string;
-  company?: string;
+  /** Raw Google ID token (JWT). The server re-verifies it; nothing here is trusted as-is. */
+  idToken: string;
 }
 
 export interface DemoResponse {

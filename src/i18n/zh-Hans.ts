@@ -35,6 +35,9 @@ export const zhHans: Messages = {
     sub: "我们开发定制软件，巩固您的竞争优势。",
     ctaPrimary: "聊一聊",
     ctaWork: "查看案例",
+    ctaDeck: "下载介绍文档",
+    languagesAvailable: "支持语言：",
+    tapAgainToSwitch: "再次点击 {language} 即可切换。",
     ctaAsk: "提出问题",
     note: "免费咨询，无需准备任何材料。告诉我们最耗时的那个流程即可。如果软件不是答案，我们会直说。",
     proof: {
@@ -90,6 +93,7 @@ export const zhHans: Messages = {
     before: "此前状况",
     built: "我们做了什么",
     result: "成果",
+    details: "详情",
     disclaimer:
       "涉及保密协议的项目不披露客户名称。文中数据来自已交付的系统，可在通话中详细说明。",
     cases: [
@@ -154,6 +158,32 @@ export const zhHans: Messages = {
         ],
       },
     ],
+  },
+
+  showcase: {
+    eyebrow: "亲自试用",
+    title: "13个真实项目，选一个，亲自试试看。",
+    sub: "下面每张卡片都是真实可用的AI产品，不是效果图。点开即可看到即时样例结果，也可以用您自己的数据当场定制。",
+    sampleBadge: "示例",
+    tryIt: "立即试用",
+    seeAll: "查看全部解决方案",
+    disclaimer:
+      "每个示例均使用虚构数据。使用您自己的数据进行定制免费，用时不到一分钟。",
+    teasers: {
+      invoiceScanner: "几秒内完成扫描与逐项识别",
+      customerChatbot: "回答置信度",
+      appointmentBooking: "自动预约并确认",
+      quotationGenerator: "已生成含税报价单",
+      jobPostingWriter: "已撰写的岗位要求",
+      inventoryTracker: "需要补货的项目",
+      socialMediaManager: "同时生成的平台帖子数",
+      documentTranslator: "种语言，一键翻译",
+      employeeOnboarding: "已安排的入职任务",
+      salesAssistant: "已排定的跟进邮件",
+      complianceChecker: "发现的高风险条款",
+      trainingContentGenerator: "已生成的培训模块",
+      financialReportBuilder: "季度净利润解读",
+    },
   },
 
   practices: {
@@ -382,6 +412,13 @@ export const zhHans: Messages = {
     ],
   },
 
+  capabilityDeck: {
+    eyebrow: "带走这份资料",
+    title: "整套方案，浓缩成一份文档。",
+    sub: "每项服务、每个案例、本页所有数据。",
+    cta: "下载能力介绍文档",
+  },
+
   contact: {
     eyebrow: "联系我们",
     title: "三十分钟，一个诚实的答复",
@@ -407,5 +444,15 @@ export const zhHans: Messages = {
   footer: {
     location: "新加坡",
     rights: "StarTech Innovation Pte. Ltd.",
+  },
+
+  demos: {
+    signIn: {
+      title: "自定义{title}",
+      subtitle: "使用 Google 登录，即可用您自己的数据生成定制结果。",
+      notConfigured: "登录功能尚未配置，请稍后再来查看。",
+      signedInAs: "已登录：",
+      backToSample: "← 返回示例",
+    },
   },
 };

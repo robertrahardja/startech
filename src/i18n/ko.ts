@@ -34,6 +34,9 @@ export const ko: Messages = {
     sub: "귀사의 경쟁력을 지키는 맞춤형 소프트웨어를 개발합니다.",
     ctaPrimary: "상담 요청",
     ctaWork: "사례 보기",
+    ctaDeck: "소개서 다운로드",
+    languagesAvailable: "지원 언어:",
+    tapAgainToSwitch: "{language}을(를) 다시 탭하면 전환됩니다.",
     ctaAsk: "질문하기",
     note: "무료로 상담해 드립니다. 사전 자료는 필요하지 않습니다. 가장 많은 시간이 드는 업무를 알려주십시오. 소프트웨어가 답이 아니라면 그렇게 말씀드리겠습니다.",
     proof: {
@@ -89,6 +92,7 @@ export const ko: Messages = {
     before: "도입 전",
     built: "구축한 내용",
     result: "성과",
+    details: "상세 내용",
     disclaimer:
       "비밀 유지 계약이 적용되는 프로젝트는 고객사명을 밝히지 않습니다. 기재된 수치는 납품된 시스템에 근거하며, 상담 시 자세히 설명해 드릴 수 있습니다.",
     cases: [
@@ -153,6 +157,32 @@ export const ko: Messages = {
         ],
       },
     ],
+  },
+
+  showcase: {
+    eyebrow: "직접 사용해 보세요",
+    title: "13가지 구축 사례. 하나를 골라 직접 실행해 보세요.",
+    sub: "아래 카드는 모두 실제로 작동하는 AI 제품입니다. 열어보면 바로 샘플 결과가 나타나고, 그 자리에서 직접 데이터로 커스터마이즈할 수 있습니다.",
+    sampleBadge: "샘플",
+    tryIt: "체험하기",
+    seeAll: "모든 솔루션 보기",
+    disclaimer:
+      "각 샘플은 가상의 데이터를 사용합니다. 직접 데이터로 커스터마이즈하는 것은 무료이며 1분도 걸리지 않습니다.",
+    teasers: {
+      invoiceScanner: "몇 초 만에 스캔 및 항목화",
+      customerChatbot: "답변 신뢰도",
+      appointmentBooking: "자동으로 예약 및 확정",
+      quotationGenerator: "GST 포함 견적서 작성",
+      jobPostingWriter: "작성된 직무 요건",
+      inventoryTracker: "재주문이 필요한 항목",
+      socialMediaManager: "한 번에 작성된 게시물 수",
+      documentTranslator: "언어, 클릭 한 번으로 번역",
+      employeeOnboarding: "예약된 온보딩 작업",
+      salesAssistant: "자동 구성된 후속 이메일",
+      complianceChecker: "발견된 고위험 조항",
+      trainingContentGenerator: "제작된 교육 모듈",
+      financialReportBuilder: "분기 순이익 분석",
+    },
   },
 
   practices: {
@@ -381,6 +411,13 @@ export const ko: Messages = {
     ],
   },
 
+  capabilityDeck: {
+    eyebrow: "가져가서 검토하세요",
+    title: "제안 전체를 하나의 문서로.",
+    sub: "모든 서비스, 실적, 그리고 이 페이지의 모든 수치를.",
+    cta: "역량 소개서 다운로드",
+  },
+
   contact: {
     eyebrow: "문의",
     title: "30분, 그리고 솔직한 답변",
@@ -407,5 +444,15 @@ export const ko: Messages = {
   footer: {
     location: "싱가포르",
     rights: "StarTech Innovation Pte. Ltd.",
+  },
+
+  demos: {
+    signIn: {
+      title: "{title} 맞춤 설정",
+      subtitle: "Google로 로그인하면 나만의 데이터로 맞춤 결과를 생성할 수 있습니다.",
+      notConfigured: "로그인 기능이 아직 준비되지 않았습니다 — 곧 다시 확인해 주세요.",
+      signedInAs: "로그인 계정:",
+      backToSample: "← 샘플로 돌아가기",
+    },
   },
 };

@@ -1,7 +1,9 @@
 import { useState, useCallback } from "react";
 import { useInView } from "../../hooks/useInView";
 import { useDemoApi } from "../../hooks/useDemoApi";
+import { useI18n } from "../../i18n";
 import { CACHED_DEMO_DATA } from "./cachedDemoData";
+import GoogleSignIn from "./GoogleSignIn";
 import type { DemoLead } from "../../types";
 
 type DemoPhase = "preview" | "customize" | "custom_result";
@@ -19,9 +21,11 @@ interface DemoShellProps {
 }
 
 export default function DemoShell({ demoType, title, children }: DemoShellProps) {
+  const { t } = useI18n();
   const [ref, isInView] = useInView({ threshold: 0.1 });
   const { lead, setLead, submitDemo, isLoading, result, error, clearResult } =
     useDemoApi(demoType);
+  const signedInLabel = t.demos.signIn.signedInAs;
   const [phase, setPhase] = useState<DemoPhase>("preview");
   const [pdfLoading, setPdfLoading] = useState(false);
 
@@ -138,9 +142,9 @@ export default function DemoShell({ demoType, title, children }: DemoShellProps)
         {/* ─── Phase: CUSTOMIZE (lead capture → form) ─── */}
         {phase === "customize" && (
           <div className="space-y-6">
-            {/* Lead capture if no lead yet */}
+            {/* Sign in if no lead yet */}
             {!lead && (
-              <LeadCaptureOverlay onCapture={handleLeadCapture} title={title} />
+              <GoogleSignIn onSignedIn={handleLeadCapture} title={title} />
             )}
 
             {/* Demo form (once lead exists) */}
@@ -149,15 +153,17 @@ export default function DemoShell({ demoType, title, children }: DemoShellProps)
                 {/* Logged-in indicator */}
                 <div className="flex items-center justify-between rounded-lg border border-st-border/50 bg-st-surface px-4 py-2.5">
                   <span className="text-[12px] font-normal text-st-text-muted">
-                    Signed in as{" "}
-                    <span className="text-st-text">{lead.email}</span>
+                    {lead.name
+                      ? `${signedInLabel} `
+                      : signedInLabel}
+                    {lead.name && <span className="text-st-text">{lead.name}</span>}
                   </span>
                   <button
                     type="button"
                     onClick={handleBackToSample}
                     className="text-[11px] font-medium text-st-text-muted/60 transition-colors duration-300 hover:text-st-text-muted"
                   >
-                    ← Back to sample
+                    {t.demos.signIn.backToSample}
                   </button>
                 </div>
 
@@ -253,114 +259,6 @@ export default function DemoShell({ demoType, title, children }: DemoShellProps)
           </div>
         )}
       </div>
-    </div>
-  );
-}
-
-/* ─── Lead Capture Form ─── */
-
-function LeadCaptureOverlay({
-  onCapture,
-  title,
-}: {
-  onCapture: (lead: DemoLead) => void;
-  title: string;
-}) {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
-
-  const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
-      e.preventDefault();
-      if (!email.trim()) return;
-      onCapture({
-        email: email.trim(),
-        name: name.trim() || undefined,
-        company: company.trim() || undefined,
-      });
-    },
-    [email, name, company, onCapture]
-  );
-
-  return (
-    <div className="card rounded-xl p-6 sm:p-8">
-      {/* Gold accent line */}
-      <div className="mb-6 h-px w-16 gold-glimmer" />
-
-      <h3 className="mb-2 text-base font-medium tracking-wide text-st-text">
-        Customize {title}
-      </h3>
-      <p className="mb-6 text-[13px] font-normal leading-[1.7] text-st-text-muted">
-        Enter your email to generate custom results with your own data.
-      </p>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Email — required */}
-        <div>
-          <label
-            htmlFor="demo-email"
-            className="mb-1.5 block text-[11px] font-medium tracking-wide text-st-text/60"
-          >
-            Email <span className="text-st-text-muted/70">*</span>
-          </label>
-          <input
-            id="demo-email"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            maxLength={320}
-            placeholder="you@company.com"
-            className="w-full min-h-[44px] rounded-lg border border-st-border bg-st-surface px-3.5 py-3 text-[13px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-st-border"
-          />
-        </div>
-
-        {/* Name — optional */}
-        <div>
-          <label
-            htmlFor="demo-name"
-            className="mb-1.5 block text-[11px] font-medium tracking-wide text-st-text/60"
-          >
-            Name
-          </label>
-          <input
-            id="demo-name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            maxLength={200}
-            placeholder="Jane Doe"
-            className="w-full min-h-[44px] rounded-lg border border-st-border bg-st-surface px-3.5 py-3 text-[13px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-st-border"
-          />
-        </div>
-
-        {/* Company — optional */}
-        <div>
-          <label
-            htmlFor="demo-company"
-            className="mb-1.5 block text-[11px] font-medium tracking-wide text-st-text/60"
-          >
-            Company
-          </label>
-          <input
-            id="demo-company"
-            type="text"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-            maxLength={200}
-            placeholder="Acme Corp"
-            className="w-full min-h-[44px] rounded-lg border border-st-border bg-st-surface px-3.5 py-3 text-[13px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-colors duration-300 focus:border-st-border"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-normal tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50"
-        >
-          Continue
-        </button>
-      </form>
     </div>
   );
 }

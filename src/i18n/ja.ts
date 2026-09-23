@@ -35,6 +35,9 @@ export const ja: Messages = {
     sub: "御社の競争力を守るカスタムソフトウェアを開発します。",
     ctaPrimary: "ご相談ください",
     ctaWork: "実績を見る",
+    ctaDeck: "資料をダウンロード",
+    languagesAvailable: "対応言語：",
+    tapAgainToSwitch: "もう一度「{language}」をタップすると切り替わります。",
     ctaAsk: "質問する",
     note: "無料でご相談いただけます。資料のご用意も不要です。最も時間がかかっている業務をお聞かせください。ソフトウェアで解決すべきでない場合は、その旨をお伝えします。",
     proof: {
@@ -90,6 +93,7 @@ export const ja: Messages = {
     before: "導入前",
     built: "開発した内容",
     result: "成果",
+    details: "詳細",
     disclaimer:
       "守秘義務のある案件については社名を伏せています。記載の数値は納品済みのシステムに基づくもので、ご相談時に詳細をご説明できます。",
     cases: [
@@ -154,6 +158,32 @@ export const ja: Messages = {
         ],
       },
     ],
+  },
+
+  showcase: {
+    eyebrow: "実際に試せます",
+    title: "13の開発事例。選んで、動かして確かめてください。",
+    sub: "以下のカードはすべて、実際に動くAI製品です。開くとすぐにサンプル結果が表示され、その場でご自身のデータに置き換えて試せます。",
+    sampleBadge: "サンプル",
+    tryIt: "試してみる",
+    seeAll: "すべてのソリューションを見る",
+    disclaimer:
+      "各サンプルは架空のデータを使用しています。ご自身のデータでのカスタマイズは無料で、1分もかかりません。",
+    teasers: {
+      invoiceScanner: "数秒でスキャン・項目化",
+      customerChatbot: "回答の確信度",
+      appointmentBooking: "自動で予約・確定",
+      quotationGenerator: "GST込みの見積書を作成",
+      jobPostingWriter: "職務要件を作成",
+      inventoryTracker: "再発注が必要な項目",
+      socialMediaManager: "同時に作成された投稿数",
+      documentTranslator: "言語、ワンクリックで翻訳",
+      employeeOnboarding: "オンボーディングタスクを設定",
+      salesAssistant: "フォローアップメールを自動作成",
+      complianceChecker: "高リスク条項を検出",
+      trainingContentGenerator: "作成された研修モジュール",
+      financialReportBuilder: "四半期純利益を解説",
+    },
   },
 
   practices: {
@@ -387,6 +417,13 @@ export const ja: Messages = {
     ],
   },
 
+  capabilityDeck: {
+    eyebrow: "お持ち帰りください",
+    title: "提案内容のすべてを、一冊の資料に。",
+    sub: "各サービス、実績、そしてこのページの数字のすべてを。",
+    cta: "会社案内資料をダウンロード",
+  },
+
   contact: {
     eyebrow: "お問い合わせ",
     title: "30分で、率直な回答を",
@@ -413,5 +450,15 @@ export const ja: Messages = {
   footer: {
     location: "シンガポール",
     rights: "StarTech Innovation Pte. Ltd.",
+  },
+
+  demos: {
+    signIn: {
+      title: "{title}をカスタマイズ",
+      subtitle: "Googleでサインインすると、あなた自身のデータでカスタム結果を生成できます。",
+      notConfigured: "サインインはまだ設定されていません。しばらくしてから再度お試しください。",
+      signedInAs: "サインイン中:",
+      backToSample: "← サンプルに戻る",
+    },
   },
 };

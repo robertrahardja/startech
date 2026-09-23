@@ -1,4 +1,14 @@
 {
   "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
-  "entry": ["src/main.tsx", "worker/index.ts"]
+  "entry": ["src/main.tsx", "worker/index.ts"],
+  "health": {
+    "thresholdOverrides": [
+      {
+        "files": ["src/components/demos/renderers/InvoiceScannerDemo.tsx"],
+        "functions": ["InvoiceScannerDemo"],
+        "maxCrap": 120,
+        "reason": "Upload/preview/paste-fallback form state genuinely belongs in one component; the result view already split out into ExtractedInvoiceResult."
+      }
+    ]
+  }
 }

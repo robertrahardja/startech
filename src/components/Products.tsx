@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useI18n } from "../i18n";
-import { useSnapRail, useTapGuard } from "../hooks/useSnapRail";
+import { useSnapRail } from "../hooks/useSnapRail";
 import { haptic } from "../lib/haptics";
 import { useInView } from "../hooks/useInView";
 import type { Product } from "../types";
-import ExpandedDetailCard from "./ExpandedDetailCard";
 
 /** Structure only — icon, tags and span. The words live in the catalogue. */
 const PRODUCT_META = [
@@ -40,22 +39,33 @@ const ICONS: Record<string, React.ReactNode> = {
 function ProductCard({
   product,
   index,
-  onExpand,
-  railRef,
+  activeRailIndex,
 }: {
   product: Product;
   index: number;
-  onExpand: (product: Product) => void;
-  railRef: React.RefObject<HTMLDivElement | null>;
+  /** Which card the mobile rail is currently snapped to. Only meaningful
+   *  below sm:, where the rail is an actual swipeable strip — above that
+   *  it's a static grid and every card can stay open independently. */
+  activeRailIndex: number;
 }) {
   const [ref, isInView] = useInView({ threshold: 0.1 });
+  const [open, setOpen] = useState(false);
   const hasDetails = product.details && product.details.length > 0;
 
-  // Pointer-based so a swipe across the rail does not open the card.
-  const tap = useTapGuard(() => {
+  // Swiping to a different card on the mobile rail collapses this one
+  // first, rather than leaving every previously-opened card expanded as
+  // you swipe through.
+  useEffect(() => {
+    if (activeRailIndex === index) return;
+    if (!window.matchMedia("(min-width: 640px)").matches) {
+      setOpen(false);
+    }
+  }, [activeRailIndex, index]);
+
+  const toggleOpen = () => {
     haptic("select");
-    onExpand(product);
-  }, railRef);
+    setOpen((o) => !o);
+  };
 
   const spanClass =
     product.span === "wide"
@@ -69,9 +79,8 @@ function ProductCard({
       ref={ref}
       className={`product-card pressable h-full ${spanClass} ${isInView ? "reveal visible" : "reveal"}`}
       style={{ transitionDelay: `${index * 60}ms` }}
-      {...(hasDetails ? tap : {})}
     >
-      <div className="card group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-xl p-6 sm:p-7">
+      <div className="card group relative flex h-full flex-col overflow-hidden rounded-xl p-6 sm:p-7">
         <div className="relative z-10 flex h-full flex-col">
           <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-lg bg-st-surface text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
             {ICONS[product.icon]}
@@ -82,6 +91,34 @@ function ProductCard({
           <p className="mb-5 flex-1 text-sm font-normal leading-[1.7] text-st-text-muted">
             {product.description}
           </p>
+
+          {/* Details toggle inline, on the card itself — a short bullet list
+              does not need a whole modal to read; it just needs somewhere
+              to be hidden until asked for. */}
+          {hasDetails && (
+            <div
+              id={`product-details-${index}`}
+              className="grid overflow-hidden transition-[grid-template-rows] duration-[400ms] ease-out"
+              style={{ gridTemplateRows: open ? "1fr" : "0fr" }}
+            >
+              <ul className="min-h-0 space-y-2.5 overflow-hidden">
+                <li aria-hidden="true" className="h-3" />
+                {product.details!.map((d) => (
+                  <li key={d} className="flex gap-2.5">
+                    <span
+                      aria-hidden="true"
+                      className="mt-[7px] h-1 w-1 flex-none rounded-full bg-st-gold-light/60"
+                    />
+                    <span className="text-[12.5px] font-normal leading-[1.65] text-st-text-muted/90">
+                      {d}
+                    </span>
+                  </li>
+                ))}
+                <li aria-hidden="true" className="h-2" />
+              </ul>
+            </div>
+          )}
+
           <div className="flex flex-wrap items-center gap-1.5">
             {product.tags.map((tag) => (
               <span
@@ -92,9 +129,21 @@ function ProductCard({
               </span>
             ))}
             {hasDetails && (
-              <span className="ml-auto text-[11px] font-medium tracking-[0.15em] uppercase text-st-text-muted/80 transition-colors duration-300 group-hover:text-st-gold-light">
-                Details →
-              </span>
+              <button
+                type="button"
+                aria-expanded={open}
+                aria-controls={`product-details-${index}`}
+                onClick={toggleOpen}
+                className="pressable ml-auto flex items-center gap-1 text-[11px] font-medium tracking-[0.15em] uppercase text-st-text-muted/80 transition-colors duration-300 hover:text-st-gold-light"
+              >
+                {open ? "Hide" : "Details"}
+                <span
+                  aria-hidden="true"
+                  className={`transition-transform duration-300 ${open ? "-rotate-90" : "rotate-90"}`}
+                >
+                  →
+                </span>
+              </button>
             )}
           </div>
         </div>
@@ -105,7 +154,6 @@ function ProductCard({
 
 export default function Products() {
   const { t } = useI18n();
-  const [expanded, setExpanded] = useState<Product | null>(null);
   const { railRef, active, goTo } = useSnapRail(t.practices.items.length);
 
   return (
@@ -130,12 +178,7 @@ export default function Products() {
             } as unknown as Product;
             return (
             <div key={copy.title} className="snap-item" data-snap-index={i}>
-              <ProductCard
-                product={product}
-                index={i}
-                onExpand={setExpanded}
-                railRef={railRef}
-              />
+              <ProductCard product={product} index={i} activeRailIndex={active} />
             </div>
             );
           })}
@@ -156,21 +199,6 @@ export default function Products() {
           ))}
         </div>
       </div>
-
-      {expanded && (
-        <ExpandedDetailCard
-          title={expanded.title}
-          description={expanded.description}
-          details={expanded.details!}
-          tags={expanded.tags}
-          header={
-            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-st-surface text-st-gold-light">
-              {ICONS[expanded.icon]}
-            </div>
-          }
-          onClose={() => setExpanded(null)}
-        />
-      )}
     </section>
   );
 }
@@ -197,7 +225,7 @@ function SectionHeader({
       <h2 className="mb-4 font-display text-2xl tracking-[-0.02em] text-st-text sm:text-3xl md:text-5xl lg:text-6xl">
         {title}
       </h2>
-      <p className="mx-auto max-w-3xl text-balance text-[15px] font-normal leading-[1.7] text-st-text-muted md:text-base">
+      <p className="mx-auto max-w-3xl text-balance text-[14px] font-normal leading-[1.7] text-st-text-muted/70">
         {subtitle}
       </p>
     </div>

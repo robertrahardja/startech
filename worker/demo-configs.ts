@@ -3,10 +3,21 @@ export interface DemoInputField {
   required: boolean;
   maxLength: number;
   label: string;
-  type: "text" | "textarea" | "number" | "select";
+  type: "text" | "textarea" | "number" | "select" | "image";
   placeholder?: string;
   options?: string[];
 }
+
+/**
+ * Base64-encoded image payload cap. The client re-encodes as JPEG at a
+ * capped resolution before sending (see InvoiceScannerDemo.tsx), so a
+ * legitimate photo lands well under this; it exists to bound worst-case
+ * request size and OpenAI cost, not as the primary compression mechanism.
+ * Base64 runs ~4/3 the size of the underlying bytes, so 2,750,000 chars
+ * caps the actual image around 2MB — comfortably inside OpenAI's own
+ * per-image limit for chat completions.
+ */
+export const MAX_IMAGE_DATA_URL_LENGTH = 2_750_000;
 
 export interface DemoConfig {
   slug: string;
@@ -29,17 +40,25 @@ export const DEMO_CONFIGS: Record<string, DemoConfig> = {
     maxTokens: 800,
     inputFields: [
       {
+        name: "receipt_image",
+        required: false,
+        maxLength: MAX_IMAGE_DATA_URL_LENGTH,
+        label: "Receipt / Invoice Photo",
+        type: "image",
+        placeholder: "Upload a photo of your receipt or invoice",
+      },
+      {
         name: "receipt_text",
-        required: true,
+        required: false,
         maxLength: 3000,
         label: "Receipt / Invoice Text",
         type: "textarea",
-        placeholder: "Paste your receipt or invoice text here...",
+        placeholder: "Or paste the text instead...",
       },
     ],
     systemPrompt: `${PROMPT_PREFIX("Invoice Scanner")}
 
-Extract vendor, date, line items (description, qty, unit_price, amount), subtotal, GST (9%), total from the provided receipt or invoice text.
+Extract vendor, date, line items (description, qty, unit_price, amount), subtotal, GST (9%), total from the provided receipt or invoice — a photo, or its text if no photo was given.
 
 Return JSON matching this schema:
 {

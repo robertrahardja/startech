@@ -1,9 +1,17 @@
-import type { CSSProperties } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import AiIcon from "./AiIcon";
 import { usePointerGlow } from "../hooks/usePointerGlow";
 import { AI_CHAT_ENABLED } from "../lib/features";
-import { useI18n } from "../i18n";
-import { fullStop, setsSolid } from "../i18n/locales";
+import { getCatalogue, loadCatalogue, useI18n } from "../i18n";
+import {
+  LOCALES,
+  LOCALE_META,
+  fullStop,
+  localePath,
+  parseLocalePath,
+  setsSolid,
+  type Locale,
+} from "../i18n/locales";
 
 interface HeroProps {
   onAskAi: () => void;
@@ -14,6 +22,54 @@ export default function Hero({ onAskAi }: HeroProps) {
   // Japanese and Chinese set solid; Korean and Latin scripts keep spaces.
   const gap = setsSolid(locale) ? null : " ";
   const onPointerMove = usePointerGlow();
+
+  // Hovering (or, on touch, tapping) a language in the strip below previews
+  // that language's note line in place, without switching the page's actual
+  // locale. null means "not previewing" — show the real page language.
+  //
+  // loadCatalogue() is async and getCatalogue() only reads whatever is
+  // already cached, so a preview requested this render is never ready this
+  // render — it has to land in state once the import actually resolves, or
+  // the very first hover of each language would silently show nothing.
+  //
+  // Touch has no real "leave" — a tap fires focus with no matching blur if
+  // the page scrolls instead, which would otherwise leave the preview stuck
+  // showing another language indefinitely. A self-clearing timeout closes
+  // that (and any other stuck-preview edge case) without needing to special
+  // case touch vs. mouse at all.
+  const [previewNote, setPreviewNote] = useState<string | null>(null);
+  const previewRequestRef = useRef(0);
+  const previewClearTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const previewLanguage = (target: Locale | null) => {
+    const requestId = ++previewRequestRef.current;
+    if (previewClearTimerRef.current) clearTimeout(previewClearTimerRef.current);
+
+    if (target === null) {
+      setPreviewNote(null);
+      return;
+    }
+
+    previewClearTimerRef.current = setTimeout(() => {
+      if (previewRequestRef.current === requestId) setPreviewNote(null);
+    }, 4000);
+
+    const cached = getCatalogue(target);
+    if (cached) {
+      setPreviewNote(cached.hero.note);
+      return;
+    }
+    setPreviewNote(null);
+    void loadCatalogue(target).then(() => {
+      // A later hover may have started and finished while this one was
+      // still loading — only the most recent request should ever win.
+      if (previewRequestRef.current !== requestId) return;
+      const loaded = getCatalogue(target);
+      if (loaded) setPreviewNote(loaded.hero.note);
+    });
+  };
+
+  const noteText = previewNote ?? t.hero.note;
 
   return (
     <section
@@ -60,48 +116,45 @@ export default function Hero({ onAskAi }: HeroProps) {
       <div>
         {/* Eyebrow */}
         <div
-          className="mb-8 flex items-center gap-3 animate-fade-in"
+          className="mb-6 flex items-center gap-2.5 animate-fade-in sm:mb-8 sm:gap-3"
           style={{ animationDelay: "0.05s" }}
         >
-          <span className="brand-rule h-px w-10" />
-          <span className="text-[11px] font-medium tracking-[0.2em] uppercase text-st-text-muted sm:text-[10px] sm:tracking-[0.22em]">
+          <span className="brand-rule h-px w-8 sm:w-10" />
+          <span className="whitespace-nowrap text-[10px] font-medium tracking-[0.08em] uppercase text-st-text-muted sm:text-[10px] sm:tracking-[0.22em]">
             <span className="sm:hidden">{t.hero.eyebrowShort}</span>
             <span className="hidden sm:inline">{t.hero.eyebrowFull}</span>
           </span>
         </div>
 
-        {/* Headline */}
+        {/* Headline — 2.4rem rather than the 2.75rem this scales up to at
+            sm:: on a 390px phone, lines at 2.75rem ran close enough to both
+            24px margins that the margin stopped reading as a margin. A
+            slightly smaller mobile size leaves visible slack at the line
+            ends, so the gutter is felt rather than just technically present.
+
+            A plain opacity fade-in on load — no translateY, no per-word
+            stagger. Tried a scratches-clearing-to-clean effect here first;
+            it read as broken rather than deliberate, so it's gone. This is
+            just the headline appearing. */}
         <h1
-          className="max-w-4xl font-display text-[2.75rem] leading-[1.05] tracking-[-0.03em] text-st-text sm:text-5xl md:text-6xl lg:text-7xl"
+          className="animate-fade-in max-w-4xl font-display text-[3.4rem] leading-[1.02] tracking-[-0.03em] text-st-text sm:text-5xl md:text-6xl lg:text-7xl"
           style={{ textWrap: "balance" }}
         >
           {/* Four parts rather than five words: CJK locales do not put spaces
               between words and order the clause differently, so the catalogue
               supplies each fragment and the spacing comes from the locale. */}
-          <span className="rise inline-block" style={{ animationDelay: "0.05s" }}>
-            {t.hero.headlineLead}
-          </span>
+          <span className="inline-block">{t.hero.headlineLead}</span>
           {gap}
-          <span
-            className="rise gradient-text inline-block italic"
-            style={{ animationDelay: "0.18s" }}
-          >
+          <span className="gradient-text inline-block italic">
             {t.hero.headlineBusiness}
           </span>
           {gap}
-          <span className="rise inline-block" style={{ animationDelay: "0.3s" }}>
-            {t.hero.headlineAnd}
-          </span>
+          <span className="inline-block">{t.hero.headlineAnd}</span>
           {gap}
-          <span
-            className="rise gradient-text inline-block italic"
-            style={{ animationDelay: "0.38s" }}
-          >
+          <span className="gradient-text inline-block italic">
             {t.hero.headlineTech}
           </span>
-          <span className="rise inline-block" style={{ animationDelay: "0.46s" }}>
-            {fullStop(locale)}
-          </span>
+          <span className="inline-block">{fullStop(locale)}</span>
         </h1>
 
         {/* Sub */}
@@ -112,15 +165,16 @@ export default function Hero({ onAskAi }: HeroProps) {
           {t.hero.sub}
         </p>
 
-        {/* CTAs — one primary action and two ways in for someone not ready
-            to book yet. Each label names what the click does. */}
+        {/* CTAs — one primary action, full weight; the rest step down in
+            size so the row reads as a hierarchy on a phone, not three
+            equally-loud blocks stacked on top of each other. */}
         <div
-          className="mt-9 flex flex-col items-stretch gap-3 animate-fade-in-up sm:mt-12 sm:flex-row sm:items-center"
+          className="mt-8 flex flex-col items-stretch gap-2.5 animate-fade-in-up sm:mt-12 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
           style={{ animationDelay: "0.25s" }}
         >
           <a
             href="#contact"
-            className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-center text-[15px] font-medium tracking-wide text-st-text transition-all duration-500 active:scale-[0.97] sm:py-4 sm:text-[13px]"
+            className="hero-btn-primary group relative overflow-hidden rounded-xl px-8 py-4 text-center text-[15px] font-medium tracking-wide text-st-text transition-all duration-500 active:scale-[0.97] sm:py-4 sm:text-[13px]"
           >
             <span className="relative z-10 flex items-center justify-center gap-2.5">
               {t.hero.ctaPrimary}
@@ -140,35 +194,54 @@ export default function Hero({ onAskAi }: HeroProps) {
             </span>
           </a>
 
-          <a
-            href="#work"
-            onPointerMove={onPointerMove}
-            className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-center text-[15px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:py-4 sm:text-[13px]"
-          >
-            <span className="relative z-10 flex items-center justify-center gap-2.5">
-              {t.hero.ctaWork}
-            </span>
-          </a>
-
-          {AI_CHAT_ENABLED && (
-            <button
-              onClick={onAskAi}
+          <div className="flex flex-row flex-wrap items-stretch gap-2 sm:contents">
+            <a
+              href="#work"
               onPointerMove={onPointerMove}
-              className="hero-btn-secondary group relative overflow-hidden rounded-xl px-8 py-[1.15rem] text-[15px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:py-4 sm:text-[13px]"
+              className="hero-btn-secondary group relative flex-1 overflow-hidden rounded-lg px-4 py-2.5 text-center text-[12.5px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:flex-none sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
             >
-              <span className="relative z-10 flex items-center justify-center gap-2.5">
-                <AiIcon className="btn-spark h-3.5 w-3.5" />
-                {t.hero.ctaAsk}
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                {t.hero.ctaWork}
               </span>
-            </button>
-          )}
+            </a>
+
+            {AI_CHAT_ENABLED && (
+              <button
+                onClick={onAskAi}
+                onPointerMove={onPointerMove}
+                className="hero-btn-secondary group relative flex-1 overflow-hidden rounded-lg px-4 py-2.5 text-[12.5px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:flex-none sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <AiIcon className="btn-spark h-3.5 w-3.5" />
+                  {t.hero.ctaAsk}
+                </span>
+              </button>
+            )}
+
+            <a
+              href="#capability-deck"
+              onPointerMove={onPointerMove}
+              className="hero-btn-secondary group relative flex-1 overflow-hidden rounded-lg px-4 py-2.5 text-center text-[12.5px] font-medium tracking-wide transition-all duration-500 sm:flex-none sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                <span className="deck-text-shine deck-shine-play">{t.hero.ctaDeck}</span>
+              </span>
+            </a>
+          </div>
         </div>
 
+        <HeroLanguageStrip
+          locale={locale}
+          label={t.hero.languagesAvailable}
+          tapAgainToSwitch={t.hero.tapAgainToSwitch}
+          onPreview={previewLanguage}
+        />
+
         <p
-          className="mt-5 text-[12.5px] font-normal leading-relaxed tracking-wide text-st-text-muted/85 animate-fade-in sm:text-[11px]"
+          className="mt-5 min-h-[2.6em] text-[12.5px] font-normal leading-relaxed tracking-wide text-st-text-muted/85 transition-opacity duration-200 animate-fade-in sm:min-h-[2.2em] sm:text-[11px]"
           style={{ animationDelay: "0.3s" }}
         >
-          {t.hero.note}
+          {noteText}
         </p>
 
         {/* Proof strip */}
@@ -240,5 +313,99 @@ export default function Hero({ onAskAi }: HeroProps) {
       </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * A quiet proof that the site itself is multilingual, not just a claim — the
+ * seven languages this page is actually published in, each a real link to
+ * the same page in that language. Sits below the CTAs at the same low key
+ * as the note beneath it: present as a fact, not pitched as a fourth choice.
+ *
+ * On a mouse, hovering previews the note below in that language — no click
+ * needed, nothing navigates until you actually choose to. Touch has no
+ * hover, and a tap that both previewed AND navigated would mean the preview
+ * is never actually seen, just flashed through on the way to a page reload.
+ * So on touch the first tap on a language previews it and holds the page
+ * (armed, ready to go); tapping that same language again is the visitor
+ * choosing to actually switch, and the link is left to navigate normally.
+ */
+function HeroLanguageStrip({
+  locale,
+  label,
+  tapAgainToSwitch,
+  onPreview,
+}: {
+  locale: string;
+  label: string;
+  tapAgainToSwitch: string;
+  onPreview: (locale: Locale | null) => void;
+}) {
+  const { path } = parseLocalePath(window.location.pathname);
+  const [armed, setArmed] = useState<Locale | null>(null);
+
+  return (
+    <div
+      className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1.5 animate-fade-in sm:mt-7"
+      style={{ animationDelay: "0.32s" }}
+    >
+      <span className="text-[11px] font-normal tracking-wide text-st-text-muted/60 sm:text-[10.5px]">
+        {label}
+      </span>
+      {/* text-wrap: balance (via .text-balance) needs an ordinary inline
+          flow to work with — flexbox's own line-wrapping ignores it — so
+          this is a plain inline block of <a> tags, not flex/flex-wrap.
+          That's what stops a lone language stranding itself alone on the
+          last line at odd widths: the browser balances line lengths
+          instead of packing every line as full as it'll go. */}
+      <nav aria-label="Language" className="text-balance">
+        {LOCALES.map((code) => (
+          <a
+            key={code}
+            href={localePath(code, path)}
+            hrefLang={LOCALE_META[code].htmlLang}
+            aria-current={code === locale ? "true" : undefined}
+            onMouseEnter={() => onPreview(code)}
+            onMouseLeave={() => onPreview(null)}
+            onFocus={() => onPreview(code)}
+            onBlur={() => onPreview(null)}
+            onTouchEnd={(e) => {
+              if (armed === code) {
+                // Second tap on the already-previewed language: let this
+                // one navigate normally.
+                setArmed(null);
+                return;
+              }
+              // First tap on a language: preview it, hold the page.
+              e.preventDefault();
+              setArmed(code);
+              onPreview(code);
+            }}
+            // The separator lives on the link itself (not a sibling span), so
+            // wrapping the row can never strand a lone dot at a line start —
+            // it travels with whichever word ends up starting the new line.
+            className={`inline-block text-[11px] font-normal leading-[1.9] tracking-wide transition-colors duration-300 before:mx-2 before:text-st-text-muted/30 before:content-['·'] first:before:content-none first:before:mx-0 sm:text-[10.5px] ${
+              code === locale
+                ? "text-st-text-muted"
+                : armed === code
+                  ? "text-st-text-muted"
+                  : "text-st-text-muted/50 hover:text-st-text-muted"
+            }`}
+          >
+            {LOCALE_META[code].label}
+          </a>
+        ))}
+      </nav>
+
+      {/* Touch only in practice — a mouse never sets `armed`, since a click
+          just follows the link straight away. Tells the visitor what a
+          second tap on the same language will do, so the preview-then-
+          confirm pattern isn't just implied by the highlight alone. */}
+      {armed && (
+        <span className="w-full text-[10.5px] font-normal italic text-st-text-muted/50 sm:w-auto">
+          {tapAgainToSwitch.replace("{language}", LOCALE_META[armed].label)}
+        </span>
+      )}
+    </div>
   );
 }

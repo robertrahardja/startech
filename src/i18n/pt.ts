@@ -35,6 +35,9 @@ export const pt: Messages = {
     sub: "Desenvolvemos o software sob medida que protege a sua vantagem competitiva.",
     ctaPrimary: "Vamos conversar",
     ctaWork: "Ver projetos",
+    ctaDeck: "Baixar o dossiê",
+    languagesAvailable: "Também disponível em:",
+    tapAgainToSwitch: "Toque em {language} novamente para ler esta página nele.",
     ctaAsk: "Fazer uma pergunta",
     note: "Sem custo e sem precisar preparar documento algum: basta trazer o processo que mais consome o seu tempo. Se software não for a resposta, diremos isso.",
     proof: {
@@ -90,6 +93,7 @@ export const pt: Messages = {
     before: "Antes",
     built: "O que construímos",
     result: "Resultado",
+    details: "Detalhes",
     disclaimer:
       "Omitimos o nome do cliente quando há acordo de confidencialidade. Os números vêm dos sistemas entregues e podem ser detalhados em uma conversa.",
     cases: [
@@ -154,6 +158,32 @@ export const pt: Messages = {
         ],
       },
     ],
+  },
+
+  showcase: {
+    eyebrow: "Experimente você mesmo",
+    title: "Treze projetos. Escolha um e coloque à prova.",
+    sub: "Cada cartão abaixo é um produto de IA que funciona de verdade, não uma maquete. Abra um, veja um resultado de amostra na hora e personalize com seus próprios dados.",
+    sampleBadge: "Amostra",
+    tryIt: "Experimentar",
+    seeAll: "Ver todas as soluções",
+    disclaimer:
+      "Cada amostra usa dados fictícios. Personalizar uma demonstração com seus próprios dados é gratuito e leva menos de um minuto.",
+    teasers: {
+      invoiceScanner: "escaneada e detalhada em segundos",
+      customerChatbot: "confiança da resposta",
+      appointmentBooking: "agendada e confirmada automaticamente",
+      quotationGenerator: "orçamento gerado, com imposto incluído",
+      jobPostingWriter: "requisitos da vaga redigidos",
+      inventoryTracker: "itens sinalizados para reposição",
+      socialMediaManager: "publicações geradas de uma vez",
+      documentTranslator: "idiomas, em um clique",
+      employeeOnboarding: "tarefas de integração agendadas",
+      salesAssistant: "e-mails de acompanhamento programados",
+      complianceChecker: "cláusulas de alto risco identificadas",
+      trainingContentGenerator: "módulos de treinamento criados",
+      financialReportBuilder: "lucro líquido trimestral, explicado",
+    },
   },
 
   practices: {
@@ -388,6 +418,13 @@ export const pt: Messages = {
     ],
   },
 
+  capabilityDeck: {
+    eyebrow: "Leve com você",
+    title: "Toda a proposta, em um único documento.",
+    sub: "Cada prática, cada prova, cada número desta página.",
+    cta: "Baixar o dossiê de capacidades",
+  },
+
   contact: {
     eyebrow: "Contato",
     title: "Trinta minutos e uma resposta honesta",
@@ -414,5 +451,15 @@ export const pt: Messages = {
   footer: {
     location: "Singapura",
     rights: "StarTech Innovation Pte. Ltd.",
+  },
+
+  demos: {
+    signIn: {
+      title: "Personalizar {title}",
+      subtitle: "Entre com o Google para gerar resultados personalizados com os seus próprios dados.",
+      notConfigured: "O login ainda não está configurado — volte em breve.",
+      signedInAs: "Sessão iniciada como",
+      backToSample: "← Voltar à amostra",
+    },
   },
 };

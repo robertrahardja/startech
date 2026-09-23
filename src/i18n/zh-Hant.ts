@@ -35,6 +35,9 @@ export const zhHant: Messages = {
     sub: "我們開發客製化軟體，鞏固您的競爭優勢。",
     ctaPrimary: "聊一聊",
     ctaWork: "查看案例",
+    ctaDeck: "下載介紹文件",
+    languagesAvailable: "支援語言：",
+    tapAgainToSwitch: "再次點擊 {language} 即可切換。",
     ctaAsk: "提出問題",
     note: "免費諮詢，不需要準備任何資料。告訴我們最耗時的那個流程就好。如果軟體不是答案，我們會直說。",
     proof: {
@@ -90,6 +93,7 @@ export const zhHant: Messages = {
     before: "先前狀況",
     built: "我們做了什麼",
     result: "成果",
+    details: "詳情",
     disclaimer:
       "涉及保密協議的專案不揭露客戶名稱。文中數據來自已交付的系統，可在通話中詳細說明。",
     cases: [
@@ -154,6 +158,32 @@ export const zhHant: Messages = {
         ],
       },
     ],
+  },
+
+  showcase: {
+    eyebrow: "親自試用",
+    title: "13個真實專案，選一個，親自試試看。",
+    sub: "下方每張卡片都是真實可用的AI產品，不是效果圖。點開即可看到即時範例結果，也可以用您自己的資料當場客製化。",
+    sampleBadge: "範例",
+    tryIt: "立即試用",
+    seeAll: "查看全部解決方案",
+    disclaimer:
+      "每個範例均使用虛構資料。使用您自己的資料進行客製化免費，耗時不到一分鐘。",
+    teasers: {
+      invoiceScanner: "數秒內完成掃描與逐項辨識",
+      customerChatbot: "回答信心度",
+      appointmentBooking: "自動預約並確認",
+      quotationGenerator: "已生成含稅報價單",
+      jobPostingWriter: "已撰寫的職缺要求",
+      inventoryTracker: "需要補貨的項目",
+      socialMediaManager: "同時生成的平台貼文數",
+      documentTranslator: "種語言，一鍵翻譯",
+      employeeOnboarding: "已安排的入職任務",
+      salesAssistant: "已排定的跟進郵件",
+      complianceChecker: "發現的高風險條款",
+      trainingContentGenerator: "已生成的培訓模組",
+      financialReportBuilder: "季度淨利潤解讀",
+    },
   },
 
   practices: {
@@ -382,6 +412,13 @@ export const zhHant: Messages = {
     ],
   },
 
+  capabilityDeck: {
+    eyebrow: "帶走這份資料",
+    title: "整套方案，濃縮成一份文件。",
+    sub: "每項服務、每個案例、本頁所有數據。",
+    cta: "下載能力介紹文件",
+  },
+
   contact: {
     eyebrow: "聯絡我們",
     title: "三十分鐘，一個誠實的答覆",
@@ -407,5 +444,15 @@ export const zhHant: Messages = {
   footer: {
     location: "新加坡",
     rights: "StarTech Innovation Pte. Ltd.",
+  },
+
+  demos: {
+    signIn: {
+      title: "自訂{title}",
+      subtitle: "使用 Google 登入，即可用您自己的資料產生客製化結果。",
+      notConfigured: "登入功能尚未設定，請稍後再回來查看。",
+      signedInAs: "已登入：",
+      backToSample: "← 返回範例",
+    },
   },
 };

@@ -33,7 +33,10 @@ export const en = {
     sub: "We build the custom software that secures your competitive advantage.",
     ctaPrimary: "Let's talk",
     ctaWork: "See the work",
+    ctaDeck: "Download the deck",
     ctaAsk: "Ask a question",
+    languagesAvailable: "Also reading in:",
+    tapAgainToSwitch: "Tap {language} again to read this page in it.",
     note: "Free, and no brief document required — bring the process that costs you the most time. If software isn't the answer, we'll say so.",
     proof: {
       yearsFigure: "20+",
@@ -88,6 +91,7 @@ export const en = {
     before: "Before",
     built: "What we built",
     result: "Result",
+    details: "Details",
     disclaimer:
       "Client names are withheld where the engagement is covered by confidentiality. Figures are drawn from the delivered systems and can be walked through in detail on a call.",
     cases: [
@@ -152,6 +156,32 @@ export const en = {
     ],
   },
     ],
+  },
+
+  showcase: {
+    eyebrow: "Try it yourself",
+    title: "Thirteen builds. Pick one, see it run.",
+    sub: "Every card below is a working AI product, not a mockup. Open one, see a real sample result instantly, then customise it with your own data.",
+    sampleBadge: "Sample",
+    tryIt: "Try it",
+    seeAll: "See every solution",
+    disclaimer:
+      "Each sample uses fictional data. Customising a demo with your own data is free and takes under a minute.",
+    teasers: {
+      invoiceScanner: "scanned & itemised in seconds",
+      customerChatbot: "answer confidence",
+      appointmentBooking: "booked and confirmed automatically",
+      quotationGenerator: "quote drafted, GST included",
+      jobPostingWriter: "role requirements written out",
+      inventoryTracker: "items flagged for reorder",
+      socialMediaManager: "platform posts drafted at once",
+      documentTranslator: "languages, one click",
+      employeeOnboarding: "onboarding tasks scheduled",
+      salesAssistant: "follow-up emails sequenced",
+      complianceChecker: "high-risk clauses caught",
+      trainingContentGenerator: "training modules built",
+      financialReportBuilder: "quarterly net profit, explained",
+    },
   },
 
   practices: {
@@ -387,6 +417,13 @@ export const en = {
     ],
   },
 
+  capabilityDeck: {
+    eyebrow: "Take it with you",
+    title: "The whole pitch, in one document.",
+    sub: "Every practice, every proof point, every number on this page.",
+    cta: "Download the capability deck",
+  },
+
   contact: {
     eyebrow: "Contact",
     title: "Thirty minutes, and an honest answer",
@@ -413,6 +450,16 @@ export const en = {
   footer: {
     location: "Singapore",
     rights: "StarTech Innovation Pte. Ltd.",
+  },
+
+  demos: {
+    signIn: {
+      title: "Customize {title}",
+      subtitle: "Sign in with Google to generate custom results with your own data.",
+      notConfigured: "Sign-in isn't set up yet — check back soon.",
+      signedInAs: "Signed in as",
+      backToSample: "← Back to sample",
+    },
   },
 };
 

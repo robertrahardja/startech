@@ -75,9 +75,6 @@ const ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
-/* ─── Step number indicators ───────────────────────────────────────────── */
-const STEP_NUMBERS = ["01", "02", "03", "04"];
-
 /* ─── Grant callout section ────────────────────────────────────────────── */
 function GrantsCallout() {
   const [ref, isInView] = useInView({ threshold: 0.15 });
@@ -193,21 +190,10 @@ export default function SolutionPage({
 
   return (
     <>
-      {/* ── Hero ── */}
-      <SolutionHero
-        solution={solution}
-        tierMeta={tier}
-        icon={icon}
-        onAskAi={onAskAi}
-      />
+      {/* ── Slim header: just enough to say what this is ── */}
+      <SolutionStrip solution={solution} tierMeta={tier} icon={icon} />
 
-      {/* ── Problem ── */}
-      <ProblemSection problem={solution.problem} />
-
-      {/* ── How It Works ── */}
-      <HowItWorksSection steps={solution.steps} />
-
-      {/* ── Try It Demo ── */}
+      {/* ── Try It Demo: the page, not a section of it ── */}
       <DemoSection slug={solution.slug} title={solution.title} />
 
       {/* ── Key Features ── */}
@@ -229,32 +215,24 @@ export default function SolutionPage({
   );
 }
 
-/* ─── Hero Section ─────────────────────────────────────────────────────── */
-function SolutionHero({
+/* ─── Header strip ─────────────────────────────────────────────────────────
+ * Just enough to orient a visitor arriving from the showcase grid — no
+ * pitch, no CTA wall. The demo right below is the pitch.
+ */
+function SolutionStrip({
   solution,
   tierMeta,
   icon,
-  onAskAi,
 }: {
   solution: Solution;
   tierMeta: (typeof TIER_META)[keyof typeof TIER_META];
   icon: React.ReactNode;
-  onAskAi: () => void;
 }) {
-  const [ref, isInView] = useInView({ threshold: 0.1 });
-
   return (
-    <section className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
-      {/* Subtle background gradient */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-st-bg via-st-bg-elevated/50 to-st-bg" />
-
-      <div
-        ref={ref}
-        className={`relative mx-auto max-w-4xl px-6 text-center sm:px-8 ${isInView ? "reveal visible" : "reveal"}`}
-      >
-        {/* Breadcrumb */}
-        <nav className="mb-6 flex items-center justify-center gap-2 text-[11px] font-medium tracking-wide text-st-text-muted">
-          <Link href="/" className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center transition-colors duration-300 hover:text-st-text">
+    <section className="pt-28 pb-8 sm:pt-32 sm:pb-10">
+      <div className="mx-auto max-w-4xl px-6 sm:px-8">
+        <nav className="mb-6 flex items-center gap-2 text-[11px] font-medium tracking-wide text-st-text-muted">
+          <Link href="/" className="inline-flex min-h-[44px] items-center transition-colors duration-300 hover:text-st-text">
             Home
           </Link>
           <span className="text-st-text-muted/40">/</span>
@@ -265,120 +243,28 @@ function SolutionHero({
           <span className="text-st-text-muted/60">{solution.title}</span>
         </nav>
 
-        {/* Tier badge */}
-        <span
-          className={`mb-5 inline-block rounded-full px-3 py-1 text-[10px] font-medium tracking-[0.15em] uppercase ${tierMeta.badgeClass}`}
-        >
-          {tierMeta.label}
-        </span>
-
-        {/* Icon */}
-        <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-st-surface text-st-text-muted">
-          {icon}
-        </div>
-
-        {/* Title */}
-        <h1 className="mb-4 font-display text-3xl tracking-[-0.02em] text-st-text sm:text-4xl md:text-5xl lg:text-6xl">
-          {solution.title}
-        </h1>
-
-        {/* Tagline */}
-        <p className="mx-auto mb-8 max-w-2xl text-base font-normal leading-relaxed text-st-text-muted sm:text-lg">
-          {solution.tagline}
-        </p>
-
-        {/* CTA buttons */}
-        <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-          <button
-            onClick={AI_CHAT_ENABLED ? onAskAi : () => { window.location.href = "/#contact"; }}
-            className="hero-btn-primary relative overflow-hidden rounded-xl px-7 py-3 text-sm font-normal tracking-wide text-st-text transition-all duration-500"
-          >
-            <span className="relative z-10">Get a Free Demo</span>
-          </button>
-          <Link
-            href="/solutions"
-            className="hero-btn-secondary relative overflow-hidden rounded-xl px-7 py-3 text-sm font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
-          >
-            <span className="relative z-10">View All Solutions</span>
-          </Link>
+        <div className="flex items-center gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-st-surface text-st-text-muted">
+            {icon}
+          </div>
+          <div>
+            <div className="mb-1.5 flex flex-wrap items-center gap-2">
+              <h1 className="font-display text-xl tracking-[-0.02em] text-st-text sm:text-2xl">
+                {solution.title}
+              </h1>
+              <span
+                className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-medium tracking-[0.15em] uppercase ${tierMeta.badgeClass}`}
+              >
+                {tierMeta.label}
+              </span>
+            </div>
+            <p className="text-sm font-normal leading-relaxed text-st-text-muted">
+              {solution.tagline}
+            </p>
+          </div>
         </div>
       </div>
     </section>
-  );
-}
-
-/* ─── Problem Section ──────────────────────────────────────────────────── */
-function ProblemSection({ problem }: { problem: string }) {
-  const [ref, isInView] = useInView({ threshold: 0.15 });
-
-  return (
-    <section className="py-16 sm:py-20">
-      <div className="mx-auto max-w-3xl px-6 sm:px-8">
-        <div
-          ref={ref}
-          className={`${isInView ? "reveal visible" : "reveal"}`}
-        >
-          <SectionHeader
-            label="The Problem"
-            title="Why this matters"
-            subtitle={problem}
-          />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── How It Works Section ─────────────────────────────────────────────── */
-function HowItWorksSection({
-  steps,
-}: {
-  steps: Solution["steps"];
-}) {
-  return (
-    <section className="py-16 sm:py-20">
-      <div className="mx-auto max-w-5xl px-6 sm:px-8">
-        <SectionHeader
-          label="Process"
-          title="How it works"
-          subtitle="A simple, clear path from problem to solution."
-        />
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {steps.map((step, i) => (
-            <StepCard key={i} step={step} index={i} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function StepCard({
-  step,
-  index,
-}: {
-  step: Solution["steps"][number];
-  index: number;
-}) {
-  const [ref, isInView] = useInView({ threshold: 0.1 });
-
-  return (
-    <div
-      ref={ref}
-      className={`card group rounded-xl p-5 sm:p-6 ${isInView ? "reveal visible" : "reveal"}`}
-      style={{ transitionDelay: `${index * 80}ms` }}
-    >
-      <span className="mb-3 block font-display text-2xl text-st-gold-light/30">
-        {STEP_NUMBERS[index]}
-      </span>
-      <h3 className="mb-2 text-sm font-medium tracking-wide text-st-text">
-        {step.title}
-      </h3>
-      <p className="text-[13px] font-normal leading-relaxed text-st-text-muted">
-        {step.description}
-      </p>
-    </div>
   );
 }
 

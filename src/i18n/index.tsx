@@ -54,6 +54,16 @@ export async function loadCatalogue(locale: Locale): Promise<void> {
   }
 }
 
+/**
+ * A locale's strings if already resolved, without triggering a fetch —
+ * for a component that wants to preview another language's text (e.g. on
+ * hover) without switching the page's actual locale via I18nProvider.
+ * Pair with loadCatalogue(locale) to warm the cache first.
+ */
+export function getCatalogue(locale: Locale): Messages | undefined {
+  return CATALOGUES[locale];
+}
+
 interface I18nValue {
   locale: Locale;
   /** The strings for the active locale. */
