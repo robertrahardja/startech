@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useI18n } from "../i18n";
 import { useSnapRail } from "../hooks/useSnapRail";
 import { haptic } from "../lib/haptics";
@@ -39,13 +39,28 @@ const ICONS: Record<string, React.ReactNode> = {
 function ProductCard({
   product,
   index,
+  activeRailIndex,
 }: {
   product: Product;
   index: number;
+  /** Which card the mobile rail is currently snapped to. Only meaningful
+   *  below sm:, where the rail is an actual swipeable strip — above that
+   *  it's a static grid and every card can stay open independently. */
+  activeRailIndex: number;
 }) {
   const [ref, isInView] = useInView({ threshold: 0.1 });
   const [open, setOpen] = useState(false);
   const hasDetails = product.details && product.details.length > 0;
+
+  // Swiping to a different card on the mobile rail collapses this one
+  // first, rather than leaving every previously-opened card expanded as
+  // you swipe through.
+  useEffect(() => {
+    if (activeRailIndex === index) return;
+    if (!window.matchMedia("(min-width: 640px)").matches) {
+      setOpen(false);
+    }
+  }, [activeRailIndex, index]);
 
   const toggleOpen = () => {
     haptic("select");
@@ -163,7 +178,7 @@ export default function Products() {
             } as unknown as Product;
             return (
             <div key={copy.title} className="snap-item" data-snap-index={i}>
-              <ProductCard product={product} index={i} />
+              <ProductCard product={product} index={i} activeRailIndex={active} />
             </div>
             );
           })}

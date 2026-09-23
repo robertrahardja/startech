@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useI18n } from "../i18n";
 import { useInView } from "../hooks/useInView";
 import { useSnapRail } from "../hooks/useSnapRail";
@@ -31,7 +31,7 @@ export default function Industries() {
         >
           {t.industries.items.map((industry, i) => (
             <div key={industry.name} className="snap-item" data-snap-index={i}>
-              <IndustryCard industry={industry} index={i} />
+              <IndustryCard industry={industry} index={i} activeRailIndex={active} />
             </div>
           ))}
         </div>
@@ -58,14 +58,29 @@ export default function Industries() {
 function IndustryCard({
   industry,
   index,
+  activeRailIndex,
 }: {
   industry: Industry;
   index: number;
+  /** Which card the mobile rail is currently snapped to. Only meaningful
+   *  below sm:, where the rail is an actual swipeable strip — above that
+   *  it's a static grid and every card can stay open independently. */
+  activeRailIndex: number;
 }) {
   const [ref, isInView] = useInView({ threshold: 0.1 });
   const [open, setOpen] = useState(false);
 
   const hasDetails = industry.details && industry.details.length > 0;
+
+  // Swiping to a different card on the mobile rail collapses this one
+  // first, rather than leaving every previously-opened card expanded as
+  // you swipe through.
+  useEffect(() => {
+    if (activeRailIndex === index) return;
+    if (!window.matchMedia("(min-width: 640px)").matches) {
+      setOpen(false);
+    }
+  }, [activeRailIndex, index]);
 
   const toggleOpen = () => {
     haptic("select");
