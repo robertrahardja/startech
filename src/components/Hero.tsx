@@ -351,22 +351,31 @@ function HeroLanguageStrip({
 
   return (
     <div
-      className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1.5 animate-fade-in sm:mt-7"
+      className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 animate-fade-in sm:mt-7"
       style={{ animationDelay: "0.32s" }}
     >
-      <span className="text-[11px] font-normal tracking-wide text-st-text-muted/60 sm:text-[10.5px]">
-        {label}
-      </span>
-      {/* text-wrap: balance (via .text-balance) needs an ordinary inline
-          flow to work with — flexbox's own line-wrapping ignores it — so
-          this is a plain inline block of <a> tags, not flex/flex-wrap.
-          That's what stops a lone language stranding itself alone on the
-          last line at odd widths: the browser balances line lengths
-          instead of packing every line as full as it'll go. */}
-      <nav aria-label="Language" className="text-balance">
-        {LOCALES.map((code, i) => (
-          <span key={code} className="inline-block whitespace-nowrap">
+      {/* The language list itself: a stable column whose own wrapping never
+          changes shape, whether or not a confirm button is showing. Earlier
+          this put the confirm button inline right after its language, which
+          read well but meant the row's own text could reflow (a language
+          moving lines) the moment a language got armed. Keeping the list
+          and the button in separate flex columns means tapping a language
+          only ever adds a button to the right — it never reshuffles the
+          list underneath it. */}
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
+        <span className="text-[11px] font-normal tracking-wide text-st-text-muted/60 sm:text-[10.5px]">
+          {label}
+        </span>
+        {/* text-wrap: balance (via .text-balance) needs an ordinary inline
+            flow to work with — flexbox's own line-wrapping ignores it — so
+            this is a plain inline block of <a> tags, not flex/flex-wrap.
+            That's what stops a lone language stranding itself alone on the
+            last line at odd widths: the browser balances line lengths
+            instead of packing every line as full as it'll go. */}
+        <nav aria-label="Language" className="text-balance">
+          {LOCALES.map((code) => (
             <a
+              key={code}
               href={localePath(code, path)}
               hrefLang={LOCALE_META[code].htmlLang}
               aria-current={code === locale ? "true" : undefined}
@@ -377,25 +386,22 @@ function HeroLanguageStrip({
               // Touch never navigates directly from this link — the links
               // sit close together, and a reflexive double-tap (checking a
               // tap registered, a stray second touch) would otherwise switch
-              // the page's language by accident. A tap here only previews;
-              // actually switching needs the separate "Read in ..." button
-              // that appears right after it, a real second target rather
-              // than a second tap on the same small link.
+              // the page's language by accident. A tap here only previews
+              // and arms the confirm button in the column to the right;
+              // nothing in this list ever navigates on its own. Tapping the
+              // language the page is already in has nothing to confirm —
+              // "Read this page in English" while already reading it in
+              // English is nonsense — so it never arms.
               onTouchEnd={(e) => {
                 e.preventDefault();
+                if (code === locale) return;
                 setArmed(code);
                 onPreview(code);
               }}
-              // The separator lives on the link itself, and each link is
-              // now wrapped in its own <span> (so the "Read in..." button
-              // can travel with its language instead of wrapping onto a
-              // line by itself) — first:before:content-none no longer
-              // means "first language overall" once every <a> is its
-              // parent span's only/first child, so the true first item is
-              // singled out by index instead.
-              className={`text-[11px] font-normal tracking-wide transition-colors duration-300 before:mx-2 before:text-st-text-muted/30 before:content-['·'] sm:text-[10.5px] ${
-                i === 0 ? "before:content-none before:mx-0" : ""
-              } ${
+              // The separator lives on the link itself (not a sibling span), so
+              // wrapping the row can never strand a lone dot at a line start —
+              // it travels with whichever word ends up starting the new line.
+              className={`inline-block text-[11px] font-normal leading-[1.9] tracking-wide transition-colors duration-300 before:mx-2 before:text-st-text-muted/30 before:content-['·'] first:before:content-none first:before:mx-0 sm:text-[10.5px] ${
                 code === locale
                   ? "text-st-text-muted"
                   : armed === code
@@ -405,23 +411,24 @@ function HeroLanguageStrip({
             >
               {LOCALE_META[code].label}
             </a>
+          ))}
+        </nav>
+      </div>
 
-            {/* Touch only in practice — a mouse never sets `armed`, since a
-                click on the link above already navigates immediately
-                there. Sits right after the armed language, on the same
-                line, so it reads as "this one, confirmed" rather than a
-                detached instruction elsewhere on the page. */}
-            {armed === code && (
-              <a
-                href={localePath(code, path)}
-                className="ml-2 text-[11px] font-medium text-st-blue-light underline underline-offset-2 sm:text-[10.5px]"
-              >
-                {readInLanguage.replace("{language}", LOCALE_META[code].label)}
-              </a>
-            )}
-          </span>
-        ))}
-      </nav>
+      {/* Touch only in practice — a mouse never sets `armed`, since a click
+          on the link above already navigates immediately there. Its own
+          column, so it appears/disappears without ever touching the
+          language list's own layout. code !== locale guards the same
+          "already reading it in this language" case a second way, in case
+          `armed` ever holds the current locale from a stale transition. */}
+      {armed && armed !== locale && (
+        <a
+          href={localePath(armed, path)}
+          className="pressable inline-flex items-center rounded-full bg-st-blue px-3 py-1 text-[10.5px] font-medium text-white transition-colors duration-300 hover:bg-st-blue-light sm:text-[10px]"
+        >
+          {readInLanguage.replace("{language}", LOCALE_META[armed].label)}
+        </a>
+      )}
     </div>
   );
 }
