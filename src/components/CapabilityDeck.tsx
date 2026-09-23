@@ -16,7 +16,7 @@ export default function CapabilityDeck() {
   const [ref, isInView] = useInView({ threshold: 0.2 });
 
   return (
-    <section id="capability-deck" className="relative py-20 sm:py-24">
+    <section className="relative py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <div
           ref={ref}

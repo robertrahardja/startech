@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import Hero from "../components/Hero";
 import Qualify from "../components/Qualify";
 import CaseStudies from "../components/CaseStudies";
@@ -14,6 +14,65 @@ import Contact from "../components/Contact";
  * main bundle for every visitor.
  */
 const CapabilityDeck = lazy(() => import("../components/CapabilityDeck"));
+
+/**
+ * Mounts `children` only once the sentinel is near the viewport — not on
+ * first render. React.lazy() only keeps a component's code out of the main
+ * bundle; it still fetches that code the instant the component is actually
+ * rendered, Suspense or not. CapabilityDeck sat unconditionally in the JSX
+ * below, so every visitor downloaded it (and the motion/react it pulls in)
+ * immediately after the main bundle, whether or not they ever scrolled
+ * eight sections down to see it — an extra ~130KB blocking chunk for
+ * something most of the page's weight was supposed to avoid.
+ *
+ * Deliberately not useInView: that hook has a 3s fallback that forces
+ * isInView true regardless of actual visibility, which is right for a
+ * reveal animation (content must not stay invisible forever if the
+ * observer fails) but wrong here — it would make this gate expire for
+ * nearly every visitor before they'd scrolled anywhere near it, which
+ * defeats the entire point of deferring the fetch.
+ */
+function DeferredMount({
+  id,
+  children,
+}: {
+  id: string;
+  children: React.ReactNode;
+}) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [shouldMount, setShouldMount] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || shouldMount) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldMount(true);
+          observer.disconnect();
+        }
+      },
+      // Starts the fetch a little before the section is actually on
+      // screen, so scrolling to it doesn't show a bare loading gap.
+      { rootMargin: "400px 0px" }
+    );
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [shouldMount]);
+
+  // The id lives on this sentinel, not on anything inside `children` — the
+  // hero's "Download the deck" link points at #capability-deck, and that
+  // target has to exist before the real section does, or scrolling to it
+  // finds nothing, never triggers the observer, and the anchor link goes
+  // nowhere.
+  return (
+    <div id={id} ref={ref}>
+      {shouldMount ? children : null}
+    </div>
+  );
+}
 
 interface HomePageProps {
   onAskAi: () => void;
@@ -52,9 +111,11 @@ export default function HomePage({ onAskAi }: HomePageProps) {
       <Industries />
       <Approach />
       <Objections />
-      <Suspense fallback={<div className="min-h-[20vh]" aria-hidden="true" />}>
-        <CapabilityDeck />
-      </Suspense>
+      <DeferredMount id="capability-deck">
+        <Suspense fallback={<div className="min-h-[20vh]" aria-hidden="true" />}>
+          <CapabilityDeck />
+        </Suspense>
+      </DeferredMount>
       <Contact />
     </>
   );
