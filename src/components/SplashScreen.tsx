@@ -21,9 +21,11 @@ const FADE_MS = 900;
  * of the file, clipped to the logo's own paths, which turned out fragile
  * (SVG gradients defined relative to a moving element don't sweep the way
  * a transform suggests, and it read as a glitch rather than light). A
- * plain radial glow sitting behind the logo — see .splash-glow below —
+ * plain radial glow starting behind the logo — see .splash-glow below —
  * gets the same "catching light, once" feeling without touching the
- * logo's own file at all.
+ * logo's own file at all, and it's sized to the viewport (not the logo's
+ * own wrapper) so it can bloom out to cover the whole screen and clear,
+ * rather than staying a small halo around the mark.
  *
  * Renders on top of the real page from the first frame rather than
  * blocking on anything — the homepage underneath is already there,
@@ -69,8 +71,8 @@ export default function SplashScreen() {
         fading ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
+      <div aria-hidden="true" className="splash-glow" />
       <div className="relative flex w-1/2 items-center justify-center">
-        <div aria-hidden="true" className="splash-glow" />
         <img
           src="/assets/startech-logo-full.svg"
           alt=""

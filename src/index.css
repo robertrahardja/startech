@@ -1473,40 +1473,46 @@ a:hover .deck-text-shine {
 }
 
 /*
- * A radial glow sitting behind the splash logo, flaring outward once —
- * not a shine on the logo's own surface (two earlier attempts at that,
- * a CSS overlay and an animated SVG gradient inside a duplicated logo
- * file, both turned out fragile or visibly wrong), just light behind it
- * expanding past its edges and fading, the way a spotlight catching
- * something reads before your eye settles on the thing itself.
+ * A radial glow that starts small behind the splash logo and blooms out
+ * to cover the whole screen before clearing — not a shine on the logo's
+ * own surface (two earlier attempts at that, a CSS overlay and an
+ * animated SVG gradient inside a duplicated logo file, both turned out
+ * fragile or visibly wrong), just light behind it expanding past its
+ * edges, the way a spotlight catching something reads before your eye
+ * settles on the thing itself — except here it keeps going, so the
+ * light washes the whole screen for a moment and fades, a single
+ * "wow" beat before the reveal.
  *
- * Sized well past the logo (140% of this wrapper, which is itself sized
- * to the logo) so the glow is felt spilling outward, not read as a glow
- * exactly the logo's own shape. z-index below the <img> (which gets
- * relative + no z-index override, so it stacks above in normal document
- * order) keeps it strictly behind.
+ * Fixed and centred on the viewport (not the logo's own wrapper) so it
+ * can scale up far enough to reach every corner regardless of screen
+ * size: vmax means the end size is always at least as large as the
+ * screen's longer edge. z-index 0 vs. the logo wrapper's implicit
+ * stacking (a later sibling in normal document order) keeps it behind.
  */
 .splash-glow {
-  position: absolute;
-  inset: -20%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
   z-index: 0;
+  width: 60vmax;
+  height: 60vmax;
   border-radius: 9999px;
   pointer-events: none;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.35) 0%,
-    rgba(155, 107, 216, 0.22) 35%,
-    transparent 70%
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(155, 107, 216, 0.28) 30%,
+    transparent 68%
   );
   opacity: 0;
-  transform: scale(0.6);
+  transform: translate(-50%, -50%) scale(0.12);
   animation: splash-glow-pulse 3.3s cubic-bezier(0.16, 1, 0.3, 1) 300ms 1 both;
 }
 
 @keyframes splash-glow-pulse {
-  0% { opacity: 0; transform: scale(0.6); }
-  20% { opacity: 1; }
-  100% { opacity: 0; transform: scale(1.4); }
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.12); }
+  22% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.2); }
 }
 
 @media (prefers-reduced-motion: reduce) {
