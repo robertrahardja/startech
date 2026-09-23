@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import AiIcon from "./AiIcon";
 import Link from "./solutions/Link";
 import { AI_CHAT_ENABLED } from "../lib/features";
@@ -23,12 +23,44 @@ export default function Nav({ onAskAi }: NavProps) {
   const { t } = useI18n();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  // Mobile only (see the header's md: reset below): hidden while scrolling
+  // down, so the bar isn't permanently spending a slice of a small screen
+  // on a phone; shown again on any upward scroll, since that's the
+  // universal signal for "I want to see where I am" — a visitor orienting
+  // themselves shouldn't have to scroll back to the very top first.
+  const [navHidden, setNavHidden] = useState(false);
+  const lastY = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
+    lastY.current = window.scrollY;
+
+    const handleScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 40);
+
+      // Ignore the top of the page entirely — the bar should never hide
+      // itself before a visitor has even started reading, and overscroll
+      // bounce near y=0 on iOS would otherwise flicker it.
+      if (y < 80) {
+        setNavHidden(false);
+      } else if (y > lastY.current) {
+        setNavHidden(true);
+      } else if (y < lastY.current) {
+        setNavHidden(false);
+      }
+
+      lastY.current = y;
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // A menu you just opened should never be the thing that then hides
+  // itself out from under you.
+  useEffect(() => {
+    if (mobileOpen) setNavHidden(false);
+  }, [mobileOpen]);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -114,9 +146,13 @@ export default function Nav({ onAskAi }: NavProps) {
         </div>
       )}
 
-      {/* Header bar */}
+      {/* Header bar. The translate-y hide/show is mobile only — md:translate-y-0
+          unconditionally overrides it, since a desktop nav has the room to
+          just stay put. */}
       <header
-        className={`fixed top-0 left-0 z-50 w-full transition-all duration-500 ${
+        className={`fixed top-0 left-0 z-50 w-full transition-all duration-500 md:translate-y-0 ${
+          navHidden ? "-translate-y-full" : "translate-y-0"
+        } ${
           scrolled
             ? "nav-blur border-b border-st-border bg-st-bg/80"
             : "bg-transparent"
