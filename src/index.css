@@ -1481,3 +1481,145 @@ a:hover .deck-text-shine {
   }
 }
 
+
+/* ─── Splash screen ───────────────────────────────────────────────────────
+ *
+ * The first-load moment on mobile. Everything here animates transform and
+ * opacity only — deliberately. Two earlier passes at this screen built the
+ * drama out of a radial-gradient glow, and it didn't render on iPhone
+ * Safari, which this environment can't test directly (see the history on
+ * SplashScreen.tsx). Transform and opacity are the two properties that are
+ * reliably GPU-composited everywhere, so this stays within them: no
+ * mix-blend-mode, no masked gradients, no filter blooms.
+ *
+ * The sequence is three overlapping beats inside ~1.1s:
+ *   the mark rises and settles   (splash-mark)
+ *   a light sweeps across it     (splash-sweep)
+ *   the whole screen lifts away  (splash-exit)
+ */
+
+/* The mark arrives slightly small and low, then overshoots a touch before
+   settling — the overshoot is what makes it feel like an object with weight
+   rather than a fade-in. */
+.splash-mark {
+  animation: splash-mark 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+}
+
+@keyframes splash-mark {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0) scale(0.92);
+  }
+  55% {
+    opacity: 1;
+  }
+  70% {
+    transform: translate3d(0, 0, 0) scale(1.025);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* A narrow band of light crossing the lockup, once. Sized in percentages of
+   its own box so it scales with the logo at any width.
+
+   plus-lighter is what makes this *light* rather than a panel: a plain
+   translucent white div over a black ground composites to grey, so the
+   first version of this read as a dark bar sweeping across and dimming the
+   mark — the exact opposite of the intent. plus-lighter adds the band's
+   channels to what's beneath, so black stays black and only the artwork
+   brightens. Supported in iOS Safari 16+; where it isn't, the rule is
+   dropped and the band simply doesn't show (opacity stays low enough that
+   the fallback is a faint haze, not the dark bar). */
+.splash-sweep {
+  position: absolute;
+  inset: 0;
+  /* Masked to the logo itself, so the light only exists where the artwork
+     is. Without this the element's own box shows as a rectangle with hard
+     edges cutting across the mark and the wordmark — the band has to be
+     clipped to the shape, not to a container. */
+  -webkit-mask-image: url("/assets/startech-logo-full.svg");
+  mask-image: url("/assets/startech-logo-full.svg");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  opacity: 0;
+  animation: splash-sweep 750ms cubic-bezier(0.4, 0, 0.2, 1) 260ms both;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+/* The moving band lives on a child, so the mask above stays put while this
+   travels underneath it. */
+.splash-sweep::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -45%;
+  width: 45%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.10) 42%,
+    rgba(255, 255, 255, 0.70) 50%,
+    rgba(255, 255, 255, 0.10) 58%,
+    transparent 100%
+  );
+  animation: splash-sweep-band 750ms cubic-bezier(0.4, 0, 0.2, 1) 260ms both;
+}
+
+/* Masking is what keeps this safe: the band is only ever drawn inside the
+   logo's own pixels, so there is no rectangle to leak regardless of how the
+   browser composites it. No blend mode needed. */
+
+/* The masked container only fades in and out... */
+@keyframes splash-sweep {
+  0%   { opacity: 0; }
+  25%  { opacity: 1; }
+  75%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ...while the band inside it crosses the full width of the mark. */
+@keyframes splash-sweep-band {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(320%, 0, 0); }
+}
+
+/* The exit. Rather than only fading, the screen scales up very slightly as
+   it goes, so it reads as lifting away from the page underneath instead of
+   dissolving in place. */
+.splash-exit {
+  animation: splash-exit 420ms cubic-bezier(0.4, 0, 1, 1) both;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+@keyframes splash-exit {
+  0%   { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.06); }
+}
+
+/* Under reduced motion the global block above already flattens every
+   duration to ~0, which would leave the mark mid-keyframe. Pin the end
+   state explicitly so it shows as a plain, still, fully-visible lockup. */
+@media (prefers-reduced-motion: reduce) {
+  .splash-mark {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  .splash-sweep,
+  .splash-sweep::before {
+    animation: none !important;
+    opacity: 0;
+  }
+}

@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 
 const SEEN_KEY = "startech-splash-seen";
-// Just long enough to register as a deliberate beat, not a stall. The
-// glow/shine effect that used to justify a longer hold (giving it room to
-// bloom out) is gone — it didn't render on iPhone Safari, a browser this
-// environment can't directly test, so rather than keep tuning a radial-
-// gradient animation blind, it's cut entirely. What's left is the logo
-// itself, held briefly and cleared — nothing left that can silently fail
-// on a browser this session can't see.
-const HOLD_MS = 700;
-const FADE_MS = 400;
+// Long enough for the mark to rise, settle, and take one pass of light
+// before the screen lifts away — the three beats defined in index.css
+// (.splash-mark 900ms, .splash-sweep 750ms from 260ms, .splash-exit 420ms).
+// The hold covers the two entrance beats; the exit overlaps the tail of the
+// sweep rather than waiting for it, so the screen is already leaving while
+// the light is still finishing. Total ~1.5s.
+//
+// An earlier version of this screen built its drama from a radial-gradient
+// glow, which didn't render on iPhone Safari — a browser this environment
+// can't test directly — and was cut. Everything here animates transform and
+// opacity only, the two properties that composite reliably everywhere, so
+// there is nothing left that can silently fail on an untestable browser.
+const HOLD_MS = 1080;
+const FADE_MS = 420;
 
 /**
  * A black screen with the full lockup (mark + "StarTech Innovation")
@@ -63,16 +68,19 @@ export default function SplashScreen() {
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[100] flex items-center justify-center bg-st-bg px-6 transition-opacity duration-[400ms] ease-out sm:hidden ${
-        fading ? "pointer-events-none opacity-0" : "opacity-100"
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-st-bg px-6 sm:hidden ${
+        fading ? "splash-exit" : ""
       }`}
     >
-      <div className="relative flex w-1/2 items-center justify-center">
+      {/* The sweep is masked to the logo's own shape (see .splash-sweep in
+          index.css), so this wrapper needs no clipping of its own. */}
+      <div className="splash-mark relative flex w-1/2 items-center justify-center">
         <img
           src="/assets/startech-logo-full.svg"
           alt=""
           className="relative w-full"
         />
+        <div aria-hidden="true" className="splash-sweep" />
       </div>
     </div>
   );
