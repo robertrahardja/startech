@@ -25,9 +25,13 @@ export default function Objections() {
   return (
     <section id="objections" className="relative py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
+        {/* Centred, not left-aligned. Every other section either fills the
+            7xl container or pairs a left intro with a full-width grid
+            (Qualify); here every child is constrained, so pinning them left
+            left a 480px gutter down the right of the whole section. */}
         <div
           ref={ref}
-          className={`mb-12 max-w-2xl ${isInView ? "reveal visible" : "reveal"}`}
+          className={`mx-auto mb-12 max-w-3xl ${isInView ? "reveal visible" : "reveal"}`}
         >
           <div className="mb-4 flex items-center gap-3">
             <span className="brand-rule h-px w-10" />
@@ -43,7 +47,7 @@ export default function Objections() {
           </p>
         </div>
 
-        <div className="max-w-3xl space-y-3">
+        <div className="mx-auto max-w-3xl space-y-3">
           {t.objections.items.map((objection, i) => {
             const isOpen = open === i;
             return (
