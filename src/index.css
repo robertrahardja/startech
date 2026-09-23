@@ -1473,15 +1473,45 @@ a:hover .deck-text-shine {
 }
 
 /*
- * The splash logo's shine now lives inside startech-logo-splash.svg
- * itself (a dedicated copy — see SplashScreen.tsx), as a native
- * animateTransform clipped to the logo's own paths. Two things tried here
- * first didn't hold up: a plain inset: 0 rectangle lit the whole square
- * box the <img> sits in, not just the logo; a CSS mask-image referencing
- * the same file relies on the mask source's luminance, which the
- * gradient blob's colour (not just white/black) made unreliable.
- * Animating inside the SVG's own coordinate space means the shine is
- * clipped by the exact same path data the logo is drawn from — there is
- * no second approximation of the shape that could ever fall out of sync.
+ * A radial glow sitting behind the splash logo, flaring outward once —
+ * not a shine on the logo's own surface (two earlier attempts at that,
+ * a CSS overlay and an animated SVG gradient inside a duplicated logo
+ * file, both turned out fragile or visibly wrong), just light behind it
+ * expanding past its edges and fading, the way a spotlight catching
+ * something reads before your eye settles on the thing itself.
+ *
+ * Sized well past the logo (140% of this wrapper, which is itself sized
+ * to the logo) so the glow is felt spilling outward, not read as a glow
+ * exactly the logo's own shape. z-index below the <img> (which gets
+ * relative + no z-index override, so it stacks above in normal document
+ * order) keeps it strictly behind.
  */
+.splash-glow {
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(155, 107, 216, 0.22) 35%,
+    transparent 70%
+  );
+  opacity: 0;
+  transform: scale(0.6);
+  animation: splash-glow-pulse 1.1s cubic-bezier(0.16, 1, 0.3, 1) 300ms 1 both;
+}
+
+@keyframes splash-glow-pulse {
+  0% { opacity: 0; transform: scale(0.6); }
+  35% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-glow {
+    display: none;
+  }
+}
 

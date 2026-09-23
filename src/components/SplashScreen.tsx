@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 
 const SEEN_KEY = "startech-splash-seen";
-// Long enough to hold past the shine sweep baked into
-// startech-logo-splash.svg (0.5s begin + 1.3s duration) before the
-// fade-out starts — the shine finishing mid-fade would read as cut off
-// rather than complete.
-const HOLD_MS = 2000;
+// Long enough to hold past the glow pulse (see .splash-glow in index.css:
+// 300ms delay + 1.1s duration) before the fade-out starts.
+const HOLD_MS = 1800;
 const FADE_MS = 900;
 
 /**
@@ -17,16 +15,15 @@ const FADE_MS = 900;
  *
  * The logo is the whole point of this screen, so it's sized to fill the
  * width — the same 24px gutter every other section on the page uses
- * (px-6), not a small centred icon.
- *
- * startech-logo-splash.svg is a dedicated copy of startech-logo-full.svg
- * (the same file the Nav, Footer, and Hero business card use), not the
- * shared asset itself — it carries a self-playing shine baked in as a
- * native SVG animateTransform, clipped to the logo's own paths via
- * clipPath so light only ever sweeps across the real mark and wordmark,
- * never a bounding box. Baking that into the shared file would have made
- * every logo on the site shine on every page load; this copy exists so
- * only the splash does.
+ * (px-6), not a small centred icon. The original startech-logo-full.svg —
+ * the same file the Nav, Footer, and Hero business card use — not a copy:
+ * an earlier version tried animating a shine inside a dedicated duplicate
+ * of the file, clipped to the logo's own paths, which turned out fragile
+ * (SVG gradients defined relative to a moving element don't sweep the way
+ * a transform suggests, and it read as a glitch rather than light). A
+ * plain radial glow sitting behind the logo — see .splash-glow below —
+ * gets the same "catching light, once" feeling without touching the
+ * logo's own file at all.
  *
  * Renders on top of the real page from the first frame rather than
  * blocking on anything — the homepage underneath is already there,
@@ -72,11 +69,14 @@ export default function SplashScreen() {
         fading ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      <img
-        src="/assets/startech-logo-splash.svg"
-        alt=""
-        className="w-1/2"
-      />
+      <div className="relative flex w-1/2 items-center justify-center">
+        <div aria-hidden="true" className="splash-glow" />
+        <img
+          src="/assets/startech-logo-full.svg"
+          alt=""
+          className="relative w-full"
+        />
+      </div>
     </div>
   );
 }
