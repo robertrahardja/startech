@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 
 const SEEN_KEY = "startech-splash-seen";
-// Long enough to hold past the glow pulse (see .splash-glow in index.css:
-// 300ms delay + 3.3s duration) before the fade-out starts.
-const HOLD_MS = 3800;
-const FADE_MS = 900;
+// Just long enough to register as a deliberate beat, not a stall. The
+// glow/shine effect that used to justify a longer hold (giving it room to
+// bloom out) is gone — it didn't render on iPhone Safari, a browser this
+// environment can't directly test, so rather than keep tuning a radial-
+// gradient animation blind, it's cut entirely. What's left is the logo
+// itself, held briefly and cleared — nothing left that can silently fail
+// on a browser this session can't see.
+const HOLD_MS = 700;
+const FADE_MS = 400;
 
 /**
  * A black screen with the full lockup (mark + "StarTech Innovation")
@@ -16,16 +21,7 @@ const FADE_MS = 900;
  * The logo is the whole point of this screen, so it's sized to fill the
  * width — the same 24px gutter every other section on the page uses
  * (px-6), not a small centred icon. The original startech-logo-full.svg —
- * the same file the Nav, Footer, and Hero business card use — not a copy:
- * an earlier version tried animating a shine inside a dedicated duplicate
- * of the file, clipped to the logo's own paths, which turned out fragile
- * (SVG gradients defined relative to a moving element don't sweep the way
- * a transform suggests, and it read as a glitch rather than light). A
- * plain radial glow starting behind the logo — see .splash-glow below —
- * gets the same "catching light, once" feeling without touching the
- * logo's own file at all, and it's sized to the viewport (not the logo's
- * own wrapper) so it can bloom out to cover the whole screen and clear,
- * rather than staying a small halo around the mark.
+ * the same file the Nav, Footer, and Hero business card use — not a copy.
  *
  * Renders on top of the real page from the first frame rather than
  * blocking on anything — the homepage underneath is already there,
@@ -67,11 +63,10 @@ export default function SplashScreen() {
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[100] flex items-center justify-center bg-st-bg px-6 transition-opacity duration-[900ms] ease-out sm:hidden ${
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-st-bg px-6 transition-opacity duration-[400ms] ease-out sm:hidden ${
         fading ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      <div aria-hidden="true" className="splash-glow" />
       <div className="relative flex w-1/2 items-center justify-center">
         <img
           src="/assets/startech-logo-full.svg"
