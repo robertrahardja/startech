@@ -346,7 +346,12 @@ function HeroLanguageStrip({
   readInLanguage: string;
   onPreview: (locale: Locale | null) => void;
 }) {
-  const { path } = parseLocalePath(window.location.pathname);
+  // typeof window check, not a bare reference: this also runs during
+  // prerendering (see scripts/prerender.mjs), where there is no window.
+  // The homepage is the only prerendered route, so "/" is correct there.
+  const { path } = parseLocalePath(
+    typeof window === "undefined" ? "/" : window.location.pathname
+  );
   const [armed, setArmed] = useState<Locale | null>(null);
 
   return (

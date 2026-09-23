@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { resolve } from "path";
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
@@ -11,15 +11,21 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "dist",
+    outDir: isSsrBuild ? "dist-ssr" : "dist",
     sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          react: ["react", "react-dom"],
+    rollupOptions: isSsrBuild
+      ? {}
+      : // react/react-dom are externalized by default in SSR mode (Node
+        // resolves them itself), which conflicts with pinning them into a
+        // manual chunk — that grouping only makes sense for the real
+        // client bundle.
+        {
+          output: {
+            manualChunks: {
+              react: ["react", "react-dom"],
+            },
+          },
         },
-      },
-    },
   },
   server: {
     port: 5173,
@@ -30,4 +36,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

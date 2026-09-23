@@ -40,7 +40,13 @@ function resolvePage(pathname: string): Page {
  * popstate events the Link component dispatches on navigation.
  */
 function usePathname(): string {
-  const [pathname, setPathname] = useState(window.location.pathname);
+  // typeof window check, not a bare reference: this hook's initial value
+  // also runs during prerendering (see scripts/prerender.mjs), where there
+  // is no window at all. The homepage is the only route prerendered, so
+  // "/" is the only value that render ever actually needs.
+  const [pathname, setPathname] = useState(
+    typeof window === "undefined" ? "/" : window.location.pathname
+  );
 
   useEffect(() => {
     const handlePopState = () => setPathname(window.location.pathname);

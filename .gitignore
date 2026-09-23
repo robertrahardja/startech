@@ -28,6 +28,9 @@ yarn-error.log*
 
 # Build output
 dist/
+# Intermediate SSR build for scripts/prerender.mjs — never deployed, and
+# the script removes it itself once it's read entry-server.js out of it.
+dist-ssr/
 build/
 .cache/
 
