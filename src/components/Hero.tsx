@@ -352,7 +352,13 @@ function HeroLanguageStrip({
       <span className="text-[11px] font-normal tracking-wide text-st-text-muted/60 sm:text-[10.5px]">
         {label}
       </span>
-      <nav aria-label="Language" className="flex flex-wrap items-center gap-y-1.5">
+      {/* text-wrap: balance (via .text-balance) needs an ordinary inline
+          flow to work with — flexbox's own line-wrapping ignores it — so
+          this is a plain inline block of <a> tags, not flex/flex-wrap.
+          That's what stops a lone language stranding itself alone on the
+          last line at odd widths: the browser balances line lengths
+          instead of packing every line as full as it'll go. */}
+      <nav aria-label="Language" className="text-balance">
         {LOCALES.map((code) => (
           <a
             key={code}
@@ -378,7 +384,7 @@ function HeroLanguageStrip({
             // The separator lives on the link itself (not a sibling span), so
             // wrapping the row can never strand a lone dot at a line start —
             // it travels with whichever word ends up starting the new line.
-            className={`text-[11px] font-normal tracking-wide transition-colors duration-300 before:mx-2 before:text-st-text-muted/30 before:content-['·'] first:before:content-none first:before:mx-0 sm:text-[10.5px] ${
+            className={`inline-block text-[11px] font-normal leading-[1.9] tracking-wide transition-colors duration-300 before:mx-2 before:text-st-text-muted/30 before:content-['·'] first:before:content-none first:before:mx-0 sm:text-[10.5px] ${
               code === locale
                 ? "text-st-text-muted"
                 : armed === code
