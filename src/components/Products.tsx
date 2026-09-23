@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useI18n } from "../i18n";
-import { useSnapRail, useTapGuard } from "../hooks/useSnapRail";
+import { useSnapRail } from "../hooks/useSnapRail";
 import { haptic } from "../lib/haptics";
 import { useInView } from "../hooks/useInView";
 import type { Product } from "../types";
@@ -39,21 +39,18 @@ const ICONS: Record<string, React.ReactNode> = {
 function ProductCard({
   product,
   index,
-  railRef,
 }: {
   product: Product;
   index: number;
-  railRef: React.RefObject<HTMLDivElement | null>;
 }) {
   const [ref, isInView] = useInView({ threshold: 0.1 });
   const [open, setOpen] = useState(false);
   const hasDetails = product.details && product.details.length > 0;
 
-  // Pointer-based so a swipe across the rail does not toggle the card.
-  const tap = useTapGuard(() => {
+  const toggleOpen = () => {
     haptic("select");
     setOpen((o) => !o);
-  }, railRef);
+  };
 
   const spanClass =
     product.span === "wide"
@@ -121,7 +118,7 @@ function ProductCard({
                 type="button"
                 aria-expanded={open}
                 aria-controls={`product-details-${index}`}
-                {...tap}
+                onClick={toggleOpen}
                 className="pressable ml-auto flex items-center gap-1 text-[11px] font-medium tracking-[0.15em] uppercase text-st-text-muted/80 transition-colors duration-300 hover:text-st-gold-light"
               >
                 {open ? "Hide" : "Details"}
@@ -166,11 +163,7 @@ export default function Products() {
             } as unknown as Product;
             return (
             <div key={copy.title} className="snap-item" data-snap-index={i}>
-              <ProductCard
-                product={product}
-                index={i}
-                railRef={railRef}
-              />
+              <ProductCard product={product} index={i} />
             </div>
             );
           })}
