@@ -117,7 +117,7 @@ export default function Hero({ onAskAi }: HeroProps) {
         {/* Eyebrow */}
         <div
           className="mb-6 flex items-center gap-2.5 animate-fade-in sm:mb-8 sm:gap-3"
-          style={{ animationDelay: "0.05s" }}
+          style={{ animationDelay: "0.02s" }}
         >
           <span className="brand-rule h-px w-8 sm:w-10" />
           <span className="whitespace-nowrap text-[10px] font-medium tracking-[0.08em] uppercase text-st-text-muted sm:text-[10px] sm:tracking-[0.22em]">
@@ -160,7 +160,7 @@ export default function Hero({ onAskAi }: HeroProps) {
         {/* Sub */}
         <p
           className="mt-6 max-w-2xl text-[1.0625rem] font-normal leading-[1.55] text-st-text-muted animate-fade-in-up sm:mt-8 sm:text-base sm:leading-[1.7] md:text-lg"
-          style={{ animationDelay: "0.15s" }}
+          style={{ animationDelay: "0.05s" }}
         >
           {t.hero.sub}
         </p>
@@ -170,7 +170,7 @@ export default function Hero({ onAskAi }: HeroProps) {
             equally-loud blocks stacked on top of each other. */}
         <div
           className="mt-8 flex flex-col items-stretch gap-2.5 animate-fade-in-up sm:mt-12 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3"
-          style={{ animationDelay: "0.25s" }}
+          style={{ animationDelay: "0.09s" }}
         >
           <a
             href="#contact"
@@ -239,7 +239,7 @@ export default function Hero({ onAskAi }: HeroProps) {
 
         <p
           className="mt-5 min-h-[2.6em] text-[12.5px] font-normal leading-relaxed tracking-wide text-st-text-muted/85 transition-opacity duration-200 animate-fade-in sm:min-h-[2.2em] sm:text-[11px]"
-          style={{ animationDelay: "0.3s" }}
+          style={{ animationDelay: "0.15s" }}
         >
           {noteText}
         </p>
@@ -247,7 +247,7 @@ export default function Hero({ onAskAi }: HeroProps) {
         {/* Proof strip */}
         <div
           className="mt-11 grid max-w-3xl grid-cols-2 gap-x-6 gap-y-7 border-t border-st-border pb-16 pt-7 animate-fade-in sm:mt-16 sm:grid-cols-4 sm:gap-x-8 sm:pb-0 sm:pt-8"
-          style={{ animationDelay: "0.4s" }}
+          style={{ animationDelay: "0.18s" }}
         >
           {[
             { figure: t.hero.proof.yearsFigure, label: t.hero.proof.yearsLabel },
@@ -258,7 +258,7 @@ export default function Hero({ onAskAi }: HeroProps) {
             <div
               key={p.label}
               className="figure-in"
-              style={{ animationDelay: `${0.55 + i * 0.09}s` }}
+              style={{ animationDelay: `${0.24 + i * 0.04}s` }}
             >
               <div className="font-display text-[2rem] leading-none tracking-[-0.02em] text-st-text sm:text-2xl md:text-3xl">
                 {p.figure}
@@ -352,7 +352,7 @@ function HeroLanguageStrip({
   return (
     <div
       className="mt-6 flex flex-col gap-1.5 animate-fade-in sm:mt-7 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-3 sm:gap-y-2"
-      style={{ animationDelay: "0.32s" }}
+      style={{ animationDelay: "0.13s" }}
     >
       {/* Mobile: the label and the confirm button share their own row,
           entirely separate from the language list below it — the button
