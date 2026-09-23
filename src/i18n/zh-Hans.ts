@@ -93,6 +93,7 @@ export const zhHans: Messages = {
     before: "此前状况",
     built: "我们做了什么",
     result: "成果",
+    details: "详情",
     disclaimer:
       "涉及保密协议的项目不披露客户名称。文中数据来自已交付的系统，可在通话中详细说明。",
     cases: [

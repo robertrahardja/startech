@@ -91,6 +91,7 @@ export const en = {
     before: "Before",
     built: "What we built",
     result: "Result",
+    details: "Details",
     disclaimer:
       "Client names are withheld where the engagement is covered by confidentiality. Figures are drawn from the delivered systems and can be walked through in detail on a call.",
     cases: [

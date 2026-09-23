@@ -92,6 +92,7 @@ export const ko: Messages = {
     before: "도입 전",
     built: "구축한 내용",
     result: "성과",
+    details: "상세 내용",
     disclaimer:
       "비밀 유지 계약이 적용되는 프로젝트는 고객사명을 밝히지 않습니다. 기재된 수치는 납품된 시스템에 근거하며, 상담 시 자세히 설명해 드릴 수 있습니다.",
     cases: [

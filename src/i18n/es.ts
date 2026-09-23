@@ -94,6 +94,7 @@ export const es: Messages = {
     before: "Antes",
     built: "Lo que construimos",
     result: "Resultado",
+    details: "Detalles",
     disclaimer:
       "Omitimos el nombre del cliente cuando el acuerdo está sujeto a confidencialidad. Las cifras proceden de los sistemas entregados y podemos detallarlas en una llamada.",
     cases: [

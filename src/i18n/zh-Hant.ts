@@ -93,6 +93,7 @@ export const zhHant: Messages = {
     before: "先前狀況",
     built: "我們做了什麼",
     result: "成果",
+    details: "詳情",
     disclaimer:
       "涉及保密協議的專案不揭露客戶名稱。文中數據來自已交付的系統，可在通話中詳細說明。",
     cases: [

@@ -1205,6 +1205,23 @@
     }
   }
 
+  /* A rail that should stay a swipeable strip through tablet, only handing
+     off to its own lg: layout (not this file's default sm: grid) — the
+     case-study rail is the first user, since each item is a full tabbed
+     card that only reads well one at a time, not shrunk into a grid cell
+     at sm:/md: widths. */
+  .snap-rail-lg {
+    display: flex !important;
+    overflow-x: auto !important;
+    margin: 0 -1.5rem !important;
+    padding: 0.25rem 1.5rem 1.25rem !important;
+  }
+
+  .snap-rail-lg .snap-item {
+    flex: 0 0 86% !important;
+    max-width: 26rem !important;
+  }
+
   /* Press feedback. Scale is compositor-only, so it lands immediately even
      while the page is still settling. */
   .pressable {

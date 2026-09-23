@@ -93,6 +93,7 @@ export const ja: Messages = {
     before: "導入前",
     built: "開発した内容",
     result: "成果",
+    details: "詳細",
     disclaimer:
       "守秘義務のある案件については社名を伏せています。記載の数値は納品済みのシステムに基づくもので、ご相談時に詳細をご説明できます。",
     cases: [

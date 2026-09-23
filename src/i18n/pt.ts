@@ -93,6 +93,7 @@ export const pt: Messages = {
     before: "Antes",
     built: "O que construímos",
     result: "Resultado",
+    details: "Detalhes",
     disclaimer:
       "Omitimos o nome do cliente quando há acordo de confidencialidade. Os números vêm dos sistemas entregues e podem ser detalhados em uma conversa.",
     cases: [
