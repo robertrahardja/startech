@@ -130,36 +130,31 @@ export default function Hero({ onAskAi }: HeroProps) {
             sm:: on a 390px phone, lines at 2.75rem ran close enough to both
             24px margins that the margin stopped reading as a margin. A
             slightly smaller mobile size leaves visible slack at the line
-            ends, so the gutter is felt rather than just technically present. */}
+            ends, so the gutter is felt rather than just technically present.
+
+            A plain opacity fade-in on load — no translateY, no per-word
+            stagger. Tried a scratches-clearing-to-clean effect here first;
+            it read as broken rather than deliberate, so it's gone. This is
+            just the headline appearing. */}
         <h1
-          className="max-w-4xl font-display text-[3.4rem] leading-[1.02] tracking-[-0.03em] sm:text-5xl md:text-6xl lg:text-7xl"
+          className="animate-fade-in max-w-4xl font-display text-[3.4rem] leading-[1.02] tracking-[-0.03em] text-st-text sm:text-5xl md:text-6xl lg:text-7xl"
           style={{ textWrap: "balance" }}
         >
           {/* Four parts rather than five words: CJK locales do not put spaces
               between words and order the clause differently, so the catalogue
-              supplies each fragment and the spacing comes from the locale.
-              No entrance motion here (no rise/translate) — the scratch
-              effect below is the entrance; flying the letters in at the
-              same time as clearing static competed with it rather than
-              reading as one moment.
-
-              crt-word carries the scratch/static texture directly on each
-              span's own background-clip: text, not a second copy of the
-              text layered on top — there is nothing else for the noise to
-              be positioned relative to, so it cannot drift out of sync
-              with the letters it belongs to. */}
-          <span className="crt-word inline-block">{t.hero.headlineLead}</span>
+              supplies each fragment and the spacing comes from the locale. */}
+          <span className="inline-block">{t.hero.headlineLead}</span>
           {gap}
-          <span className="crt-word crt-word-gradient gradient-text inline-block italic">
+          <span className="gradient-text inline-block italic">
             {t.hero.headlineBusiness}
           </span>
           {gap}
-          <span className="crt-word inline-block">{t.hero.headlineAnd}</span>
+          <span className="inline-block">{t.hero.headlineAnd}</span>
           {gap}
-          <span className="crt-word crt-word-gradient gradient-text inline-block italic">
+          <span className="gradient-text inline-block italic">
             {t.hero.headlineTech}
           </span>
-          <span className="crt-word inline-block">{fullStop(locale)}</span>
+          <span className="inline-block">{fullStop(locale)}</span>
         </h1>
 
         {/* Sub */}
