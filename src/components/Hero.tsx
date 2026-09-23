@@ -126,9 +126,13 @@ export default function Hero({ onAskAi }: HeroProps) {
           </span>
         </div>
 
-        {/* Headline */}
+        {/* Headline — 2.4rem rather than the 2.75rem this scales up to at
+            sm:: on a 390px phone, lines at 2.75rem ran close enough to both
+            24px margins that the margin stopped reading as a margin. A
+            slightly smaller mobile size leaves visible slack at the line
+            ends, so the gutter is felt rather than just technically present. */}
         <h1
-          className="max-w-4xl font-display text-[2.75rem] leading-[1.05] tracking-[-0.03em] text-st-text sm:text-5xl md:text-6xl lg:text-7xl"
+          className="max-w-4xl font-display text-[2.4rem] leading-[1.08] tracking-[-0.03em] text-st-text sm:text-5xl md:text-6xl lg:text-7xl"
           style={{ textWrap: "balance" }}
         >
           {/* Four parts rather than five words: CJK locales do not put spaces
