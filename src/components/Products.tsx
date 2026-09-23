@@ -225,7 +225,7 @@ function SectionHeader({
       <h2 className="mb-4 font-display text-2xl tracking-[-0.02em] text-st-text sm:text-3xl md:text-5xl lg:text-6xl">
         {title}
       </h2>
-      <p className="mx-auto max-w-3xl text-balance text-[15px] font-normal leading-[1.7] text-st-text-muted md:text-base">
+      <p className="mx-auto max-w-3xl text-balance text-[14px] font-normal leading-[1.7] text-st-text-muted/70">
         {subtitle}
       </p>
     </div>

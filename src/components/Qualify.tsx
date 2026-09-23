@@ -41,7 +41,7 @@ export default function Qualify() {
           <h2 className="font-display text-3xl leading-[1.2] tracking-[-0.03em] text-st-text sm:text-4xl md:text-5xl">
             {t.qualify.title}
           </h2>
-          <p className="mt-5 text-base font-normal leading-[1.7] text-st-text-muted">
+          <p className="mt-5 text-[14px] font-normal leading-[1.7] text-st-text-muted/70">
             {t.qualify.sub}
           </p>
         </div>
