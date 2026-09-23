@@ -1542,7 +1542,7 @@ a:hover .deck-text-shine {
     100% 100%,
     100% 100%,
     6px 6px;
-  animation: crt-word-clear 900ms steps(6, end) 1 both;
+  animation: crt-word-clear 2200ms steps(10, end) 1 both;
 }
 
 /* Only the three noise layers (scratches, scanlines, static) shrink to
@@ -1613,7 +1613,7 @@ a:hover .deck-text-shine {
     6px 6px;
   animation:
     gradient-drift 14s ease-in-out infinite,
-    crt-word-clear-gradient 900ms steps(6, end) 1 both;
+    crt-word-clear-gradient 2200ms steps(10, end) 1 both;
 }
 
 /* Same clearing motion as crt-word-clear, sized for this span's own first
