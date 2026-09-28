@@ -10,6 +10,8 @@ serving it with `[assets]` and handling the API routes.
 - **[docs/OPERATIONS.md](docs/OPERATIONS.md)** — where the site is hosted,
   which mailbox actually receives mail, how to deploy and roll back, and the
   outstanding DNS problems. Read this first when returning to the project.
+- [docs/COMPANY.md](docs/COMPANY.md) — what the company sells, the
+  portfolio of client work and products, and claims to keep honest.
 - [SETUP.md](SETUP.md) — original contact-form setup notes.
 - [brand/guidelines/brand-guidelines.md](brand/guidelines/brand-guidelines.md)
   — colour, type and logo rules.
