@@ -427,6 +427,7 @@ export const ko: Messages = {
     reassurance:
       "계약 의무는 없습니다. 요건 정의 결과물은 이후 거래 여부와 관계없이 귀사의 것입니다.",
     name: "성함",
+    company: "회사명",
     message: "문의 내용",
     messagePlaceholder: "프로젝트에 대해 알려주십시오",
     send: "보내기",

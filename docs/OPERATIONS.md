@@ -97,17 +97,25 @@ Manage → Advanced DNS.
 
 ## Contact form
 
-`POST /api/contact` → the Worker → [Resend](https://resend.com) → an email.
+`POST /api/contact` → the Worker → the CRM database, then
+[Resend](https://resend.com) → an email.
 
 | | |
 | --- | --- |
+| Stored in | D1 `startech-crm` (binding `CRM_DB`), the st_dasboard CRM |
 | To | `rr.startech.innovation@gmail.com` |
 | From | `StarTech Website <onboarding@resend.dev>` |
 | Reply-To | the visitor's address |
 
-**Nothing is stored.** No database write — if the email fails or is filtered,
-that lead is gone. The D1 database is used by the demo endpoints, not by this
-form.
+Each enquiry becomes a `lead` contact with source `website`, plus a
+"Website enquiry" note holding the message. A company is created or matched
+by name when one is given. A repeat enquiry from the same email address adds
+a note to the existing contact.
+
+The email's footer says whether the CRM write worked. The visitor sees an
+error only when the lead reached neither the CRM nor the inbox. The schema
+belongs to `st_dasboard/migrations/`; change it there, then check
+`saveLead` in `worker/index.ts`.
 
 Two things worth changing:
 

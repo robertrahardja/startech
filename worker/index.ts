@@ -4,7 +4,7 @@
  * Handles API endpoints:
  * - POST /api/chat    — Proxies to OpenAI GPT-4o-mini with streaming SSE
  * - POST /api/tts     — Proxies to ElevenLabs text-to-speech
- * - POST /api/contact — Sends email via Resend
+ * - POST /api/contact — Saves the lead to the CRM, then emails via Resend
  * - POST /api/demo    — AI-powered product demos with lead capture, backed
  *                        by Gemini (free tier) with a Workers AI fallback
  *
@@ -23,6 +23,8 @@ interface Env {
   /** "true" turns the chat and speech endpoints back on. Absent means off. */
   ENABLE_AI_CHAT?: string;
   DB: D1Database;
+  /** The st_dasboard CRM database; contact-form leads are written here. */
+  CRM_DB?: D1Database;
   /** OAuth client ID demo sign-in tokens must have been issued for. */
   GOOGLE_CLIENT_ID: string;
   /** Primary model for /api/demo — free tier, text and vision both. */
@@ -59,15 +61,21 @@ async function isRateLimited(
   windowSeconds: number
 ): Promise<boolean> {
   const kvKey = `ratelimit:${key}`;
-  const raw = await kv.get(kvKey);
-  const count = raw ? parseInt(raw, 10) : 0;
+  const now = Math.floor(Date.now() / 1000);
+  const { value, metadata } = await kv.getWithMetadata<{ resetAt: number }>(kvKey);
+  // Keys written before resetAt was recorded lost their expiry and would
+  // block forever, so they count as an expired window.
+  const live = value !== null && metadata !== null && metadata.resetAt > now;
+  const resetAt = live ? metadata.resetAt : now + windowSeconds;
+  const count = live ? parseInt(value, 10) : 0;
 
   if (count >= maxRequests) return true;
 
-  // expirationTtl resets the window on the first request in it and lets KV
-  // clean the key up on its own — no separate reset bookkeeping needed.
+  // Every put must carry the expiry: a put without one makes the key
+  // permanent. KV rejects expirations less than 60 seconds away.
   await kv.put(kvKey, String(count + 1), {
-    expirationTtl: count === 0 ? windowSeconds : undefined,
+    expiration: Math.max(resetAt, now + 60),
+    metadata: { resetAt },
   });
   return false;
 }
@@ -627,17 +635,107 @@ async function handleTts(
   });
 }
 
+// ─── Lead capture (CRM) ─────────────────────────────────────────────────────
+// Every enquiry is written to the CRM before the notification email goes out,
+// so a bounced or filtered email no longer loses the lead. The database
+// belongs to st_dasboard; the ids and columns below mirror its
+// migrations/0001_crm_init.sql and src/crm/db.ts.
+
+const CRM_ORG_ID = "org_startech_default";
+const CRM_USER_ID = "user_ceo_default";
+
+interface Lead {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  message: string;
+  country: string | null;
+}
+
+/** "SG" → "Singapore", matching how the CRM stores country names. */
+function countryName(code: unknown): string | null {
+  if (typeof code !== "string") return null;
+  try {
+    return new Intl.DisplayNames(["en"], { type: "region" }).of(code) ?? null;
+  } catch {
+    return null; // Cloudflare's "T1" (Tor) and other non-region codes
+  }
+}
+
+async function saveLead(db: D1Database, lead: Lead): Promise<void> {
+  const now = new Date().toISOString();
+  const writes: D1PreparedStatement[] = [];
+
+  let companyId: string | null = null;
+  if (lead.company) {
+    const existing = await db
+      .prepare("SELECT id FROM companies WHERE org_id = ? AND name = ? COLLATE NOCASE LIMIT 1")
+      .bind(CRM_ORG_ID, lead.company)
+      .first<{ id: string }>();
+    companyId = existing?.id ?? `cmp_${crypto.randomUUID()}`;
+    if (!existing) {
+      writes.push(
+        db
+          .prepare(
+            `INSERT INTO companies (id, org_id, name, country, created_by, created_at, updated_at)
+             VALUES (?, ?, ?, ?, ?, ?, ?)`
+          )
+          .bind(companyId, CRM_ORG_ID, lead.company, lead.country, CRM_USER_ID, now, now)
+      );
+    }
+  }
+
+  // A repeat enquiry from the same address is a new activity on the existing
+  // contact, not a second contact.
+  const contact = await db
+    .prepare("SELECT id, company_id FROM contacts WHERE org_id = ? AND email = ? COLLATE NOCASE LIMIT 1")
+    .bind(CRM_ORG_ID, lead.email)
+    .first<{ id: string; company_id: string | null }>();
+  const contactId = contact?.id ?? `con_${crypto.randomUUID()}`;
+
+  if (!contact) {
+    const [firstName, ...rest] = lead.name.split(/\s+/);
+    writes.push(
+      db
+        .prepare(
+          `INSERT INTO contacts (id, org_id, company_id, type, first_name, last_name, email, phone, country, status, source, created_by, created_at, updated_at)
+           VALUES (?, ?, ?, 'b2b_contact', ?, ?, ?, ?, ?, 'lead', 'website', ?, ?, ?)`
+        )
+        .bind(
+          contactId, CRM_ORG_ID, companyId, firstName, rest.join(" "),
+          lead.email, lead.phone || null, lead.country, CRM_USER_ID, now, now
+        )
+    );
+  } else if (companyId && !contact.company_id) {
+    writes.push(
+      db
+        .prepare("UPDATE contacts SET company_id = ?, updated_at = ? WHERE id = ? AND org_id = ?")
+        .bind(companyId, now, contactId, CRM_ORG_ID)
+    );
+  }
+
+  // Logged as a completed note, not an email: last_contacted_at is left alone
+  // because nobody at StarTech has replied yet.
+  writes.push(
+    db
+      .prepare(
+        `INSERT INTO activities (id, org_id, type, contact_id, company_id, subject, description, completed_at, is_completed, created_by, created_at)
+         VALUES (?, ?, 'note', ?, ?, 'Website enquiry', ?, ?, 1, ?, ?)`
+      )
+      .bind(
+        `act_${crypto.randomUUID()}`, CRM_ORG_ID, contactId, companyId ?? contact?.company_id ?? null,
+        lead.message, now, CRM_USER_ID, now
+      )
+  );
+
+  await db.batch(writes);
+}
+
 async function handleContact(
   request: Request,
   env: Env
 ): Promise<Response> {
-  if (!env.RESEND_API_KEY) {
-    return new Response(
-      JSON.stringify({ success: false, error: "Email service is not configured." }),
-      { status: 503, headers: { "Content-Type": "application/json" } }
-    );
-  }
-
   if (isRequestTooLarge(request, 20_000)) {
     return new Response(
       JSON.stringify({ success: false, error: "Request too large." }),
@@ -653,7 +751,7 @@ async function handleContact(
     );
   }
 
-  let body: { name?: string; email?: string; phone?: string; message?: string };
+  let body: { name?: string; email?: string; phone?: string; company?: string; message?: string };
   try {
     body = await request.json();
   } catch {
@@ -666,6 +764,7 @@ async function handleContact(
   const name = sanitizeString(body.name || "", 200);
   const email = sanitizeEmail(body.email || "");
   const phone = sanitizeString(body.phone || "", 30).replace(/[\r\n]/g, "");
+  const company = sanitizeString(body.company || "", 200).replace(/[\r\n]/g, "");
   const message = sanitizeString(body.message || "", 5000);
 
   if (!name || !email || !message) {
@@ -684,35 +783,58 @@ async function handleContact(
     );
   }
 
-  const resendResponse = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${env.RESEND_API_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: "StarTech Website <onboarding@resend.dev>",
-      to: ["rr.startech.innovation@gmail.com"],
-      reply_to: email,
-      subject: `New Contact: ${escapeHtml(name).slice(0, 100)}`,
-      html: `
-        <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        ${phone ? `<p><strong>Phone:</strong> ${escapeHtml(phone)}</p>` : ""}
-        <p><strong>Message:</strong></p>
-        <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
-        <hr>
-        <p><small>Sent from StarTech Innovation website</small></p>
-      `,
-      text: `Name: ${escapeHtml(name)}\nEmail: ${escapeHtml(email)}\n${phone ? `Phone: ${escapeHtml(phone)}\n` : ""}Message:\n${escapeHtml(message)}`,
-    }),
-  });
+  let saved = false;
+  if (env.CRM_DB) {
+    try {
+      await saveLead(env.CRM_DB, {
+        name, email, phone, company, message,
+        country: countryName(request.cf?.country),
+      });
+      saved = true;
+    } catch (err) {
+      console.error("CRM write failed:", err instanceof Error ? err.message : err);
+    }
+  }
 
-  if (!resendResponse.ok) {
-    console.error("Resend error:", resendResponse.status);
+  const crmLine = saved
+    ? "Saved to the CRM."
+    : "NOT saved to the CRM. Add this lead by hand.";
+
+  let emailed = false;
+  if (env.RESEND_API_KEY) {
+    const resendResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "StarTech Website <onboarding@resend.dev>",
+        to: ["rr.startech.innovation@gmail.com"],
+        reply_to: email,
+        subject: `New Contact: ${escapeHtml(name).slice(0, 100)}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+          ${company ? `<p><strong>Company:</strong> ${escapeHtml(company)}</p>` : ""}
+          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          ${phone ? `<p><strong>Phone:</strong> ${escapeHtml(phone)}</p>` : ""}
+          <p><strong>Message:</strong></p>
+          <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
+          <hr>
+          <p><small>Sent from StarTech Innovation website. ${crmLine}</small></p>
+        `,
+        text: `Name: ${escapeHtml(name)}\n${company ? `Company: ${escapeHtml(company)}\n` : ""}Email: ${escapeHtml(email)}\n${phone ? `Phone: ${escapeHtml(phone)}\n` : ""}Message:\n${escapeHtml(message)}\n\n${crmLine}`,
+      }),
+    });
+    emailed = resendResponse.ok;
+    if (!emailed) console.error("Resend error:", resendResponse.status);
+  }
+
+  // The visitor only needs to retry when the lead reached neither place.
+  if (!saved && !emailed) {
     return new Response(
-      JSON.stringify({ success: false, error: "Failed to send email. Please try again later." }),
+      JSON.stringify({ success: false, error: "Failed to send your message. Please try again later." }),
       { status: 502, headers: { "Content-Type": "application/json" } }
     );
   }

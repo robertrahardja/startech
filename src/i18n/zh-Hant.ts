@@ -428,6 +428,7 @@ export const zhHant: Messages = {
     reassurance:
       "沒有任何承諾義務。需求盤點的成果歸貴公司所有，無論之後是否繼續合作。",
     name: "姓名",
+    company: "公司名稱",
     message: "諮詢內容",
     messagePlaceholder: "請介紹一下您的專案",
     send: "送出",

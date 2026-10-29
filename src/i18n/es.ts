@@ -435,6 +435,7 @@ export const es: Messages = {
     reassurance:
       "Sin compromiso. El resultado de la fase de descubrimiento es suyo, continúe con nosotros o no.",
     name: "Nombre",
+    company: "Empresa",
     message: "Mensaje",
     messagePlaceholder: "Cuéntenos sobre su proyecto...",
     send: "Enviar mensaje",

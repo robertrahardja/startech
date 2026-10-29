@@ -428,6 +428,7 @@ export const zhHans: Messages = {
     reassurance:
       "没有任何承诺义务。需求梳理的成果归贵司所有，无论之后是否继续合作。",
     name: "姓名",
+    company: "公司名称",
     message: "咨询内容",
     messagePlaceholder: "请介绍一下您的项目",
     send: "发送",

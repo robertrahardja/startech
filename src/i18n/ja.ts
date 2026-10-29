@@ -433,6 +433,7 @@ export const ja: Messages = {
     reassurance:
       "契約の義務はありません。要件定義の成果物は、その後お取引がなくても御社のものです。",
     name: "お名前",
+    company: "会社名",
     message: "ご相談内容",
     messagePlaceholder: "プロジェクトについてお聞かせください",
     send: "送信する",
