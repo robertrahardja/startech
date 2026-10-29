@@ -434,6 +434,7 @@ export const pt: Messages = {
     reassurance:
       "Sem compromisso. O resultado do levantamento é seu, continuando conosco ou não.",
     name: "Nome",
+    company: "Empresa",
     message: "Mensagem",
     messagePlaceholder: "Conte sobre o seu projeto...",
     send: "Enviar mensagem",

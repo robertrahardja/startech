@@ -11,6 +11,7 @@ export default function Contact() {
     name: "",
     email: "",
     phone: "",
+    company: "",
     message: "",
   });
   const [status, setStatus] = useState<
@@ -48,7 +49,7 @@ export default function Contact() {
         }
 
         setStatus("success");
-        setForm({ name: "", email: "", phone: "", message: "" });
+        setForm({ name: "", email: "", phone: "", company: "", message: "" });
       } catch (err) {
         setStatus("error");
         setErrorMsg(
@@ -104,6 +105,13 @@ export default function Contact() {
               type="text"
               required
               value={form.name}
+              onChange={handleChange}
+            />
+            <FormField
+              name="company"
+              label={t.contact.company}
+              type="text"
+              value={form.company}
               onChange={handleChange}
             />
             <FormField

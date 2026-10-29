@@ -433,6 +433,7 @@ export const en = {
     reassurance:
       "No commitment, and the discovery output is yours whether or not you continue with us.",
     name: "Name",
+    company: "Company",
     message: "Message",
     messagePlaceholder: "Tell us about your project...",
     send: "Send message",
