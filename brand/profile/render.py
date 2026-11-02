@@ -23,7 +23,9 @@ def css():
 @page {{ size: A4; margin: 0; }}
 html {{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }}
 body {{
-  font-family: 'Inter', system-ui, sans-serif;
+  /* Noto Sans CJK SC (Arch: noto-fonts-cjk) draws the 中文 in the working
+     languages line; without it Chromium picked a Korean or monospaced face. */
+  font-family: 'Inter', 'Noto Sans CJK SC', system-ui, sans-serif;
   background: {BG}; color: {TEXT};
   font-size: 9.5pt; line-height: 1.62; font-weight: 400;
   letter-spacing: -0.01em;

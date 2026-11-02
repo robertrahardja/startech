@@ -8,15 +8,16 @@ card and startech-innovation.com.
 
 | File | Format | Use |
 |---|---|---|
-| `out/pitch-{EN,JA,KO,ZH-Hans,ZH-Hant,ES,PT,ID}.pdf` | 16:9, 8 slides | **Capability deck** — the one to send; also the website download |
-| `profile-EN.pdf` / `profile-ID.pdf` | A4 portrait, 5 pages | Outdated — see below |
-| `deck-EN.pdf` / `deck-ID.pdf` | 16:9 landscape, 9 slides | Outdated — see below |
+| `out/pitch-{EN,JA,KO,ZH-Hans,ZH-Hant,ES,PT,ID}.pdf` | 16:9, 8 slides | **Capability deck** — first contact; also the website download |
+| `profile-EN.pdf` / `profile-ID.pdf` | A4 portrait, 5 pages | **Company profile** — printable leave-behind, same story in more detail |
+| `deck-EN.pdf` / `deck-ID.pdf` | 16:9 landscape, 9 slides | **Technical profile** — for a technical lead reviewing the work |
 
-> **Do not send the profile or the technical deck** until they are
-> rewritten. They predate the current positioning: "Singapore, Indonesia",
-> "strategy to production in 90 days", and (profile) "we run the full PSG
-> and SFEC application" — PSG closed on 29 September 2026. The capability
-> deck replaces both. Claims are tracked in `../../docs/COMPANY.md`.
+All three tell the same story, rewritten on 2026-11-02: Singapore and
+Japan, founder-led, the scoping sprint and care plan, and the spreadsheet
+offer. Each piece of work says where it stands: only the exporter system is
+live with a client. There are no accounting or payroll-accuracy claims,
+and the only grant named is EDGE, with no percentage. Claims are tracked in
+`../../docs/COMPANY.md`; check it before changing one in any of the three.
 
 ## Capability deck
 
@@ -52,50 +53,63 @@ done
 Check slides 3 and 5 after any text change: they are the fullest, and
 longer languages (ES, PT, ID) are the first to reach the footer.
 
-## Deck structure (landscape)
+## Technical profile structure (landscape)
 
 1. Cover
 2. Who we are — positioning + four headline metrics
-3. **Engineering evidence** — auditable numbers + a real defect caught
+3. **Engineering evidence** — ERP test figures + a defect caught on a
+   live client system
 4. How we build — architecture principles
-5. Data & AI — production AI, multi-model
-6. Selected work — four systems, each with its stack
+5. Data & AI — multi-model, answers with sources, human sign-off
+6. Selected work — the same four cards as the capability deck, with stacks
 7. Technology — the full stack
-8. How we work — 90-day process
-9. Next step — CTA + contact
+8. How we work — scoping sprint to care plan
+9. Next step — the spreadsheet offer + contact
 
-The deck is written for a technical audience that will probe the
-claims. Every number on slide 3 is reproducible from the build:
+Written for a technical audience that will probe the claims. The figures
+on slides 2, 3 and 6 come from the internal ERP build, which is in
+development and not deployed; the slides say so. Sources:
 
-```bash
-cd ../../../startech_erp_java
-grep -rh "@Test" --include="*.java" src/test | wc -l   # test methods
-grep -rl "@RestController" --include="*.java" src/main | wc -l
-```
+- `startech_erp_java/docs/architecture/verification-report-2026-08.md`:
+  9,273 unit + 549 integration + 17 architecture tests (9,839), 0
+  failures; SpotBugs gate at 0 findings.
+- `startech_erp_java/docs/architecture/calculation-layer-design.md`: 484
+  calculation classes, 7,060 tests, about 12 seconds without a database.
 
-Source of the headline figures:
-`startech_erp_java/docs/architecture/verification-report-2026-08.md`.
-**Re-verify before reuse** — these grow with the codebase.
+Re-verify with `./mvnw clean verify` in `startech_erp_java` and read the
+Surefire / Failsafe totals. Do not grep for `@Test`: that counts test
+methods (about 5,400), not the parameterised runs the totals report.
+
+The same report found two claims the old deck made untrue, so they must
+not come back: the "5-engine verification" is two engines (Java and
+PostgreSQL), and tenancy is single-schema with a tenant column, not
+schema-per-tenant.
 
 ## Regenerating
 
 ```bash
 python3 render.py        # A4 profile  -> out/profile-{EN,ID}.html
 python3 render_deck.py   # 16:9 deck   -> out/deck-{EN,ID}.html
-```
 
-Then convert each to PDF:
-
-```bash
 cd out
-chromium --headless --disable-gpu --no-pdf-header-footer \
-  --print-to-pdf=deck-EN.pdf file://$PWD/deck-EN.html
+for f in profile-EN profile-ID deck-EN deck-ID; do
+  chromium --headless --disable-gpu --no-pdf-header-footer \
+    --print-to-pdf=$f.pdf file://$PWD/$f.html
+  cp $f.pdf ../$f.pdf     # the top-level copies are the ones to send
+done
 ```
+
+The profile's working-languages line needs Noto Sans CJK SC installed
+(Arch: `noto-fonts-cjk`) to draw 中文 in the right face. `render_pitch.py`
+reuses `render_deck.py`'s `css()` and slide builders, so after editing
+`render_deck.py` re-render the capability deck and confirm its HTML is
+unchanged.
 
 ## Editing content
 
 - `content.py` — A4 profile copy, plus `COMMON` (shared company details)
-- `deck_content.py` — deck copy; imports `COMMON` from `content.py`
+- `deck_content.py` — technical profile copy; imports `COMMON`
+- `pitch_content.py` — capability deck copy, eight languages
 
 Both language dicts in each file use identical keys, so add to both
 when adding a field. Layout lives in `render.py` / `render_deck.py`.

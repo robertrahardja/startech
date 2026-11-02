@@ -34,10 +34,11 @@ Four practices:
   and workflow that replace spreadsheets and disconnected tools.
 - **AI implementation**: retrieval over the client's own documents,
   domain-tuned models and automation, with source attribution.
-- **Financial and compliance systems**: accounting engines,
-  reconciliation, payroll compliance and regulatory reporting.
-- **Cross-border operations**: multi-currency, multi-jurisdiction systems
-  across Singapore, Indonesia and Japan.
+- **Finance workflows**: invoicing, bank-statement import, reconciliation
+  and document generation, with an audit trail for the client's
+  accountant. No accounting-engine or payroll-accuracy claims.
+- **Cross-border operations**: multi-currency, multi-language systems
+  for companies trading between Singapore, Japan and the region.
 
 ### Markets
 
@@ -113,13 +114,21 @@ The deck no longer claims accounting engines or payroll compliance, gives
 its markets as Singapore and Japan, and ends with the spreadsheet offer.
 Re-check these lines whenever a client engagement starts or ends.
 
+The A4 company profile (`brand/profile/content.py`) and the technical
+profile deck (`brand/profile/deck_content.py`) were rewritten to the same
+claims on 2026-11-02, in English and Indonesian. They had said "Singapore,
+Indonesia", "strategy to production in 90 days" and, in the profile, that
+StarTech runs PSG and SFEC applications. The technical deck also claimed
+"5-engine verification" and "schema-per-tenant isolation". The ERP's own
+August 2026 verification report contradicts both claims, so they were
+removed. Its ERP test figures are now labelled as an internal build, not
+deployed.
+
 Other inconsistencies:
 
-- The older A4 profile (`brand/profile/content.py`) and technical deck
-  (`brand/profile/deck_content.py`) still say "Singapore, Indonesia",
-  "strategy to production in 90 days" and, in the profile, that StarTech
-  runs PSG and SFEC applications. PSG closed on 29 September 2026. Do not
-  send either until it is rewritten; the capability deck replaces both.
+- The capability deck says its 7,060 tests are in "our Singapore payroll
+  engine". They cover all 484 calculation classes in the ERP build, payroll
+  included. The profile and technical deck say it that way.
 - The site publishes `info@`, but the contact form delivers to Gmail, so
   enquiries arrive in two places. See [OPERATIONS.md](OPERATIONS.md).
 
