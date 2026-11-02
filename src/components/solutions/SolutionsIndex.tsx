@@ -2,11 +2,8 @@ import { useInView } from "../../hooks/useInView";
 import { AI_CHAT_ENABLED } from "../../lib/features";
 import { SectionHeader } from "../Products";
 import Link from "./Link";
-import {
-  TIER_META,
-  getSolutionsByTier,
-} from "./solutionsData";
-import type { Solution, SolutionTier } from "./solutionsData";
+import { SOLUTIONS } from "./solutionsData";
+import type { Solution } from "./solutionsData";
 
 /* ─── Small icon map for cards ─────────────────────────────────────────── */
 const ICONS: Record<string, React.ReactNode> = {
@@ -77,17 +74,6 @@ const ICONS: Record<string, React.ReactNode> = {
   ),
 };
 
-const TIER_ORDER: SolutionTier[] = ["quick-win", "medium", "premium"];
-
-const TIER_DESCRIPTIONS: Record<SolutionTier, string> = {
-  "quick-win":
-    "Deploy in days. Immediate ROI. Perfect first step into AI for your business.",
-  medium:
-    "More powerful automation that transforms how your team works day-to-day.",
-  premium:
-    "Enterprise-grade AI solutions for complex, high-value business processes.",
-};
-
 /* ─── Solutions Index Page ─────────────────────────────────────────────── */
 export default function SolutionsIndex({ onAskAi }: { onAskAi: () => void }) {
   return (
@@ -95,20 +81,18 @@ export default function SolutionsIndex({ onAskAi }: { onAskAi: () => void }) {
       {/* Hero */}
       <IndexHero onAskAi={onAskAi} />
 
-      {/* Tiers */}
-      {TIER_ORDER.map((tier) => (
-        <TierSection key={tier} tier={tier} />
-      ))}
+      {/* Demos */}
+      <DemoGrid />
 
       {/* Bottom CTA */}
       <section className="py-20 sm:py-28">
         <div className="mx-auto max-w-2xl px-6 text-center sm:px-8">
           <h2 className="mb-4 font-display text-2xl text-st-text sm:text-3xl md:text-4xl">
-            Not sure which solution fits?
+            Don't see your process here?
           </h2>
           <p className="mb-8 text-sm font-normal leading-relaxed text-st-text-muted sm:text-base">
-            Tell us about your business challenge and we will recommend the right
-            AI solution, complete with a grant application plan.
+            Send us one spreadsheet you would like to replace, and we will show
+            it working as a system. Free, and no commitment.
           </p>
           <button
             onClick={AI_CHAT_ENABLED ? onAskAi : () => { window.location.href = "/#contact"; }}
@@ -146,16 +130,17 @@ function IndexHero({ onAskAi }: { onAskAi: () => void }) {
         </nav>
 
         <span className="mb-4 inline-block text-[10px] font-medium tracking-[0.2em] uppercase text-st-text-muted">
-          13 AI Solutions for SMEs
+          Solutions
         </span>
 
         <h1 className="mb-4 font-display text-3xl tracking-[-0.02em] text-st-text sm:text-4xl md:text-5xl lg:text-6xl">
-          AI Solutions
+          Working demos
         </h1>
 
         <p className="mx-auto mb-8 max-w-2xl text-base font-normal leading-relaxed text-st-text-muted sm:text-lg">
-          Production-ready AI tools designed for Singapore SMEs. Government grant
-          eligible. Deploy in days, not months.
+          Each demo runs on sample data, so you can see it work before you talk
+          to us. Any of them can become part of a system built around your own
+          business.
         </p>
 
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
@@ -178,43 +163,26 @@ function IndexHero({ onAskAi }: { onAskAi: () => void }) {
           <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          PSG Grant Eligible: up to 50% subsidy on all solutions
+          PSG has been replaced by the EDGE Grant. Ask us whether your project qualifies.
         </div>
       </div>
     </section>
   );
 }
 
-/* ─── Tier Section ─────────────────────────────────────────────────────── */
-function TierSection({ tier }: { tier: SolutionTier }) {
-  const solutions = getSolutionsByTier(tier);
-  const meta = TIER_META[tier];
-
+/* ─── Demo Grid ────────────────────────────────────────────────────────── */
+function DemoGrid() {
   return (
     <section className="py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <SectionHeader
-          label={meta.label}
-          title={
-            tier === "quick-win"
-              ? "Quick wins"
-              : tier === "medium"
-                ? "Medium builds"
-                : "Premium solutions"
-          }
-          subtitle={TIER_DESCRIPTIONS[tier]}
+          label="Try one"
+          title="Pick a demo, see it run"
+          subtitle="Open any card to try it with sample data."
         />
 
-        {/* Three columns only when this tier's count divides evenly by
-            three; otherwise two, so the last row never holds a single card
-            with two card-widths of space beside it. Each tier is counted
-            separately, since they're rendered as independent grids. */}
-        <div
-          className={`grid grid-cols-1 gap-3 sm:grid-cols-2 ${
-            solutions.length % 3 === 0 ? "lg:grid-cols-3" : ""
-          }`}
-        >
-          {solutions.map((solution, i) => (
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {SOLUTIONS.map((solution, i) => (
             <SolutionCard key={solution.slug} solution={solution} index={i} />
           ))}
         </div>
@@ -232,7 +200,6 @@ function SolutionCard({
   index: number;
 }) {
   const [ref, isInView] = useInView({ threshold: 0.1 });
-  const tier = TIER_META[solution.tier];
 
   return (
     <Link href={`/solutions/${solution.slug}`}>
@@ -242,16 +209,9 @@ function SolutionCard({
         style={{ transitionDelay: `${index * 60}ms` }}
       >
         <div className="flex h-full flex-col">
-          {/* Top row: icon + badge */}
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-st-surface text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
-              {ICONS[solution.icon]}
-            </div>
-            <span
-              className={`rounded-full px-2.5 py-0.5 text-[9px] font-medium tracking-[0.1em] uppercase ${tier.badgeClass}`}
-            >
-              {tier.label}
-            </span>
+          {/* Icon */}
+          <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-lg bg-st-surface text-st-text-muted transition-colors duration-300 group-hover:text-st-text">
+            {ICONS[solution.icon]}
           </div>
 
           {/* Title */}
@@ -264,32 +224,10 @@ function SolutionCard({
             {solution.tagline}
           </p>
 
-          {/* Pricing row */}
-          <div className="flex items-end justify-between border-t border-st-border pt-4">
-            <div>
-              <div className="text-[10px] font-medium text-st-text-muted/60">
-                From
-              </div>
-              <div className="text-sm font-medium text-st-text">
-                S${solution.priceFrom}
-                <span className="text-[11px] font-medium text-st-text-muted">/mo</span>
-              </div>
-            </div>
-            <div className="text-right">
-              <div className="text-[10px] font-medium text-st-gold-light/60">
-                With PSG
-              </div>
-              <div className="text-sm font-medium text-st-gold-light">
-                S${solution.pricePsg}
-                <span className="text-[11px] font-medium text-st-gold-light/60">/mo</span>
-              </div>
-            </div>
-          </div>
-
           {/* View arrow */}
-          <div className="mt-3 flex items-center justify-end">
+          <div className="flex items-center justify-end border-t border-st-border pt-4">
             <span className="text-[10px] font-medium tracking-[0.15em] uppercase text-st-text-muted/40 transition-colors duration-300 group-hover:text-st-gold-light/60">
-              Learn more
+              Try the demo
               <svg
                 className="ml-1 inline h-3 w-3"
                 fill="none"

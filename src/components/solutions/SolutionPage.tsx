@@ -1,9 +1,7 @@
 import { useInView } from "../../hooks/useInView";
-import { AI_CHAT_ENABLED } from "../../lib/features";
 import { SectionHeader } from "../Products";
 import DemoSection from "../demos/DemoSection";
 import Link from "./Link";
-import { TIER_META } from "./solutionsData";
 import type { Solution } from "./solutionsData";
 
 /* ─── Icon map for solution pages ──────────────────────────────────────── */
@@ -94,72 +92,69 @@ function GrantsCallout() {
           </div>
           <div>
             <h3 className="text-base font-medium tracking-wide text-st-gold-light sm:text-lg">
-              Pay up to 50% less with government grants
+              Government support in Singapore
             </h3>
             <p className="text-[13px] font-normal text-st-gold-light/60">
-              Singapore SMEs are eligible for multiple grants that stack together
+              PSG closed on 29 September 2026. The EDGE Grant replaced it, and works differently.
             </p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {/* PSG */}
+          {/* EDGE */}
           <div className="rounded-lg border border-st-gold/15 bg-st-bg-card/60 p-4">
             <div className="mb-1.5 flex items-center gap-2">
               <span className="rounded-md bg-st-gold/20 px-2 py-0.5 text-[10px] font-medium tracking-wider uppercase text-st-gold-light">
-                Up to 50% off
+                Replaces PSG and EDG
               </span>
             </div>
             <h4 className="mb-1.5 text-sm font-medium text-st-text">
-              Productivity Solutions Grant (PSG)
+              EDGE Grant (Enterprise Singapore)
             </h4>
             <p className="text-[12px] font-normal leading-relaxed text-st-text-muted">
-              Pre-approved IT solutions and equipment for SMEs.
-              Covers software, deployment, and training costs.
-              Most Singapore-registered businesses with at least
-              30% local shareholding qualify.
+              Supports automation and digitalisation projects. A
+              business system with at least three functions, such as
+              sales, inventory and finance, can be supported even when
+              the vendor is not on the pre-approved list. Apply before
+              the project starts; the grant is paid back once the
+              project is finished and paid for. Your company needs at
+              least 30% Singaporean or PR shareholding.
             </p>
           </div>
 
-          {/* SFEC */}
+          {/* EIS AI deduction */}
           <div className="rounded-lg border border-st-gold/15 bg-st-bg-card/60 p-4">
             <div className="mb-1.5 flex items-center gap-2">
               <span className="rounded-md bg-st-gold/20 px-2 py-0.5 text-[10px] font-medium tracking-wider uppercase text-st-gold-light">
-                S$10,000 credit
+                Tax deduction
               </span>
             </div>
             <h4 className="mb-1.5 text-sm font-medium text-st-text">
-              SkillsFuture Enterprise Credit (SFEC)
+              Enterprise Innovation Scheme: AI spending
             </h4>
             <p className="text-[12px] font-normal leading-relaxed text-st-text-muted">
-              One-time S$10,000 credit for employers to upskill
-              employees and adopt digital solutions. Can be used
-              on top of PSG for additional savings.
+              Budget 2026 added AI spending to the scheme: a 400%
+              deduction on the first S$50,000 of qualifying AI
+              expenditure a year, for YA 2027 and YA 2028. It is a
+              deduction, not a cash payout. Your tax adviser can tell
+              you what qualifies.
             </p>
           </div>
         </div>
 
-        {/* Additional grants */}
+        {/* Good to know */}
         <div className="mt-4 rounded-lg border border-st-border bg-st-surface p-4">
           <h4 className="mb-2 text-[13px] font-medium text-st-text">
-            Other grants you may qualify for
+            Good to know
           </h4>
-          <div className="grid grid-cols-1 gap-2 text-[12px] font-normal text-st-text-muted sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-2 text-[12px] font-normal text-st-text-muted">
             <div className="flex items-start gap-2">
               <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-st-gold-light/40" />
-              <span><span className="text-st-text/80">Enterprise Development Grant (EDG)</span> — up to 70% for business transformation projects</span>
+              <span><span className="text-st-text/80">SkillsFuture Enterprise Credit (SFEC)</span> — the current credit ends on 30 November 2026 and a redesigned S$10,000 credit starts on 1 December 2026. SFEC cannot be used for projects supported by EDGE.</span>
             </div>
             <div className="flex items-start gap-2">
               <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-st-gold-light/40" />
-              <span><span className="text-st-text/80">Digital Leaders Programme</span> — for advanced AI and automation adoption</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-st-gold-light/40" />
-              <span><span className="text-st-text/80">CIT Rebate (Budget 2026)</span> — S$2,000 corporate tax rebate for all companies</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-st-gold-light/40" />
-              <span><span className="text-st-text/80">400% Tax Deduction</span> — on qualifying AI and automation investments (EIS)</span>
+              <span><span className="text-st-text/80">Support is not automatic</span> — Enterprise Singapore decides each application, and support levels differ by activity.</span>
             </div>
           </div>
         </div>
@@ -169,7 +164,7 @@ function GrantsCallout() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <p className="text-[13px] font-normal text-st-gold-light/80">
-            We handle the full grant application process for you at no extra charge — eligibility check, paperwork, and submission.
+            We check whether your project qualifies and prepare the vendor documents for your application, at no extra charge.
           </p>
         </div>
       </div>
@@ -180,18 +175,17 @@ function GrantsCallout() {
 /* ─── Main Solution Page ───────────────────────────────────────────────── */
 export default function SolutionPage({
   solution,
-  onAskAi,
 }: {
   solution: Solution;
-  onAskAi: () => void;
+  /** Passed by the app shell; the spreadsheet CTA links to the contact form instead. */
+  onAskAi?: () => void;
 }) {
-  const tier = TIER_META[solution.tier];
   const icon = ICONS[solution.icon];
 
   return (
     <>
       {/* ── Slim header: just enough to say what this is ── */}
-      <SolutionStrip solution={solution} tierMeta={tier} icon={icon} />
+      <SolutionStrip solution={solution} icon={icon} />
 
       {/* ── Try It Demo: the page, not a section of it ── */}
       <DemoSection slug={solution.slug} title={solution.title} />
@@ -206,11 +200,8 @@ export default function SolutionPage({
         </div>
       </section>
 
-      {/* ── Pricing ── */}
-      <PricingSection solution={solution} tierMeta={tier} />
-
       {/* ── CTA ── */}
-      <CtaSection solution={solution} onAskAi={onAskAi} />
+      <CtaSection />
     </>
   );
 }
@@ -221,11 +212,9 @@ export default function SolutionPage({
  */
 function SolutionStrip({
   solution,
-  tierMeta,
   icon,
 }: {
   solution: Solution;
-  tierMeta: (typeof TIER_META)[keyof typeof TIER_META];
   icon: React.ReactNode;
 }) {
   return (
@@ -248,16 +237,9 @@ function SolutionStrip({
             {icon}
           </div>
           <div>
-            <div className="mb-1.5 flex flex-wrap items-center gap-2">
-              <h1 className="font-display text-xl tracking-[-0.02em] text-st-text sm:text-2xl">
-                {solution.title}
-              </h1>
-              <span
-                className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-medium tracking-[0.15em] uppercase ${tierMeta.badgeClass}`}
-              >
-                {tierMeta.label}
-              </span>
-            </div>
+            <h1 className="mb-1.5 font-display text-xl tracking-[-0.02em] text-st-text sm:text-2xl">
+              {solution.title}
+            </h1>
             <p className="text-sm font-normal leading-relaxed text-st-text-muted">
               {solution.tagline}
             </p>
@@ -277,8 +259,8 @@ function FeaturesSection({ features }: { features: string[] }) {
       <div className="mx-auto max-w-4xl px-6 sm:px-8">
         <SectionHeader
           label="Features"
-          title="What you get"
-          subtitle="Built for Singapore SMEs, with the details that matter."
+          title="What it does"
+          subtitle="What this demo shows. In your system, it works on your own data and rules."
         />
 
         <div
@@ -311,102 +293,11 @@ function FeaturesSection({ features }: { features: string[] }) {
   );
 }
 
-/* ─── Pricing Section ──────────────────────────────────────────────────── */
-function PricingSection({
-  solution,
-  tierMeta,
-}: {
-  solution: Solution;
-  tierMeta: (typeof TIER_META)[keyof typeof TIER_META];
-}) {
-  const [ref, isInView] = useInView({ threshold: 0.15 });
-  const savings = solution.priceFrom - solution.pricePsg;
-
-  return (
-    <section className="py-16 sm:py-20">
-      <div className="mx-auto max-w-2xl px-6 sm:px-8">
-        <SectionHeader
-          label="Pricing"
-          title="Estimated investment"
-          subtitle="Pricing varies based on your requirements, company size, and customisation needs. Below is a typical range — contact us for a detailed quote."
-        />
-
-        <div
-          ref={ref}
-          className={`space-y-4 ${isInView ? "reveal visible" : "reveal"}`}
-        >
-          {/* Price comparison */}
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {/* Standard price */}
-            <div className="card overflow-hidden rounded-xl p-5 text-center sm:p-6">
-              <span
-                className={`mb-3 inline-block rounded-full px-3 py-1 text-[10px] font-medium tracking-[0.15em] uppercase ${tierMeta.badgeClass}`}
-              >
-                {tierMeta.label}
-              </span>
-              <div className="mb-0.5 text-[11px] font-medium tracking-wide text-st-text-muted">
-                Estimated from
-              </div>
-              <div className="mb-2 font-display text-3xl text-st-text sm:text-4xl">
-                S${solution.priceFrom}
-                <span className="text-base text-st-text-muted">/mo</span>
-              </div>
-              <p className="text-[11px] font-medium text-st-text-muted/60">
-                Standard pricing before grants
-              </p>
-            </div>
-
-            {/* Grant price — highlighted */}
-            <div className="overflow-hidden rounded-xl border-2 border-st-gold/30 bg-gradient-to-br from-st-gold/[0.08] to-st-gold/[0.02] p-5 text-center sm:p-6">
-              <span className="mb-3 inline-block rounded-full bg-st-gold/20 px-3 py-1 text-[10px] font-medium tracking-[0.15em] uppercase text-st-gold-light">
-                With PSG Grant
-              </span>
-              <div className="mb-0.5 text-[11px] font-medium tracking-wide text-st-gold-light/60">
-                You could pay as low as
-              </div>
-              <div className="mb-2 font-display text-3xl text-st-gold-light sm:text-4xl">
-                S${solution.pricePsg}
-                <span className="text-base text-st-gold-light/60">/mo</span>
-              </div>
-              <p className="text-[12px] font-normal text-st-gold-light/70">
-                Save S${savings}/mo with 50% PSG subsidy
-              </p>
-            </div>
-          </div>
-
-          {/* Disclaimer and details */}
-          <div className="rounded-lg border border-st-border bg-st-surface p-4 text-[12px] font-normal leading-relaxed text-st-text-muted">
-            <p className="mb-2">
-              <span className="text-st-text/80">These are estimated prices.</span>{" "}
-              Actual pricing depends on your specific requirements, number of
-              users, data volume, integration complexity, and customisation.
-              We provide a detailed quote after understanding your needs.
-            </p>
-            <p className="mb-2">
-              <span className="text-st-text/80">Government grants can significantly
-              reduce your cost.</span>{" "}
-              PSG covers up to 50% of qualifying costs. SFEC provides an
-              additional S$10,000 credit. Multiple grants can be stacked.
-            </p>
-            <p className="text-st-text-muted/60">
-              All estimates exclude 9% GST. Annual billing available with
-              additional discount. No lock-in contracts — cancel anytime.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ─── CTA Section ──────────────────────────────────────────────────────── */
-function CtaSection({
-  solution,
-  onAskAi,
-}: {
-  solution: Solution;
-  onAskAi: () => void;
-}) {
+/* ─── CTA Section ──────────────────────────────────────────────────────────
+ * The demo runs on sample data; the next step is the spreadsheet offer, not
+ * a subscription.
+ */
+function CtaSection() {
   const [ref, isInView] = useInView({ threshold: 0.15 });
 
   return (
@@ -416,25 +307,26 @@ function CtaSection({
         className={`mx-auto max-w-2xl px-6 text-center sm:px-8 ${isInView ? "reveal visible" : "reveal"}`}
       >
         <h2 className="mb-4 font-display text-2xl text-st-text sm:text-3xl md:text-4xl">
-          Ready to get started?
+          Want this in your own system?
         </h2>
         <p className="mb-8 text-sm font-normal leading-relaxed text-st-text-muted sm:text-base">
-          Book a free demo of {solution.title} and see how it works with your
-          actual data. No commitment, no credit card required.
+          This demo runs on sample data. Send us one spreadsheet you would like
+          to replace, and we will show it working as a system. Free, and no
+          commitment.
         </p>
         <div className="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
-          <button
-            onClick={AI_CHAT_ENABLED ? onAskAi : () => { window.location.href = "/#contact"; }}
-            className="hero-btn-primary relative overflow-hidden rounded-xl px-8 py-3.5 text-sm font-normal tracking-wide text-st-text transition-all duration-500"
-          >
-            <span className="relative z-10">Get a Free Demo</span>
-          </button>
           <a
             href="/#contact"
+            className="hero-btn-primary relative overflow-hidden rounded-xl px-8 py-3.5 text-sm font-normal tracking-wide text-st-text transition-all duration-500"
+          >
+            <span className="relative z-10">Send us a spreadsheet</span>
+          </a>
+          <Link
+            href="/solutions"
             className="hero-btn-secondary relative overflow-hidden rounded-xl px-8 py-3.5 text-sm font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
           >
-            <span className="relative z-10">Contact Us</span>
-          </a>
+            <span className="relative z-10">See all demos</span>
+          </Link>
         </div>
       </div>
     </section>

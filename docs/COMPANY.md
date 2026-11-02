@@ -53,7 +53,9 @@ Four practices:
 - Deployed on the client's own cloud account, database and repository.
 - Much of the work is rescue: rebuilding what an earlier vendor or an
   off-the-shelf tool did not deliver.
-- Singapore's PSG grant is used to lower the net cost in quotes.
+- Singapore's PSG grant used to lower the net cost in quotes. PSG closed
+  on 29 September 2026; quotes now say whether a project may qualify for
+  the EDGE Grant, with no percentage until Enterprise Singapore confirms it.
 
 ## Portfolio
 

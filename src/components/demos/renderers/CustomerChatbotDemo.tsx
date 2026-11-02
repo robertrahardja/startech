@@ -5,7 +5,7 @@ interface DemoRendererProps {
   isLoading: boolean;
   result: Record<string, unknown> | null;
   error: string | null;
-  clearResult: () => void;
+  clearResult?: () => void;
 }
 
 const inputClass =
@@ -13,10 +13,43 @@ const inputClass =
 const labelClass =
   "mb-1.5 block text-[11px] font-medium tracking-wide text-st-text/60";
 
+interface FollowupAnswer {
+  answer: string;
+  confidence_percent: number;
+}
+
+function QuestionBubble({ text }: { text: string }) {
+  return (
+    <div className="mb-4 flex justify-end">
+      <div className="max-w-[80%] rounded-2xl rounded-br-md bg-st-surface px-4 py-3">
+        <p className="text-[13px] font-normal text-st-text">{text}</p>
+      </div>
+    </div>
+  );
+}
+
+function AnswerBubble({ text, confidence }: { text: string; confidence: number }) {
+  return (
+    <div className="mb-4 flex justify-start">
+      <div className="max-w-[80%] rounded-2xl rounded-bl-md border border-st-border bg-st-surface px-4 py-3">
+        <p className="whitespace-pre-line text-[13px] font-normal leading-relaxed text-st-text">
+          {text}
+        </p>
+        <span className="mt-2 inline-block rounded-full bg-st-surface px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-st-text-muted">
+          {confidence}% confident
+        </span>
+      </div>
+    </div>
+  );
+}
+
 export default function CustomerChatbotDemo(props: DemoRendererProps) {
   const { onSubmit, isLoading, result, error, clearResult } = props;
   const [businessDescription, setBusinessDescription] = useState("");
   const [question, setQuestion] = useState("");
+  // Follow-ups the visitor has clicked, in order. Only follow-ups with a
+  // canned answer in the result can be asked; the rest stay as plain labels.
+  const [asked, setAsked] = useState<string[]>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,44 +64,53 @@ export default function CustomerChatbotDemo(props: DemoRendererProps) {
     const answer = result.answer as string;
     const confidence = result.confidence_percent as number;
     const followups = (result.suggested_followups as string[]) || [];
+    const followupAnswers =
+      (result.followup_answers as Record<string, FollowupAnswer> | undefined) ?? {};
+    const remaining = followups.filter((f) => !asked.includes(f));
 
     return (
       <div className="animate-fade-in-up space-y-4">
         <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
-          {/* Question bubble - right aligned */}
-          <div className="mb-4 flex justify-end">
-            <div className="max-w-[80%] rounded-2xl rounded-br-md bg-st-surface px-4 py-3">
-              <p className="text-[13px] font-normal text-st-text">{q}</p>
-            </div>
-          </div>
+          <QuestionBubble text={q} />
+          <AnswerBubble text={answer} confidence={confidence} />
 
-          {/* Answer bubble - left aligned */}
-          <div className="mb-4 flex justify-start">
-            <div className="max-w-[80%] rounded-2xl rounded-bl-md border border-st-border bg-st-surface px-4 py-3">
-              <p className="text-[13px] font-normal leading-relaxed text-st-text">
-                {answer}
-              </p>
-              <span className="mt-2 inline-block rounded-full bg-st-surface px-2.5 py-0.5 text-[10px] font-medium tracking-wide text-st-text-muted">
-                {confidence}% confident
-              </span>
+          {/* Follow-ups the visitor has asked */}
+          {asked.map((f) => (
+            <div key={f} className="animate-fade-in-up">
+              <QuestionBubble text={f} />
+              <AnswerBubble
+                text={followupAnswers[f].answer}
+                confidence={followupAnswers[f].confidence_percent}
+              />
             </div>
-          </div>
+          ))}
 
           {/* Suggested follow-ups */}
-          {followups.length > 0 && (
+          {remaining.length > 0 && (
             <div className="mt-4 border-t border-st-border pt-3">
               <p className="mb-2 text-[11px] font-medium tracking-wide text-st-text-muted">
                 Suggested follow-ups
               </p>
               <div className="flex flex-wrap gap-2">
-                {followups.map((f, i) => (
-                  <span
-                    key={i}
-                    className="cursor-default rounded-full border border-st-border px-3 py-1.5 text-[12px] font-normal text-st-text/70 transition-colors duration-300 hover:border-st-border-hover hover:text-st-text"
-                  >
-                    {f}
-                  </span>
-                ))}
+                {remaining.map((f) =>
+                  followupAnswers[f] ? (
+                    <button
+                      key={f}
+                      type="button"
+                      onClick={() => setAsked((prev) => [...prev, f])}
+                      className="min-h-[44px] rounded-full border border-st-border px-3 py-1.5 text-[12px] font-normal text-st-text/70 transition-colors duration-300 hover:border-st-border-hover hover:text-st-text"
+                    >
+                      {f}
+                    </button>
+                  ) : (
+                    <span
+                      key={f}
+                      className="rounded-full border border-st-border px-3 py-1.5 text-[12px] font-normal text-st-text/70"
+                    >
+                      {f}
+                    </span>
+                  )
+                )}
               </div>
             </div>
           )}
@@ -78,13 +120,15 @@ export default function CustomerChatbotDemo(props: DemoRendererProps) {
           <p className="text-[13px] font-normal text-red-400/80">{error}</p>
         )}
 
-        <button
-          type="button"
-          onClick={clearResult}
-          className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
-        >
-          Try Again
-        </button>
+        {clearResult && (
+          <button
+            type="button"
+            onClick={clearResult}
+            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
+          >
+            Try Again
+          </button>
+        )}
       </div>
     );
   }

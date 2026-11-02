@@ -32,6 +32,26 @@ export const CACHED_DEMO_DATA: Record<string, Record<string, unknown>> = {
       "Can I bring a guest?",
       "Is there parking available?",
     ],
+    // Canned answers so the follow-up chips work in the sample, with no AI
+    // call. Keys must match suggested_followups exactly.
+    followup_answers: {
+      "Do you offer corporate rates?": {
+        answer: "Yes. Companies that sign up 5 or more staff get 15% off any plan, billed monthly to the company. Ask your HR team to contact us and we'll send a corporate agreement.",
+        confidence_percent: 92,
+      },
+      "What are your operating hours?": {
+        answer: "We're open 6am to 11pm on weekdays, and 7am to 9pm on weekends and public holidays. Premium and VIP members can also use the gym floor 24/7 with their access card.",
+        confidence_percent: 97,
+      },
+      "Can I bring a guest?": {
+        answer: "Premium and VIP members can bring one guest per visit, up to four times a month, at no charge. Your guest will need to show photo ID and sign a waiver at the front desk.",
+        confidence_percent: 90,
+      },
+      "Is there parking available?": {
+        answer: "Yes. Our basement car park gives members 2 hours of free parking. Just validate your ticket at the front desk before you leave.",
+        confidence_percent: 95,
+      },
+    },
   },
 
   "appointment-booking": {
