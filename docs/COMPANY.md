@@ -96,24 +96,30 @@ product.
 
 ## Claims to keep honest
 
-The pitch deck states **"4 production systems delivered and live"**. It
-maps them as follows:
+The capability deck (`brand/profile/pitch_content.py`, served as
+`public/assets/startech-capability-deck-*.pdf`) used to state **"4
+production systems delivered and live"**. Rewritten on 2026-11-02 in all
+eight languages to what holds up:
 
-1. Cross-border trading system (Japan): live.
-2. AI co-pilot (Singapore): client work.
-3. Payroll engine: the ERP. It is not clearly running for a client in
-   production.
-4. Patient-owned health record: VIPhealth, which belongs to the related
-   company, not StarTech.
+1. Cross-border trading system (Japan): live with the client.
+2. AI co-pilot (Singapore): delivered; the engagement completed in 2026.
+3. Payroll engine: the ERP. Shown as an internal build, not yet deployed,
+   with no accuracy claim.
+4. Patient-owned health record: VIPhealth belongs to the related company,
+   not StarTech, so it is no longer shown. Its slot now shows the working
+   demos on both sites.
 
-Items 3 and 4 are the claims a technical prospect is most likely to probe.
-Re-check the wording before the deck is used again.
+The deck no longer claims accounting engines or payroll compliance, gives
+its markets as Singapore and Japan, and ends with the spreadsheet offer.
+Re-check these lines whenever a client engagement starts or ends.
 
 Other inconsistencies:
 
-- The older A4 profile (`brand/profile/content.py`) says "Singapore,
-  Indonesia" and "strategy to production in 90 days". The newer deck says
-  "Singapore, Japan".
+- The older A4 profile (`brand/profile/content.py`) and technical deck
+  (`brand/profile/deck_content.py`) still say "Singapore, Indonesia",
+  "strategy to production in 90 days" and, in the profile, that StarTech
+  runs PSG and SFEC applications. PSG closed on 29 September 2026. Do not
+  send either until it is rewritten; the capability deck replaces both.
 - The site publishes `info@`, but the contact form delivers to Gmail, so
   enquiries arrive in two places. See [OPERATIONS.md](OPERATIONS.md).
 

@@ -1,15 +1,56 @@
 # Company Profile & Capability Deck
 
-Bilingual (EN / ID) company collateral for Startech Innovation Pte Ltd.
-On-brand per `../guidelines/brand-guidelines.md` — dark theme, matching
-the business card and startech-innovation.com.
+Company collateral for Startech Innovation Pte Ltd. On-brand per
+`../guidelines/brand-guidelines.md` — dark theme, matching the business
+card and startech-innovation.com.
 
 ## Output
 
 | File | Format | Use |
 |---|---|---|
-| `profile-EN.pdf` / `profile-ID.pdf` | A4 portrait, 5 pages | Emailed leave-behind, procurement |
-| `deck-EN.pdf` / `deck-ID.pdf` | 16:9 landscape, 9 slides | Screen-share, projected pitch |
+| `out/pitch-{EN,JA,KO,ZH-Hans,ZH-Hant,ES,PT,ID}.pdf` | 16:9, 8 slides | **Capability deck** — the one to send; also the website download |
+| `profile-EN.pdf` / `profile-ID.pdf` | A4 portrait, 5 pages | Outdated — see below |
+| `deck-EN.pdf` / `deck-ID.pdf` | 16:9 landscape, 9 slides | Outdated — see below |
+
+> **Do not send the profile or the technical deck** until they are
+> rewritten. They predate the current positioning: "Singapore, Indonesia",
+> "strategy to production in 90 days", and (profile) "we run the full PSG
+> and SFEC application" — PSG closed on 29 September 2026. The capability
+> deck replaces both. Claims are tracked in `../../docs/COMPANY.md`.
+
+## Capability deck
+
+Content: `pitch_content.py`, one dict per language with identical keys
+(EN, JA, KO, ZH_HANS, ZH_HANT, ES, PT, ID). Layout: `render_pitch.py`,
+which reuses `render_deck.py`'s CSS and slide builders. Every claim must
+hold up on a call — check `../../docs/COMPANY.md` before changing one.
+
+```bash
+python3 render_pitch.py                     # -> out/pitch-*.html
+# Only if CJK text changed: rebuild the embedded Noto Sans CJK subsets
+# (one per language, only the characters used), then render again.
+uvx --from fonttools --with brotli python build_cjk_fonts.py
+python3 render_pitch.py
+
+cd out
+for s in EN JA KO ZH-Hans ZH-Hant ES PT ID; do
+  chromium --headless --disable-gpu --no-pdf-header-footer \
+    --print-to-pdf=pitch-$s.pdf file://$PWD/pitch-$s.html
+done
+```
+
+Publish to the website (the homepage download, by locale; there is no
+Indonesian site):
+
+```bash
+for s in EN:en JA:ja KO:ko ZH-Hans:zh-Hans ZH-Hant:zh-Hant ES:es PT:pt; do
+  cp "out/pitch-${s%%:*}.pdf" \
+    "../../public/assets/startech-capability-deck-${s##*:}.pdf"
+done
+```
+
+Check slides 3 and 5 after any text change: they are the fullest, and
+longer languages (ES, PT, ID) are the first to reach the footer.
 
 ## Deck structure (landscape)
 
