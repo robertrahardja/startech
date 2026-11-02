@@ -1,29 +1,71 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useI18n } from "../i18n";
 import { useInView } from "../hooks/useInView";
 import { SectionHeader } from "./Products";
+import { getUtm } from "../lib/utm";
 import type { ContactFormData } from "../types";
 
-export default function Contact() {
+const EMPTY_FORM: ContactFormData = {
+  name: "",
+  email: "",
+  phone: "",
+  company: "",
+  message: "",
+  country: "",
+  staff: "",
+};
+
+/** Must match SPREADSHEET_MAX_BYTES in worker/index.ts. */
+const SPREADSHEET_MAX_BYTES = 10 * 1024 * 1024;
+const SPREADSHEET_ACCEPT = ".xlsx,.xls,.xlsm,.csv,.ods,.numbers,.tsv";
+
+interface ContactProps {
+  /**
+   * "flyer" adds country, staff count and a spreadsheet upload, and takes
+   * its heading from the flyer copy: that page's offer is "send us one
+   * spreadsheet", so the form has to be able to take one.
+   */
+  variant?: "default" | "flyer";
+}
+
+export default function Contact({ variant = "default" }: ContactProps) {
   const { t } = useI18n();
   const [ref, isInView] = useInView({ threshold: 0.1 });
-  const [form, setForm] = useState<ContactFormData>({
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
-    message: "",
-  });
+  const [form, setForm] = useState<ContactFormData>(EMPTY_FORM);
+  const [file, setFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [status, setStatus] = useState<
     "idle" | "sending" | "success" | "error"
   >("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const isFlyer = variant === "flyer";
 
   const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (
+      e: React.ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >
+    ) => {
       setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     },
     []
+  );
+
+  const handleFile = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const picked = e.target.files?.[0] ?? null;
+      if (picked && picked.size > SPREADSHEET_MAX_BYTES) {
+        setErrorMsg(t.contact.fileTooLarge);
+        setStatus("error");
+        e.target.value = "";
+        setFile(null);
+        return;
+      }
+      if (status === "error") setStatus("idle");
+      setErrorMsg("");
+      setFile(picked);
+    },
+    [status, t.contact.fileTooLarge]
   );
 
   const handleSubmit = useCallback(
@@ -32,16 +74,25 @@ export default function Contact() {
       setStatus("sending");
       setErrorMsg("");
 
-      try {
-        const res = await fetch("/api/contact", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Requested-With": "XMLHttpRequest",
-          },
-          body: JSON.stringify(form),
-        });
+      const payload = { ...form, ...getUtm() };
 
+      try {
+        // JSON unless a spreadsheet is attached; the Worker reads both.
+        const init: RequestInit = {
+          method: "POST",
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        };
+        if (file) {
+          const data = new FormData();
+          for (const [key, value] of Object.entries(payload)) data.set(key, value);
+          data.set("spreadsheet", file, file.name);
+          init.body = data;
+        } else {
+          init.headers = { ...init.headers, "Content-Type": "application/json" };
+          init.body = JSON.stringify(payload);
+        }
+
+        const res = await fetch("/api/contact", init);
         const data = await res.json();
 
         if (!res.ok || !data.success) {
@@ -49,7 +100,9 @@ export default function Contact() {
         }
 
         setStatus("success");
-        setForm({ name: "", email: "", phone: "", company: "", message: "" });
+        setForm(EMPTY_FORM);
+        setFile(null);
+        if (fileInputRef.current) fileInputRef.current.value = "";
       } catch (err) {
         setStatus("error");
         setErrorMsg(
@@ -57,16 +110,20 @@ export default function Contact() {
         );
       }
     },
-    [form]
+    [form, file, t.contact.error]
   );
+
+  const header = isFlyer
+    ? { label: t.flyer.formEyebrow, title: t.flyer.formTitle, subtitle: t.flyer.formSub }
+    : { label: t.contact.eyebrow, title: t.contact.title, subtitle: t.contact.sub };
 
   return (
     <section id="contact" className="relative py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <SectionHeader
-          label={t.contact.eyebrow}
-          title={t.contact.title}
-          subtitle={t.contact.sub}
+          label={header.label}
+          title={header.title}
+          subtitle={header.subtitle}
         />
 
         <div
@@ -92,7 +149,7 @@ export default function Contact() {
 
             <div className="border-t border-st-border pt-6">
               <p className="text-[13.5px] leading-[1.7] text-st-text-muted">
-                {t.contact.reassurance}
+                {isFlyer ? t.flyer.formReassurance : t.contact.reassurance}
               </p>
             </div>
           </div>
@@ -111,6 +168,7 @@ export default function Contact() {
               name="company"
               label={t.contact.company}
               type="text"
+              required={isFlyer}
               value={form.company}
               onChange={handleChange}
             />
@@ -129,11 +187,65 @@ export default function Contact() {
               value={form.phone}
               onChange={handleChange}
             />
+
+            {isFlyer && (
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <FormField
+                  name="country"
+                  label={t.contact.country}
+                  type="text"
+                  required
+                  value={form.country}
+                  onChange={handleChange}
+                />
+                <div>
+                  <label htmlFor="staff" className={LABEL_CLASS}>
+                    {t.contact.staff}
+                    <span className="text-st-text-muted/70"> *</span>
+                  </label>
+                  <select
+                    id="staff"
+                    name="staff"
+                    required
+                    value={form.staff}
+                    onChange={handleChange}
+                    className={FIELD_CLASS}
+                  >
+                    <option value="" disabled>
+                      {t.contact.staffPick}
+                    </option>
+                    {t.contact.staffOptions.map((band) => (
+                      <option key={band} value={band}>
+                        {band}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )}
+
+            {isFlyer && (
+              <div>
+                <label htmlFor="spreadsheet" className={LABEL_CLASS}>
+                  {t.contact.spreadsheet}
+                </label>
+                <input
+                  ref={fileInputRef}
+                  id="spreadsheet"
+                  name="spreadsheet"
+                  type="file"
+                  accept={SPREADSHEET_ACCEPT}
+                  onChange={handleFile}
+                  className={`${FIELD_CLASS} file:mr-3 file:rounded-md file:border-0 file:bg-st-bg-elevated file:px-3 file:py-1.5 file:text-[12px] file:text-st-text`}
+                />
+                <p className="mt-1.5 text-[12px] text-st-text-muted">
+                  {t.contact.spreadsheetHint}
+                </p>
+              </div>
+            )}
+
             <div>
-              <label
-                htmlFor="message"
-                className="mb-1.5 block text-[11px] font-medium tracking-wide text-st-text-muted"
-              >
+              <label htmlFor="message" className={LABEL_CLASS}>
                 {t.contact.message}{" "}
                 <span className="text-st-text-muted/70">*</span>
               </label>
@@ -145,8 +257,8 @@ export default function Contact() {
                 value={form.message}
                 onChange={handleChange}
                 maxLength={5000}
-                className="w-full min-h-[46px] rounded-lg border border-st-field bg-st-field-bg px-3.5 py-3 text-[14px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-all duration-300 hover:border-st-border-hover focus:border-st-blue-light focus:bg-st-bg-elevated focus:ring-2 focus:ring-st-blue/25"
-                placeholder={t.contact.messagePlaceholder}
+                className={FIELD_CLASS}
+                placeholder={isFlyer ? t.flyer.messagePlaceholder : t.contact.messagePlaceholder}
               />
             </div>
 
@@ -164,7 +276,7 @@ export default function Contact() {
                 disabled={status === "sending"}
                 className="hero-btn-primary relative w-full overflow-hidden rounded-xl px-4 py-3.5 text-[13px] font-normal tracking-wide text-st-text transition-all duration-500 disabled:opacity-40"
               >
-                {status === "sending" ? t.contact.sending : t.contact.send}
+                {status === "sending" ? t.contact.sending : isFlyer ? t.flyer.formSend : t.contact.send}
               </button>
             )}
           </form>
@@ -173,6 +285,11 @@ export default function Contact() {
     </section>
   );
 }
+
+const LABEL_CLASS =
+  "mb-1.5 block text-[11px] font-medium tracking-wide text-st-text-muted";
+const FIELD_CLASS =
+  "w-full min-h-[46px] rounded-lg border border-st-field bg-st-field-bg px-3.5 py-3 text-[14px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-all duration-300 hover:border-st-border-hover focus:border-st-blue-light focus:bg-st-bg-elevated focus:ring-2 focus:ring-st-blue/25";
 
 function ContactDetail({
   label,
@@ -219,10 +336,7 @@ function FormField({
 }) {
   return (
     <div>
-      <label
-        htmlFor={name}
-        className="mb-1.5 block text-[11px] font-medium tracking-wide text-st-text-muted"
-      >
+      <label htmlFor={name} className={LABEL_CLASS}>
         {label}
         {required && <span className="text-st-text-muted/70"> *</span>}
       </label>
@@ -233,8 +347,8 @@ function FormField({
         required={required}
         value={value}
         onChange={onChange}
-        maxLength={name === "email" ? 320 : name === "phone" ? 30 : 200}
-        className="w-full min-h-[46px] rounded-lg border border-st-field bg-st-field-bg px-3.5 py-3 text-[14px] font-normal text-st-text placeholder-st-text-muted/50 outline-none transition-all duration-300 hover:border-st-border-hover focus:border-st-blue-light focus:bg-st-bg-elevated focus:ring-2 focus:ring-st-blue/25"
+        maxLength={name === "email" ? 320 : name === "phone" ? 30 : name === "country" ? 100 : 200}
+        className={FIELD_CLASS}
       />
     </div>
   );

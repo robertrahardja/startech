@@ -442,6 +442,63 @@ export const pt: Messages = {
     success: "Obrigado pela mensagem. Retornaremos em breve.",
     error:
       "Algo deu errado. Tente novamente ou escreva diretamente para o nosso e-mail.",
+    country: "País",
+    staff: "Funcionários",
+    staffPick: "Quantas pessoas",
+    staffOptions: ["Menos de 10", "De 10 a 50", "De 51 a 200", "Mais de 200"],
+    spreadsheet: "Sua planilha (opcional)",
+    spreadsheetHint:
+      "Excel, CSV ou Numbers, até 10 MB. Remova o que for confidencial; uma amostra de linhas basta.",
+    fileTooLarge: "Esse arquivo passa de 10 MB. Envie um extrato menor.",
+  },
+
+  // O folheto digital em /flyer. Afirma apenas o que a apresentação de
+  // capacidades afirma; ver docs/COMPANY.md.
+  flyer: {
+    eyebrow: "Singapura · Japão · Atuação mundial",
+    headline: "Da planilha ao sistema.",
+    who: "Para empresas de 10 a 200 pessoas que funcionam com planilhas, ou com um sistema que um fornecedor nunca terminou. Construímos o software que realmente sustenta a sua operação, e cada parte dele é sua.",
+    ctaOffer: "Envie-nos uma planilha",
+    ctaDeck: "Baixar a apresentação",
+    proofEyebrow: "Três coisas que são verdade",
+    proof: [
+      {
+        lead: "Em produção no Japão",
+        detail:
+          "Um exportador de carros usados opera com um sistema que construímos: estoque, CRM, faturas, documentos de embarque e recebimentos. Em produção, com o cliente, hoje.",
+      },
+      {
+        lead: "7,060 testes",
+        detail:
+          "Testes automatizados sobre 484 calculadoras do nosso ERP, da execução de agosto de 2026. Um desenvolvimento interno, ainda não implantado, em que cada número é conferido antes de ser entregue.",
+      },
+      {
+        lead: "É seu",
+        detail:
+          "O fundador escreve o código. A conta na nuvem, o banco de dados e o repositório ficam no seu nome desde a primeira semana, então nenhum fornecedor pode segurar o seu negócio.",
+      },
+    ],
+    demosEyebrow: "Experimente antes de se comprometer",
+    demosTitle: "Demos que funcionam, não slides",
+    demosSub: "{count} sistemas pequenos que você pode executar no navegador com dados de exemplo. Estes três são os mais universais.",
+    demoOpen: "Abrir a demo",
+    demosAll: "Ver todas as {count} demos",
+    offerEyebrow: "A oferta",
+    offerTitle: "Envie-nos uma planilha e nós a mostraremos funcionando como sistema.",
+    offerBody:
+      "Escolha a planilha que faz o seu negócio girar: orçamentos, estoque, ordens, entregas, qualquer uma. Em duas semanas você a vê como um sistema funcionando, com as suas linhas dentro, e uma resposta direta sobre quanto custaria o desenvolvimento completo.",
+    offerPoints: ["Sem custo, sem compromisso", "De 3 a 5 empresas por mês", "O que for construído na demo fica com você"],
+    formEyebrow: "Comece aqui",
+    formTitle: "Uma planilha, um formulário",
+    formSub: "Conte o que essa planilha faz por você hoje. Respondemos em dois dias úteis.",
+    formReassurance:
+      "Seu arquivo fica guardado em privado, é lido por uma única pessoa e apagado a pedido. Nada é compartilhado nem vendido.",
+    formSend: "Enviar a planilha",
+    messagePlaceholder: "O que esta planilha faz pelo negócio e onde ela falha?",
+    deckLine: "Baixe a apresentação de 8 slides. Sem precisar deixar e-mail.",
+    grantsLabel: "Empresas de Singapura:",
+    grantsLine: "verificaremos se o seu projeto se qualifica para o apoio EDGE.",
+    backHome: "Voltar ao site principal",
   },
 
   stickyCta: {

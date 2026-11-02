@@ -22,6 +22,7 @@ import { AI_CHAT_ENABLED } from "./lib/features";
  */
 const SolutionsIndex = lazy(() => import("./components/solutions/SolutionsIndex"));
 const SolutionPage = lazy(() => import("./components/solutions/SolutionPage"));
+const FlyerPage = lazy(() => import("./pages/FlyerPage"));
 const AskStartech = lazy(() => import("./components/AskStartech"));
 
 /**
@@ -66,6 +67,12 @@ export default function App() {
 
       <main>
         {page.type === "home" && <HomePage onAskAi={openChat} />}
+
+        {page.type === "flyer" && (
+          <Suspense fallback={<RouteFallback />}>
+            <FlyerPage />
+          </Suspense>
+        )}
 
         {page.type === "solutions-index" && (
           <Suspense fallback={<RouteFallback />}>

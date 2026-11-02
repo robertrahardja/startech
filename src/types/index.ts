@@ -11,6 +11,9 @@ export interface ContactFormData {
   phone: string;
   company: string;
   message: string;
+  /** Flyer form only: free-text country and a staff-count band. */
+  country: string;
+  staff: string;
 }
 
 export interface Product {

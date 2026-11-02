@@ -6,6 +6,7 @@ import { parseLocalePath, type Locale } from "../i18n/locales";
 /** Which page a pathname resolves to. */
 export type Page =
   | { type: "home" }
+  | { type: "flyer" }
   | { type: "solutions-index" }
   | { type: "solution-page"; solution: Solution };
 
@@ -22,6 +23,11 @@ const SOLUTION_PATH = /^\/solutions\/([a-z0-9-]+)$/;
 function resolvePage(pathname: string): Page {
   if (pathname === "/solutions") {
     return { type: "solutions-index" };
+  }
+
+  // The digital flyer: the one page every bio link and campaign points at.
+  if (pathname === "/flyer") {
+    return { type: "flyer" };
   }
 
   const match = pathname.match(SOLUTION_PATH);
