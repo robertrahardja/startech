@@ -107,10 +107,36 @@ Manage → Advanced DNS.
 | From | `StarTech Website <onboarding@resend.dev>` |
 | Reply-To | the visitor's address |
 
-Each enquiry becomes a `lead` contact with source `website`, plus a
-"Website enquiry" note holding the message. A company is created or matched
-by name when one is given. A repeat enquiry from the same email address adds
-a note to the existing contact.
+Each enquiry becomes a `lead` contact, plus a "Website enquiry" note holding
+the message. A company is created or matched by name when one is given. A
+repeat enquiry from the same email address adds a note to the existing
+contact.
+
+### Where the lead came from
+
+The contact's `source` is the `utm_source` of the URL the visitor arrived
+on, when it is one hq knows (`linkedin`, `youtube`, `line`, `whatsapp` and
+the rest of `CONTACT_SOURCES` in `st_dasboard/src/crm/types.ts`); any other
+tag is filed under `website` and kept verbatim in the note. `src/lib/utm.ts`
+reads `utm_source`, `utm_medium` and `utm_campaign` once on arrival and
+keeps them in `sessionStorage` until the form is sent, so a tag survives
+browsing to another page first. Every bio link and flyer must carry
+`?utm_source=<platform>`, or the channel cannot be measured.
+
+### The flyer page and its spreadsheet
+
+`/flyer` (and `/<locale>/flyer`) is the digital flyer: who it is for, three
+proof lines, three demos, the offer, a longer form, the deck, the EDGE line.
+It is reached by link only and is not prerendered. Its form adds country, a
+staff-count band and an optional spreadsheet; with a file attached it posts
+`multipart/form-data` instead of JSON and the Worker reads both.
+
+The file goes to the R2 bucket `startech-leads` (binding `LEADS`, created
+2026-11-02) under `<date>/<uuid>/<name>`; `.xlsx .xls .xlsm .csv .ods
+.numbers .tsv`, 10 MB at most. The note and the email link to
+`https://hq.startech-innovation.com/api/leads/files/<key>`, which hq serves
+behind its Access gate. Nothing expires these files; delete one with
+`wrangler r2 object delete startech-leads/<key>` when a prospect asks.
 
 The email's footer says whether the CRM write worked. The visitor sees an
 error only when the lead reached neither the CRM nor the inbox. The schema

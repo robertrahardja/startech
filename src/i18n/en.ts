@@ -441,6 +441,63 @@ export const en = {
     success:
       "Thank you for your message. We will come back to you shortly.",
     error: "Something went wrong. Please try again, or email us directly.",
+    country: "Country",
+    staff: "Staff",
+    staffPick: "How many people",
+    staffOptions: ["Under 10", "10 to 50", "51 to 200", "Over 200"],
+    spreadsheet: "Your spreadsheet (optional)",
+    spreadsheetHint:
+      "Excel, CSV or Numbers, up to 10 MB. Remove anything confidential; a sample of rows is enough.",
+    fileTooLarge: "That file is over 10 MB. Send a smaller extract.",
+  },
+
+  // The digital flyer at /flyer. Claims are the capability deck's and nothing
+  // more; see docs/COMPANY.md, "Claims to keep honest".
+  flyer: {
+    eyebrow: "Singapore · Japan · Working worldwide",
+    headline: "From spreadsheet to system.",
+    who: "For companies of 10 to 200 people that run on spreadsheets, or on a system a vendor never finished. We build the software your operation actually runs on, and you own every part of it.",
+    ctaOffer: "Send us one spreadsheet",
+    ctaDeck: "Download the deck",
+    proofEyebrow: "Three things that are true",
+    proof: [
+      {
+        lead: "Live in Japan",
+        detail:
+          "A used-car exporter runs on a system we built: inventory, CRM, invoices, shipping documents and payments. In production, with the client, today.",
+      },
+      {
+        lead: "7,060 tests",
+        detail:
+          "Automated tests across 484 calculators in our ERP build, from the August 2026 run. An internal build, not yet deployed, and every number is checked before it ships.",
+      },
+      {
+        lead: "You own it",
+        detail:
+          "The founder writes the code. The cloud account, the database and the repository are in your name from the first week, so no vendor can hold your business.",
+      },
+    ],
+    demosEyebrow: "Try before you commit",
+    demosTitle: "Working demos, not slides",
+    demosSub: "{count} small systems you can run in the browser with sample data. These three are the most universal.",
+    demoOpen: "Open the demo",
+    demosAll: "See all {count} demos",
+    offerEyebrow: "The offer",
+    offerTitle: "Send us one spreadsheet and we will show it working as a system.",
+    offerBody:
+      "Pick the sheet that runs your business: quotes, stock, jobs, deliveries, anything. Within two weeks you see it as a working system, with your rows in it, and a straight answer on what a full build would cost.",
+    offerPoints: ["No cost, no commitment", "3 to 5 companies a month", "What we build in the demo is yours to keep"],
+    formEyebrow: "Start here",
+    formTitle: "One spreadsheet, one form",
+    formSub: "Tell us what the sheet does for you today. We reply within two working days.",
+    formReassurance:
+      "Your file is stored privately, read by one person, and deleted on request. Nothing is shared and nothing is sold.",
+    formSend: "Send the spreadsheet",
+    messagePlaceholder: "What does this spreadsheet do for the business, and where does it break?",
+    deckLine: "Download the 8-slide capability deck. No email needed.",
+    grantsLabel: "Singapore companies:",
+    grantsLine: "we will check whether your project qualifies for EDGE support.",
+    backHome: "Back to the main site",
   },
 
   stickyCta: {

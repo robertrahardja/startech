@@ -443,6 +443,63 @@ export const es: Messages = {
     success: "Gracias por su mensaje. Le responderemos en breve.",
     error:
       "Algo ha fallado. Vuelva a intentarlo o escríbanos directamente por correo.",
+    country: "País",
+    staff: "Plantilla",
+    staffPick: "Cuántas personas",
+    staffOptions: ["Menos de 10", "De 10 a 50", "De 51 a 200", "Más de 200"],
+    spreadsheet: "Su hoja de cálculo (opcional)",
+    spreadsheetHint:
+      "Excel, CSV o Numbers, hasta 10 MB. Quite lo confidencial; con una muestra de filas basta.",
+    fileTooLarge: "Ese archivo supera los 10 MB. Envíe un extracto más pequeño.",
+  },
+
+  // El folleto digital en /flyer. Solo afirma lo que afirma la presentación
+  // de capacidades; véase docs/COMPANY.md.
+  flyer: {
+    eyebrow: "Singapur · Japón · Trabajamos en todo el mundo",
+    headline: "De la hoja de cálculo al sistema.",
+    who: "Para empresas de 10 a 200 personas que funcionan con hojas de cálculo, o con un sistema que un proveedor nunca terminó. Construimos el software sobre el que realmente opera su negocio, y usted es dueño de cada parte.",
+    ctaOffer: "Envíenos una hoja de cálculo",
+    ctaDeck: "Descargar la presentación",
+    proofEyebrow: "Tres cosas que son ciertas",
+    proof: [
+      {
+        lead: "En producción en Japón",
+        detail:
+          "Un exportador de vehículos usados opera con un sistema que construimos: inventario, CRM, facturas, documentos de embarque y cobros. En producción, con el cliente, hoy.",
+      },
+      {
+        lead: "7,060 pruebas",
+        detail:
+          "Pruebas automatizadas sobre 484 calculadoras de nuestro ERP, de la ejecución de agosto de 2026. Un desarrollo interno, aún no desplegado, en el que cada cifra se verifica antes de entregarse.",
+      },
+      {
+        lead: "Es suyo",
+        detail:
+          "El fundador escribe el código. La cuenta en la nube, la base de datos y el repositorio están a su nombre desde la primera semana, así que ningún proveedor puede retener su negocio.",
+      },
+    ],
+    demosEyebrow: "Pruebe antes de comprometerse",
+    demosTitle: "Demos que funcionan, no diapositivas",
+    demosSub: "{count} sistemas pequeños que puede ejecutar en el navegador con datos de ejemplo. Estos tres son los más universales.",
+    demoOpen: "Abrir la demo",
+    demosAll: "Ver las {count} demos",
+    offerEyebrow: "La oferta",
+    offerTitle: "Envíenos una hoja de cálculo y se la mostraremos funcionando como sistema.",
+    offerBody:
+      "Elija la hoja con la que funciona su negocio: presupuestos, existencias, trabajos, entregas, lo que sea. En dos semanas la verá como un sistema en marcha, con sus filas dentro, y una respuesta clara sobre lo que costaría el desarrollo completo.",
+    offerPoints: ["Sin coste ni compromiso", "De 3 a 5 empresas al mes", "Lo construido en la demo se lo queda usted"],
+    formEyebrow: "Empiece aquí",
+    formTitle: "Una hoja, un formulario",
+    formSub: "Cuéntenos qué hace esa hoja por usted hoy. Respondemos en dos días laborables.",
+    formReassurance:
+      "Su archivo se guarda en privado, lo lee una sola persona y se borra a petición. No se comparte ni se vende nada.",
+    formSend: "Enviar la hoja de cálculo",
+    messagePlaceholder: "¿Qué hace esta hoja por el negocio y dónde falla?",
+    deckLine: "Descargue la presentación de 8 diapositivas. Sin dejar su correo.",
+    grantsLabel: "Empresas de Singapur:",
+    grantsLine: "comprobaremos si su proyecto puede optar a la ayuda EDGE.",
+    backHome: "Volver al sitio principal",
   },
 
   stickyCta: {

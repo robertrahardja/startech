@@ -4,7 +4,10 @@
  * Handles API endpoints:
  * - POST /api/chat    — Proxies to OpenAI GPT-4o-mini with streaming SSE
  * - POST /api/tts     — Proxies to ElevenLabs text-to-speech
- * - POST /api/contact — Saves the lead to the CRM, then emails via Resend
+ * - POST /api/contact — Saves the lead to the CRM, then emails via Resend.
+ *                        JSON from the homepage form; multipart from /flyer
+ *                        when a spreadsheet is attached (stored in R2).
+ *                        utm_* fields become the contact's source in hq.
  * - POST /api/demo    — AI-powered product demos with lead capture, backed
  *                        by Gemini (free tier) with a Workers AI fallback
  *
@@ -25,6 +28,8 @@ interface Env {
   DB: D1Database;
   /** The st_dasboard CRM database; contact-form leads are written here. */
   CRM_DB?: D1Database;
+  /** Spreadsheets attached to the flyer form. hq serves them back to the CEO. */
+  LEADS?: R2Bucket;
   /** OAuth client ID demo sign-in tokens must have been issued for. */
   GOOGLE_CLIENT_ID: string;
   /** Primary model for /api/demo — free tier, text and vision both. */
@@ -651,6 +656,42 @@ interface Lead {
   company: string;
   message: string;
   country: string | null;
+  /** Company size band from the flyer form; "" when not asked. */
+  staff: string;
+  /** utm_source from the URL the visitor arrived on, or "" when untagged. */
+  utmSource: string;
+  utmMedium: string;
+  utmCampaign: string;
+  /** R2 key of the spreadsheet the visitor attached, if any. */
+  spreadsheetKey: string | null;
+}
+
+/**
+ * Where hq serves an attached spreadsheet from. The R2 key itself is
+ * private; this URL sits behind hq's Cloudflare Access gate.
+ */
+const HQ_FILE_URL = "https://hq.startech-innovation.com/api/leads/files/";
+
+/**
+ * Contact sources hq knows. A utm_source that matches one is written straight
+ * to contacts.source so the channel can be filtered; anything else is kept
+ * verbatim in the activity text and the contact is filed under "website".
+ * Mirrors CONTACT_SOURCES in st_dasboard/src/crm/types.ts.
+ */
+const HQ_SOURCES = new Set([
+  "website", "referral", "linkedin", "event", "cold_outreach", "partner",
+  "email", "whatsapp", "line", "youtube", "x", "instagram", "tiktok",
+  "facebook", "telegram", "newsletter", "google",
+]);
+
+/** The lines hq and the notification email both show under the message. */
+function leadTrail(lead: Lead): string {
+  const lines: string[] = [];
+  const utm = [lead.utmSource, lead.utmMedium, lead.utmCampaign].filter(Boolean);
+  if (utm.length) lines.push(`Source: ${utm.join(" / ")}`);
+  if (lead.staff) lines.push(`Staff: ${lead.staff}`);
+  if (lead.spreadsheetKey) lines.push(`Spreadsheet: ${HQ_FILE_URL}${lead.spreadsheetKey}`);
+  return lines.join("\n");
 }
 
 /** "SG" → "Singapore", matching how the CRM stores country names. */
@@ -696,15 +737,16 @@ async function saveLead(db: D1Database, lead: Lead): Promise<void> {
 
   if (!contact) {
     const [firstName, ...rest] = lead.name.split(/\s+/);
+    const source = HQ_SOURCES.has(lead.utmSource) ? lead.utmSource : "website";
     writes.push(
       db
         .prepare(
           `INSERT INTO contacts (id, org_id, company_id, type, first_name, last_name, email, phone, country, status, source, created_by, created_at, updated_at)
-           VALUES (?, ?, ?, 'b2b_contact', ?, ?, ?, ?, ?, 'lead', 'website', ?, ?, ?)`
+           VALUES (?, ?, ?, 'b2b_contact', ?, ?, ?, ?, ?, 'lead', ?, ?, ?, ?)`
         )
         .bind(
           contactId, CRM_ORG_ID, companyId, firstName, rest.join(" "),
-          lead.email, lead.phone || null, lead.country, CRM_USER_ID, now, now
+          lead.email, lead.phone || null, lead.country, source, CRM_USER_ID, now, now
         )
     );
   } else if (companyId && !contact.company_id) {
@@ -725,18 +767,126 @@ async function saveLead(db: D1Database, lead: Lead): Promise<void> {
       )
       .bind(
         `act_${crypto.randomUUID()}`, CRM_ORG_ID, contactId, companyId ?? contact?.company_id ?? null,
-        lead.message, now, CRM_USER_ID, now
+        [lead.message, leadTrail(lead)].filter(Boolean).join("\n\n"), now, CRM_USER_ID, now
       )
   );
 
   await db.batch(writes);
 }
 
+/** Spreadsheet types the flyer form accepts, by extension. */
+const SPREADSHEET_EXTENSIONS = new Set(["xlsx", "xls", "xlsm", "csv", "ods", "numbers", "tsv"]);
+const SPREADSHEET_MAX_BYTES = 10 * 1024 * 1024;
+/** Multipart overhead on top of the file plus the text fields. */
+const CONTACT_MAX_BYTES = SPREADSHEET_MAX_BYTES + 64 * 1024;
+
+/** utm values: lowercase, and only what a tracking tag legitimately contains. */
+function sanitizeUtm(input: unknown): string {
+  if (typeof input !== "string") return "";
+  return input.trim().toLowerCase().replace(/[^a-z0-9._-]/g, "").slice(0, 100);
+}
+
+interface ContactFields {
+  name: string;
+  email: string;
+  phone: string;
+  company: string;
+  message: string;
+  country: string;
+  staff: string;
+  utm_source: string;
+  utm_medium: string;
+  utm_campaign: string;
+  file: File | null;
+}
+
+/**
+ * Reads the form from either encoding. The homepage form sends JSON; the
+ * flyer form sends multipart when a spreadsheet is attached.
+ */
+async function readContactFields(request: Request): Promise<ContactFields | null> {
+  const str = (v: unknown) => (typeof v === "string" ? v : "");
+  const type = request.headers.get("Content-Type") ?? "";
+
+  if (type.startsWith("multipart/form-data")) {
+    let form: FormData;
+    try {
+      form = await request.formData();
+    } catch {
+      return null;
+    }
+    const file = form.get("spreadsheet");
+    return {
+      name: str(form.get("name")),
+      email: str(form.get("email")),
+      phone: str(form.get("phone")),
+      company: str(form.get("company")),
+      message: str(form.get("message")),
+      country: str(form.get("country")),
+      staff: str(form.get("staff")),
+      utm_source: str(form.get("utm_source")),
+      utm_medium: str(form.get("utm_medium")),
+      utm_campaign: str(form.get("utm_campaign")),
+      file: file instanceof File && file.size > 0 ? file : null,
+    };
+  }
+
+  let body: Record<string, unknown>;
+  try {
+    body = await request.json();
+  } catch {
+    return null;
+  }
+  if (!body || typeof body !== "object") return null;
+  return {
+    name: str(body.name),
+    email: str(body.email),
+    phone: str(body.phone),
+    company: str(body.company),
+    message: str(body.message),
+    country: str(body.country),
+    staff: str(body.staff),
+    utm_source: str(body.utm_source),
+    utm_medium: str(body.utm_medium),
+    utm_campaign: str(body.utm_campaign),
+    file: null,
+  };
+}
+
+/**
+ * Stores the attached spreadsheet under a key nobody can guess from the
+ * filename alone. Returns the key, or an error message for the visitor.
+ */
+async function storeSpreadsheet(
+  bucket: R2Bucket | undefined,
+  file: File,
+  email: string
+): Promise<{ key: string } | { error: string }> {
+  const ext = file.name.toLowerCase().split(".").pop() ?? "";
+  if (!SPREADSHEET_EXTENSIONS.has(ext)) {
+    return { error: "Please attach a spreadsheet (.xlsx, .xls, .csv, .ods or .numbers)." };
+  }
+  if (file.size > SPREADSHEET_MAX_BYTES) {
+    return { error: "The spreadsheet is over 10 MB. Please send a smaller extract." };
+  }
+  if (!bucket) {
+    return { error: "File uploads are not available right now. Please send the form without the file." };
+  }
+  const safeName = file.name.replace(/[^A-Za-z0-9._-]+/g, "_").slice(-80) || `upload.${ext}`;
+  const day = new Date().toISOString().slice(0, 10);
+  const key = `${day}/${crypto.randomUUID()}/${safeName}`;
+  await bucket.put(key, file.stream(), {
+    httpMetadata: { contentType: file.type || "application/octet-stream" },
+    customMetadata: { email, originalName: file.name.slice(0, 200) },
+  });
+  return { key };
+}
+
 async function handleContact(
   request: Request,
   env: Env
 ): Promise<Response> {
-  if (isRequestTooLarge(request, 20_000)) {
+  if (isRequestTooLarge(request, CONTACT_MAX_BYTES)) {
     return new Response(
       JSON.stringify({ success: false, error: "Request too large." }),
       { status: 413, headers: { "Content-Type": "application/json" } }
@@ -751,21 +901,24 @@ async function handleContact(
     );
   }
 
-  let body: { name?: string; email?: string; phone?: string; company?: string; message?: string };
-  try {
-    body = await request.json();
-  } catch {
+  const body = await readContactFields(request);
+  if (!body) {
     return new Response(
       JSON.stringify({ success: false, error: "Invalid request body." }),
       { status: 400, headers: { "Content-Type": "application/json" } }
     );
   }
 
-  const name = sanitizeString(body.name || "", 200);
-  const email = sanitizeEmail(body.email || "");
-  const phone = sanitizeString(body.phone || "", 30).replace(/[\r\n]/g, "");
-  const company = sanitizeString(body.company || "", 200).replace(/[\r\n]/g, "");
-  const message = sanitizeString(body.message || "", 5000);
+  const name = sanitizeString(body.name, 200);
+  const email = sanitizeEmail(body.email);
+  const phone = sanitizeString(body.phone, 30).replace(/[\r\n]/g, "");
+  const company = sanitizeString(body.company, 200).replace(/[\r\n]/g, "");
+  const message = sanitizeString(body.message, 5000);
+  const formCountry = sanitizeString(body.country, 100).replace(/[\r\n]/g, "");
+  const staff = sanitizeString(body.staff, 40).replace(/[\r\n]/g, "");
+  const utmSource = sanitizeUtm(body.utm_source);
+  const utmMedium = sanitizeUtm(body.utm_medium);
+  const utmCampaign = sanitizeUtm(body.utm_campaign);
 
   if (!name || !email || !message) {
     return new Response(
@@ -783,18 +936,37 @@ async function handleContact(
     );
   }
 
+  // The file goes up before anything else: a rejected file is the visitor's
+  // problem to fix, so it has to be reported before the lead is recorded.
+  let spreadsheetKey: string | null = null;
+  if (body.file) {
+    const stored = await storeSpreadsheet(env.LEADS, body.file, email);
+    if ("error" in stored) {
+      return new Response(
+        JSON.stringify({ success: false, error: stored.error }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+    spreadsheetKey = stored.key;
+  }
+
+  const lead: Lead = {
+    name, email, phone, company, message, staff,
+    utmSource, utmMedium, utmCampaign, spreadsheetKey,
+    // What the visitor typed beats where the request came from.
+    country: formCountry || countryName(request.cf?.country),
+  };
+
   let saved = false;
   if (env.CRM_DB) {
     try {
-      await saveLead(env.CRM_DB, {
-        name, email, phone, company, message,
-        country: countryName(request.cf?.country),
-      });
+      await saveLead(env.CRM_DB, lead);
       saved = true;
     } catch (err) {
       console.error("CRM write failed:", err instanceof Error ? err.message : err);
     }
   }
+  const trail = leadTrail(lead);
 
   const crmLine = saved
     ? "Saved to the CRM."
@@ -819,12 +991,14 @@ async function handleContact(
           ${company ? `<p><strong>Company:</strong> ${escapeHtml(company)}</p>` : ""}
           <p><strong>Email:</strong> ${escapeHtml(email)}</p>
           ${phone ? `<p><strong>Phone:</strong> ${escapeHtml(phone)}</p>` : ""}
+          ${lead.country ? `<p><strong>Country:</strong> ${escapeHtml(lead.country)}</p>` : ""}
           <p><strong>Message:</strong></p>
           <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
+          ${trail ? `<p>${escapeHtml(trail).replace(/\n/g, "<br>")}</p>` : ""}
           <hr>
           <p><small>Sent from StarTech Innovation website. ${crmLine}</small></p>
         `,
-        text: `Name: ${escapeHtml(name)}\n${company ? `Company: ${escapeHtml(company)}\n` : ""}Email: ${escapeHtml(email)}\n${phone ? `Phone: ${escapeHtml(phone)}\n` : ""}Message:\n${escapeHtml(message)}\n\n${crmLine}`,
+        text: `Name: ${escapeHtml(name)}\n${company ? `Company: ${escapeHtml(company)}\n` : ""}Email: ${escapeHtml(email)}\n${phone ? `Phone: ${escapeHtml(phone)}\n` : ""}${lead.country ? `Country: ${escapeHtml(lead.country)}\n` : ""}Message:\n${escapeHtml(message)}\n${trail ? `\n${escapeHtml(trail)}\n` : ""}\n${crmLine}`,
       }),
     });
     emailed = resendResponse.ok;

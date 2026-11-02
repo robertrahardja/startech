@@ -3,7 +3,11 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import { loadCatalogue } from "./i18n";
 import { parseLocalePath } from "./i18n/locales";
+import { captureUtm } from "./lib/utm";
 import "./index.css";
+
+// Read the channel tag off the landing URL before anything navigates away.
+captureUtm();
 
 // The locale is in the URL, so the right catalogue can be fetched before the
 // first render. This keeps the other six out of the main bundle without

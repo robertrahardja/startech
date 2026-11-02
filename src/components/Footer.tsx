@@ -27,19 +27,19 @@ export default function Footer() {
               it. Tight row/column gaps keep wrapped lines reading as one
               group instead of stray rows. */}
           <div className="flex max-w-[15.5rem] flex-wrap justify-center gap-x-5 gap-y-2 text-[11px] font-medium tracking-wide text-st-text-muted sm:max-w-none sm:justify-start">
-            <Link href="/#products" className="transition-colors duration-300 hover:text-st-text">
+            <Link href="/#products" className="inline-flex min-h-[44px] min-w-[44px] items-center transition-colors duration-300 hover:text-st-text">
               {t.nav.practices}
             </Link>
-            <Link href="/solutions" className="transition-colors duration-300 hover:text-st-text">
+            <Link href="/solutions" className="inline-flex min-h-[44px] min-w-[44px] items-center transition-colors duration-300 hover:text-st-text">
               {t.nav.solutions}
             </Link>
-            <Link href="/#work" className="transition-colors duration-300 hover:text-st-text">
+            <Link href="/#work" className="inline-flex min-h-[44px] min-w-[44px] items-center transition-colors duration-300 hover:text-st-text">
               {t.nav.work}
             </Link>
-            <Link href="/#industries" className="transition-colors duration-300 hover:text-st-text">
+            <Link href="/#industries" className="inline-flex min-h-[44px] min-w-[44px] items-center transition-colors duration-300 hover:text-st-text">
               {t.nav.industries}
             </Link>
-            <Link href="/#contact" className="transition-colors duration-300 hover:text-st-text">
+            <Link href="/#contact" className="inline-flex min-h-[44px] min-w-[44px] items-center transition-colors duration-300 hover:text-st-text">
               {t.nav.contact}
             </Link>
           </div>
@@ -47,7 +47,7 @@ export default function Footer() {
           <div className="text-center text-[11px] font-medium text-st-text-muted sm:text-right">
             <a
               href="mailto:info@startech-innovation.com"
-              className="transition-colors duration-300 hover:text-st-text"
+              className="inline-flex min-h-[44px] min-w-[44px] items-center transition-colors duration-300 hover:text-st-text"
             >
               info@startech-innovation.com
             </a>

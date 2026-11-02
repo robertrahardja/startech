@@ -31,6 +31,13 @@ binding = "CRM_DB"
 database_name = "startech-crm"
 database_id = "025fe80d-f9e2-473c-9433-158cca50902d"
 
+# Spreadsheets attached to the flyer form (/flyer). Private; hq serves them
+# at /api/leads/files/<key> behind its Access gate. Created 2026-11-02 with
+# `wrangler r2 bucket create startech-leads --location apac`.
+[[r2_buckets]]
+binding = "LEADS"
+bucket_name = "startech-leads"
+
 # Shared across every isolate/edge location, so demo rate limiting and the
 # manual blocklist actually hold under distributed traffic instead of
 # resetting whenever Cloudflare spins up a fresh isolate.
