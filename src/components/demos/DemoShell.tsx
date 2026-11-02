@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { useInView } from "../../hooks/useInView";
 import { useDemoApi } from "../../hooks/useDemoApi";
+import { DEMO_CUSTOMISE_ENABLED } from "../../lib/features";
 import { useI18n } from "../../i18n";
 import { CACHED_DEMO_DATA } from "./cachedDemoData";
 import GoogleSignIn from "./GoogleSignIn";
@@ -16,7 +17,7 @@ interface DemoShellProps {
     isLoading: boolean;
     result: Record<string, unknown> | null;
     error: string | null;
-    clearResult: () => void;
+    clearResult?: () => void;
   }) => React.ReactNode;
 }
 
@@ -96,13 +97,15 @@ export default function DemoShell({ demoType, title, children }: DemoShellProps)
               </span>
             </div>
 
-            {/* Render cached result via the demo renderer */}
+            {/* Render cached result via the demo renderer. Without a
+                clearResult the renderer hides its "Try Again" button, which
+                would otherwise lead into the disabled customise step. */}
             {children({
               onSubmit: () => {},
               isLoading: false,
               result: cachedData,
               error: null,
-              clearResult: handleCustomize,
+              clearResult: DEMO_CUSTOMISE_ENABLED ? handleCustomize : undefined,
             })}
 
             {/* Action bar */}
@@ -125,16 +128,18 @@ export default function DemoShell({ demoType, title, children }: DemoShellProps)
                   </span>
                 )}
               </button>
-              <button
-                type="button"
-                onClick={handleCustomize}
-                className="relative overflow-hidden rounded-xl border border-st-border bg-st-surface px-6 py-3 text-[13px] font-normal tracking-wide text-st-text transition-all duration-500 hover:bg-st-surface hover:border-st-border"
-              >
-                <span className="flex items-center gap-2">
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg>
-                  Customize with your data
-                </span>
-              </button>
+              {DEMO_CUSTOMISE_ENABLED && (
+                <button
+                  type="button"
+                  onClick={handleCustomize}
+                  className="relative overflow-hidden rounded-xl border border-st-border bg-st-surface px-6 py-3 text-[13px] font-normal tracking-wide text-st-text transition-all duration-500 hover:bg-st-surface hover:border-st-border"
+                >
+                  <span className="flex items-center gap-2">
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" /></svg>
+                    Customize with your data
+                  </span>
+                </button>
+              )}
             </div>
           </div>
         )}

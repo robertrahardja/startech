@@ -5,7 +5,7 @@ export const DEMO_REGISTRY: Record<string, React.LazyExoticComponent<React.Compo
   isLoading: boolean;
   result: Record<string, unknown> | null;
   error: string | null;
-  clearResult: () => void;
+  clearResult?: () => void;
 }>>> = {
   "invoice-scanner": lazy(() => import("./renderers/InvoiceScannerDemo")),
   "customer-chatbot": lazy(() => import("./renderers/CustomerChatbotDemo")),

@@ -5,7 +5,7 @@ interface DemoRendererProps {
   isLoading: boolean;
   result: Record<string, unknown> | null;
   error: string | null;
-  clearResult: () => void;
+  clearResult?: () => void;
 }
 
 const inputClass =
@@ -107,13 +107,15 @@ export default function AppointmentBookingDemo(props: DemoRendererProps) {
           <p className="text-[13px] font-normal text-red-400/80">{error}</p>
         )}
 
-        <button
-          type="button"
-          onClick={clearResult}
-          className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
-        >
-          Try Again
-        </button>
+        {clearResult && (
+          <button
+            type="button"
+            onClick={clearResult}
+            className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
+          >
+            Try Again
+          </button>
+        )}
       </div>
     );
   }
