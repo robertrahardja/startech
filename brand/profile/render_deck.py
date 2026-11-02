@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Render the StarTech Innovation capability deck to HTML (EN + ID).
+"""Render the StarTech Innovation technical profile deck to HTML (EN + ID).
 
 Landscape 16:9 slides, PDF-ready. On-brand per
 ../guidelines/brand-guidelines.md — dark theme, matching the business
 card and startech-innovation.com.
 
-Technical-depth framing for an engineering audience.
+Technical-depth framing for an engineering audience. render_pitch.py
+(the capability deck) reuses css() and the slide builders, so a change
+to either changes both decks.
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -307,8 +309,13 @@ def s_work(d, n, tot):
     return f"""<div class="slide">
 <div class="glow g1"></div><div class="glow g2"></div>
 <div class="z">{head(d)}
-  <div class="kicker">{d['work_kicker']}</div>
-  <h2 style="margin:3.5mm 0 0">{d['work_head']}</h2>
+  <div class="split-w" style="align-items:end">
+    <div>
+      <div class="kicker">{d['work_kicker']}</div>
+      <h2 style="margin:3.5mm 0 0">{d['work_head']}</h2>
+    </div>
+    <p class="lead" style="font-size:11pt">{d['work_lead']}</p>
+  </div>
   <div class="rule" style="margin:4.5mm 0 5mm"></div>
   <div class="work">{w}</div>
   <div class="sp"></div>
@@ -377,6 +384,19 @@ def s_contact(d, n, tot):
 </div>{foot(d, n, tot)}</div>"""
 
 
+# The four work cards plus the lead overflow the footer in the Indonesian
+# text at css()'s sizes. Tighter cards for this deck only: added here, not to
+# css(), because render_pitch.py reuses css() and has its own .work-tight.
+DECK_CSS = """
+.work { gap:3.5mm; }
+.wc { padding:4mm 5mm; }
+.wc .top { margin-bottom:1.8mm; }
+.wc .top h3 { font-size:13pt; line-height:1.3; margin-bottom:1.2mm; }
+.wc p { font-size:9.6pt; line-height:1.45; margin-bottom:2.2mm; }
+.wc .tech { font-size:8.4pt; padding-top:2.2mm; }
+"""
+
+
 def render(d):
     tot = 9
     slides = (
@@ -393,7 +413,7 @@ def render(d):
     title = f"{COMMON['legal_name']} — {d['doc_label']}"
     return (f'<!doctype html><html lang="{d["lang"]}"><head>'
             f'<meta charset="utf-8"><title>{title}</title>'
-            f'<style>{css()}</style></head><body>{slides}</body></html>')
+            f'<style>{css() + DECK_CSS}</style></head><body>{slides}</body></html>')
 
 
 if __name__ == '__main__':
