@@ -12,7 +12,7 @@ import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from assets import ASSETS  # noqa: F401  (used by render_deck builders)
 from content import COMMON
-from pitch_content import EN, JA, KO, ZH_HANS, ZH_HANT, ES, PT
+from pitch_content import EN, JA, ID, KO, ZH_HANS, ZH_HANT, ES, PT
 import render_deck as rd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -39,9 +39,32 @@ CJK_FONT_CSS = {
 def cjk_css_override(family):
     return f"""
 body {{ font-family:'Inter','{family}',system-ui,sans-serif; }}
-h1, h2, h3 {{
+h1, h2, h3, .cov-tag, .stat .n, .evc .n, .item .i {{
   font-family:'Instrument Serif','{family}',Georgia,serif;
 }}
+"""
+# Every selector render_deck.py sets in Instrument Serif needs the CJK subset
+# behind it; without it, CJK in the evidence card titles (e.g. 第1週) fell
+# through to whatever serif CJK font the rendering machine had.
+
+
+# Two slides overflow into the footer at render_deck.py's sizes: the four
+# case-study cards (slide 5, every language) and the evidence cards plus
+# case box (slide 3, in the longer ES / PT / ID text). Tighter spacing for
+# those slides, in this deck only — render_deck.py's own deck is unchanged.
+TIGHT_CSS = """
+.evc { padding:5.5mm 5mm; }
+.evc .n { font-size:30pt; margin-bottom:3mm; }
+.evc p { font-size:9.8pt; line-height:1.5; }
+.case { padding:5mm 6.5mm; }
+.case .k { margin-bottom:2.5mm; }
+.case p { font-size:11pt; line-height:1.55; }
+.work-tight { gap:3.5mm; }
+.work-tight .wc { padding:4mm 5mm; }
+.work-tight .wc .top { margin-bottom:1.8mm; }
+.work-tight .wc .top h3 { font-size:13pt; line-height:1.3; margin-bottom:1.2mm; }
+.work-tight .wc p { font-size:9.4pt; line-height:1.45; margin-bottom:2.2mm; }
+.work-tight .wc .tech { font-size:8.4pt; padding-top:2.2mm; }
 """
 
 
@@ -62,8 +85,8 @@ def s_work_lead(d, n, tot):
     </div>
     <p class="lead" style="font-size:11pt">{d['work_lead']}</p>
   </div>
-  <div class="rule" style="margin:4.5mm 0 5mm"></div>
-  <div class="work">{w}</div>
+  <div class="rule" style="margin:3.5mm 0 4mm"></div>
+  <div class="work work-tight">{w}</div>
   <div class="sp"></div>
 </div>{rd.foot(d, n, tot)}</div>"""
 
@@ -81,7 +104,7 @@ def render(d):
         + rd.s_contact(d, 8, tot)
     )
     title = f"{COMMON['legal_name']} — {d['doc_label']}"
-    page_css = rd.css()
+    page_css = rd.css() + TIGHT_CSS
     lang = d['lang']
     if lang in CJK_FONTS:
         _fname, family = CJK_FONTS[lang]
@@ -97,7 +120,7 @@ if __name__ == '__main__':
     docs = (
         (EN, 'EN'), (JA, 'JA'), (KO, 'KO'),
         (ZH_HANS, 'ZH-Hans'), (ZH_HANT, 'ZH-Hant'),
-        (ES, 'ES'), (PT, 'PT'),
+        (ES, 'ES'), (PT, 'PT'), (ID, 'ID'),
     )
     for d, sfx in docs:
         p = os.path.join(out, f'pitch-{sfx}.html')
