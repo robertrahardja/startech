@@ -161,12 +161,12 @@ export const en = {
   showcase: {
     eyebrow: "Try it yourself",
     title: "Thirteen builds. Pick one, see it run.",
-    sub: "Every card below is a working AI product, not a mockup. Open one, see a real sample result instantly, then customise it with your own data.",
+    sub: "Every card below is a working demo, not a mockup. Open one to see a sample result instantly.",
     sampleBadge: "Sample",
     tryIt: "Try it",
     seeAll: "See every solution",
     disclaimer:
-      "Each sample uses fictional data. Customising a demo with your own data is free and takes under a minute.",
+      "Each sample uses fictional data. To see one working on your own process, send us one spreadsheet. It's free.",
     teasers: {
       invoiceScanner: "scanned & itemised in seconds",
       customerChatbot: "answer confidence",
@@ -399,7 +399,7 @@ export const en = {
   {
     said: "What does something like this usually cost?",
     answer:
-      "You get a range on the first call and a firm number after discovery. We will say the real figure early rather than late, then cut scope together until it fits — a smaller system that ships beats a large one that stalls. Singapore SMEs can offset up to half through PSG, and we prepare that paperwork at no charge.",
+      "You get a range on the first call and a firm number after discovery. We will say the real figure early rather than late, then cut scope together until it fits — a smaller system that ships beats a large one that stalls. Singapore SMEs may qualify for support under the EDGE Grant, which replaced PSG; we check your project and prepare the vendor documents at no charge.",
     proof: "Eligibility confirmed against current IMDA criteria, not assumed.",
   },
   {

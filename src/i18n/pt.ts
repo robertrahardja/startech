@@ -163,12 +163,12 @@ export const pt: Messages = {
   showcase: {
     eyebrow: "Experimente você mesmo",
     title: "Treze projetos. Escolha um e coloque à prova.",
-    sub: "Cada cartão abaixo é um produto de IA que funciona de verdade, não uma maquete. Abra um, veja um resultado de amostra na hora e personalize com seus próprios dados.",
+    sub: "Cada cartão abaixo é uma demonstração que funciona de verdade, não uma maquete. Abra um e veja um resultado de amostra na hora.",
     sampleBadge: "Amostra",
     tryIt: "Experimentar",
     seeAll: "Ver todas as soluções",
     disclaimer:
-      "Cada amostra usa dados fictícios. Personalizar uma demonstração com seus próprios dados é gratuito e leva menos de um minuto.",
+      "Cada amostra usa dados fictícios. Para ver funcionando com o seu próprio processo, envie-nos uma planilha. É gratuito.",
     teasers: {
       invoiceScanner: "escaneada e detalhada em segundos",
       customerChatbot: "confiança da resposta",
@@ -400,7 +400,7 @@ export const pt: Messages = {
       {
         said: "Quanto costuma custar algo assim?",
         answer:
-          "Na primeira conversa damos uma faixa e, depois do levantamento, um número firme. Dizemos o valor real antes, não depois. Se não couber no orçamento, cortamos escopo junto com você: um sistema menor que entra no ar vale mais que um grande que empaca. Pequenas empresas de Singapura podem abater até metade pelo PSG, e preparamos essa documentação sem custo.",
+          "Na primeira conversa damos uma faixa e, depois do levantamento, um número firme. Dizemos o valor real antes, não depois. Se não couber no orçamento, cortamos escopo junto com você: um sistema menor que entra no ar vale mais que um grande que empaca. Projetos de pequenas empresas de Singapura podem se qualificar para o subsídio EDGE, que substituiu o PSG; verificamos se o seu se encaixa e preparamos sem custo a documentação do fornecedor.",
         proof: "A elegibilidade é conferida com os critérios vigentes da IMDA, não presumida.",
       },
       {

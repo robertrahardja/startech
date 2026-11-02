@@ -164,12 +164,12 @@ export const es: Messages = {
   showcase: {
     eyebrow: "Pruébalo tú mismo",
     title: "Trece proyectos. Elige uno y ponlo a prueba.",
-    sub: "Cada tarjeta de abajo es un producto de IA que funciona de verdad, no una maqueta. Ábrela, verás un resultado de muestra al instante y podrás personalizarlo con tus propios datos.",
+    sub: "Cada tarjeta de abajo es una demo que funciona de verdad, no una maqueta. Ábrela y verás un resultado de muestra al instante.",
     sampleBadge: "Muestra",
     tryIt: "Probarlo",
     seeAll: "Ver todas las soluciones",
     disclaimer:
-      "Cada muestra usa datos ficticios. Personalizar una demo con tus propios datos es gratis y toma menos de un minuto.",
+      "Cada muestra usa datos ficticios. Para verla funcionando con tu propio proceso, envíanos una hoja de cálculo; es gratis.",
     teasers: {
       invoiceScanner: "escaneada y desglosada en segundos",
       customerChatbot: "confianza de la respuesta",
@@ -401,7 +401,7 @@ export const es: Messages = {
       {
         said: "¿Cuánto suele costar algo así?",
         answer:
-          "En la primera llamada le damos un rango y, tras el descubrimiento, una cifra firme. Le decimos el número real antes, no después. Si no encaja en el presupuesto, recortamos alcance juntos: un sistema pequeño que se pone en marcha vale más que uno grande que se queda parado. Las pymes de Singapur pueden cubrir hasta la mitad con la ayuda PSG, y preparamos ese trámite sin coste.",
+          "En la primera llamada le damos un rango y, tras el descubrimiento, una cifra firme. Le decimos el número real antes, no después. Si no encaja en el presupuesto, recortamos alcance juntos: un sistema pequeño que se pone en marcha vale más que uno grande que se queda parado. Los proyectos de pymes de Singapur pueden optar a la ayuda EDGE, que sustituyó a PSG; comprobamos si el suyo encaja y preparamos sin coste la documentación del proveedor.",
         proof: "La elegibilidad se comprueba con los criterios vigentes de IMDA, no se presupone.",
       },
       {
