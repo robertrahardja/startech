@@ -77,9 +77,12 @@ async function isRateLimited(
   if (count >= maxRequests) return true;
 
   // Every put must carry the expiry: a put without one makes the key
-  // permanent. KV rejects expirations less than 60 seconds away.
+  // permanent. KV rejects expiries under 60 seconds, and an absolute
+  // `expiration` of exactly now + 60 is already under 60 by the time KV
+  // checks it (Worker exception 1101 on every second send within a
+  // minute). A relative TTL is measured from KV's own receipt, so 60 holds.
   await kv.put(kvKey, String(count + 1), {
-    expiration: Math.max(resetAt, now + 60),
+    expirationTtl: Math.max(resetAt - now, 60),
     metadata: { resetAt },
   });
   return false;
