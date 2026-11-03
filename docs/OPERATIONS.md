@@ -151,6 +151,22 @@ Two things worth changing:
 - The form sends to Gmail while the site publishes `info@`, so enquiries
   arrive in different places depending on how someone makes contact.
 
+### Testimonials
+
+`/testimonial` is where a client leaves a testimonial. It is not in the
+nav and carries `noindex`; send the link, optionally prefilled:
+
+```text
+https://startech-innovation.com/testimonial?name=Michael%20Choy&company=TechTree
+```
+
+`POST /api/testimonial` saves it as a "Testimonial" note on the client's
+contact in hq (found by email, created as a customer if new) and emails
+the same Gmail inbox. The client picks a credit (name and company, role
+and industry only, or do not publish) and agrees to see the final wording
+before it goes online, so nothing is published from the form itself. A
+hidden honeypot field drops bot submissions; the limit is 3 a minute.
+
 ## AI chat — currently disabled
 
 Disabled in production on 2026-09-02. OpenAI returns **429 on every request**,

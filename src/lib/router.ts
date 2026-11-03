@@ -7,6 +7,7 @@ import { parseLocalePath, type Locale } from "../i18n/locales";
 export type Page =
   | { type: "home" }
   | { type: "flyer" }
+  | { type: "testimonial" }
   | { type: "solutions-index" }
   | { type: "solution-page"; solution: Solution };
 
@@ -28,6 +29,11 @@ function resolvePage(pathname: string): Page {
   // The digital flyer: the one page every bio link and campaign points at.
   if (pathname === "/flyer") {
     return { type: "flyer" };
+  }
+
+  // Where clients leave a testimonial. Unlisted: reached by a link we send.
+  if (pathname === "/testimonial") {
+    return { type: "testimonial" };
   }
 
   const match = pathname.match(SOLUTION_PATH);

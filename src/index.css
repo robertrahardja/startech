@@ -1623,3 +1623,37 @@ a:hover .deck-text-shine {
     opacity: 0;
   }
 }
+
+/* Radio and tick box with a 44px tap target and an 18px visible mark,
+   drawn as a background so the control itself meets the touch minimum.
+   The negative margin keeps the mark aligned as if it were 18px. */
+@layer components {
+  .tap-radio,
+  .tap-check {
+    appearance: none;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    margin: -13px -6px -13px -13px;
+    cursor: pointer;
+    border-radius: 10px;
+    background: no-repeat center / 18px 18px;
+  }
+  .tap-radio {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Ccircle cx='9' cy='9' r='8' fill='none' stroke='%23c2c2cc' stroke-width='1.5'/%3E%3C/svg%3E");
+  }
+  .tap-radio:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Ccircle cx='9' cy='9' r='8' fill='none' stroke='%230a68f9' stroke-width='1.5'/%3E%3Ccircle cx='9' cy='9' r='4.5' fill='%230a68f9'/%3E%3C/svg%3E");
+  }
+  .tap-check {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Crect x='.75' y='.75' width='16.5' height='16.5' rx='4' fill='none' stroke='%23c2c2cc' stroke-width='1.5'/%3E%3C/svg%3E");
+  }
+  .tap-check:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Crect width='18' height='18' rx='4' fill='%230a68f9'/%3E%3Cpath d='M4.5 9.5l3 3 6-7' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+  .tap-radio:focus-visible,
+  .tap-check:focus-visible {
+    outline: 2px solid var(--color-st-blue-light);
+    outline-offset: -8px;
+  }
+}
