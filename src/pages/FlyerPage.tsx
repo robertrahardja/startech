@@ -143,6 +143,12 @@ export default function FlyerPage() {
             >
               {f.invoiceNowLink} →
             </Link>
+            <Link
+              href="/singpass"
+              className="mt-1 flex min-h-[44px] items-center text-[13px] text-st-text-muted underline-offset-4 hover:text-st-text hover:underline"
+            >
+              {t.singpass.flyerLine} →
+            </Link>
           </Reveal>
         </div>
       </section>

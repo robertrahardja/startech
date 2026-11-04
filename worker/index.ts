@@ -10,13 +10,28 @@
  *                        utm_* fields become the contact's source in hq.
  * - POST /api/demo    — AI-powered product demos with lead capture, backed
  *                        by Gemini (free tier) with a Workers AI fallback
+ * - /api/demo/singpass/* — mock Singpass FAPI 2.0 authorization server for
+ *                        the /singpass demo (worker/singpass-demo.ts)
+ * - /.well-known/jwks.json, /singpass/callback, /api/demo/singpass/staging/*
+ *                      — StarTech as a Singpass staging relying party
+ *                        (worker/singpass-rp.ts), off unless configured
  *
  * Static assets are served by the ASSETS binding (Cloudflare Workers static assets).
  */
 
 import { DEMO_CONFIGS, MAX_IMAGE_DATA_URL_LENGTH } from "./demo-configs";
+import { SINGPASS_DEMO_PREFIX, handleSingpassDemo } from "./singpass-demo";
+import {
+  RP_API_PREFIX,
+  RP_CALLBACK_PATH,
+  RP_JWKS_PATH,
+  handleRpJwks,
+  handleSingpassRp,
+  type SingpassRpEnv,
+} from "./singpass-rp";
 
-interface Env {
+/** SINGPASS_* vars and secrets: see worker/singpass-rp.ts and docs/OPERATIONS.md. */
+interface Env extends SingpassRpEnv {
   ASSETS: Fetcher;
   /** Used only by /api/chat and /api/tts now — /api/demo moved to Gemini. */
   OPENAI_API_KEY: string;
@@ -173,6 +188,15 @@ function corsHeaders(request: Request): Record<string, string> {
     "Access-Control-Allow-Headers": "Content-Type, X-Requested-With",
     "Access-Control-Max-Age": "86400",
   };
+}
+
+/** Copies a response with SECURITY_HEADERS applied. Used by the Singpass routes. */
+function withSecurityHeaders(response: Response): Response {
+  const headers = new Headers(response.headers);
+  for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+    headers.set(key, value);
+  }
+  return new Response(response.body, { status: response.status, headers });
 }
 
 function jsonError(message: string, status: number): Response {
@@ -1470,6 +1494,23 @@ export default {
       });
     }
 
+    // Singpass relying party: its public JWKS (fetched by Singpass, so no
+    // origin check or rate limit) and the redirect URL registered with it.
+    if (url.pathname === RP_JWKS_PATH) {
+      return withSecurityHeaders(handleRpJwks(env));
+    }
+    if (url.pathname === RP_CALLBACK_PATH || url.pathname.startsWith(RP_API_PREFIX)) {
+      return withSecurityHeaders(
+        await handleSingpassRp(request, env, {
+          kv: env.RATE_LIMIT,
+          originAllowed: validateOrigin(request, env),
+          clientIp: request.headers.get("CF-Connecting-IP") || "unknown",
+          isRateLimited: (key, max, windowSeconds) =>
+            isRateLimited(env.RATE_LIMIT, key, max, windowSeconds),
+        })
+      );
+    }
+
     // Static assets — add security headers
     if (!url.pathname.startsWith("/api/")) {
       const assetResponse = await env.ASSETS.fetch(request);
@@ -1497,6 +1538,21 @@ export default {
         return withLocaleMarkup(asset, url.pathname);
       }
       return asset;
+    }
+
+    // The Singpass demo's mock server has GET routes (discovery, JWKS,
+    // userinfo) and OAuth-shaped errors, so it routes, rate-limits and checks
+    // origin itself, with this file's validateOrigin and isRateLimited.
+    if (url.pathname.startsWith(SINGPASS_DEMO_PREFIX)) {
+      return withSecurityHeaders(
+        await handleSingpassDemo(request, {
+          kv: env.RATE_LIMIT,
+          originAllowed: validateOrigin(request, env),
+          clientIp: request.headers.get("CF-Connecting-IP") || "unknown",
+          isRateLimited: (key, max, windowSeconds) =>
+            isRateLimited(env.RATE_LIMIT, key, max, windowSeconds),
+        })
+      );
     }
 
     // Origin validation for API routes

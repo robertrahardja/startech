@@ -700,6 +700,168 @@ export const ko: Messages = {
     backHome: "메인 사이트로 돌아가기",
   },
 
+  singpass: {
+    eyebrow: "Singpass 전환 · FAPI 2.0",
+    title: "Singpass 로그인은 2026년 12월 31일까지 FAPI 2.0으로 전환해야 합니다",
+    intro:
+      "웹사이트나 앱에 “Singpass로 로그인” 버튼이 있거나 Myinfo로 양식을 자동 입력한다면, 2026년 말 전에 Singpass의 새 보안 표준으로 전환해야 합니다.",
+    source: "Singpass가 공지한 마감일",
+    ctaCheck: "연동 점검 요청하기",
+    ctaDemo: "데모 실행하기",
+    changesEyebrow: "무엇이 바뀌나",
+    changesTitle: "로그인 방식의 다섯 가지 변화",
+    changes: [
+      {
+        lead: "요청을 먼저 보냅니다",
+        detail:
+          "서버가 로그인 요청을 먼저 Singpass에 보내고(PAR), 사용자의 브라우저는 짧은 참조값만 전달합니다. 주소창의 내용은 바꿀 수 없습니다.",
+      },
+      {
+        lead: "로그인마다 일회용 증명",
+        detail:
+          "서버가 로그인을 시작한 주체임을 증명하므로(PKCE), 중간에 가로챈 로그인 코드는 다른 사람에게 쓸모가 없습니다.",
+      },
+      {
+        lead: "토큰을 우리 키에 묶습니다",
+        detail:
+          "코드와 토큰은 서버가 보관한 키와 함께여야만 작동합니다(DPoP). 유출된 토큰은 재사용할 수 없습니다.",
+      },
+      {
+        lead: "신원 정보는 암호화됩니다",
+        detail:
+          "모든 ID 토큰이 우리 키로 암호화되고, NRIC는 새 필드로 옮겨졌습니다. 기존 형식을 읽는 코드는 작동을 멈춥니다.",
+      },
+      {
+        lead: "더 엄격한 리디렉션과 오류 처리",
+        detail:
+          "사용자 정의 앱 링크는 더 이상 허용되지 않고, Login 앱은 로그인마다 목적을 밝혀야 하며, Singpass가 이제 오류를 사이트로 돌려보내므로 이를 처리해야 합니다.",
+      },
+    ],
+    migrationLink: "Login 및 Myinfo(v5) 앱을 위한 Singpass 전환 가이드",
+    whoEyebrow: "영향을 받는 대상",
+    whoTitle: "Singpass로 로그인하거나 정보를 입력하는 모든 사이트와 앱",
+    who: [
+      "“Singpass로 로그인”이 있는 웹사이트, 포털, 모바일 앱",
+      "Myinfo에서 개인 정보를 자동 입력하는 양식",
+      "2026년 2월 이전에 구축한 연동. 그 이후 등록된 앱은 처음부터 FAPI 2.0을 써야 했습니다",
+      "Myinfo v3·v4 연동. Singpass는 2026년 9월 말까지 Myinfo v5로 옮기도록 요청했습니다",
+    ],
+    corppass: "Corppass 로그인은 별도의, 더 늦은 마감일이 있습니다: 2027년 3월 31일.",
+    corppassLink: "Corppass 일정",
+    riskEyebrow: "전환하지 않으면",
+    riskTitle: "기존 로그인이 멈출 것에 대비하세요",
+    riskBody:
+      "Singpass는 2026년 12월 31일까지 모든 연동이 FAPI 2.0을 따르도록 요구하며, 기존 방식의 문서는 2026년 7월 14일에 내렸습니다. 기존 방식에 머문 연동은 마감 후 Singpass 로그인이나 Myinfo 자동 입력이 실패할 것으로 봐야 합니다. 사용자는 로그인하지 못하고, 양식도 완료하지 못하게 됩니다.",
+    demoEyebrow: "작동하는 참조 데모",
+    demoTitle: "FAPI 2.0 전체 흐름을 브라우저에서 실행",
+    demoIntro:
+      "이 데모를 위해 만든 모의 Singpass 서버를 상대로 실제 프로토콜 단계를 실행합니다. 키는 브라우저에서 매번 새로 만들어지고, 인물은 샘플이며, Singpass로는 아무것도 보내지 않습니다. 모든 요청과 응답을 토큰을 줄인 형태로 보여 줍니다.",
+    demoNotice:
+      "모의 서버입니다. Singpass가 아니며 Singpass나 GovTech와 연결되어 있지 않습니다. StarTech가 Singpass Developer Portal에 등록하면, 같은 클라이언트 코드가 설정 변경만으로 Singpass 스테이징 환경에서 작동합니다.",
+    appType: "앱 유형",
+    appLogin: "Singpass 로그인",
+    appMyinfo: "Myinfo (v5) 앱",
+    run: "흐름 실행하기",
+    runAgain: "다시 실행하기",
+    running: "흐름을 실행하는 중…",
+    allPassed:
+      "모든 단계를 통과했습니다. 아래 정보는 이 브라우저의 키에 묶인 코드와 토큰을 거쳐, 암호화되고 서명된 상태로 도착했습니다.",
+    failed: "한 단계가 실패했습니다. 해당 요청과 응답이 아래에 있습니다.",
+    cancelled:
+      "로그인이 취소되었습니다. Singpass는 오류를 사이트로 돌려보내고, 사이트는 Singpass의 오류 문구가 아닌 자체 메시지를 보여 줍니다.",
+    details: "요청과 응답",
+    status: {
+      pending: "시작 전",
+      running: "실행 중",
+      waiting: "입력 대기",
+      done: "통과",
+      error: "실패",
+    },
+    steps: {
+      register: {
+        title: "앱 등록하기",
+        body: "브라우저가 서명 키와 암호화 키를 만들고, 공개 부분을 모의 서버에 등록합니다. Singpass Developer Portal에서 하는 작업에 해당합니다.",
+      },
+      discovery: {
+        title: "서버 구성 읽기",
+        body: "엔드포인트와 알고리즘은 고정 주소가 아니라 OpenID 구성에서 가져옵니다.",
+      },
+      session: {
+        title: "이번 로그인의 비밀값 만들기",
+        body: "새 state, nonce, PKCE verifier(S256), DPoP 키를 이번 로그인 한 번만을 위해 만들고, 끝나면 버립니다.",
+      },
+      par: {
+        title: "요청을 먼저 보내기 (PAR)",
+        body: "서명된 클라이언트 어서션(private_key_jwt)과 DPoP 증명을 붙여 로그인 요청을 먼저 서버로 보냅니다. 서버는 수명이 짧은 request_uri로 답합니다.",
+      },
+      authorize: {
+        title: "사용자를 Singpass로 보내기",
+        body: "주소에는 client_id와 request_uri만 담깁니다. 실제 서비스라면 사용자는 여기서 Singpass 앱으로 로그인을 승인합니다.",
+      },
+      redirect: {
+        title: "돌아오는 리디렉션 처리하기",
+        body: "코드를 믿기 전에 state와 iss를 확인합니다.",
+      },
+      token: {
+        title: "코드를 토큰으로 교환하기",
+        body: "코드, PKCE verifier, 새 클라이언트 어서션, 새 DPoP 증명을 보냅니다. 토큰은 DPoP 키에 묶인 상태로 돌아옵니다.",
+      },
+      idToken: {
+        title: "ID 토큰 복호화와 검증",
+        body: "우리 암호화 키로 복호화하고, 서버가 공개한 키(JWKS)로 서명을 확인한 뒤 iss, aud, exp, nonce를 확인합니다.",
+      },
+      userinfo: {
+        title: "Myinfo 데이터 가져오기",
+        body: "Authorization: DPoP에 액세스 토큰에 묶인 증명(ath)을 함께 보냅니다. 응답도 암호화·서명되어 있고 person_info 안에 담겨 있습니다.",
+      },
+      replay: {
+        title: "훔친 코드로 시도하기",
+        body: "코드와 PKCE verifier를 몰래 복사한 사람이 다른 기기에서 자기 키로 사용해 봅니다. 서버는 거부해야 합니다.",
+        refused: "예상대로 거부되었습니다. 코드는 그것을 요청한 키로만 쓸 수 있습니다.",
+        accepted: "서버가 훔친 코드를 받아들였습니다. 이것은 버그입니다.",
+      },
+    },
+    loginTitle: "모의 Singpass 로그인",
+    loginBody:
+      "실제 Singpass에서는 사용자가 지금 Singpass 앱으로 QR 코드를 스캔합니다. 여기서는 샘플 인물을 대신해 직접 선택합니다.",
+    loginRequested: "요청된 데이터",
+    loginPurpose: "목적",
+    approve: "샘플 인물로 로그인",
+    cancel: "로그인 취소",
+    sample: "샘플 인물, 실존하지 않음",
+    resultTitle: "사이트가 받는 정보",
+    errorGeneric: "문제가 발생했습니다. 잠시 후 흐름을 다시 실행해 주세요.",
+    offerEyebrow: "제공 서비스",
+    offerTitle: "Singpass 연동을 점검하고 전환해 드립니다",
+    offerSteps: [
+      {
+        lead: "점검",
+        detail:
+          "현재의 Singpass 또는 Myinfo 코드를 읽고, 무엇을 바꿔야 하는지와 얼마나 걸리는지를 문서로 알려 드립니다.",
+      },
+      {
+        lead: "전환",
+        detail:
+          "PAR, PKCE, DPoP, 암호화된 ID 토큰을 고객의 코드에 구현하고, 고객 조직의 앱으로 Singpass 스테이징 환경에서 테스트합니다.",
+      },
+      {
+        lead: "운영 전환",
+        detail:
+          "마감 전에 운영 환경을 전환합니다. Singpass는 기존 방식과 새 방식을 나란히 운영할 수 있게 하므로 단계적으로 바꿀 수 있습니다.",
+      },
+    ],
+    honesty:
+      "분명히 말씀드립니다. 이 데모는 모의 서버를 상대로 한 저희의 참조 구현입니다. 저희는 아직 고객의 Singpass 전환을 완료한 적이 없으며, Singpass나 GovTech의 파트너도 아닙니다. Singpass 앱은 계속 고객 조직 명의로 등록되어 있습니다.",
+    otherWork: "그 밖에 만드는 것 보기",
+    flyerLine: "Singpass는 2026년 12월 31일까지 FAPI 2.0으로 전환해야 합니다. 새 로그인 흐름의 작동 데모를 확인하세요.",
+    stagingTitle: "Singpass 스테이징 환경에서 시험하기",
+    stagingBody: "이 버튼은 같은 클라이언트를 StarTech의 스테이징 앱으로 Singpass 자체 스테이징 서비스에 연결해 실행합니다. Singpass 스테이징 테스트 계정만 로그인할 수 있으며, 실제 Singpass 계정은 사용할 수 없습니다.",
+    stagingButton: "Singpass로 로그인 (스테이징)",
+    stagingResult: "Singpass 스테이징이 반환한 ID 토큰 (복호화 및 검증 완료)",
+    stagingCancelled: "스테이징 로그인이 취소되었습니다.",
+    stagingFailed: "스테이징 로그인이 완료되지 않았습니다. 나중에 다시 시도해 주세요.",
+  },
+
   stickyCta: {
     line: "30분 동안 현황을 듣고, 무엇부터 만들지 정리해 드립니다.",
     action: "상담 요청",

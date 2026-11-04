@@ -9,6 +9,7 @@ export type Page =
   | { type: "flyer" }
   | { type: "testimonial" }
   | { type: "invoicenow" }
+  | { type: "singpass" }
   | { type: "solutions-index" }
   | { type: "solution-page"; solution: Solution };
 
@@ -40,6 +41,11 @@ function resolvePage(pathname: string): Page {
   // InvoiceNow explainer and the client-side PINT SG invoice demo.
   if (pathname === "/invoicenow") {
     return { type: "invoicenow" };
+  }
+
+  // Singpass FAPI 2.0: the deadline, a working demo, and the upgrade offer.
+  if (pathname === "/singpass") {
+    return { type: "singpass" };
   }
 
   const match = pathname.match(SOLUTION_PATH);

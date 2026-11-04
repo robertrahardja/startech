@@ -54,3 +54,12 @@ binding = "AI"
 
 [vars]
 ENVIRONMENT = "production"
+# Singpass relying party (worker/singpass-rp.ts). "staging" turns on the
+# real "Log in with Singpass (staging)" button on /singpass once the client
+# ID is filled in and both key secrets are set; anything else keeps only the
+# mock demo. Keys are secrets, never vars: SINGPASS_SIG_PRIVATE_JWK and
+# SINGPASS_ENC_PRIVATE_JWK. See docs/OPERATIONS.md, "Singpass demo".
+SINGPASS_MODE = "mock"
+SINGPASS_ISSUER = "https://stg-id.singpass.gov.sg/fapi"
+SINGPASS_CLIENT_ID = ""
+SINGPASS_REDIRECT_URI = "https://startech-innovation.com/singpass/callback"

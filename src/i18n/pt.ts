@@ -708,6 +708,168 @@ export const pt: Messages = {
     backHome: "Voltar ao site principal",
   },
 
+  singpass: {
+    eyebrow: "Migração do Singpass · FAPI 2.0",
+    title: "O login com Singpass precisa migrar para FAPI 2.0 até 31 de dezembro de 2026",
+    intro:
+      "Se o seu site ou aplicativo tem um botão “Entrar com Singpass”, ou preenche formulários com o Myinfo, ele precisa adotar o novo padrão de segurança do Singpass antes do fim de 2026.",
+    source: "O prazo, como o Singpass o publica",
+    ctaCheck: "Peça-nos para verificar sua integração",
+    ctaDemo: "Executar a demo",
+    changesEyebrow: "O que muda",
+    changesTitle: "Cinco mudanças no funcionamento do login",
+    changes: [
+      {
+        lead: "A solicitação é enviada antes",
+        detail:
+          "Seu servidor envia primeiro a solicitação de login ao Singpass (PAR), e o navegador do usuário leva só uma referência curta. Nada na barra de endereço pode ser alterado.",
+      },
+      {
+        lead: "Uma prova de uso único por login",
+        detail:
+          "Seu servidor prova que foi ele quem iniciou o login (PKCE), então um código interceptado não serve para mais ninguém.",
+      },
+      {
+        lead: "Tokens vinculados à sua chave",
+        detail:
+          "Cada código e cada token só funcionam junto com uma chave que o seu servidor guarda (DPoP). Um token vazado não pode ser reutilizado.",
+      },
+      {
+        lead: "A identidade é criptografada",
+        detail:
+          "Todo token de ID agora é criptografado para a sua chave, e o NRIC passou para um campo novo. Código que lê o formato antigo deixa de funcionar.",
+      },
+      {
+        lead: "Redirecionamentos e erros mais rígidos",
+        detail:
+          "Links de aplicativo com esquema próprio não são mais aceitos, apps Login precisam informar para que serve cada login e o Singpass agora devolve os erros ao seu site, que precisa tratá-los.",
+      },
+    ],
+    migrationLink: "Guia de migração do Singpass para apps Login e Myinfo (v5)",
+    whoEyebrow: "Quem é afetado",
+    whoTitle: "Qualquer site ou app que use o Singpass para fazer login ou preencher dados",
+    who: [
+      "Sites, portais e apps móveis com “Entrar com Singpass”",
+      "Formulários que preenchem os dados de uma pessoa a partir do Myinfo",
+      "Integrações criadas antes de fevereiro de 2026; apps registrados desde então já precisavam usar FAPI 2.0",
+      "Integrações com Myinfo v3 e v4, que o Singpass pediu para migrar ao Myinfo v5 até o fim de setembro de 2026",
+    ],
+    corppass: "O login com Corppass tem um prazo próprio, mais tarde: 31 de março de 2027.",
+    corppassLink: "Cronograma do Corppass",
+    riskEyebrow: "Se você não migrar",
+    riskTitle: "Planeje-se para o login antigo parar de funcionar",
+    riskBody:
+      "O Singpass exige que todas as integrações usem FAPI 2.0 até 31 de dezembro de 2026, e retirou a documentação do fluxo antigo em 14 de julho de 2026. Uma integração que continue no fluxo antigo deve esperar que o login com Singpass ou o preenchimento pelo Myinfo falhem depois do prazo: pessoas que não conseguem entrar e formulários que não conseguem concluir.",
+    demoEyebrow: "Demo de referência em funcionamento",
+    demoTitle: "Todo o fluxo FAPI 2.0, rodando no seu navegador",
+    demoIntro:
+      "Executa as etapas reais do protocolo contra um servidor Singpass simulado que construímos para a demo. As chaves são criadas no seu navegador, a pessoa é de exemplo e nada é enviado ao Singpass. Todas as solicitações e respostas aparecem, com os tokens encurtados.",
+    demoNotice:
+      "Servidor simulado: não é o Singpass e não está conectado ao Singpass nem à GovTech. Quando a StarTech estiver registrada no Singpass Developer Portal, o mesmo código cliente roda contra o ambiente de testes do Singpass apenas com uma mudança de configuração.",
+    appType: "Tipo de app",
+    appLogin: "Login com Singpass",
+    appMyinfo: "Myinfo (versão 5)",
+    run: "Executar o fluxo",
+    runAgain: "Executar de novo",
+    running: "Executando o fluxo…",
+    allPassed:
+      "Todas as etapas passaram. Os dados abaixo chegaram criptografados e assinados, por meio de um código e de tokens vinculados à chave deste navegador.",
+    failed: "Uma etapa falhou. A solicitação e a resposta dela estão abaixo.",
+    cancelled:
+      "Login cancelado. O Singpass devolve um erro ao seu site, e o site mostra a própria mensagem, nunca o texto de erro do Singpass.",
+    details: "Solicitação e resposta",
+    status: {
+      pending: "Não iniciado",
+      running: "Em execução",
+      waiting: "Aguardando você",
+      done: "Aprovado",
+      error: "Falhou",
+    },
+    steps: {
+      register: {
+        title: "Registrar o app",
+        body: "Seu navegador cria uma chave de assinatura e uma de criptografia, e registra as metades públicas no servidor simulado, como seria feito no Singpass Developer Portal.",
+      },
+      discovery: {
+        title: "Ler a configuração do servidor",
+        body: "Endpoints e algoritmos vêm da configuração OpenID, não de endereços fixos no código.",
+      },
+      session: {
+        title: "Criar os segredos deste login",
+        body: "Um state, um nonce, um verificador PKCE (S256) e uma chave DPoP novos, usados só neste login e depois descartados.",
+      },
+      par: {
+        title: "Enviar a solicitação antes (PAR)",
+        body: "A solicitação de login vai primeiro ao servidor, com uma asserção de cliente assinada (private_key_jwt) e uma prova DPoP. O servidor responde com um request_uri de curta duração.",
+      },
+      authorize: {
+        title: "Enviar a pessoa ao Singpass",
+        body: "O endereço leva apenas client_id e request_uri. No serviço real, a pessoa agora aprova o login no app do Singpass.",
+      },
+      redirect: {
+        title: "Tratar o retorno",
+        body: "Verificar state e iss antes de confiar no código.",
+      },
+      token: {
+        title: "Trocar o código por tokens",
+        body: "Envia o código, o verificador PKCE, uma nova asserção de cliente e uma nova prova DPoP. Os tokens voltam vinculados à chave DPoP.",
+      },
+      idToken: {
+        title: "Descriptografar e verificar o token de ID",
+        body: "Descriptografa com a sua chave de criptografia, confere a assinatura com as chaves públicas do servidor (JWKS) e depois iss, aud, exp e nonce.",
+      },
+      userinfo: {
+        title: "Buscar os dados do Myinfo",
+        body: "Authorization: DPoP, com uma prova vinculada ao token de acesso (ath). A resposta também é criptografada e assinada, dentro de person_info.",
+      },
+      replay: {
+        title: "Testar um código roubado",
+        body: "Alguém que copiou o código e o verificador PKCE tenta usá-los de outro dispositivo, com a própria chave. O servidor precisa recusar.",
+        refused: "Recusado, como deve ser: o código só funciona com a chave que o pediu.",
+        accepted: "O servidor aceitou um código roubado. Isso é um bug.",
+      },
+    },
+    loginTitle: "Login simulado do Singpass",
+    loginBody:
+      "No Singpass, a pessoa agora escanearia um QR code com o app do Singpass. Aqui você decide pela pessoa de exemplo.",
+    loginRequested: "Dados solicitados",
+    loginPurpose: "Finalidade",
+    approve: "Entrar como a pessoa de exemplo",
+    cancel: "Cancelar o login",
+    sample: "Pessoa de exemplo, não real",
+    resultTitle: "O que o seu site recebe",
+    errorGeneric: "Algo deu errado. Execute o fluxo de novo daqui a um minuto.",
+    offerEyebrow: "O que oferecemos",
+    offerTitle: "Verificamos e atualizamos sua integração com o Singpass",
+    offerSteps: [
+      {
+        lead: "Verificação",
+        detail:
+          "Lemos o seu código atual de Singpass ou Myinfo e dizemos por escrito o que precisa mudar e quanto tempo vai levar.",
+      },
+      {
+        lead: "Atualização",
+        detail:
+          "Implementamos PAR, PKCE, DPoP e tokens de ID criptografados no seu código, e testamos contra o ambiente de testes do Singpass com o app da sua própria organização.",
+      },
+      {
+        lead: "Entrada em produção",
+        detail:
+          "Fazemos a troca em produção antes do prazo. O Singpass permite que o fluxo antigo e o novo rodem lado a lado, então a mudança pode ser feita em etapas.",
+      },
+    ],
+    honesty:
+      "Para ser claro: esta demo é a nossa implementação de referência contra um servidor simulado. Ainda não concluímos uma migração de Singpass para um cliente e não somos parceiros do Singpass nem da GovTech. O seu app do Singpass continua registrado em nome da sua organização.",
+    otherWork: "Veja o que mais construímos",
+    flyerLine: "O Singpass precisa migrar para FAPI 2.0 até 31 de dezembro de 2026. Veja nossa demo do novo fluxo de login funcionando.",
+    stagingTitle: "Teste contra o ambiente de testes do Singpass",
+    stagingBody: "Este botão executa o mesmo cliente contra o próprio serviço de testes do Singpass, com o app de testes da StarTech. Só contas de teste do Singpass conseguem entrar; contas reais não.",
+    stagingButton: "Entrar com Singpass (testes)",
+    stagingResult: "O ambiente de testes do Singpass devolveu este token de ID, descriptografado e verificado",
+    stagingCancelled: "O login de teste foi cancelado.",
+    stagingFailed: "O login de teste não foi concluído. Tente de novo mais tarde.",
+  },
+
   stickyCta: {
     line: "Trinta minutos sobre o seu processo e clareza sobre por onde começar.",
     action: "Vamos conversar",
