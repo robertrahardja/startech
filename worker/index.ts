@@ -177,6 +177,13 @@ function validateOrigin(request: Request, env: Env): boolean {
     allowedOrigins.push("http://localhost:5173", "http://localhost:8787");
   }
 
+  // Preview versions (`wrangler versions upload`) are served from
+  // <8-hex>-startech.rr-startech-innovation.workers.dev; only this Worker's
+  // own previews match, so testing a preview does not need the live domain.
+  if (/^https:\/\/[0-9a-f]{8}-startech\.rr-startech-innovation\.workers\.dev$/.test(origin)) {
+    return true;
+  }
+
   return allowedOrigins.includes(origin);
 }
 
