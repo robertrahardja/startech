@@ -137,6 +137,12 @@ export default function FlyerPage() {
             >
               {f.demosAll.replace("{count}", String(SOLUTIONS.length))}
             </Link>
+            <Link
+              href="/invoicenow"
+              className="mt-1 flex min-h-[44px] items-center text-[13px] text-st-text-muted underline-offset-4 hover:text-st-text hover:underline"
+            >
+              {f.invoiceNowLink} →
+            </Link>
           </Reveal>
         </div>
       </section>

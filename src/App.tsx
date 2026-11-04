@@ -24,6 +24,7 @@ const SolutionsIndex = lazy(() => import("./components/solutions/SolutionsIndex"
 const SolutionPage = lazy(() => import("./components/solutions/SolutionPage"));
 const FlyerPage = lazy(() => import("./pages/FlyerPage"));
 const TestimonialPage = lazy(() => import("./pages/TestimonialPage"));
+const InvoiceNowPage = lazy(() => import("./pages/InvoiceNowPage"));
 const AskStartech = lazy(() => import("./components/AskStartech"));
 
 /**
@@ -78,6 +79,12 @@ export default function App() {
         {page.type === "testimonial" && (
           <Suspense fallback={<RouteFallback />}>
             <TestimonialPage />
+          </Suspense>
+        )}
+
+        {page.type === "invoicenow" && (
+          <Suspense fallback={<RouteFallback />}>
+            <InvoiceNowPage />
           </Suspense>
         )}
 
