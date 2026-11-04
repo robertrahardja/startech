@@ -16,7 +16,7 @@ import {
   type UnitCode,
 } from "./pintSg";
 
-export const CSV_COLUMNS = [
+const CSV_COLUMNS = [
   "invoice_number",
   "issue_date",
   "due_date",
@@ -50,7 +50,7 @@ export type CsvResult =
   | { ok: false; error: CsvError; missing?: string[] };
 
 /** RFC 4180 parsing: quoted fields, doubled quotes, CRLF or LF. */
-export function parseCsv(text: string): string[][] {
+function parseCsv(text: string): string[][] {
   const rows: string[][] = [];
   let row: string[] = [];
   let field = "";

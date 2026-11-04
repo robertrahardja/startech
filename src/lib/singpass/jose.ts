@@ -47,23 +47,23 @@ const ES256 = { name: "ECDSA", hash: "SHA-256" };
 const P256_SIGN = { name: "ECDSA", namedCurve: "P-256" };
 const P256_ECDH = { name: "ECDH", namedCurve: "P-256" };
 
-export const JWE_ALG = "ECDH-ES+A256KW";
-export const JWE_ENC = "A256CBC-HS512";
+const JWE_ALG = "ECDH-ES+A256KW";
+const JWE_ENC = "A256CBC-HS512";
 
 // ─── Encoding ───────────────────────────────────────────────────────────────
 
-export function utf8(text: string): Uint8Array<ArrayBuffer> {
+function utf8(text: string): Uint8Array<ArrayBuffer> {
   return encoder.encode(text) as Uint8Array<ArrayBuffer>;
 }
 
-export function b64urlEncode(input: ArrayBuffer | Uint8Array): string {
+function b64urlEncode(input: ArrayBuffer | Uint8Array): string {
   const bytes = input instanceof Uint8Array ? input : new Uint8Array(input);
   let binary = "";
   for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
   return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
-export function b64urlDecode(input: string): Uint8Array<ArrayBuffer> {
+function b64urlDecode(input: string): Uint8Array<ArrayBuffer> {
   if (!/^[A-Za-z0-9_-]*$/.test(input)) throw new JoseError("Not base64url.");
   const padded = input.replace(/-/g, "+").replace(/_/g, "/") + "===".slice((input.length + 3) % 4);
   const binary = atob(padded);

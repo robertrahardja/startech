@@ -28,13 +28,13 @@
  * BT-24 Specification identifier. Asserted by PEPPOL-EN16931-R004-SG in
  * PINT-jurisdiction-aligned-rules.sch; same value in every official example.
  */
-export const CUSTOMIZATION_ID = "urn:peppol:pint:billing-1@sg-1";
+const CUSTOMIZATION_ID = "urn:peppol:pint:billing-1@sg-1";
 
 /** BT-23 Business process. Asserted by PEPPOL-EN16931-R007-SG. */
-export const PROFILE_ID = "urn:peppol:bis:billing";
+const PROFILE_ID = "urn:peppol:bis:billing";
 
 /** UNCL1001 code 380 "Commercial invoice" (codelist/UNCL1001-inv.gc). */
-export const INVOICE_TYPE_CODE = "380";
+const INVOICE_TYPE_CODE = "380";
 
 /**
  * Peppol Electronic Address Scheme 0195, "Singapore UEN identifier"
@@ -42,15 +42,15 @@ export const INVOICE_TYPE_CODE = "380";
  * as "SGUEN" + UEN, e.g. <cbc:EndpointID schemeID="0195">SGUEN200212345Z<…>,
  * while PartyLegalEntity/CompanyID carries the bare UEN.
  */
-export const UEN_SCHEME = "0195";
-export const UEN_ENDPOINT_PREFIX = "SGUEN";
+const UEN_SCHEME = "0195";
+const UEN_ENDPOINT_PREFIX = "SGUEN";
 
 /** The demo only invoices in SGD, so BR-113-GST-SG forbids TaxCurrencyCode. */
-export const CURRENCY = "SGD";
-export const COUNTRY = "SG";
+const CURRENCY = "SGD";
+const COUNTRY = "SG";
 
 /** TaxScheme/ID used throughout PINT SG ("GST", not "VAT"). */
-export const TAX_SCHEME = "GST";
+const TAX_SCHEME = "GST";
 
 /**
  * GST category codes offered in the demo: a subset of the 14 codes in
@@ -83,7 +83,7 @@ const GST_REGISTERED_CATEGORIES = new Set([
  * Rates are for the demo only; which category applies is the client's and
  * their accountant's call.
  */
-export const GST_RATES: Record<GstCategory, string> = {
+const GST_RATES: Record<GstCategory, string> = {
   SR: "9",
   ZR: "0",
   ES33: "0",
@@ -160,7 +160,7 @@ function divRound(numerator: bigint, divisor: bigint): bigint {
 }
 
 /** Integer cents to "1234.50". */
-export function formatCents(cents: bigint): string {
+function formatCents(cents: bigint): string {
   const sign = cents < 0n ? "-" : "";
   const abs = cents < 0n ? -cents : cents;
   const whole = abs / 100n;
@@ -616,7 +616,7 @@ export function runChecks(inv: UblInvoice): CheckResult[] {
 // ---------------------------------------------------------------------------
 
 /** ISO date `days` from today, in the visitor's local calendar. */
-export function isoDateFromToday(days = 0): string {
+function isoDateFromToday(days = 0): string {
   const d = new Date();
   d.setDate(d.getDate() + days);
   const pad = (n: number) => String(n).padStart(2, "0");

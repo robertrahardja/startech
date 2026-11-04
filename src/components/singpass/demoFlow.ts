@@ -26,7 +26,7 @@ import {
   type JsonObject,
 } from "../../lib/singpass/jose";
 
-export const DEMO_API = "/api/demo/singpass";
+const DEMO_API = "/api/demo/singpass";
 
 export const STEP_IDS = [
   "register",
@@ -83,7 +83,7 @@ const SCOPES: Record<SingpassAppType, string> = {
 };
 
 /** Long values shortened for display: the shape stays visible, the secret does not. */
-export function redact(value: string): string {
+function redact(value: string): string {
   if (value.length <= 24) return value;
   return `${value.slice(0, 14)}…${value.slice(-6)} (${value.length} chars)`;
 }
