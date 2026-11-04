@@ -763,7 +763,7 @@ export const ja: Messages = {
     demoIntro:
       "このデモ用に構築したモックの Singpass サーバーに対して、実際のプロトコル手順を実行します。鍵はブラウザ内でその都度生成され、人物はサンプルで、Singpass には何も送信しません。すべてのリクエストとレスポンスを、トークンを短縮した形で表示します。",
     demoNotice:
-      "モックサーバーです。Singpass ではなく、Singpass や GovTech とも接続していません。StarTech が Singpass Developer Portal に登録すれば、同じクライアントコードが設定の変更だけで Singpass のステージング環境に対して動作します。",
+      "モックサーバーです。Singpass ではなく、Singpass や GovTech とも接続していません。同じクライアントコードは Singpass 自身のステージング環境でも動作します。下のボタンでお試しください。",
     appType: "アプリの種類",
     appLogin: "Singpass ログイン",
     appMyinfo: "Myinfo（v5）",

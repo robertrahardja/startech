@@ -757,7 +757,7 @@ export const ko: Messages = {
     demoIntro:
       "이 데모를 위해 만든 모의 Singpass 서버를 상대로 실제 프로토콜 단계를 실행합니다. 키는 브라우저에서 매번 새로 만들어지고, 인물은 샘플이며, Singpass로는 아무것도 보내지 않습니다. 모든 요청과 응답을 토큰을 줄인 형태로 보여 줍니다.",
     demoNotice:
-      "모의 서버입니다. Singpass가 아니며 Singpass나 GovTech와 연결되어 있지 않습니다. StarTech가 Singpass Developer Portal에 등록하면, 같은 클라이언트 코드가 설정 변경만으로 Singpass 스테이징 환경에서 작동합니다.",
+      "모의 서버입니다. Singpass가 아니며 Singpass나 GovTech와 연결되어 있지 않습니다. 같은 클라이언트 코드는 Singpass의 실제 스테이징 환경에서도 작동합니다. 아래 버튼으로 직접 확인해 보세요.",
     appType: "앱 유형",
     appLogin: "Singpass 로그인",
     appMyinfo: "Myinfo (v5) 앱",

@@ -768,7 +768,7 @@ export const en = {
     demoIntro:
       "This runs the real protocol steps against a mock Singpass server we built for the demo. The keys are created fresh in your browser, the person is a sample, and nothing is sent to Singpass. Every request and response is shown, with tokens shortened.",
     demoNotice:
-      "Mock server: not Singpass, and not connected to Singpass or GovTech. Once StarTech is registered on the Singpass Developer Portal, the same client code runs against Singpass staging with a configuration change.",
+      "Mock server: not Singpass, and not connected to Singpass or GovTech. The same client code also runs against Singpass's own staging service: try it with the button below.",
     appType: "App type",
     appLogin: "Singpass Login",
     appMyinfo: "Myinfo (v5)",

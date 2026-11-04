@@ -765,7 +765,7 @@ export const pt: Messages = {
     demoIntro:
       "Executa as etapas reais do protocolo contra um servidor Singpass simulado que construímos para a demo. As chaves são criadas no seu navegador, a pessoa é de exemplo e nada é enviado ao Singpass. Todas as solicitações e respostas aparecem, com os tokens encurtados.",
     demoNotice:
-      "Servidor simulado: não é o Singpass e não está conectado ao Singpass nem à GovTech. Quando a StarTech estiver registrada no Singpass Developer Portal, o mesmo código cliente roda contra o ambiente de testes do Singpass apenas com uma mudança de configuração.",
+      "Servidor simulado: não é o Singpass e não está conectado ao Singpass nem à GovTech. O mesmo código cliente também roda contra o ambiente de testes do próprio Singpass: experimente com o botão abaixo.",
     appType: "Tipo de app",
     appLogin: "Login com Singpass",
     appMyinfo: "Myinfo (versão 5)",

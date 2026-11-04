@@ -757,7 +757,7 @@ export const zhHans: Messages = {
     demoIntro:
       "演示针对我们为此搭建的模拟 Singpass 服务器，执行真实的协议步骤。密钥在您的浏览器中重新生成，人物是样例，不会向 Singpass 发送任何内容。每个请求和响应都会显示，令牌已缩短。",
     demoNotice:
-      "模拟服务器：不是 Singpass，也未与 Singpass 或 GovTech 连接。StarTech 在 Singpass Developer Portal 完成注册后，同一套客户端代码只需修改配置即可对接 Singpass 预发布环境。",
+      "模拟服务器：不是 Singpass，也未与 Singpass 或 GovTech 连接。同一套客户端代码也可对接 Singpass 自己的预发布环境：请用下方按钮试试。",
     appType: "应用类型",
     appLogin: "Singpass 登录",
     appMyinfo: "Myinfo（v5）",
