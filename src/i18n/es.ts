@@ -862,6 +862,11 @@ export const es: Messages = {
     honesty:
       "Con claridad: esta demo es nuestra implementación de referencia contra un servidor simulado. Todavía no hemos completado una migración de Singpass para un cliente y no somos socios de Singpass ni de GovTech. Su app de Singpass sigue registrada a nombre de su organización.",
     otherWork: "Vea qué más construimos",
+    formEyebrow: "Revisión de Singpass",
+    formTitle: "Pídanos revisar su inicio de sesión con Singpass",
+    formSub: "Indíquenos qué sitio web o aplicación tiene el inicio de sesión con Singpass. Respondemos en dos días hábiles con lo que el cambio a FAPI 2.0 significa para él.",
+    formPlaceholder: "¿Qué sitio o aplicación tiene el inicio de sesión con Singpass, quién lo desarrolló y usa Myinfo o Corppass?",
+    formSend: "Solicitar revisión de Singpass",
     flyerLine: "Singpass debe pasar a FAPI 2.0 antes del 31 de diciembre de 2026. Vea nuestra demo funcional del nuevo inicio de sesión.",
     stagingTitle: "Pruébelo contra el entorno de pruebas de Singpass",
     stagingBody: "Este botón ejecuta el mismo cliente contra el propio servicio de pruebas de Singpass, con la app de pruebas de StarTech. Solo pueden entrar las cuentas de prueba de Singpass; las cuentas reales no.",

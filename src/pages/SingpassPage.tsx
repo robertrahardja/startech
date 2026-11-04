@@ -187,7 +187,7 @@ export default function SingpassPage() {
         </div>
       </section>
 
-      <Contact />
+      <Contact variant="singpass" />
     </>
   );
 }

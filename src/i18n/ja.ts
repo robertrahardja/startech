@@ -859,6 +859,11 @@ export const ja: Messages = {
     honesty:
       "率直に申し上げます。このデモは、モックサーバーに対する当社のリファレンス実装です。当社はまだお客様の Singpass 移行を完了した実績がなく、Singpass や GovTech のパートナーでもありません。Singpass のアプリはお客様の組織に登録されたままです。",
     otherWork: "ほかに開発しているものを見る",
+    formEyebrow: "Singpass チェック",
+    formTitle: "Singpass ログインの確認をご依頼ください",
+    formSub: "Singpass ログインがあるウェブサイトまたはアプリを教えてください。FAPI 2.0 への変更がどう影響するか、2営業日以内にご回答します。",
+    formPlaceholder: "Singpass ログインがあるサイトやアプリ、開発した会社、Myinfo や Corppass の利用の有無を教えてください。",
+    formSend: "Singpass チェックを依頼する",
     flyerLine: "Singpass は2026年12月31日までに FAPI 2.0 への移行が必要です。新しいログインフローの動作デモをご覧ください。",
     stagingTitle: "Singpass のステージング環境で試す",
     stagingBody: "このボタンは、同じクライアントを StarTech のステージング用アプリとして Singpass 自身のステージング環境に対して実行します。ログインできるのは Singpass ステージングのテスト用アカウントだけで、実際の Singpass アカウントは使えません。",

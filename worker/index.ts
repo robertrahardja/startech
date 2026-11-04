@@ -837,6 +837,8 @@ interface ContactFields {
   utm_source: string;
   utm_medium: string;
   utm_campaign: string;
+  /** Which page's form sent it, e.g. "singpass". */
+  topic: string;
   file: File | null;
 }
 
@@ -867,6 +869,7 @@ async function readContactFields(request: Request): Promise<ContactFields | null
       utm_source: str(form.get("utm_source")),
       utm_medium: str(form.get("utm_medium")),
       utm_campaign: str(form.get("utm_campaign")),
+      topic: str(form.get("topic")),
       file: file instanceof File && file.size > 0 ? file : null,
     };
   }
@@ -889,6 +892,7 @@ async function readContactFields(request: Request): Promise<ContactFields | null
     utm_source: str(body.utm_source),
     utm_medium: str(body.utm_medium),
     utm_campaign: str(body.utm_campaign),
+    topic: str(body.topic),
     file: null,
   };
 }
@@ -959,6 +963,8 @@ async function handleContact(
   const utmSource = sanitizeUtm(body.utm_source);
   const utmMedium = sanitizeUtm(body.utm_medium);
   const utmCampaign = sanitizeUtm(body.utm_campaign);
+  // Which page's form it came from; only known topics change the subject.
+  const topic = body.topic === "singpass" ? "Singpass check" : null;
 
   if (!name || !email || !message) {
     return new Response(
@@ -993,6 +999,7 @@ async function handleContact(
   const lead: Lead = {
     name, email, phone, company, message, staff,
     utmSource, utmMedium, utmCampaign, spreadsheetKey,
+    ...(topic ? { subject: topic } : {}),
     // What the visitor typed beats where the request came from.
     country: formCountry || countryName(request.cf?.country),
   };
@@ -1024,7 +1031,7 @@ async function handleContact(
         from: "StarTech Website <onboarding@resend.dev>",
         to: ["rr.startech.innovation@gmail.com"],
         reply_to: email,
-        subject: `New Contact: ${escapeHtml(name).slice(0, 100)}`,
+        subject: `${topic ?? "New Contact"}: ${escapeHtml(name).slice(0, 100)}`,
         html: `
           <h2>New Contact Form Submission</h2>
           <p><strong>Name:</strong> ${escapeHtml(name)}</p>

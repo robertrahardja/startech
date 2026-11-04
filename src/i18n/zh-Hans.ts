@@ -847,6 +847,11 @@ export const zhHans: Messages = {
     honesty:
       "坦白说：这个演示是我们针对模拟服务器的参考实现。我们尚未为客户完成过 Singpass 迁移，也不是 Singpass 或 GovTech 的合作伙伴。您的 Singpass 应用始终注册在贵机构名下。",
     otherWork: "看看我们还做什么",
+    formEyebrow: "Singpass 检查",
+    formTitle: "请我们检查您的 Singpass 登录",
+    formSub: "告诉我们哪个网站或应用使用了 Singpass 登录。我们会在两个工作日内答复 FAPI 2.0 变更对它的影响。",
+    formPlaceholder: "哪个网站或应用有 Singpass 登录？由谁开发？是否使用 Myinfo 或 Corppass？",
+    formSend: "申请 Singpass 检查",
     flyerLine: "Singpass 必须在 2026 年 12 月 31 日前升级到 FAPI 2.0。查看新登录流程的可运行演示。",
     stagingTitle: "在 Singpass 预发布环境中试用",
     stagingBody: "这个按钮以 StarTech 的预发布应用身份，对 Singpass 自己的预发布服务运行同一套客户端。只有 Singpass 预发布测试账户可以登录，真实的 Singpass 账户不行。",

@@ -864,6 +864,11 @@ export const en = {
     honesty:
       "To be plain: this demo is our reference implementation against a mock server. We have not yet completed a Singpass migration for a client, and we are not a Singpass or GovTech partner. Your Singpass app stays registered to your organisation.",
     otherWork: "See what else we build",
+    formEyebrow: "Singpass check",
+    formTitle: "Ask us to check your Singpass login",
+    formSub: "Tell us which website or app has the Singpass login. We reply within two working days with what the FAPI 2.0 change means for it.",
+    formPlaceholder: "Which site or app has the Singpass login, who built it, and does it use Myinfo or Corppass?",
+    formSend: "Ask for a Singpass check",
     flyerLine: "Singpass must move to FAPI 2.0 by 31 December 2026. See our working demo of the new login flow.",
     stagingTitle: "Try it against Singpass staging",
     stagingBody: "This button runs the same client against Singpass's own staging service, under StarTech's staging app. Only Singpass staging test accounts can log in; real Singpass accounts cannot.",

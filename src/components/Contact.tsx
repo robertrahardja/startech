@@ -25,7 +25,7 @@ interface ContactProps {
    * its heading from the flyer copy: that page's offer is "send us one
    * spreadsheet", so the form has to be able to take one.
    */
-  variant?: "default" | "flyer";
+  variant?: "default" | "flyer" | "singpass";
 }
 
 export default function Contact({ variant = "default" }: ContactProps) {
@@ -39,6 +39,9 @@ export default function Contact({ variant = "default" }: ContactProps) {
   >("idle");
   const [errorMsg, setErrorMsg] = useState("");
   const isFlyer = variant === "flyer";
+  // On /singpass the enquiry is a Singpass check: its own copy, and a topic
+  // the Worker turns into the "Singpass check" subject in hq and the email.
+  const isSingpass = variant === "singpass";
 
   const handleChange = useCallback(
     (
@@ -74,7 +77,7 @@ export default function Contact({ variant = "default" }: ContactProps) {
       setStatus("sending");
       setErrorMsg("");
 
-      const payload = { ...form, ...getUtm() };
+      const payload = { ...form, ...getUtm(), ...(isSingpass ? { topic: "singpass" } : {}) };
 
       try {
         // JSON unless a spreadsheet is attached; the Worker reads both.
@@ -110,12 +113,14 @@ export default function Contact({ variant = "default" }: ContactProps) {
         );
       }
     },
-    [form, file, t.contact.error]
+    [form, file, isSingpass, t.contact.error]
   );
 
   const header = isFlyer
     ? { label: t.flyer.formEyebrow, title: t.flyer.formTitle, subtitle: t.flyer.formSub }
-    : { label: t.contact.eyebrow, title: t.contact.title, subtitle: t.contact.sub };
+    : isSingpass
+      ? { label: t.singpass.formEyebrow, title: t.singpass.formTitle, subtitle: t.singpass.formSub }
+      : { label: t.contact.eyebrow, title: t.contact.title, subtitle: t.contact.sub };
 
   return (
     <section id="contact" className="relative py-20 sm:py-24">
@@ -258,7 +263,13 @@ export default function Contact({ variant = "default" }: ContactProps) {
                 onChange={handleChange}
                 maxLength={5000}
                 className={FIELD_CLASS}
-                placeholder={isFlyer ? t.flyer.messagePlaceholder : t.contact.messagePlaceholder}
+                placeholder={
+                  isFlyer
+                    ? t.flyer.messagePlaceholder
+                    : isSingpass
+                      ? t.singpass.formPlaceholder
+                      : t.contact.messagePlaceholder
+                }
               />
             </div>
 
@@ -276,7 +287,13 @@ export default function Contact({ variant = "default" }: ContactProps) {
                 disabled={status === "sending"}
                 className="hero-btn-primary relative w-full overflow-hidden rounded-xl px-4 py-3.5 text-[13px] font-normal tracking-wide text-st-text transition-all duration-500 disabled:opacity-40"
               >
-                {status === "sending" ? t.contact.sending : isFlyer ? t.flyer.formSend : t.contact.send}
+                {status === "sending"
+                  ? t.contact.sending
+                  : isFlyer
+                    ? t.flyer.formSend
+                    : isSingpass
+                      ? t.singpass.formSend
+                      : t.contact.send}
               </button>
             )}
           </form>

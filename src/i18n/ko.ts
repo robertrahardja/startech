@@ -853,6 +853,11 @@ export const ko: Messages = {
     honesty:
       "분명히 말씀드립니다. 이 데모는 모의 서버를 상대로 한 저희의 참조 구현입니다. 저희는 아직 고객의 Singpass 전환을 완료한 적이 없으며, Singpass나 GovTech의 파트너도 아닙니다. Singpass 앱은 계속 고객 조직 명의로 등록되어 있습니다.",
     otherWork: "그 밖에 만드는 것 보기",
+    formEyebrow: "Singpass 점검",
+    formTitle: "Singpass 로그인 점검을 요청하세요",
+    formSub: "Singpass 로그인이 있는 웹사이트나 앱을 알려 주세요. FAPI 2.0 변경이 어떤 영향을 주는지 영업일 기준 2일 이내에 답변드립니다.",
+    formPlaceholder: "Singpass 로그인이 있는 사이트나 앱, 개발한 곳, Myinfo나 Corppass 사용 여부를 알려 주세요.",
+    formSend: "Singpass 점검 요청하기",
     flyerLine: "Singpass는 2026년 12월 31일까지 FAPI 2.0으로 전환해야 합니다. 새 로그인 흐름의 작동 데모를 확인하세요.",
     stagingTitle: "Singpass 스테이징 환경에서 시험하기",
     stagingBody: "이 버튼은 같은 클라이언트를 StarTech의 스테이징 앱으로 Singpass 자체 스테이징 서비스에 연결해 실행합니다. Singpass 스테이징 테스트 계정만 로그인할 수 있으며, 실제 Singpass 계정은 사용할 수 없습니다.",
