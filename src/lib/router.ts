@@ -8,6 +8,7 @@ export type Page =
   | { type: "home" }
   | { type: "flyer" }
   | { type: "testimonial" }
+  | { type: "singpass" }
   | { type: "solutions-index" }
   | { type: "solution-page"; solution: Solution };
 
@@ -34,6 +35,11 @@ function resolvePage(pathname: string): Page {
   // Where clients leave a testimonial. Unlisted: reached by a link we send.
   if (pathname === "/testimonial") {
     return { type: "testimonial" };
+  }
+
+  // Singpass FAPI 2.0: the deadline, a working demo, and the upgrade offer.
+  if (pathname === "/singpass") {
+    return { type: "singpass" };
   }
 
   const match = pathname.match(SOLUTION_PATH);

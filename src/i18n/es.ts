@@ -528,6 +528,168 @@ export const es: Messages = {
     errorConsent: "Marque esta casilla para continuar.",
     error: "Algo salió mal. Inténtelo de nuevo.",
   },
+  singpass: {
+    eyebrow: "Migración de Singpass · FAPI 2.0",
+    title: "El inicio de sesión con Singpass debe pasar a FAPI 2.0 antes del 31 de diciembre de 2026",
+    intro:
+      "Si su sitio web o su aplicación tiene un botón «Iniciar sesión con Singpass», o rellena formularios con Myinfo, tiene que adoptar el nuevo estándar de seguridad de Singpass antes de que termine 2026.",
+    source: "La fecha límite, tal como la publica Singpass",
+    ctaCheck: "Pídanos que revisemos su integración",
+    ctaDemo: "Ejecutar la demo",
+    changesEyebrow: "Qué cambia",
+    changesTitle: "Cinco cambios en cómo funciona el inicio de sesión",
+    changes: [
+      {
+        lead: "La solicitud se envía por adelantado",
+        detail:
+          "Su servidor envía primero la solicitud de inicio de sesión a Singpass (PAR), y el navegador del usuario solo lleva una referencia corta. Nada de la barra de direcciones se puede alterar.",
+      },
+      {
+        lead: "Una prueba de un solo uso por inicio de sesión",
+        detail:
+          "Su servidor demuestra que fue él quien inició el proceso (PKCE), así que un código interceptado no le sirve a nadie más.",
+      },
+      {
+        lead: "Tokens ligados a su clave",
+        detail:
+          "Cada código y cada token solo funcionan junto con una clave que guarda su servidor (DPoP). Un token filtrado no se puede reutilizar.",
+      },
+      {
+        lead: "La identidad va cifrada",
+        detail:
+          "Cada token de ID se cifra ahora con su clave, y el NRIC pasó a un campo nuevo. El código que lee el formato antiguo deja de funcionar.",
+      },
+      {
+        lead: "Redirecciones y errores más estrictos",
+        detail:
+          "Ya no se aceptan enlaces de aplicación con esquema propio, las apps Login deben indicar para qué es cada inicio de sesión y Singpass ahora devuelve los errores a su sitio, que tiene que gestionarlos.",
+      },
+    ],
+    migrationLink: "Guía de migración de Singpass para apps Login y Myinfo (v5)",
+    whoEyebrow: "A quién afecta",
+    whoTitle: "A cualquier sitio o app que use Singpass para iniciar sesión o rellenar datos",
+    who: [
+      "Sitios web, portales y apps móviles con «Iniciar sesión con Singpass»",
+      "Formularios que rellenan los datos de una persona desde Myinfo",
+      "Integraciones creadas antes de febrero de 2026; las apps registradas desde entonces ya tenían que usar FAPI 2.0",
+      "Integraciones con Myinfo v3 y v4, a las que Singpass pidió pasar a Myinfo v5 antes de finales de septiembre de 2026",
+    ],
+    corppass: "El inicio de sesión con Corppass tiene su propia fecha, posterior: el 31 de marzo de 2027.",
+    corppassLink: "Calendario de Corppass",
+    riskEyebrow: "Si no migra",
+    riskTitle: "Cuente con que el inicio de sesión antiguo dejará de funcionar",
+    riskBody:
+      "Singpass exige que todas las integraciones usen FAPI 2.0 antes del 31 de diciembre de 2026, y retiró la documentación del flujo antiguo el 14 de julio de 2026. Una integración que siga con el flujo antiguo debe esperar que el inicio de sesión con Singpass o el relleno con Myinfo fallen después de esa fecha: personas que no pueden entrar y formularios que no pueden completar.",
+    demoEyebrow: "Demo de referencia funcional",
+    demoTitle: "Todo el flujo FAPI 2.0, ejecutándose en su navegador",
+    demoIntro:
+      "Ejecuta los pasos reales del protocolo contra un servidor Singpass simulado que construimos para la demo. Las claves se crean en su navegador, la persona es de muestra y no se envía nada a Singpass. Se muestran todas las solicitudes y respuestas, con los tokens acortados.",
+    demoNotice:
+      "Servidor simulado: no es Singpass y no está conectado a Singpass ni a GovTech. Cuando StarTech se registre en el Singpass Developer Portal, el mismo código cliente funcionará contra el entorno de pruebas de Singpass con solo cambiar la configuración.",
+    appType: "Tipo de app",
+    appLogin: "Inicio de sesión Singpass",
+    appMyinfo: "Myinfo (versión 5)",
+    run: "Ejecutar el flujo",
+    runAgain: "Ejecutarlo otra vez",
+    running: "Ejecutando el flujo…",
+    allPassed:
+      "Todos los pasos se superaron. Los datos de abajo llegaron cifrados y firmados, mediante un código y unos tokens ligados a la clave de este navegador.",
+    failed: "Un paso falló. Su solicitud y su respuesta están abajo.",
+    cancelled:
+      "Inicio de sesión cancelado. Singpass devuelve un error a su sitio, y su sitio muestra su propio mensaje, nunca el texto de error de Singpass.",
+    details: "Solicitud y respuesta",
+    status: {
+      pending: "Sin empezar",
+      running: "En curso",
+      waiting: "Esperando su decisión",
+      done: "Superado",
+      error: "Fallido",
+    },
+    steps: {
+      register: {
+        title: "Registrar la app",
+        body: "Su navegador crea una clave de firma y una de cifrado, y registra las mitades públicas en el servidor simulado, como se haría en el Singpass Developer Portal.",
+      },
+      discovery: {
+        title: "Leer la configuración del servidor",
+        body: "Los endpoints y los algoritmos salen de la configuración OpenID, no de direcciones fijas en el código.",
+      },
+      session: {
+        title: "Crear los secretos de este inicio de sesión",
+        body: "Un state, un nonce, un verificador PKCE (S256) y una clave DPoP nuevos, usados para este único inicio de sesión y luego descartados.",
+      },
+      par: {
+        title: "Enviar la solicitud por adelantado (PAR)",
+        body: "La solicitud va primero al servidor, con una aserción de cliente firmada (private_key_jwt) y una prueba DPoP. El servidor responde con un request_uri de vida corta.",
+      },
+      authorize: {
+        title: "Enviar a la persona a Singpass",
+        body: "La dirección solo lleva client_id y request_uri. En el servicio real, la persona aprueba ahora el inicio de sesión en la app de Singpass.",
+      },
+      redirect: {
+        title: "Gestionar la vuelta",
+        body: "Comprobar state e iss antes de fiarse del código.",
+      },
+      token: {
+        title: "Cambiar el código por tokens",
+        body: "Envía el código, el verificador PKCE, una nueva aserción de cliente y una nueva prueba DPoP. Los tokens vuelven ligados a la clave DPoP.",
+      },
+      idToken: {
+        title: "Descifrar y verificar el token de ID",
+        body: "Se descifra con su clave de cifrado, se comprueba la firma con las claves públicas del servidor (JWKS) y luego iss, aud, exp y nonce.",
+      },
+      userinfo: {
+        title: "Obtener los datos de Myinfo",
+        body: "Authorization: DPoP, con una prueba ligada al token de acceso (ath). La respuesta también va cifrada y firmada, dentro de person_info.",
+      },
+      replay: {
+        title: "Probar un código robado",
+        body: "Alguien que copió el código y el verificador PKCE los prueba desde otro dispositivo, con su propia clave. El servidor debe rechazarlo.",
+        refused: "Rechazado, como debe ser: el código solo funciona con la clave que lo pidió.",
+        accepted: "El servidor aceptó un código robado. Eso es un error.",
+      },
+    },
+    loginTitle: "Inicio de sesión Singpass simulado",
+    loginBody:
+      "En Singpass, la persona escanearía ahora un código QR con la app de Singpass. Aquí decide usted por la persona de muestra.",
+    loginRequested: "Datos solicitados",
+    loginPurpose: "Finalidad",
+    approve: "Entrar como la persona de muestra",
+    cancel: "Cancelar el inicio de sesión",
+    sample: "Persona de muestra, no real",
+    resultTitle: "Lo que recibe su sitio",
+    errorGeneric: "Algo salió mal. Vuelva a ejecutar el flujo dentro de un minuto.",
+    offerEyebrow: "Lo que ofrecemos",
+    offerTitle: "Revisamos y actualizamos su integración con Singpass",
+    offerSteps: [
+      {
+        lead: "Revisión",
+        detail:
+          "Leemos su código actual de Singpass o Myinfo y le decimos por escrito qué tiene que cambiar y cuánto llevará.",
+      },
+      {
+        lead: "Actualización",
+        detail:
+          "Incorporamos PAR, PKCE, DPoP y tokens de ID cifrados en su código, y probamos contra el entorno de pruebas de Singpass con la app de su propia organización.",
+      },
+      {
+        lead: "Puesta en marcha",
+        detail:
+          "Cambiamos producción antes de la fecha límite. Singpass permite que el flujo antiguo y el nuevo funcionen en paralelo, así que el cambio puede hacerse por etapas.",
+      },
+    ],
+    honesty:
+      "Con claridad: esta demo es nuestra implementación de referencia contra un servidor simulado. Todavía no hemos completado una migración de Singpass para un cliente y no somos socios de Singpass ni de GovTech. Su app de Singpass sigue registrada a nombre de su organización.",
+    otherWork: "Vea qué más construimos",
+    flyerLine: "Singpass debe pasar a FAPI 2.0 antes del 31 de diciembre de 2026. Vea nuestra demo funcional del nuevo inicio de sesión.",
+    stagingTitle: "Pruébelo contra el entorno de pruebas de Singpass",
+    stagingBody: "Este botón ejecuta el mismo cliente contra el propio servicio de pruebas de Singpass, con la app de pruebas de StarTech. Solo pueden entrar las cuentas de prueba de Singpass; las cuentas reales no.",
+    stagingButton: "Iniciar sesión con Singpass (pruebas)",
+    stagingResult: "El entorno de pruebas de Singpass devolvió este token de ID, descifrado y verificado",
+    stagingCancelled: "El inicio de sesión de prueba se canceló.",
+    stagingFailed: "El inicio de sesión de prueba no se completó. Inténtelo de nuevo más tarde.",
+  },
+
   stickyCta: {
     line: "Treinta minutos sobre su proceso y una idea clara de por dónde empezar.",
     action: "Hablemos",

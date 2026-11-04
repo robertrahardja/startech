@@ -519,6 +519,162 @@ export const zhHant: Messages = {
     errorConsent: "請勾選此項以繼續。",
     error: "發生問題，請再試一次。",
   },
+  singpass: {
+    eyebrow: "Singpass 升級 · FAPI 2.0",
+    title: "Singpass 登入必須在 2026 年 12 月 31 日前升級到 FAPI 2.0",
+    intro:
+      "如果您的網站或應用有「使用 Singpass 登入」按鈕，或透過 Myinfo 自動填寫表單，就必須在 2026 年底前升級到 Singpass 的新安全標準。",
+    source: "Singpass 官方公佈的截止日期",
+    ctaCheck: "請我們檢查您的整合",
+    ctaDemo: "執行示範",
+    changesEyebrow: "有哪些變化",
+    changesTitle: "登入方式的五項變化",
+    changes: [
+      {
+        lead: "請求提前傳送",
+        detail:
+          "您的伺服器先把登入請求傳送給 Singpass（PAR），使用者瀏覽器只攜帶一個簡短的引用值。位址列中的內容無法被篡改。",
+      },
+      {
+        lead: "每次登入一次性證明",
+        detail:
+          "您的伺服器證明登入由它發起（PKCE），因此被截獲的登入授權碼對他人毫無用處。",
+      },
+      {
+        lead: "權杖繫結您的金鑰",
+        detail:
+          "授權碼和權杖只有配合您伺服器持有的金鑰才能使用（DPoP）。洩露的權杖無法被重複使用。",
+      },
+      {
+        lead: "身份資訊加密",
+        detail:
+          "每個 ID 權杖現在都用您的金鑰加密，NRIC 也移到了新欄位。讀取舊格式的程式碼將無法執行。",
+      },
+      {
+        lead: "更嚴格的跳轉與錯誤處理",
+        detail:
+          "不再接受自訂協定的應用連結，Login 應用必須說明每次登入的用途，Singpass 現在還會把錯誤傳回您的網站，網站必須處理這些錯誤。",
+      },
+    ],
+    migrationLink: "Singpass 針對 Login 和 Myinfo（v5）應用的遷移指南",
+    whoEyebrow: "受影響的對象",
+    whoTitle: "所有使用 Singpass 登入或填寫資料的網站和應用",
+    who: [
+      "帶有「使用 Singpass 登入」的網站、入口網站和行動應用程式",
+      "從 Myinfo 預填個人資料的表單",
+      "2026 年 2 月之前搭建的整合；此後註冊的應用從一開始就必須使用 FAPI 2.0",
+      "Myinfo v3 和 v4 整合，Singpass 要求它們在 2026 年 9 月底前遷移到 Myinfo v5",
+    ],
+    corppass: "Corppass 登入有單獨且更晚的截止日期：2027 年 3 月 31 日。",
+    corppassLink: "Corppass 時間表",
+    riskEyebrow: "如果不遷移",
+    riskTitle: "請按舊登入方式將會失效來規劃",
+    riskBody:
+      "Singpass 要求所有整合在 2026 年 12 月 31 日前採用 FAPI 2.0，並已於 2026 年 7 月 14 日下架舊流程的文件。仍在使用舊流程的整合，應預計在截止日期後 Singpass 登入或 Myinfo 預填會失敗：使用者無法登入，表單也無法完成。",
+    demoEyebrow: "可執行的參考示範",
+    demoTitle: "完整的 FAPI 2.0 流程，在您的瀏覽器中執行",
+    demoIntro:
+      "示範針對我們為此搭建的模擬 Singpass 伺服器，執行真實的協定步驟。金鑰在您的瀏覽器中重新生成，人物是樣例，不會向 Singpass 傳送任何內容。每個請求和回應都會顯示，權杖已縮短。",
+    demoNotice:
+      "模擬伺服器：不是 Singpass，也未與 Singpass 或 GovTech 連線。StarTech 在 Singpass Developer Portal 完成註冊後，同一套客戶端程式碼只需修改設定即可對接 Singpass 預備（staging）環境。",
+    appType: "應用程式類型",
+    appLogin: "Singpass 登入",
+    appMyinfo: "Myinfo（v5）",
+    run: "執行流程",
+    runAgain: "再執行一次",
+    running: "正在執行流程…",
+    allPassed: "所有步驟均已通過。以下資料經由繫結此瀏覽器金鑰的授權碼和權杖，以加密並簽名的形式送達。",
+    failed: "有一個步驟失敗了。它的請求和回應顯示在下方。",
+    cancelled: "登入已取消。Singpass 會把錯誤傳回您的網站，網站顯示自己的提示資訊，而不是 Singpass 的錯誤原文。",
+    details: "請求與回應",
+    status: {
+      pending: "未開始",
+      running: "執行中",
+      waiting: "等待操作",
+      done: "通過",
+      error: "失敗",
+    },
+    steps: {
+      register: {
+        title: "註冊應用",
+        body: "瀏覽器生成一把簽名金鑰和一把加密金鑰，並把公鑰部分註冊到模擬伺服器，相當於在 Singpass Developer Portal 上的操作。",
+      },
+      discovery: {
+        title: "讀取伺服器設定",
+        body: "端點和演算法來自 OpenID 設定，而不是寫死的地址。",
+      },
+      session: {
+        title: "生成本次登入的密值",
+        body: "全新的 state、nonce、PKCE verifier（S256）和 DPoP 金鑰，只用於這一次登入，用完即棄。",
+      },
+      par: {
+        title: "提前傳送請求（PAR）",
+        body: "登入請求連同簽名的客戶端斷言（private_key_jwt）和 DPoP 證明先發送到伺服器。伺服器返回一個短時有效的 request_uri。",
+      },
+      authorize: {
+        title: "把使用者轉到 Singpass",
+        body: "地址中只包含 client_id 和 request_uri。在真實服務中，使用者此時會在 Singpass 應用中批准登入。",
+      },
+      redirect: {
+        title: "處理返回的跳轉",
+        body: "在信任授權碼之前，先檢查 state 和 iss。",
+      },
+      token: {
+        title: "用授權碼換取權杖",
+        body: "傳送授權碼、PKCE verifier、新的客戶端斷言和新的 DPoP 證明。返回的權杖繫結在 DPoP 金鑰上。",
+      },
+      idToken: {
+        title: "解密並驗證 ID 權杖",
+        body: "用您的加密金鑰解密，用伺服器公佈的金鑰（JWKS）驗證簽名，再檢查 iss、aud、exp 和 nonce。",
+      },
+      userinfo: {
+        title: "取得 Myinfo 資料",
+        body: "使用 Authorization: DPoP，並附上繫結存取權杖的證明（ath）。回應同樣經過加密和簽名，並放在 person_info 中。",
+      },
+      replay: {
+        title: "嘗試被盜的授權碼",
+        body: "有人複製了授權碼和 PKCE verifier，在另一臺裝置上用自己的金鑰嘗試使用。伺服器必須拒絕。",
+        refused: "已按預期拒絕：授權碼只能配合申請它的那把金鑰使用。",
+        accepted: "伺服器接受了被盜的授權碼。這是一個缺陷。",
+      },
+    },
+    loginTitle: "模擬 Singpass 登入",
+    loginBody: "在真實的 Singpass 中，使用者此時會用 Singpass 應用掃描QR 碼。在這裡由您代替樣例人物做出選擇。",
+    loginRequested: "請求的資料",
+    loginPurpose: "用途",
+    approve: "以樣例人物身份登入",
+    cancel: "取消登入",
+    sample: "樣例人物，並非真人",
+    resultTitle: "您的網站收到的內容",
+    errorGeneric: "出現問題。請稍後再執行一次流程。",
+    offerEyebrow: "我們提供",
+    offerTitle: "我們檢查並升級您的 Singpass 整合",
+    offerSteps: [
+      {
+        lead: "檢查",
+        detail: "我們閱讀您現有的 Singpass 或 Myinfo 程式碼，並以書面形式說明需要修改什麼、需要多長時間。",
+      },
+      {
+        lead: "升級",
+        detail: "我們在您的程式碼庫中實現 PAR、PKCE、DPoP 和加密 ID 權杖，並用貴機構自己的應用在 Singpass 預備（staging）環境中測試。",
+      },
+      {
+        lead: "上線",
+        detail: "我們在截止日期前完成生產環境切換。Singpass 允許新舊流程並行執行，因此可以分階段切換。",
+      },
+    ],
+    honesty:
+      "坦白說：這個示範是我們針對模擬伺服器的參考實現。我們尚未為客戶完成過 Singpass 遷移，也不是 Singpass 或 GovTech 的合作夥伴。您的 Singpass 應用始終註冊在貴機構名下。",
+    otherWork: "看看我們還做什麼",
+    flyerLine: "Singpass 必須在 2026 年 12 月 31 日前升級到 FAPI 2.0。檢視新登入流程的可執行示範。",
+    stagingTitle: "在 Singpass 預備（staging）環境中試用",
+    stagingBody: "這個按鈕以 StarTech 的預備環境應用身分，對 Singpass 自己的預備服務執行同一套客戶端。只有 Singpass 預備環境測試帳戶可以登入，真實的 Singpass 帳戶不行。",
+    stagingButton: "使用 Singpass 登入（預備環境）",
+    stagingResult: "Singpass 預備環境傳回的 ID 權杖（已解密並驗證）",
+    stagingCancelled: "預備環境登入已取消。",
+    stagingFailed: "預備環境登入未能完成。請稍後再試。",
+  },
+
   stickyCta: {
     line: "三十分鐘了解現況，理清應該先做什麼。",
     action: "聊一聊",

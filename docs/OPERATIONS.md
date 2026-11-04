@@ -167,6 +167,102 @@ and industry only, or do not publish) and agrees to see the final wording
 before it goes online, so nothing is published from the form itself. A
 hidden honeypot field drops bot submissions; the limit is 3 a minute.
 
+## Singpass demo
+
+`/singpass` explains the Singpass FAPI 2.0 deadline (31 December 2026;
+Corppass 31 March 2027) and runs a working reference demo of the new flow:
+PAR, PKCE (S256), DPoP-bound code and tokens, `private_key_jwt`, an ID
+token signed ES256 and encrypted (`ECDH-ES+A256KW` / `A256CBC-HS512`),
+and for Myinfo apps the encrypted `person_info` userinfo response.
+
+It runs against a **mock** authorization server, not Singpass. Honesty
+rules for the page: we have not yet done a Singpass migration for a
+client and are not a Singpass or GovTech partner.
+
+Where the code lives:
+
+- `src/lib/singpass/jose.ts` — JWS, JWE, JWK thumbprints on WebCrypto.
+  Shared by the page and the Worker. Cross-checked against `jose` 5.9.
+- `src/lib/singpass/client.ts` — the relying-party client. Everything
+  environment-specific is in `SingpassClientConfig`.
+- `src/components/singpass/` — the page's demo runner and UI.
+- `worker/singpass-demo.ts` — the mock server under
+  `/api/demo/singpass/*`, mirroring Singpass paths under `fapi/`. Its
+  `register` and JSON `fapi/auth` + `decision` endpoints exist only because
+  there is no real login page; nothing uses them against Singpass.
+- `worker/singpass-rp.ts` and `scripts/singpass-keys.mjs` — the real
+  staging relying party and its key generator (next section).
+
+The mock keeps state in the `RATE_LIMIT` KV namespace with relative TTLs:
+registrations 15 minutes, `request_uri` and codes 60 seconds, seen `jti`
+values 2 minutes, its own signing key one day. Every route is rate limited
+per IP. A full run is about 17 KV writes, counting the rate limiter.
+
+### Singpass staging (real relying party)
+
+`worker/singpass-rp.ts` runs the same `SingpassClient` server-side, as
+StarTech's own staging Login app on the
+[Singpass Developer Portal](https://developer.singpass.gov.sg). It is off
+until switched on, and the mock stays the default demo. When on, `/singpass`
+shows a "Log in with Singpass (staging)" button. Only Singpass staging
+test accounts can log in (portal: "Create Staging Test Account").
+
+Values for the portal (Login app, staging):
+
+| Field        | Value                                                   |
+| ------------ | ------------------------------------------------------- |
+| Redirect URL | `https://startech-innovation.com/singpass/callback`     |
+| JWKS URL     | `https://startech-innovation.com/.well-known/jwks.json` |
+| Scopes       | `openid` and `user.identity` (User Identity) only       |
+
+The portal rejects domains containing "singpass"; paths are fine.
+`authentication_context_type` is sent as `APP_AUTHENTICATION_DEFAULT`.
+
+Keys: one ES256 signing key (for `private_key_jwt`) and one
+`ECDH-ES+A256KW` encryption key (FAPI 2.0 ID tokens are always
+encrypted), both P-256, both Worker secrets. The script prints a private
+JWK to stdout only, so it never lands on disk:
+
+```bash
+node scripts/singpass-keys.mjs sig | npx wrangler secret put SINGPASS_SIG_PRIVATE_JWK
+node scripts/singpass-keys.mjs enc | npx wrangler secret put SINGPASS_ENC_PRIVATE_JWK
+```
+
+The JWKS URL returns 404 until both secrets are set, then serves only the
+public halves (no `d`). It is live in every mode, because the portal reads
+it before the app is switched on. After setting the secrets and deploying:
+
+```bash
+curl -s https://startech-innovation.com/.well-known/jwks.json
+```
+
+To switch on, in `wrangler.toml` `[vars]`: set `SINGPASS_CLIENT_ID` to the
+App ID and `SINGPASS_MODE = "staging"`, then deploy. `SINGPASS_ISSUER` is
+`https://stg-id.singpass.gov.sg/fapi`; production would be
+`https://id.singpass.gov.sg/fapi`. Setting `SINGPASS_MODE` back to `"mock"`
+hides the button.
+
+How a staging login runs: `GET /api/demo/singpass/staging/login` makes
+the PAR call and keeps that login's state, nonce, PKCE verifier and DPoP
+key in KV for 10 minutes. It also pins the state to the browser in an
+HttpOnly cookie, then redirects to Singpass. `/singpass/callback` checks
+state and cookie, exchanges the code, and decrypts and verifies the ID
+token. It then redirects to `/singpass?staging=<id>`, and the page reads
+the claims once from `/api/demo/singpass/staging/result`. Singpass's
+discovery document and JWKS are cached per isolate for an hour.
+
+To rotate a key, generate a new one (each kid is new), put the secret and
+deploy; Singpass refetches the JWKS. Before any production use, the button
+must follow Singpass's button design specification (in force from
+1 September 2026); the staging button is a plain test control.
+
+Local testing: `wrangler dev` rewrites `request.url` to the custom domain,
+so run it with `--local-upstream 127.0.0.1:8787 --upstream-protocol http`
+or the mock's issuer will not match the page's origin. The Worker still
+refuses localhost origins in production mode; in Playwright, replay
+`/api/**` with `route.fetch` and an `origin` header, because Chromium
+ignores an Origin override on `route.continue`.
+
 ## AI chat — currently disabled
 
 Disabled in production on 2026-09-02. OpenAI returns **429 on every request**,

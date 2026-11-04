@@ -525,6 +525,168 @@ export const ja: Messages = {
     errorConsent: "続けるにはチェックを入れてください。",
     error: "エラーが発生しました。もう一度お試しください。",
   },
+  singpass: {
+    eyebrow: "Singpass 移行 · FAPI 2.0",
+    title: "Singpass ログインは2026年12月31日までに FAPI 2.0 へ移行が必要です",
+    intro:
+      "Webサイトやアプリに「Singpass でログイン」ボタンがある場合、または Myinfo でフォームを自動入力している場合は、2026年末までに Singpass の新しいセキュリティ基準へ移行する必要があります。",
+    source: "Singpass が公表している期限",
+    ctaCheck: "連携状況の確認を依頼する",
+    ctaDemo: "デモを実行する",
+    changesEyebrow: "何が変わるか",
+    changesTitle: "ログインの仕組みに関する5つの変更",
+    changes: [
+      {
+        lead: "リクエストを先に送信",
+        detail:
+          "サーバーがログインリクエストを先に Singpass へ送り（PAR）、利用者のブラウザは短い参照値だけを運びます。アドレスバーの内容を改ざんされることはありません。",
+      },
+      {
+        lead: "ログインごとの使い捨ての証明",
+        detail:
+          "ログインを開始したのが自社サーバーであることを証明するため（PKCE）、途中で盗まれたログインコードは他人には使えません。",
+      },
+      {
+        lead: "トークンを自社の鍵に紐付け",
+        detail:
+          "コードとトークンは、サーバーが保持する鍵と一緒でなければ使えません（DPoP）。漏えいしたトークンは再利用できません。",
+      },
+      {
+        lead: "本人情報は暗号化",
+        detail:
+          "すべての ID トークンが自社の鍵で暗号化され、NRIC は新しい項目に移りました。旧形式を読むコードは動かなくなります。",
+      },
+      {
+        lead: "リダイレクトとエラーの厳格化",
+        detail:
+          "独自スキームのアプリリンクは使えなくなり、Login アプリはログインごとに目的を示す必要があります。また Singpass はエラーを自社サイトに返すようになったため、その処理が必要です。",
+      },
+    ],
+    migrationLink: "Singpass による Login / Myinfo（v5）アプリの移行ガイド",
+    whoEyebrow: "影響を受ける対象",
+    whoTitle: "Singpass でログインや情報入力を行うすべてのサイトとアプリ",
+    who: [
+      "「Singpass でログイン」があるWebサイト、ポータル、モバイルアプリ",
+      "Myinfo から個人情報を自動入力するフォーム",
+      "2026年2月より前に構築した連携。それ以降に登録されたアプリは最初から FAPI 2.0 が必須でした",
+      "Myinfo v3・v4 の連携。Singpass は2026年9月末までに Myinfo v5 へ移行するよう求めていました",
+    ],
+    corppass: "Corppass のログインには別の、より遅い期限があります：2027年3月31日。",
+    corppassLink: "Corppass のスケジュール",
+    riskEyebrow: "移行しなかった場合",
+    riskTitle: "旧方式のログインが動かなくなる前提で計画を",
+    riskBody:
+      "Singpass は2026年12月31日までにすべての連携を FAPI 2.0 にすることを求めており、旧方式のドキュメントは2026年7月14日に公開を終了しました。旧方式のままの連携は、期限後に Singpass ログインや Myinfo の自動入力が失敗すると考えるべきです。利用者がサインインできず、フォームも完了できなくなります。",
+    demoEyebrow: "動作するリファレンスデモ",
+    demoTitle: "FAPI 2.0 の全フローをブラウザで実行",
+    demoIntro:
+      "このデモ用に構築したモックの Singpass サーバーに対して、実際のプロトコル手順を実行します。鍵はブラウザ内でその都度生成され、人物はサンプルで、Singpass には何も送信しません。すべてのリクエストとレスポンスを、トークンを短縮した形で表示します。",
+    demoNotice:
+      "モックサーバーです。Singpass ではなく、Singpass や GovTech とも接続していません。StarTech が Singpass Developer Portal に登録すれば、同じクライアントコードが設定の変更だけで Singpass のステージング環境に対して動作します。",
+    appType: "アプリの種類",
+    appLogin: "Singpass ログイン",
+    appMyinfo: "Myinfo（v5）",
+    run: "フローを実行する",
+    runAgain: "もう一度実行する",
+    running: "フローを実行中…",
+    allPassed:
+      "すべての手順に合格しました。以下の情報は、このブラウザの鍵に紐付いたコードとトークンを通じて、暗号化・署名された状態で届きました。",
+    failed: "手順の一つが失敗しました。そのリクエストとレスポンスを以下に表示しています。",
+    cancelled:
+      "ログインがキャンセルされました。Singpass はエラーを自社サイトに返し、サイトは Singpass のエラー文ではなく独自のメッセージを表示します。",
+    details: "リクエストとレスポンス",
+    status: {
+      pending: "未実行",
+      running: "実行中",
+      waiting: "操作待ち",
+      done: "合格",
+      error: "失敗",
+    },
+    steps: {
+      register: {
+        title: "アプリを登録する",
+        body: "ブラウザが署名用と暗号化用の鍵を生成し、公開鍵の部分をモックサーバーに登録します。Singpass Developer Portal で行う作業に相当します。",
+      },
+      discovery: {
+        title: "サーバーの設定を読み込む",
+        body: "エンドポイントとアルゴリズムは、固定のアドレスではなく OpenID 設定から取得します。",
+      },
+      session: {
+        title: "このログイン用の秘密値を作る",
+        body: "新しい state、nonce、PKCE の verifier（S256）、DPoP 鍵を、このログイン1回だけのために作り、使い終わったら破棄します。",
+      },
+      par: {
+        title: "リクエストを先に送る（PAR）",
+        body: "ログインリクエストを、署名付きのクライアントアサーション（private_key_jwt）と DPoP 証明とともに先にサーバーへ送ります。サーバーは有効期限の短い request_uri を返します。",
+      },
+      authorize: {
+        title: "利用者を Singpass へ送る",
+        body: "アドレスに含まれるのは client_id と request_uri だけです。実際のサービスでは、利用者はここで Singpass アプリでログインを承認します。",
+      },
+      redirect: {
+        title: "戻ってきたリダイレクトを処理する",
+        body: "コードを信頼する前に state と iss を確認します。",
+      },
+      token: {
+        title: "コードをトークンに交換する",
+        body: "コード、PKCE の verifier、新しいクライアントアサーション、新しい DPoP 証明を送ります。トークンは DPoP 鍵に紐付いた状態で返ってきます。",
+      },
+      idToken: {
+        title: "ID トークンを復号して検証する",
+        body: "自社の暗号化鍵で復号し、サーバーが公開する鍵（JWKS）で署名を確認したうえで、iss、aud、exp、nonce を確認します。",
+      },
+      userinfo: {
+        title: "Myinfo のデータを取得する",
+        body: "Authorization: DPoP に、アクセストークンに紐付いた証明（ath）を添えます。応答も暗号化・署名されており、person_info の中に入っています。",
+      },
+      replay: {
+        title: "盗まれたコードを試す",
+        body: "コードと PKCE の verifier を盗み見た第三者が、別の端末から自分の鍵で使おうとします。サーバーは拒否しなければなりません。",
+        refused: "想定どおり拒否されました。コードは、それを要求した鍵でしか使えません。",
+        accepted: "サーバーが盗まれたコードを受け入れました。これは不具合です。",
+      },
+    },
+    loginTitle: "モックの Singpass ログイン",
+    loginBody:
+      "実際の Singpass では、利用者はここで Singpass アプリで QR コードを読み取ります。このデモでは、サンプルの人物に代わってあなたが選びます。",
+    loginRequested: "要求されたデータ",
+    loginPurpose: "目的",
+    approve: "サンプルの人物としてログイン",
+    cancel: "ログインをキャンセル",
+    sample: "サンプルの人物（実在しません）",
+    resultTitle: "サイトが受け取る情報",
+    errorGeneric: "問題が発生しました。少し時間をおいて、もう一度フローを実行してください。",
+    offerEyebrow: "ご提供内容",
+    offerTitle: "Singpass 連携を確認し、移行します",
+    offerSteps: [
+      {
+        lead: "確認",
+        detail:
+          "現在の Singpass または Myinfo のコードを読み、何を変える必要があり、どれくらいの期間がかかるかを書面でお伝えします。",
+      },
+      {
+        lead: "移行",
+        detail:
+          "PAR、PKCE、DPoP、暗号化された ID トークンをお客様のコードに組み込み、お客様の組織のアプリで Singpass ステージング環境に対してテストします。",
+      },
+      {
+        lead: "本番切り替え",
+        detail:
+          "期限までに本番環境を切り替えます。Singpass では旧方式と新方式を並行して動かせるため、段階的に移行できます。",
+      },
+    ],
+    honesty:
+      "率直に申し上げます。このデモは、モックサーバーに対する当社のリファレンス実装です。当社はまだお客様の Singpass 移行を完了した実績がなく、Singpass や GovTech のパートナーでもありません。Singpass のアプリはお客様の組織に登録されたままです。",
+    otherWork: "ほかに開発しているものを見る",
+    flyerLine: "Singpass は2026年12月31日までに FAPI 2.0 への移行が必要です。新しいログインフローの動作デモをご覧ください。",
+    stagingTitle: "Singpass のステージング環境で試す",
+    stagingBody: "このボタンは、同じクライアントを StarTech のステージング用アプリとして Singpass 自身のステージング環境に対して実行します。ログインできるのは Singpass ステージングのテスト用アカウントだけで、実際の Singpass アカウントは使えません。",
+    stagingButton: "Singpass でログイン（ステージング）",
+    stagingResult: "Singpass ステージングが返した ID トークン（復号・検証済み）",
+    stagingCancelled: "ステージングでのログインはキャンセルされました。",
+    stagingFailed: "ステージングでのログインが完了しませんでした。時間をおいて再度お試しください。",
+  },
+
   stickyCta: {
     line: "30分で現状を伺い、何から作るべきかを整理します。",
     action: "ご相談ください",
