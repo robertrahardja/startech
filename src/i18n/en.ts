@@ -470,7 +470,7 @@ export const en = {
       {
         lead: "7,060 tests",
         detail:
-          "Automated tests across 484 calculators in our ERP build, from the August 2026 run. An internal build, not yet deployed, and every number is checked before it ships.",
+          "Automated tests across 484 calculators in our ERP build, from the August 2026 run. An internal build, not yet deployed, with no accuracy claim.",
       },
       {
         lead: "You own it",

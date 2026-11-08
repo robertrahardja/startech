@@ -463,7 +463,7 @@ export const es: Messages = {
       {
         lead: "7,060 pruebas",
         detail:
-          "Pruebas automatizadas sobre 484 calculadoras de nuestro ERP, de la ejecución de agosto de 2026. Un desarrollo interno, aún no desplegado, en el que cada cifra se verifica antes de entregarse.",
+          "Pruebas automatizadas sobre 484 calculadoras de nuestro ERP, de la ejecución de agosto de 2026. Un desarrollo interno, aún no desplegado, sin garantía de exactitud.",
       },
       {
         lead: "Es suyo",
