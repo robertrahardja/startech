@@ -12,6 +12,7 @@
     "worker:dev": "wrangler dev",
     "worker:deploy": "npm run build && wrangler deploy",
     "typecheck": "tsc --noEmit",
+    "test": "node --import ./scripts/test-hooks.mjs --test \"test/*.test.mjs\"",
     "check:locales": "node scripts/check-locales.mjs",
     "check:untranslated": "node scripts/check-untranslated.mjs",
     "check:i18n": "npm run check:locales && npm run check:untranslated",

@@ -15,10 +15,16 @@
  * - /.well-known/jwks.json, /singpass/callback, /api/demo/singpass/staging/*
  *                      — StarTech as a Singpass staging relying party
  *                        (worker/singpass-rp.ts), off unless configured
+ * - GET/POST /u/<token> — public unsubscribe link in hq's outreach emails
+ *                        (worker/unsubscribe.ts)
  *
  * Static assets are served by the ASSETS binding (Cloudflare Workers static assets).
+ *
+ * The named export Mailer (worker/mailer-entrypoint.ts) is an RPC
+ * entrypoint for hq's service binding, not an HTTP route.
  */
 
+import { acknowledgeEnquiry } from "./ack";
 import { DEMO_CONFIGS, MAX_IMAGE_DATA_URL_LENGTH } from "./demo-configs";
 import { SINGPASS_DEMO_PREFIX, handleSingpassDemo } from "./singpass-demo";
 import {
@@ -29,6 +35,9 @@ import {
   handleSingpassRp,
   type SingpassRpEnv,
 } from "./singpass-rp";
+import { UNSUBSCRIBE_PREFIX, handleUnsubscribe } from "./unsubscribe";
+
+export { Mailer } from "./mailer-entrypoint";
 
 /** SINGPASS_* vars and secrets: see worker/singpass-rp.ts and docs/OPERATIONS.md. */
 interface Env extends SingpassRpEnv {
@@ -37,6 +46,13 @@ interface Env extends SingpassRpEnv {
   OPENAI_API_KEY: string;
   ELEVENLABS_API_KEY: string;
   RESEND_API_KEY: string;
+  /**
+   * Sender for hq's outreach (the Mailer entrypoint) and for the automatic
+   * acknowledgement to website enquiries, e.g.
+   * "Robert Rahardja <robert@mail.startech-innovation.com>". Must be on a
+   * domain verified in Resend. Unset: both are off. See docs/OPERATIONS.md.
+   */
+  OUTREACH_FROM?: string;
   ENVIRONMENT: string;
   /** "true" turns the chat and speech endpoints back on. Absent means off. */
   ENABLE_AI_CHAT?: string;
@@ -845,6 +861,8 @@ interface ContactFields {
   utm_campaign: string;
   /** Which page's form sent it, e.g. "singpass". */
   topic: string;
+  /** The language the visitor used, when the site sends it ("ja", "en"). */
+  locale: string;
   file: File | null;
 }
 
@@ -876,6 +894,7 @@ async function readContactFields(request: Request): Promise<ContactFields | null
       utm_medium: str(form.get("utm_medium")),
       utm_campaign: str(form.get("utm_campaign")),
       topic: str(form.get("topic")),
+      locale: str(form.get("locale")),
       file: file instanceof File && file.size > 0 ? file : null,
     };
   }
@@ -899,6 +918,7 @@ async function readContactFields(request: Request): Promise<ContactFields | null
     utm_medium: str(body.utm_medium),
     utm_campaign: str(body.utm_campaign),
     topic: str(body.topic),
+    locale: str(body.locale),
     file: null,
   };
 }
@@ -934,7 +954,8 @@ async function storeSpreadsheet(
 
 async function handleContact(
   request: Request,
-  env: Env
+  env: Env,
+  ctx: ExecutionContext
 ): Promise<Response> {
   if (isRequestTooLarge(request, CONTACT_MAX_BYTES)) {
     return new Response(
@@ -1071,6 +1092,17 @@ async function handleContact(
     return new Response(
       JSON.stringify({ success: false, error: "Failed to send your message. Please try again later." }),
       { status: 502, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
+  // The enquirer's own acknowledgement, only for a lead the CRM holds. It
+  // runs after the response and never throws (worker/ack.ts).
+  if (saved) {
+    ctx.waitUntil(
+      acknowledgeEnquiry(env, {
+        email, topic: body.topic, locale: body.locale, utmCampaign,
+        hasSpreadsheet: spreadsheetKey !== null,
+      })
     );
   }
 
@@ -1511,7 +1543,7 @@ function withLocaleMarkup(response: Response, pathname: string): Response {
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
     // Handle CORS preflight
@@ -1533,6 +1565,18 @@ export default {
           kv: env.RATE_LIMIT,
           originAllowed: validateOrigin(request, env),
           clientIp: request.headers.get("CF-Connecting-IP") || "unknown",
+          isRateLimited: (key, max, windowSeconds) =>
+            isRateLimited(env.RATE_LIMIT, key, max, windowSeconds),
+        })
+      );
+    }
+
+    // The unsubscribe link in hq's outreach emails. Before the static assets,
+    // which would otherwise answer it with the SPA shell.
+    if (url.pathname.startsWith(UNSUBSCRIBE_PREFIX)) {
+      return withSecurityHeaders(
+        await handleUnsubscribe(request, {
+          db: env.CRM_DB,
           isRateLimited: (key, max, windowSeconds) =>
             isRateLimited(env.RATE_LIMIT, key, max, windowSeconds),
         })
@@ -1648,7 +1692,7 @@ export default {
               : jsonError("Speech is temporarily unavailable.", 503);
           break;
         case "/api/contact":
-          response = await handleContact(request, env);
+          response = await handleContact(request, env, ctx);
           break;
         case "/api/testimonial":
           response = await handleTestimonial(request, env);
