@@ -171,6 +171,8 @@ function validateOrigin(request: Request, env: Env): boolean {
   const allowedOrigins = [
     "https://startech-innovation.com",
     "https://www.startech-innovation.com",
+    // StarTech Indonesia (apps/indonesia) posts its form here so leads land in hq.
+    "https://indonesia.startech-innovation.com",
   ];
 
   if (env.ENVIRONMENT !== "production") {
@@ -180,7 +182,7 @@ function validateOrigin(request: Request, env: Env): boolean {
   // Preview versions (`wrangler versions upload`) are served from
   // <8-hex>-startech.rr-startech-innovation.workers.dev; only this Worker's
   // own previews match, so testing a preview does not need the live domain.
-  if (/^https:\/\/[0-9a-f]{8}-startech\.rr-startech-innovation\.workers\.dev$/.test(origin)) {
+  if (/^https:\/\/[0-9a-f]{8}-startech(-indonesia)?\.rr-startech-innovation\.workers\.dev$/.test(origin)) {
     return true;
   }
 
@@ -964,7 +966,11 @@ async function handleContact(
   const utmMedium = sanitizeUtm(body.utm_medium);
   const utmCampaign = sanitizeUtm(body.utm_campaign);
   // Which page's form it came from; only known topics change the subject.
-  const topic = body.topic === "singpass" ? "Singpass check" : null;
+  const TOPIC_SUBJECTS: Record<string, string> = {
+    singpass: "Singpass check",
+    indonesia: "Indonesia site enquiry",
+  };
+  const topic = TOPIC_SUBJECTS[body.topic] ?? null;
 
   if (!name || !email || !message) {
     return new Response(
