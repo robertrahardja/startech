@@ -1,4 +1,5 @@
 import { useState } from "react";
+import FinancialReportResult from "./FinancialReportResult";
 
 interface DemoRendererProps {
   onSubmit: (input: Record<string, string>) => void;
@@ -13,27 +14,6 @@ const inputClass =
 const labelClass =
   "mb-1.5 block text-[11px] font-medium tracking-wide text-st-text/60";
 
-interface KeyMetric {
-  metric: string;
-  value: string;
-  assessment: "positive" | "negative" | "neutral";
-}
-
-const assessmentColors: Record<string, string> = {
-  positive: "text-emerald-400 border-emerald-400/20",
-  negative: "text-red-400 border-red-400/20",
-  neutral: "text-gray-400 border-gray-400/20",
-};
-
-function formatCurrency(value: number): string {
-  return new Intl.NumberFormat("en-SG", {
-    style: "currency",
-    currency: "SGD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(value);
-}
-
 export default function FinancialReportDemo(props: DemoRendererProps) {
   const { onSubmit, isLoading, result, error, clearResult } = props;
   const [period, setPeriod] = useState("");
@@ -47,170 +27,7 @@ export default function FinancialReportDemo(props: DemoRendererProps) {
   };
 
   if (result) {
-    const rPeriod = result.period as string;
-    const rRevenue = result.revenue as number;
-    const rExpenses = result.expenses as number;
-    const netProfit = result.net_profit as number;
-    const grossMargin = result.gross_margin_pct as number;
-    const netMargin = result.net_margin_pct as number;
-    const analysis = result.analysis as string;
-    const keyMetrics = (result.key_metrics as KeyMetric[]) || [];
-    const trends = (result.trends as string[]) || [];
-    const recommendations = (result.recommendations as string[]) || [];
-
-    return (
-      <div className="animate-fade-in-up space-y-4">
-        {/* P&L Summary */}
-        <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
-          <div className="mb-4 flex items-baseline justify-between">
-            <h3 className="text-[15px] font-normal text-st-text">
-              Profit &amp; Loss Summary
-            </h3>
-            <span className="text-[11px] font-medium tracking-wide text-st-text-muted">
-              {rPeriod}
-            </span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-5">
-            <div>
-              <span className="text-[11px] font-medium text-st-text-muted">
-                Revenue
-              </span>
-              <p className="mt-0.5 text-[15px] font-normal text-st-text">
-                {formatCurrency(rRevenue)}
-              </p>
-            </div>
-            <div>
-              <span className="text-[11px] font-medium text-st-text-muted">
-                Expenses
-              </span>
-              <p className="mt-0.5 text-[15px] font-normal text-st-text">
-                {formatCurrency(rExpenses)}
-              </p>
-            </div>
-            <div>
-              <span className="text-[11px] font-medium text-st-text-muted">
-                Net Profit
-              </span>
-              <p
-                className={`mt-0.5 text-[15px] font-normal ${netProfit >= 0 ? "text-emerald-400" : "text-red-400"}`}
-              >
-                {formatCurrency(netProfit)}
-              </p>
-            </div>
-            <div>
-              <span className="text-[11px] font-medium text-st-text-muted">
-                Gross Margin
-              </span>
-              <p className="mt-0.5 text-[15px] font-normal text-st-text">
-                {grossMargin}%
-              </p>
-            </div>
-            <div>
-              <span className="text-[11px] font-medium text-st-text-muted">
-                Net Margin
-              </span>
-              <p
-                className={`mt-0.5 text-[15px] font-normal ${netMargin >= 0 ? "text-emerald-400" : "text-red-400"}`}
-              >
-                {netMargin}%
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Key Metrics Grid */}
-        {keyMetrics.length > 0 && (
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {keyMetrics.map((km, i) => {
-              const colors =
-                assessmentColors[km.assessment] || assessmentColors.neutral;
-              return (
-                <div
-                  key={i}
-                  className={`rounded-xl border bg-st-bg-card p-4 ${colors}`}
-                >
-                  <span className="text-[11px] font-medium text-st-text-muted">
-                    {km.metric}
-                  </span>
-                  <p className="mt-0.5 text-[15px] font-normal">{km.value}</p>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {/* Analysis */}
-        {analysis && (
-          <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
-            <h4 className="mb-2 text-[13px] font-normal text-st-text-muted">
-              Analysis
-            </h4>
-            <p className="text-[13px] font-normal leading-[1.7] text-st-text">
-              {analysis}
-            </p>
-          </div>
-        )}
-
-        {/* Trends */}
-        {trends.length > 0 && (
-          <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
-            <h4 className="mb-2 text-[13px] font-normal text-st-text-muted">
-              Trends
-            </h4>
-            <ul className="space-y-1">
-              {trends.map((trend, i) => (
-                <li
-                  key={i}
-                  className="flex gap-2 text-[13px] font-normal leading-[1.7] text-st-text"
-                >
-                  <span className="mt-1 text-st-text-muted/50">&bull;</span>
-                  {trend}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {/* Recommendations */}
-        {recommendations.length > 0 && (
-          <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
-            <h4 className="mb-2 text-[13px] font-normal text-st-text-muted">
-              Recommendations
-            </h4>
-            <ol className="space-y-1">
-              {recommendations.map((rec, i) => (
-                <li
-                  key={i}
-                  className="flex gap-2 text-[13px] font-normal leading-[1.7] text-st-text"
-                >
-                  <span className="min-w-[1.25rem] text-st-text-muted">
-                    {i + 1}.
-                  </span>
-                  {rec}
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
-
-        {error && (
-          <p className="text-[13px] font-normal text-red-400/80">{error}</p>
-        )}
-
-        <div className="flex gap-3">
-          {clearResult && (
-            <button
-              type="button"
-              onClick={clearResult}
-              className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
-            >
-              Try Again
-            </button>
-          )}
-        </div>
-      </div>
-    );
+    return <FinancialReportResult result={result} error={error} clearResult={clearResult} />;
   }
 
   return (

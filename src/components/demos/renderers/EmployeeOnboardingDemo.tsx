@@ -1,4 +1,5 @@
 import { useState } from "react";
+import EmployeeOnboardingResult from "./EmployeeOnboardingResult";
 
 interface DemoRendererProps {
   onSubmit: (input: Record<string, string>) => void;
@@ -13,15 +14,6 @@ const inputClass =
 const labelClass =
   "mb-1.5 block text-[11px] font-medium tracking-wide text-st-text/60";
 
-interface ChecklistItem {
-  task: string;
-  owner: string;
-  due_by: string;
-  category: string;
-}
-
-const TABS = ["Offer Letter", "NDA", "Checklist"] as const;
-
 export default function EmployeeOnboardingDemo(props: DemoRendererProps) {
   const { onSubmit, isLoading, result, error, clearResult } = props;
   const [employeeName, setEmployeeName] = useState("");
@@ -29,7 +21,6 @@ export default function EmployeeOnboardingDemo(props: DemoRendererProps) {
   const [department, setDepartment] = useState("");
   const [startDate, setStartDate] = useState("");
   const [salary, setSalary] = useState("");
-  const [activeTab, setActiveTab] = useState(0);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,110 +34,7 @@ export default function EmployeeOnboardingDemo(props: DemoRendererProps) {
   };
 
   if (result) {
-    const offerLetterPreview = result.offer_letter_preview as string;
-    const ndaPreview = result.nda_preview as string;
-    const checklist = (result.checklist as ChecklistItem[]) || [];
-
-    // Group checklist by category
-    const grouped: Record<string, ChecklistItem[]> = {};
-    for (const item of checklist) {
-      if (!grouped[item.category]) grouped[item.category] = [];
-      grouped[item.category].push(item);
-    }
-
-    return (
-      <div className="animate-fade-in-up space-y-4">
-        {/* Tabs */}
-        <div className="rounded-xl border border-st-border bg-st-bg-card p-5">
-          <div className="mb-4 flex gap-1 rounded-lg border border-st-border p-1">
-            {TABS.map((tab, i) => (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => setActiveTab(i)}
-                className={`flex-1 rounded-md px-3 py-2 text-[12px] font-normal tracking-wide transition-all duration-300 ${
-                  activeTab === i
-                    ? "bg-st-surface text-st-text"
-                    : "text-st-text-muted hover:text-st-text"
-                }`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-
-          {/* Offer Letter */}
-          {activeTab === 0 && (
-            <div className="rounded-lg border border-st-border/50 bg-st-surface p-5">
-              <p className="whitespace-pre-wrap text-[13px] font-normal leading-[1.7] text-st-text">
-                {offerLetterPreview}
-              </p>
-            </div>
-          )}
-
-          {/* NDA */}
-          {activeTab === 1 && (
-            <div className="rounded-lg border border-st-border/50 bg-st-surface p-5">
-              <p className="whitespace-pre-wrap text-[13px] font-normal leading-[1.7] text-st-text">
-                {ndaPreview}
-              </p>
-            </div>
-          )}
-
-          {/* Checklist */}
-          {activeTab === 2 && (
-            <div className="space-y-4">
-              {Object.entries(grouped).map(([category, items]) => (
-                <div key={category}>
-                  <h4 className="mb-2 text-[12px] font-normal tracking-wide text-st-text-muted">
-                    {category}
-                  </h4>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-[13px] font-normal">
-                      <thead>
-                        <tr className="border-b border-st-border text-left text-st-text-muted">
-                          <th className="pb-2 pr-4 font-normal">Task</th>
-                          <th className="pb-2 pr-4 font-normal">Owner</th>
-                          <th className="pb-2 font-normal">Due By</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {items.map((item, i) => (
-                          <tr
-                            key={i}
-                            className={i % 2 === 1 ? "bg-st-surface" : ""}
-                          >
-                            <td className="py-2 pr-4 text-st-text">{item.task}</td>
-                            <td className="py-2 pr-4 text-st-text">{item.owner}</td>
-                            <td className="py-2 text-st-text">{item.due_by}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {error && (
-          <p className="text-[13px] font-normal text-red-400/80">{error}</p>
-        )}
-
-        <div className="flex gap-3">
-          {clearResult && (
-            <button
-              type="button"
-              onClick={clearResult}
-              className="hero-btn-secondary relative overflow-hidden rounded-xl px-6 py-3 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
-            >
-              Try Again
-            </button>
-          )}
-        </div>
-      </div>
-    );
+    return <EmployeeOnboardingResult result={result} error={error} clearResult={clearResult} />;
   }
 
   return (
