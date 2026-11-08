@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Render the StarTech image flyers (EN, JA, ID) to PNG.
+"""Render the StarTech image flyers (EN, JA, ID, country sites) to PNG.
 
 The image flyer is what gets sent on WhatsApp, LINE, Instagram and LinkedIn:
 headline, who it is for, three proof lines, the spreadsheet offer, the link
@@ -57,8 +57,8 @@ LOGO = "../../logos/startech-mark-light.svg"
 # ---------------------------------------------------------------- QR codes
 
 def ensure_qr(d):
-    """Return qr/<lang>.svg, regenerating it only if its URL changed."""
-    path = os.path.join(QR_DIR, f"{d['lang']}.svg")
+    """Return qr/<name>.svg, regenerating it only if its URL changed."""
+    path = os.path.join(QR_DIR, f"{d['name']}.svg")
     stamp = f"<!-- {d['qr']} -->"
     if os.path.exists(path):
         with open(path, encoding="utf-8") as f:
@@ -68,7 +68,7 @@ def ensure_qr(d):
     cmd = ["node", os.path.join(HERE, "make_qr.cjs"), d["qr"], path]
     res = subprocess.run(cmd, capture_output=True, text=True)
     if res.returncode != 0:
-        sys.exit(f"QR for {d['lang']} failed: {res.stderr.strip()}")
+        sys.exit(f"QR for {d['name']} failed: {res.stderr.strip()}")
     print("wrote", os.path.relpath(path, REPO))
     return path
 
@@ -279,7 +279,7 @@ def page(d, size, qr_src, qr_px):
 <html lang="{d['lang']}" class="{size}">
 <head>
 <meta charset="utf-8">
-<title>StarTech Innovation flyer ({d['lang']}, {size})</title>
+<title>StarTech Innovation flyer ({d['name']}, {size})</title>
 {fonts}
 <style>{css()}</style>
 </head>
@@ -337,7 +337,7 @@ def main():
         modules = qr_modules(qr_path)
         for size, (w, h) in SIZES.items():
             qr_px = QR_TARGET[size] // modules * modules
-            name = f"flyer-{d['lang']}-{size}"
+            name = f"flyer-{d['name']}-{size}"
             html_path = os.path.join(HTML_DIR, name + ".html")
             qr_src = "../qr/" + os.path.basename(qr_path)
             with open(html_path, "w", encoding="utf-8") as f:

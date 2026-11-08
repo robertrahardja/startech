@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Image flyer copy: EN, JA, ID. One dict per language, same keys.
+"""Image flyer copy: EN, JA, ID, plus country-site variants. Same keys.
 
 The image flyer is the capability deck's cover plus its proof in one frame
 (startech_marketing/gtm/playbooks/digital-flyers-and-social.md, 3.2). It
@@ -15,9 +15,17 @@ No payroll, accounting, grant or accuracy claims.
 `qr` is what the QR code opens: the written link plus ?utm_source=qr, so
 hq can tell a scan from a typed visit (src/lib/utm.ts). The Indonesian
 site is still being built; its link is written exactly as agreed.
+
+`name` is the file stem: flyer-<name>-<size>.png and qr/<name>.svg. For
+the three base flyers it is the language. The country variants at the end
+(Malaysia and the Philippines in English, Thailand and Vietnam in Japanese
+and English) reuse the EN and JA copy word for word; only the written
+link and the QR code change, to the country site. Those sites were being
+built when the variants were added (8 Nov 2026).
 """
 
 EN = {
+    "name": "en",
     "lang": "en",
     "headline": ["From spreadsheet", "to system."],
     "who": (
@@ -41,6 +49,7 @@ EN = {
 }
 
 JA = {
+    "name": "ja",
     "lang": "ja",
     "headline": ["スプレッドシートから、", "システムへ"],
     "who": (
@@ -65,6 +74,7 @@ JA = {
 
 # Formal "Anda"; wording reused from brand/profile/content.py's ID profile.
 ID = {
+    "name": "id",
     "lang": "id",
     "headline": ["Saatnya naik kelas", "dari Excel."],
     "who": (
@@ -91,4 +101,21 @@ ID = {
     "company": "StarTech Innovation Pte. Ltd. · Singapura",
 }
 
-FLYERS = (EN, JA, ID)
+
+def country_site(base, country):
+    """The base copy with the link and QR code of <country>'s own site."""
+    host = f"{country}.startech-innovation.com"
+    return {**base, "name": f"{country}-{base['lang']}", "link": host,
+            "qr": f"https://{host}/?utm_source=qr"}
+
+
+COUNTRY_FLYERS = (
+    country_site(EN, "malaysia"),
+    country_site(EN, "philippines"),
+    country_site(JA, "thailand"),
+    country_site(EN, "thailand"),
+    country_site(JA, "vietnam"),
+    country_site(EN, "vietnam"),
+)
+
+FLYERS = (EN, JA, ID, *COUNTRY_FLYERS)

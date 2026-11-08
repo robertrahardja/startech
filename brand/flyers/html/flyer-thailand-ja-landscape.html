@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ja" class="landscape">
+<head>
+<meta charset="utf-8">
+<title>StarTech Innovation flyer (thailand-ja, landscape)</title>
+<link rel="stylesheet" href="../../profile/fonts/fonts-embedded.css">
+<link rel="stylesheet" href="../../profile/fonts/fonts-ja-embedded.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { background:#09090b; }
+body { font-family:'Inter',system-ui,sans-serif; color:#e4e4e7;
+  letter-spacing:-0.01em; -webkit-font-smoothing:antialiased; }
+.frame { position:relative; overflow:hidden; background:#09090b; }
+.portrait .frame { width:1080px; height:1350px; padding:70px 80px 68px; }
+.landscape .frame { width:1200px; height:628px; padding:46px 54px 44px; }
+
+/* the deck's glows, in pixels */
+.glow { position:absolute; border-radius:50%; pointer-events:none; }
+.g1 { background:rgba(79,107,247,0.16); }
+.g2 { background:rgba(192,132,252,0.09); }
+.portrait .g1 { top:-260px; left:18%; width:760px; height:520px;
+  filter:blur(200px); }
+.portrait .g2 { bottom:-220px; right:-140px; width:640px; height:480px;
+  filter:blur(190px); }
+.landscape .g1 { top:-230px; left:12%; width:700px; height:400px;
+  filter:blur(170px); }
+.landscape .g2 { bottom:-200px; right:-120px; width:560px; height:380px;
+  filter:blur(160px); }
+
+.z { position:relative; z-index:2; height:100%; display:flex; }
+.portrait .z { flex-direction:column; }
+.landscape .z { flex-direction:row; gap:44px; }
+.col { display:flex; flex-direction:column; flex:1; min-width:0; }
+/* Nothing shrinks, so too much text overflows (and the check reports it)
+   instead of quietly squashing the rule to nothing; only spacers flex. */
+.z > *, .col > * { flex-shrink:0; }
+.sp { flex:1 1 0; }
+.portrait .sp { min-height:24px; }
+.landscape .sp { min-height:16px; }
+
+.brand { display:flex; align-items:center; }
+.brand img { display:block; width:auto; }
+.brand span { font-weight:500; letter-spacing:0.16em;
+  text-transform:uppercase; color:#8b8b95; white-space:nowrap; }
+.portrait .brand { gap:20px; }
+.portrait .brand img { height:46px; }
+.portrait .brand span { font-size:17px; }
+.landscape .brand { gap:14px; }
+.landscape .brand img { height:32px; }
+.landscape .brand span { font-size:12.5px; }
+
+h1 { font-family:'Instrument Serif',Georgia,serif; font-weight:400;
+  color:#fff; line-height:1.02; letter-spacing:-0.03em; }
+.portrait h1 { font-size:100px; }
+.landscape h1 { font-size:64px; }
+.rule { height:2px; background:linear-gradient(90deg,#d4a853,
+  rgba(212,168,83,0)); }
+.portrait .rule { width:130px; margin:32px 0 28px; }
+.landscape .rule { width:90px; margin:18px 0 14px; }
+.who { color:#a1a1aa; font-weight:300; line-height:1.45;
+  text-wrap:pretty; }
+.portrait .who { font-size:32px; }
+.landscape .who { font-size:20px; }
+
+.proof { list-style:none; }
+.proof li { display:grid; border-top:1px solid rgba(255,255,255,0.09); }
+.proof li:last-child { border-bottom:1px solid rgba(255,255,255,0.09); }
+.proof .i { font-family:'Instrument Serif',Georgia,serif; color:#4f6bf7;
+  line-height:1.1; }
+.proof .t { font-weight:600; color:#fff; line-height:1.25; }
+.proof .d { color:#a1a1aa; line-height:1.42; text-wrap:pretty; }
+.portrait .proof li { grid-template-columns:70px 1fr; padding:17px 0; }
+.portrait .proof .i { font-size:36px; }
+.portrait .proof .t { font-size:31px; }
+.portrait .proof .d { font-size:25px; margin-top:3px; }
+.landscape .proof li { grid-template-columns:40px 1fr; padding:9px 0; }
+.landscape .proof .i { font-size:22px; }
+.landscape .proof .t { font-size:18.5px; }
+.landscape .proof .d { font-size:16px; margin-top:1px; }
+
+.cta { display:flex; border-radius:22px;
+  background:linear-gradient(135deg,rgba(79,107,247,0.15),
+    rgba(192,132,252,0.07));
+  border:1px solid rgba(129,140,248,0.28); }
+.cta h2 { font-family:'Instrument Serif',Georgia,serif; font-weight:400;
+  color:#fff; line-height:1.08; letter-spacing:-0.02em;
+  text-wrap:balance; }
+.cta p { color:#c8c8d0; line-height:1.42; text-wrap:pretty; }
+.cta .link { font-weight:600; color:#fff; white-space:nowrap;
+  letter-spacing:-0.01em; text-decoration:underline;
+  text-decoration-color:rgba(212,168,83,0.75);
+  text-decoration-thickness:2px; text-underline-offset:0.28em; }
+.qr { flex:none; background:#fff; border-radius:14px; line-height:0;
+  overflow:hidden; }
+.qr img { display:block; }
+.portrait .cta { align-items:center; gap:32px;
+  padding:30px 30px 30px 40px; }
+.portrait .cta .txt { flex:1; min-width:0; }
+.portrait .cta h2 { font-size:46px; }
+.portrait .cta p { font-size:24px; margin-top:12px; }
+.portrait .cta .link { font-size:26px; margin-top:20px; }
+.landscape .cta { flex:none; width:420px; flex-direction:column;
+  align-items:flex-start; padding:26px 30px 24px; }
+.landscape .cta h2 { font-size:34px; }
+.landscape .cta p { font-size:17.5px; margin-top:8px; }
+.landscape .cta .qr { margin-top:auto; align-self:center; }
+.landscape .cta .link { font-size:19px; margin-top:12px;
+  align-self:center; }
+
+/* Japanese: the deck's Noto Sans JP subset behind the Latin faces, and
+   phrase-aware line breaks so words are not split mid-phrase. */
+html[lang=ja] body { font-family:'Inter','Noto Sans JP Subset',
+  sans-serif; letter-spacing:0; }
+/* Headings in Noto Sans JP throughout, so a digit inside them (1つ) is not
+   drawn in Instrument Serif, where it reads like an "l". */
+html[lang=ja] h1, html[lang=ja] h2 {
+  font-family:'Noto Sans JP Subset',sans-serif; }
+html[lang=ja] { word-break:auto-phrase; line-break:strict; }
+html[lang=ja] h1 { letter-spacing:0; line-height:1.24; }
+html[lang=ja].portrait h1 { font-size:76px; }
+html[lang=ja].landscape h1 { font-size:48px; }
+html[lang=ja] .who { line-height:1.6; }
+html[lang=ja].portrait .who { font-size:30px; }
+html[lang=ja] .cta h2 { letter-spacing:0; line-height:1.32; }
+html[lang=ja].portrait .cta h2 { font-size:36px; }
+html[lang=ja].landscape .cta h2 { font-size:26px; }
+</style>
+</head>
+<body>
+<div class="frame">
+<div class="glow g1"></div><div class="glow g2"></div>
+<div class="z">
+  <div class="col">
+    <div class="brand"><img src="../../logos/startech-mark-light.svg" alt="StarTech"><span>StarTech Innovation Pte. Ltd. · シンガポール</span></div>
+    <div class="sp"></div>
+    <h1>スプレッドシートから、<br>システムへ</h1><div class="rule"></div><p class="who">従業員10〜200名で、スプレッドシートや、ベンダーが完成させなかったシステムで業務を回している企業向けです。</p>
+    <div class="sp"></div>
+    <ol class="proof"><li><div class="i">01</div><div><div class="t">日本で稼働中</div><div class="d">当社が構築した中古車輸出システムを、日本の輸出企業が毎日使っています。</div></div></li><li><div class="i">02</div><div><div class="t">7,060件のテスト</div><div class="d">自社開発ERP（未導入）の自動テストです。</div></div></li><li><div class="i">03</div><div><div class="t">所有権は御社に</div><div class="d">コード、データベース、クラウドアカウントは御社のものです。</div></div></li></ol>
+  </div>
+  <div class="cta"><h2>スプレッドシートを1つお送りください。</h2><p>システムとして動く様子を、無料・契約義務なしでお見せします。</p><div class="qr"><img src="../qr/thailand-ja.svg" width="246" height="246" alt="QR code: thailand.startech-innovation.com"></div><div class="link">thailand.startech-innovation.com</div></div>
+</div>
+</div>
+<script>
+addEventListener('load', () => document.fonts.ready.then(() => {
+  const frame = document.querySelector('.frame');
+  const cs = getComputedStyle(frame), fr = frame.getBoundingClientRect();
+  const box = {
+    l: fr.left + parseFloat(cs.paddingLeft) - 1,
+    t: fr.top + parseFloat(cs.paddingTop) - 1,
+    r: fr.right - parseFloat(cs.paddingRight) + 1,
+    b: fr.bottom - parseFloat(cs.paddingBottom) + 1,
+  };
+  const name = el => el.className || el.tagName.toLowerCase();
+  const bad = new Set();
+  frame.querySelectorAll('.z *').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (!r.width && !r.height) return;
+    if (r.left < box.l || r.top < box.t || r.right > box.r || r.bottom > box.b)
+      bad.add(name(el));
+    if (el.clientWidth && el.scrollWidth > el.clientWidth + 1)
+      bad.add('x:' + name(el));
+  });
+  document.body.dataset.overflow = bad.size ? [...bad].join(' ') : 'none';
+  document.body.dataset.fonts = [...document.fonts]
+    .filter(f => f.status === 'loaded').map(f => f.family + ' ' + f.weight)
+    .join('|');
+}));
+</script>
+</body>
+</html>

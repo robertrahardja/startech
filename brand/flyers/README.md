@@ -3,15 +3,23 @@
 The image Robert sends on WhatsApp, LINE, Instagram and LinkedIn: the
 capability deck's cover and proof in one frame (plan:
 `startech_marketing/gtm/playbooks/digital-flyers-and-social.md`, 3.2).
-English, Japanese and Bahasa Indonesia, two sizes each.
+English, Japanese and Bahasa Indonesia, two sizes each, plus variants
+for the country sites.
 
 | File | Size | Use |
 | --- | --- | --- |
-| `flyer-<lang>-portrait.png` | 1080 x 1350 | WhatsApp, LINE, Instagram |
-| `flyer-<lang>-landscape.png` | 1200 x 628 | LinkedIn, email |
+| `flyer-<name>-portrait.png` | 1080 x 1350 | WhatsApp, LINE, Instagram |
+| `flyer-<name>-landscape.png` | 1200 x 628 | LinkedIn, email |
 
-`<lang>` is `en`, `ja` or `id`. Copies are served from
-`public/assets/flyers/`, so each one can be shared by link, for example
+`<name>` is `en`, `ja` or `id`, or a country-site variant:
+`malaysia-en`, `philippines-en`, `thailand-ja`, `thailand-en`,
+`vietnam-ja` and `vietnam-en`. A variant is the EN or JA flyer word for
+word; only its written link and QR code change, to
+`<country>.startech-innovation.com`. Use them in the outreach in
+`startech_marketing/gtm/playbooks/outreach-new-countries.md`.
+
+Copies are served from `public/assets/flyers/`, so each one can be
+shared by link, for example
 `startech-innovation.com/assets/flyers/flyer-en-portrait.png`.
 
 ## What each flyer says
@@ -26,14 +34,20 @@ before changing a line.
 
 The QR codes open the written link plus `?utm_source=qr`, so hq can tell
 a scan from a typed visit. The Indonesian link,
-`indonesia.startech-innovation.com`, points at a site still being built.
+`indonesia.startech-innovation.com`, points at a site still being built,
+and so did the Malaysia, Philippines, Thailand and Vietnam links when
+their flyers were made (8 Nov 2026). Thailand and Vietnam have one site
+each for Japanese and English, so both languages share the link. If
+those sites serve English at `/en`, as the Japan site does, point the two
+EN variants there in `flyer_content.py` and render again.
 
 ## Files
 
-- `flyer_content.py`: the copy, one dict per language with identical keys
+- `flyer_content.py`: the copy, one dict per language with identical keys;
+  `country_site()` makes the country variants from the EN and JA dicts
 - `render_flyers.py`: layout (HTML and CSS), render, checks and publish
 - `html/`: the rendered HTML, the source of each PNG
-- `qr/<lang>.svg`: the QR codes, committed
+- `qr/<name>.svg`: the QR codes, committed
 - `make_qr.cjs`: writes a QR code; only needed when a link changes
 
 The layout reuses the deck's palette (`../profile/render_deck.py`), its
