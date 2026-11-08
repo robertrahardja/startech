@@ -6,11 +6,13 @@ appears only as evidence of capability on complex systems, never as
 the headline offer.
 
 Every claim here is checkable on a call — no invented numbers. Claims
-were re-checked against docs/COMPANY.md on 2026-11-02: only the
-exporter system is live with a client; the AI co-pilot engagement is
-complete; the payroll engine is an internal build, not deployed; the
-health platform belongs to Alliance Digital Concierge, not a StarTech
-client, so it is not shown. No accounting or payroll-accuracy claims.
+were re-checked against docs/COMPANY.md on 2026-11-02 and again on
+2026-11-08, when the main site was brought in line: only the exporter
+system is live with a client; the AI co-pilot was delivered and the
+engagement completed in 2026; the ERP is an internal build, tested and
+not deployed, with 7,060 automated tests across its 484 calculation
+classes. No payroll, CPF, accounting or accuracy claims, and no
+"payroll engine" anywhere.
 """
 from content import COMMON  # noqa: F401  (re-exported for the renderer)
 
@@ -52,7 +54,7 @@ EN = {
         ),
         (
             "7,060",
-            "Automated tests in our Singapore payroll engine",
+            "Automated tests in our internal ERP build, not deployed",
         ),
         (
             "2",
@@ -99,7 +101,7 @@ EN = {
             "Every build",
             (
                 "Tests written against the real business rules, not the happy "
-                "path. Our payroll engine alone carries 7,060."
+                "path. Our internal ERP build, not deployed, carries 7,060."
             ),
         ),
         (
@@ -200,18 +202,15 @@ EN = {
             ),
         ),
         (
-            "A payroll engine built to be audited line by line",
-            "Internal build &middot; Singapore",
+            "An ERP we build in-house, to show how we test",
+            "Internal build &middot; Tested, not deployed",
             (
-                "Singapore payroll rules are unforgiving — CPF rounding, age "
-                "bands, SDL floors and caps. We are building an engine that "
-                "shows its working for every figure, tested scenario by "
-                "scenario."
+                "Software that calculates money is easy to demo and hard to "
+                "trust. We built a large ERP of our own to show how we test. "
+                "It is not deployed for any client, and we make no accuracy "
+                "claim for it."
             ),
-            (
-                "In development, not yet deployed &middot; 7,060 automated "
-                "tests"
-            ),
+            "7,060 automated tests across 484 calculation classes",
         ),
         (
             "Demos you can try before you commit",
@@ -376,7 +375,7 @@ JA = {
     ),
     "pos_stats": [
         ("12", "標準的な開発の、要件定義から本番稼働までの週数"),
-        ("7,060", "シンガポール給与計算エンジンの自動テスト数"),
+        ("7,060", "自社開発ERP（未導入）の自動テスト数"),
         ("2", "稼働中の顧客システムでリリース前に発見した、損失につながる不具合"),
         ("20+", "事業・エンジニアリング合計経験年数"),
     ],
@@ -400,12 +399,12 @@ JA = {
         (
             "先にスコープと見積もりを確定",
             "開発前",
-            "初回の商談で概算を、ヒアリング後に確定見積を提示。封入のタイミングもすべて書面で合意します。",
+            "初回の商談で概算を、ヒアリング後に確定見積を提示。着手前にすべて書面で合意します。",
         ),
         (
             "デモではなくテストで検証",
             "開発中",
-            "テストは都合のよいケースだけでなく、実際の業務ルールに基づいて書きます。給与計算エンジンだけで7,060件あります。",
+            "テストは都合のよいケースだけでなく、実際の業務ルールに基づいて書きます。未導入の自社開発ERPだけで7,060件あります。",
         ),
         (
             "貴社が基盤を所有",
@@ -473,18 +472,19 @@ JA = {
         (
             "自社資料から回答するAIコパイロット",
             "AI実装 &middot; シンガポール",
-            "汎用型AIはSMEの情報なしには無力です。顧客自身の資料を注中するRetrieval型AIコパイロットを構築。",
+            "汎用のチャットボットは、中小企業の業務や業界を知らないため役に立ちません。顧客自身の資料を検索して回答するAIコパイロットを構築しました。",
             "顧客向けに納品、2026年に契約完了 &middot; マルチLLMルーティング",
         ),
         (
-            "一行ずつ監査できる給与計算エンジン",
-            "自社開発 &middot; シンガポール",
+            "テストの進め方を示すための自社開発ERP",
+            "自社開発 &middot; テスト済み・未導入",
             (
-                "シンガポールの給与計算ルールは厳格です。CPFの端数処理、年"
-                "齢区分、SDLの下限と上限。すべての金額の計算過程を示すエン"
-                "ジンを、シナリオごとにテストしながら開発しています。"
+                "金額を計算するソフトウェアは、デモは簡単でも信頼を得るのは難"
+                "しいものです。テストの進め方を示すため、大規模なERPを自社で"
+                "開発しました。どの顧客にも導入しておらず、計算の正確性を保証"
+                "するものでもありません。"
             ),
-            "開発中・未導入 &middot; 自動テスト7,060件",
+            "484の計算クラスにわたる自動テスト7,060件",
         ),
         (
             "契約前に試せるデモ",
@@ -613,7 +613,7 @@ ID = {
         ),
         (
             "7.060",
-            "Uji otomatis pada mesin penggajian Singapura kami",
+            "Uji otomatis pada ERP internal kami, belum diterapkan",
         ),
         (
             "2",
@@ -660,8 +660,8 @@ ID = {
             "Tiap proyek",
             (
                 "Uji ditulis berdasarkan aturan bisnis yang sebenarnya, bukan "
-                "hanya skenario ideal. Mesin penggajian kami saja memiliki "
-                "7.060 uji."
+                "hanya skenario ideal. ERP internal kami, yang belum "
+                "diterapkan, memiliki 7.060 uji."
             ),
         ),
         (
@@ -763,18 +763,15 @@ ID = {
             ),
         ),
         (
-            "Mesin penggajian yang dapat diaudit baris per baris",
-            "Pengembangan internal &middot; Singapura",
+            "ERP internal untuk menunjukkan cara kami menguji",
+            "Pengembangan internal &middot; Diuji, belum diterapkan",
             (
-                "Aturan penggajian Singapura tidak kenal kompromi — pembulatan "
-                "CPF, kelompok usia, batas bawah dan atas SDL. Kami sedang "
-                "membangun mesin yang menunjukkan perhitungan setiap angka, "
-                "diuji skenario demi skenario."
+                "Perangkat lunak yang menghitung uang mudah didemokan, tetapi "
+                "sulit dipercaya. Kami membangun ERP sendiri untuk menunjukkan "
+                "cara kami menguji. Belum diterapkan untuk klien mana pun, dan "
+                "kami tidak mengklaim akurasinya."
             ),
-            (
-                "Dalam pengembangan, belum diterapkan &middot; 7.060 uji "
-                "otomatis"
-            ),
+            "7.060 uji otomatis atas 484 kelas perhitungan",
         ),
         (
             "Demo yang dapat dicoba sebelum Anda berkomitmen",
@@ -945,7 +942,7 @@ KO = {
     ),
     "pos_stats": [
         ("12", "일반적인 전체 구축의 요건 정의부터 배포까지 주 수"),
-        ("7,060", "싱가포르 급여 계산 엔진의 자동 테스트 건수"),
+        ("7,060", "자체 개발 ERP(미배포)의 자동화 테스트 건수"),
         ("2", "운영 중인 고객 시스템에서 출시 전에 잡은 손실성 버그"),
         ("20+", "사업 및 엔지니어링 합산 경력 년수"),
     ],
@@ -976,7 +973,7 @@ KO = {
             "개발 중",
             (
                 "테스트는 편한 경우만이 아니라 실제 업무 규칙을 기준으"
-                "로 작성합니다. 급여 계산 엔진 하나에만 7,060건이"
+                "로 작성합니다. 미배포 자체 개발 ERP 하나에만 7,060건이"
                 " 있습니다."
             ),
         ),
@@ -1053,7 +1050,7 @@ KO = {
                 "었습니다. 재고 관리, 권한별 CRM, 송장 문서 자동"
                 " 생성, 은행 명세서 가져오기를 재구축했습니다."
             ),
-            "출시 전 발견한 손실 관련 버그 2건 &middot; 운영 중 &middot; 한일 이중언어 지원",
+            "출시 전 발견한 손실 관련 버그 2건 &middot; 운영 중 &middot; 일·영 이중언어 지원",
         ),
         (
             "자체 문서에서 답하는 AI 코파일럿",
@@ -1062,15 +1059,15 @@ KO = {
             "고객에게 납품, 2026년 계약 완료 &middot; 멀티 LLM 라우팅",
         ),
         (
-            "한 줄씩 감사할 수 있는 급여 계산 엔진",
-            "자체 개발 &middot; 싱가포르",
+            "테스트 방식을 보여 주기 위해 자체 개발한 ERP",
+            "자체 개발 &middot; 테스트 완료, 미배포",
             (
-                "싱가포르 급여 규정은 엄격합니다. CPF 반올림, 연령"
-                " 구간, SDL 하한과 상한. 모든 금액의 계산 과정을"
-                " 보여 주는 엔진을 시나리오별로 테스트하며 개발하고 있"
-                "습니다."
+                "돈을 계산하는 소프트웨어는 시연하기는 쉬워도 신뢰를 얻기는"
+                " 어렵습니다. 저희의 테스트 방식을 보여 주기 위해 대규모 ERP를"
+                " 자체 개발했습니다. 어떤 고객에게도 배포하지 않았으며, 계산"
+                " 정확성을 주장하지 않습니다."
             ),
-            "개발 중, 아직 미배포 &middot; 자동 테스트 7,060건",
+            "484개 계산 클래스에 걸친 자동화 테스트 7,060건",
         ),
         (
             "계약 전에 직접 써 보는 데모",
@@ -1212,7 +1209,7 @@ ZH_HANS = {
     ),
     "pos_stats": [
         ("12", "典型完整项目从调研到上线所需周数"),
-        ("7,060", "我们新加坡薪资引擎中的自动化测试数"),
+        ("7,060", "我们内部 ERP 项目（未部署）中的自动化测试数"),
         ("2", "在客户正式运行的系统中，发布前发现的会造成损失的缺陷"),
         ("20+", "业务与工程合计经验年限"),
     ],
@@ -1229,7 +1226,7 @@ ZH_HANS = {
         (
             "用测试验证，非演示",
             "每个项目",
-            "测试依据真实的业务规则编写，而不只覆盖顺利的情况。仅我们的薪资引擎就有 7,060 个测试。",
+            "测试依据真实的业务规则编写，而不只覆盖顺利的情况。仅我们未部署的内部 ERP 项目就有 7,060 个测试。",
         ),
         ("交付物归您所有", "交付时", "部署在您自己的云账户、数据库和代码仓库上。任何工程师都能接手。"),
     ],
@@ -1279,7 +1276,7 @@ ZH_HANS = {
                 " 团队无法使用。我们重建了库存、按角色权限划分的 CRM、发"
                 "票与运输文件、银行对账单导入。"
             ),
-            "上线前发现的金额相关缺陷 2 个 &middot; 运行中 &middot; 中日双语支持",
+            "上线前发现的金额相关缺陷 2 个 &middot; 运行中 &middot; 日英双语支持",
         ),
         (
             "从企业自身文档中回答的 AI 副驾驶",
@@ -1288,14 +1285,14 @@ ZH_HANS = {
             "已为客户交付，合作于 2026 年结束 &middot; 多模型路由",
         ),
         (
-            "一个可逐行审计的薪资引擎",
-            "自主研发 &middot; 新加坡",
+            "一套用来展示我们如何测试的内部 ERP",
+            "内部开发 &middot; 已测试，未部署",
             (
-                "新加坡的薪资规则毫不宽容——公积金取整、年龄分档、技能发展税"
-                "的下限与上限。我们正在开发一个能展示每个数字计算过程的引擎，"
-                "并逐个场景测试。"
+                "计算金额的软件演示起来容易，赢得信任却难。为展示我们的测试方法，"
+                "我们自行开发了一套大型 ERP。它尚未为任何客户部署，我们也不就其"
+                "计算准确性作任何声明。"
             ),
-            "开发中，尚未部署 &middot; 7,060 个自动化测试",
+            "覆盖 484 个计算类的 7,060 个自动化测试",
         ),
         (
             "签约前就能试用的演示",
@@ -1402,7 +1399,7 @@ ZH_HANT = {
     ),
     "pos_stats": [
         ("12", "典型完整專案從調研到上線所需週數"),
-        ("7,060", "我們新加坡薪資引擎中的自動化測試數"),
+        ("7,060", "我們內部 ERP 專案（未部署）中的自動化測試數"),
         ("2", "在客戶正式運行的系統中，發布前發現的會造成損失的缺陷"),
         ("20+", "業務與工程合計經驗年限"),
     ],
@@ -1419,7 +1416,7 @@ ZH_HANT = {
         (
             "用測試驗證，非演示",
             "每個專案",
-            "測試依據真實的業務規則撰寫，而不只涵蓋順利的情況。光是我們的薪資引擎就有 7,060 個測試。",
+            "測試依據真實的業務規則撰寫，而不只涵蓋順利的情況。光是我們未部署的內部 ERP 專案就有 7,060 個測試。",
         ),
         ("交付物歸您所有", "交付時", "部署在您自己的雲帳戶、資料庫和程式碼倉庫上。任何工程師都能接手。"),
     ],
@@ -1469,7 +1466,7 @@ ZH_HANT = {
                 " 團隊無法使用。我們重建了庫存、按角色權限劃分的 CRM、發"
                 "票與運輸文件、銀行對帳單匯入。"
             ),
-            "上線前發現的金額相關缺陷 2 個 &middot; 執行中 &middot; 中日雙語支援",
+            "上線前發現的金額相關缺陷 2 個 &middot; 執行中 &middot; 日英雙語支援",
         ),
         (
             "從企業自身文件中回答的 AI 副駕駛",
@@ -1478,14 +1475,14 @@ ZH_HANT = {
             "已為客戶交付，合作於 2026 年結束 &middot; 多模型路由",
         ),
         (
-            "一個可逐行稽核的薪資引擎",
-            "自主研發 &middot; 新加坡",
+            "一套用來展示我們如何測試的內部 ERP",
+            "內部開發 &middot; 已測試，未部署",
             (
-                "新加坡的薪資規則毫不寬容——公積金進位、年齡分級、技能發展稅"
-                "的下限與上限。我們正在開發一個能呈現每個數字計算過程的引擎，"
-                "並逐一情境測試。"
+                "計算金額的軟體展示起來容易，贏得信任卻難。為展示我們的測試方法，"
+                "我們自行開發了一套大型 ERP。它尚未為任何客戶部署，我們也不就其"
+                "計算準確性做任何聲明。"
             ),
-            "開發中，尚未部署 &middot; 7,060 個自動化測試",
+            "涵蓋 484 個計算類別的 7,060 個自動化測試",
         ),
         (
             "簽約前就能試用的示範",
@@ -1600,7 +1597,7 @@ ES = {
         ),
         (
             "7.060",
-            "Pruebas automatizadas en nuestro motor de nóminas de Singapur",
+            "Pruebas automatizadas en nuestro ERP propio, no implantado",
         ),
         (
             "2",
@@ -1648,8 +1645,8 @@ ES = {
             "En cada proyecto",
             (
                 "Pruebas escritas contra las reglas reales del negocio, no "
-                "solo el caso ideal. Solo nuestro motor de nóminas tiene "
-                "7.060."
+                "solo el caso ideal. Nuestro ERP propio, no implantado, "
+                "tiene 7.060."
             ),
         ),
         (
@@ -1754,18 +1751,15 @@ ES = {
             ),
         ),
         (
-            "Un motor de nóminas que se puede auditar línea a línea",
-            "Desarrollo propio &middot; Singapur",
+            "Un ERP de desarrollo propio que muestra cómo probamos",
+            "Desarrollo propio &middot; Probado, no implantado",
             (
-                "Las reglas de nómina de Singapur no perdonan: redondeo del "
-                "CPF, tramos de edad, mínimos y topes del SDL. Estamos "
-                "construyendo un motor que muestra el cálculo de cada cifra, "
-                "probado escenario por escenario."
+                "El software que calcula dinero es fácil de enseñar y difícil "
+                "de creer. Construimos un ERP propio para mostrar cómo "
+                "probamos. No está implantado en ningún cliente y no "
+                "afirmamos nada sobre la exactitud de sus cálculos."
             ),
-            (
-                "En desarrollo, aún no implantado &middot; 7.060 pruebas "
-                "automatizadas"
-            ),
+            "7.060 pruebas automatizadas en 484 clases de cálculo",
         ),
         (
             "Demos que puede probar antes de comprometerse",
@@ -1943,8 +1937,7 @@ PT = {
         (
             "7.060",
             (
-                "Testes automatizados no nosso motor de folha de pagamento de "
-                "Singapura"
+                "Testes automatizados no nosso ERP próprio, não implantado"
             ),
         ),
         (
@@ -1992,7 +1985,7 @@ PT = {
             "Em cada projeto",
             (
                 "Testes escritos com base nas regras reais do negócio, não só "
-                "no caminho feliz. Só o nosso motor de folha de pagamento tem "
+                "no caminho feliz. O nosso ERP próprio, não implantado, tem "
                 "7.060."
             ),
         ),
@@ -2098,18 +2091,15 @@ PT = {
             ),
         ),
         (
-            "Um motor de folha de pagamento auditável linha a linha",
-            "Desenvolvimento próprio &middot; Singapura",
+            "Um ERP de desenvolvimento próprio que mostra como testamos",
+            "Desenvolvimento próprio &middot; Testado, não implantado",
             (
-                "As regras de folha de pagamento de Singapura não perdoam — "
-                "arredondamento do CPF, faixas etárias, pisos e tetos do SDL. "
-                "Estamos construindo um motor que mostra o cálculo de cada "
-                "valor, testado cenário por cenário."
+                "Software que calcula dinheiro é fácil de demonstrar e difícil "
+                "de confiar. Construímos um ERP próprio para mostrar como "
+                "testamos. Não está implantado em nenhum cliente, e não "
+                "afirmamos nada sobre a exatidão dos seus cálculos."
             ),
-            (
-                "Em desenvolvimento, ainda não implantado &middot; 7.060 "
-                "testes automatizados"
-            ),
+            "7.060 testes automatizados em 484 classes de cálculo",
         ),
         (
             "Demonstrações que você testa antes de fechar",

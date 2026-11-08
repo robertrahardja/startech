@@ -13,7 +13,10 @@ gate at 0 findings) and calculation-layer-design.md (484 calculation
 classes, 7,060 tests, about 12 seconds without a database). That report
 also found the "5-engine verification" was really two engines and the
 tenancy single-schema, not schema-per-tenant, so neither claim appears.
-Re-verify before reuse; the figures grow with the codebase.
+Re-verify before reuse; the figures grow with the codebase. On 2026-11-08
+the ERP card lost its payroll and CPF wording, as the site and capability
+deck did: an internal build, tested, not deployed, no accuracy claim. The
+115 REST controllers are the site's figure (docs/COMPANY.md).
 """
 from content import COMMON  # noqa: F401  (re-exported for the renderer)
 
@@ -48,7 +51,8 @@ EN = {
     ),
     "pos_stats": [
         ("9,839",
-         "Automated tests passing in our ERP build, August 2026 run"),
+         "Automated tests passing in our internal ERP build, not "
+         "deployed (August 2026 run)"),
         ("2",
          "Money-losing bugs caught before release on a live client system"),
         ("12",
@@ -153,13 +157,13 @@ EN = {
          "model's guess, with routing across several language models.",
          "Delivered; engagement completed in 2026 · multi-LLM · Whisper "
          "STT · D1 / R2 / Vectorize"),
-        ("An ERP built to be audited line by line",
-         "Internal build · Singapore",
-         "Payroll included: CPF rounding and age bands, SDL floors and "
-         "caps. Every figure shows its working, tested scenario by "
-         "scenario.",
-         "In development, not yet deployed · Java 21 / Spring Boot · "
-         "9,839 tests"),
+        ("An ERP we build in-house, to show how we test",
+         "Internal build · Tested, not deployed",
+         "A multi-tenant ERP backend: 7,060 automated tests across its 484 "
+         "calculation classes. Not deployed for any client, and we make "
+         "no accuracy claim for it.",
+         "Java 21 / Spring Boot · 115 REST controllers · 9,839 tests in "
+         "the August 2026 run"),
         ("Demos you can try before you commit",
          "Pre-sales · Japan &amp; Singapore",
          "Used-car export demos on our Japan site — auction, shipping "
@@ -264,7 +268,8 @@ ID = {
     ),
     "pos_stats": [
         ("9.839",
-         "Uji otomatis lulus pada ERP internal kami, putaran Agustus 2026"),
+         "Uji otomatis lulus pada ERP internal kami, belum diterapkan "
+         "(putaran Agustus 2026)"),
         ("2",
          "Bug yang dapat merugikan, ditemukan sebelum rilis pada sistem "
          "klien yang berjalan"),
@@ -369,13 +374,13 @@ ID = {
          "generik, dengan perutean ke beberapa model bahasa.",
          "Diserahkan; kerja sama selesai pada 2026 · multi-LLM · Whisper "
          "STT · D1 / R2 / Vectorize"),
-        ("ERP yang dapat diaudit baris per baris",
-         "Pengembangan internal · Singapura",
-         "Termasuk penggajian: pembulatan CPF, kelompok usia, batas bawah "
-         "dan atas SDL. Setiap angka menunjukkan perhitungannya, diuji "
-         "skenario demi skenario.",
-         "Dalam pengembangan, belum diterapkan · Java 21 / Spring Boot · "
-         "9.839 uji"),
+        ("ERP internal untuk menunjukkan cara kami menguji",
+         "Pengembangan internal · Diuji, belum diterapkan",
+         "Backend ERP multi-tenant: 7.060 uji otomatis atas 484 kelas "
+         "perhitungannya. Belum diterapkan untuk klien mana pun, dan kami "
+         "tidak mengklaim akurasinya.",
+         "Java 21 / Spring Boot · 115 REST controller · 9.839 uji pada "
+         "putaran Agustus 2026"),
         ("Demo yang dapat dicoba sebelum Anda berkomitmen",
          "Pra-penjualan · Jepang &amp; Singapura",
          "Demo ekspor mobil bekas di situs Jepang kami — lelang, pelacakan "

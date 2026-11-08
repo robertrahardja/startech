@@ -39,13 +39,19 @@ CJK_FONT_CSS = {
 def cjk_css_override(family):
     return f"""
 body {{ font-family:'Inter','{family}',system-ui,sans-serif; }}
-h1, h2, h3, .cov-tag, .stat .n, .evc .n, .item .i {{
+h1, h2, .cov-tag, .stat .n, .evc .n, .item .i {{
   font-family:'Instrument Serif','{family}',Georgia,serif;
 }}
 """
 # Every selector render_deck.py sets in Instrument Serif needs the CJK subset
 # behind it; without it, CJK in the evidence card titles (e.g. 第1週) fell
-# through to whatever serif CJK font the rendering machine had.
+# through to whatever serif CJK font the rendering machine had. h3 is not one
+# of them: render_deck.py sets it in Inter, and listing it here drew the Latin
+# in CJK card titles ("ERP", "AI") in Instrument Serif.
+
+# Japanese only: break lines between phrases, not inside a word (the slide 5
+# heading split 現状 across two lines).
+JA_CSS = "html[lang=ja] { word-break:auto-phrase; }\n"
 
 
 # Two slides overflow into the footer at render_deck.py's sizes: the four
@@ -109,6 +115,8 @@ def render(d):
     if lang in CJK_FONTS:
         _fname, family = CJK_FONTS[lang]
         page_css += CJK_FONT_CSS[lang] + cjk_css_override(family)
+    if lang == 'ja':
+        page_css += JA_CSS
     return (f'<!doctype html><html lang="{lang}"><head>'
             f'<meta charset="utf-8"><title>{title}</title>'
             f'<style>{page_css}</style></head><body>{slides}</body></html>')

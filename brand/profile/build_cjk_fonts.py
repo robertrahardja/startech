@@ -10,6 +10,10 @@ after `python3 render_pitch.py`, then render again:
     uvx --from fonttools --with brotli python build_cjk_fonts.py
     python3 render_pitch.py
 
+The Japanese subset also covers the Japanese image flyers
+(../flyers/html/flyer-ja-*.html), so write those first too when their text
+changes: `python3 ../flyers/render_flyers.py --html-only`.
+
 Source fonts: the system Noto Sans CJK collections (Arch: noto-fonts-cjk).
 Subsets keep one glyph per character and no OpenType feature closure, as the
 originals did; "*" features tripled the size.
@@ -29,17 +33,21 @@ TTC = {
     700: "/usr/share/fonts/noto-cjk/NotoSansCJK-Bold.ttc",
 }
 LANGS = {
-    # css suffix: (rendered html, index in the collection, CSS family)
-    "ja": ("pitch-JA.html", 0, "Noto Sans JP Subset"),
-    "ko": ("pitch-KO.html", 1, "Noto Sans KR Subset"),
-    "zhs": ("pitch-ZH-Hans.html", 2, "Noto Sans SC Subset"),
-    "zht": ("pitch-ZH-Hant.html", 3, "Noto Sans TC Subset"),
+    # css suffix: (rendered html, relative to this folder; index in the
+    # collection; CSS family)
+    "ja": (("out/pitch-JA.html",
+            "../flyers/html/flyer-ja-portrait.html",
+            "../flyers/html/flyer-ja-landscape.html"),
+           0, "Noto Sans JP Subset"),
+    "ko": (("out/pitch-KO.html",), 1, "Noto Sans KR Subset"),
+    "zhs": (("out/pitch-ZH-Hans.html",), 2, "Noto Sans SC Subset"),
+    "zht": (("out/pitch-ZH-Hant.html",), 3, "Noto Sans TC Subset"),
 }
 
 
 def text_chars(path):
     doc = open(path, encoding="utf-8").read()
-    doc = re.sub(r"<style.*?</style>", " ", doc, flags=re.S)
+    doc = re.sub(r"<(style|script).*?</\1>", " ", doc, flags=re.S)
     doc = html.unescape(re.sub(r"<[^>]+>", " ", doc))
     chars = {c for c in doc if not c.isspace()}
     return chars | {chr(c) for c in range(0x20, 0x7F)}
@@ -63,8 +71,14 @@ def woff2_subset(weight, index, chars):
 
 
 def main():
-    for lang, (html_name, index, family) in LANGS.items():
-        chars = text_chars(os.path.join(HERE, "out", html_name))
+    for lang, (sources, index, family) in LANGS.items():
+        chars = set()
+        for rel in sources:
+            path = os.path.normpath(os.path.join(HERE, rel))
+            if not os.path.exists(path):
+                # A missing flyer would leave its glyphs out of the subset.
+                raise SystemExit(f"{rel} not found: render it first")
+            chars |= text_chars(path)
         faces = []
         for weight, css_weight in ((400, "400"), (700, "600 700")):
             b64 = base64.b64encode(woff2_subset(weight, index, chars)).decode()

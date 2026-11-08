@@ -104,8 +104,8 @@ eight languages to what holds up:
 
 1. Cross-border trading system (Japan): live with the client.
 2. AI co-pilot (Singapore): delivered; the engagement completed in 2026.
-3. Payroll engine: the ERP. Shown as an internal build, not yet deployed,
-   with no accuracy claim.
+3. The ERP, titled a payroll engine until 2026-11-08: shown as an internal
+   build, tested and not deployed, with no payroll or accuracy claim.
 4. Patient-owned health record: VIPhealth belongs to the related company,
    not StarTech, so it is no longer shown. Its slot now shows the working
    demos on both sites.
@@ -144,11 +144,24 @@ training and financial-report demos describe drafts for HR, a lawyer, a
 trainer or an accountant to review, with no CPF, Employment Act,
 SkillsFuture, WSQ or financial-statement claims.
 
+The decks were brought in line on 2026-11-08. The capability deck, in all
+eight languages, no longer calls the ERP "our Singapore payroll engine":
+its stat, its evidence card and its case card now say internal ERP build,
+tested, not deployed, with 7,060 automated tests across 484 calculation
+classes, and no payroll, CPF, SDL or accuracy claim. The A4 profile and the
+technical deck lost the same CPF and payroll wording from their ERP cards;
+the technical deck also gives the site's 115 REST controllers. The Korean
+and Chinese decks had called the exporter system Korean–Japanese and
+Chinese–Japanese bilingual; it is Japanese and English. Every PDF was
+regenerated, and the Indonesian capability deck is now published as
+`public/assets/startech-capability-deck-id.pdf` for the Indonesian site.
+The image flyers (`brand/flyers/`, served from `public/assets/flyers/`),
+in English, Japanese and Indonesian, carry these claims and nothing more:
+the exporter system live in Japan, the 7,060 tests in the internal ERP
+build, and the client owning the code, database and cloud account.
+
 Other inconsistencies:
 
-- The capability deck says its 7,060 tests are in "our Singapore payroll
-  engine". They cover all 484 calculation classes in the ERP build, payroll
-  included. The profile and technical deck say it that way.
 - The site publishes `info@`, but the contact form delivers to Gmail, so
   enquiries arrive in two places. See [OPERATIONS.md](OPERATIONS.md).
 

@@ -19,6 +19,11 @@ live with a client. There are no accounting or payroll-accuracy claims,
 and the only grant named is EDGE, with no percentage. Claims are tracked in
 `../../docs/COMPANY.md`; check it before changing one in any of the three.
 
+On 2026-11-08 all three dropped the last payroll wording: the ERP is an
+internal build, tested and not deployed, with 7,060 automated tests across
+484 calculation classes, and no payroll, CPF or accuracy claim. The image
+flyers in `../flyers/` carry the same claims; see `../flyers/README.md`.
+
 ## Capability deck
 
 Content: `pitch_content.py`, one dict per language with identical keys
@@ -29,9 +34,13 @@ hold up on a call — check `../../docs/COMPANY.md` before changing one.
 ```bash
 python3 render_pitch.py                     # -> out/pitch-*.html
 # Only if CJK text changed: rebuild the embedded Noto Sans CJK subsets
-# (one per language, only the characters used), then render again.
+# (one per language, only the characters used), then render again. The
+# Japanese subset also covers the Japanese image flyers, so write their
+# HTML first.
+python3 ../flyers/render_flyers.py --html-only
 uvx --from fonttools --with brotli python build_cjk_fonts.py
 python3 render_pitch.py
+python3 ../flyers/render_flyers.py          # if the JA subset changed
 
 cd out
 for s in EN JA KO ZH-Hans ZH-Hant ES PT ID; do
@@ -40,11 +49,12 @@ for s in EN JA KO ZH-Hans ZH-Hant ES PT ID; do
 done
 ```
 
-Publish to the website (the homepage download, by locale; there is no
-Indonesian site):
+Publish to the website (the homepage download, by locale). The site has
+no Indonesian locale yet; the `id` deck is published for the Indonesian
+site being built and for the Indonesian flyer:
 
 ```bash
-for s in EN:en JA:ja KO:ko ZH-Hans:zh-Hans ZH-Hant:zh-Hant ES:es PT:pt; do
+for s in EN:en JA:ja KO:ko ZH-Hans:zh-Hans ZH-Hant:zh-Hant ES:es PT:pt ID:id; do
   cp "out/pitch-${s%%:*}.pdf" \
     "../../public/assets/startech-capability-deck-${s##*:}.pdf"
 done

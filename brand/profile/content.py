@@ -4,8 +4,10 @@
 Rewritten on 2026-11-02 to match the capability deck (pitch_content.py)
 and docs/COMPANY.md: Singapore and Japan, founder-led, the scoping sprint
 and care plan, the spreadsheet offer. Only the exporter system is live
-with a client; the AI co-pilot engagement is complete; the ERP is an
-internal build, not deployed. No accounting or payroll-accuracy claims.
+with a client; the AI co-pilot was delivered and the engagement completed
+in 2026; the ERP is an internal build, tested and not deployed (7,060
+tests across 484 calculation classes). Re-checked on 2026-11-08: no
+payroll, CPF, accounting or accuracy claims.
 PSG closed on 29 September 2026: the grant note describes EDGE, with no
 percentage until Enterprise Singapore confirms one for the project.
 """
@@ -155,13 +157,13 @@ EN = {
          "role or sector. We built a co-pilot that answers from the "
          "client's own documents, with routing across several language "
          "models. Delivered; the engagement completed in 2026."),
-        ("An ERP built to be audited line by line",
-         "Internal build, Singapore",
-         "Singapore rules are unforgiving — CPF rounding and age bands, "
-         "SDL floors and caps. We are building an ERP, payroll included, "
-         "that shows its working for every figure: 484 calculation "
-         "classes covered by 7,060 automated tests. In development, not "
-         "yet deployed."),
+        ("An ERP we build in-house, to show how we test",
+         "Internal build, tested, not deployed",
+         "Software that calculates money is easy to demo and hard to "
+         "trust, so we built a large ERP of our own to show how we test: "
+         "7,060 automated tests across its 484 calculation classes. It is "
+         "not deployed for any client, and we make no accuracy claim for "
+         "it."),
         ("Demos you can try before you commit",
          "Pre-sales, Japan &amp; Singapore",
          "We show a system working before a client signs. Our Japan site "
@@ -363,13 +365,13 @@ ID = {
          "pekerja pengetahuan di UKM. Kami membangun ko-pilot yang menjawab "
          "dari dokumen milik klien sendiri, dengan perutean ke beberapa "
          "model bahasa. Telah diserahkan; kerja sama selesai pada 2026."),
-        ("ERP yang dapat diaudit baris per baris",
-         "Pengembangan internal, Singapura",
-         "Aturan Singapura tidak kenal kompromi — pembulatan CPF, kelompok "
-         "usia, batas bawah dan atas SDL. Kami sedang membangun ERP, "
-         "termasuk penggajian, yang menunjukkan perhitungan setiap angka: "
-         "484 kelas perhitungan dengan 7.060 uji otomatis. Dalam "
-         "pengembangan, belum diterapkan."),
+        ("ERP internal untuk menunjukkan cara kami menguji",
+         "Pengembangan internal, diuji, belum diterapkan",
+         "Perangkat lunak yang menghitung uang mudah didemokan, tetapi "
+         "sulit dipercaya. Karena itu kami membangun ERP berskala besar "
+         "sendiri untuk menunjukkan cara kami menguji: 7.060 uji otomatis "
+         "atas 484 kelas perhitungannya. ERP ini belum diterapkan untuk "
+         "klien mana pun, dan kami tidak mengklaim akurasinya."),
         ("Demo yang dapat dicoba sebelum Anda berkomitmen",
          "Pra-penjualan, Jepang &amp; Singapura",
          "Kami menunjukkan sistem yang berjalan sebelum klien "

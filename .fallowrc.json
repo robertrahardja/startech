@@ -2,7 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
   "entry": ["src/main.tsx", "worker/index.ts", "scripts/singpass-keys.mjs"],
   "ignorePatterns": [
-    "brand/profile/**"
+    "brand/profile/**",
+    "brand/flyers/**"
   ],
   "health": {
     "thresholdOverrides": [
