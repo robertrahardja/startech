@@ -32,7 +32,7 @@ export interface Enquiry {
   hasSpreadsheet: boolean;
 }
 
-type AckLanguage = "en" | "ja" | "id";
+type AckLanguage = "en" | "ja" | "id" | "es" | "pt" | "zh-Hans" | "zh-Hant";
 
 interface AckCopy {
   subject: string;
@@ -68,7 +68,42 @@ const ACK_COPY: Record<AckLanguage, AckCopy> = {
     closing:
       "Email ini adalah konfirmasi otomatis dan merupakan satu-satunya email otomatis dari kami. Balasan selanjutnya akan dikirim langsung oleh Robert.\n\nJika Anda tidak merasa menghubungi kami, mohon abaikan email ini.\n\nHormat kami,",
   },
+  es: {
+    subject: "Gracias por su mensaje a StarTech Innovation",
+    opening:
+      "Hola:\n\nGracias por contactar a StarTech Innovation. Recibimos su mensaje, y Robert Rahardja, nuestro director general, le responderá personalmente en un plazo de un día hábil.",
+    spreadsheet: "También recibimos la hoja de cálculo que adjuntó.",
+    closing:
+      "Este es un correo de confirmación automático y el único correo automático que recibirá de nuestra parte. A partir de ahora, todo le llegará directamente de Robert.\n\nSi usted no nos contactó, ignore este correo.\n\nSaludos cordiales,",
+  },
+  pt: {
+    subject: "Obrigado pela sua mensagem à StarTech Innovation",
+    opening:
+      "Olá,\n\nObrigado por entrar em contato com a StarTech Innovation. Recebemos a sua mensagem, e Robert Rahardja, nosso diretor-geral, vai responder pessoalmente em até um dia útil.",
+    spreadsheet: "Também recebemos a planilha que você anexou.",
+    closing:
+      "Esta é uma confirmação automática e o único e-mail automático que você receberá de nós. Daqui em diante, tudo vem diretamente do Robert.\n\nSe você não entrou em contato conosco, por favor ignore este e-mail.\n\nAtenciosamente,",
+  },
+  "zh-Hans": {
+    subject: "感谢您联系 StarTech Innovation",
+    opening:
+      "您好：\n\n感谢您联系 StarTech Innovation。我们已收到您的留言，董事总经理 Robert Rahardja 会在一个工作日内亲自回复您。",
+    spreadsheet: "您附上的表格我们也已收到。",
+    closing:
+      "这是一封自动确认邮件，也是我们发送的唯一一封自动邮件。之后的所有回复都将由 Robert 亲自发送。\n\n如果您并未联系过我们，请忽略此邮件。\n\n谢谢！",
+  },
+  "zh-Hant": {
+    subject: "感謝您聯絡 StarTech Innovation",
+    opening:
+      "您好：\n\n感謝您聯絡 StarTech Innovation。我們已收到您的訊息，董事總經理 Robert Rahardja 會在一個工作天內親自回覆您。",
+    spreadsheet: "您附上的表格我們也已收到。",
+    closing:
+      "這是一封自動確認郵件，也是我們寄送的唯一一封自動郵件。之後的所有回覆都將由 Robert 親自寄送。\n\n如果您並未與我們聯絡，請忽略此郵件。\n\n謝謝！",
+  },
 };
+
+/** The main site's locales (src/i18n/locales.ts) we have copy in; Korean gets English. */
+const MAIN_SITE_LANGUAGES = new Set<string>(["en", "ja", "es", "pt", "zh-Hans", "zh-Hant"]);
 
 /** Sites that serve Japanese first, with English as their other language. */
 const JAPANESE_FIRST = new Set(["thailand", "vietnam", "japan"]);
@@ -82,10 +117,15 @@ function campaignLocale(topic: string, utmCampaign: string): string {
  * Indonesia: Bahasa Indonesia. Thailand, Vietnam and Japan: the language the
  * visitor used when the request says (its locale field, else the campaign
  * default), otherwise Japanese; a language we have no copy in gets English.
+ * The main site (no topic): the page's locale when we have copy in it.
  * Every other form: English.
  */
 function ackLanguage(enquiry: Pick<Enquiry, "topic" | "locale" | "utmCampaign">): AckLanguage {
   if (enquiry.topic === "indonesia") return "id";
+  if (enquiry.topic === "") {
+    const locale = enquiry.locale.trim();
+    return MAIN_SITE_LANGUAGES.has(locale) ? (locale as AckLanguage) : "en";
+  }
   if (!JAPANESE_FIRST.has(enquiry.topic)) return "en";
   const used =
     enquiry.locale.trim().slice(0, 2).toLowerCase() || campaignLocale(enquiry.topic, enquiry.utmCampaign);

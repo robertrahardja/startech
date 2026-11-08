@@ -37,24 +37,32 @@ interface Recipient {
   id: string;
   email: string;
   language: string | null;
+  local_language: string | null;
 }
 
-const LANGUAGES = new Set<string>(["en", "ja", "id"]);
+const LANGUAGES = new Set<string>(["en", "ja", "id", "es", "pt", "zh-Hans", "zh-Hant"]);
 
 function asLanguage(code: string | null | undefined): PageLanguage | null {
   return code && LANGUAGES.has(code) ? (code as PageLanguage) : null;
 }
 
+/** zh-TW, zh-HK and zh-Hant read Traditional; other Chinese tags Simplified. */
+function fromBrowserTag(tag: string): PageLanguage | null {
+  const t = tag.split(";")[0].trim().toLowerCase();
+  if (t.startsWith("zh")) return /hant|-tw|-hk|-mo/.test(t) ? "zh-Hant" : "zh-Hans";
+  return asLanguage(t.slice(0, 2));
+}
+
 /** For a page that knows no campaign: the visitor's first supported browser language. */
 function browserLanguage(acceptLanguage: string | null): PageLanguage {
-  const primaryTags = (acceptLanguage ?? "").split(",").map((tag) => tag.trim().slice(0, 2).toLowerCase());
-  return primaryTags.map(asLanguage).find((language) => language !== null) ?? "en";
+  const tags = (acceptLanguage ?? "").split(",");
+  return tags.map(fromBrowserTag).find((language) => language !== null) ?? "en";
 }
 
 async function findRecipient(db: D1Database, token: string): Promise<Recipient | null> {
   return db
     .prepare(
-      `SELECT r.id, r.email, c.language
+      `SELECT r.id, r.email, c.language, c.local_language
          FROM outreach_recipients r
          LEFT JOIN outreach_campaigns c ON c.id = r.campaign_id
         WHERE r.unsub_token = ?
@@ -96,9 +104,10 @@ async function answer(
   const recipient = await findRecipient(db, token);
   if (!recipient) return renderPage(fallback, "unknown", 404);
   const language = asLanguage(recipient.language) ?? fallback;
-  if (!isPost) return renderPage(language, "confirm", 200, `${UNSUBSCRIBE_PREFIX}${token}`);
+  const second = asLanguage(recipient.local_language);
+  if (!isPost) return renderPage(language, "confirm", 200, `${UNSUBSCRIBE_PREFIX}${token}`, second);
   await unsubscribe(db, recipient);
-  return renderPage(language, "done", 200);
+  return renderPage(language, "done", 200, undefined, second);
 }
 
 export async function handleUnsubscribe(

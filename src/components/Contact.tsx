@@ -29,7 +29,7 @@ interface ContactProps {
 }
 
 export default function Contact({ variant = "default" }: ContactProps) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const [ref, isInView] = useInView({ threshold: 0.1 });
   const [form, setForm] = useState<ContactFormData>(EMPTY_FORM);
   const [file, setFile] = useState<File | null>(null);
@@ -77,7 +77,9 @@ export default function Contact({ variant = "default" }: ContactProps) {
       setStatus("sending");
       setErrorMsg("");
 
-      const payload = { ...form, ...getUtm(), ...(isSingpass ? { topic: "singpass" } : {}) };
+      // locale: the page's language, so the automatic acknowledgement
+      // (worker/ack.ts) answers in it.
+      const payload = { ...form, locale, ...getUtm(), ...(isSingpass ? { topic: "singpass" } : {}) };
 
       try {
         // JSON unless a spreadsheet is attached; the Worker reads both.
@@ -113,7 +115,7 @@ export default function Contact({ variant = "default" }: ContactProps) {
         );
       }
     },
-    [form, file, isSingpass, t.contact.error]
+    [form, file, isSingpass, locale, t.contact.error]
   );
 
   const header = isFlyer

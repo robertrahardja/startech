@@ -120,6 +120,42 @@ test("an unknown token gets a neutral page and touches nothing", async () => {
   assert.match(await japanese.text(), /このリンクは無効です/);
 });
 
+test("a two-language campaign shows both: Japanese, then Spanish below", async () => {
+  db.query(
+    "INSERT INTO outreach_campaigns (id, country, language, local_language, name) VALUES ('mx-ja', 'Mexico', 'ja', 'es', 'Mexico, Japanese firms')"
+  );
+  db.query("UPDATE outreach_recipients SET campaign_id = 'mx-ja' WHERE id = 'rcp_1'");
+  const confirm = await (await handleUnsubscribe(request(TOKEN), context())).text();
+  assert.match(confirm, /<html lang="ja">/);
+  assert.match(confirm, /<section lang="ja"><h1>StarTech Innovation からのメール配信停止<\/h1>/);
+  assert.match(confirm, /<section lang="es"><h2>Dejar de recibir correos de StarTech Innovation<\/h2>/);
+  assert.match(confirm, />配信を停止する \/ Darse de baja<\/button>/);
+  const done = await (await handleUnsubscribe(post(TOKEN), context())).text();
+  assert.match(done, /配信を停止しました/);
+  assert.match(done, /Se ha dado de baja/);
+  assert.equal(statusOf("rcp_1"), "unsubscribed");
+});
+
+test("Chinese: Simplified for mainland campaigns, Traditional for Taiwanese, and by browser", async () => {
+  db.query(
+    "INSERT INTO outreach_campaigns (id, country, language, local_language, name) VALUES ('my-zh', 'Malaysia', 'zh-Hans', 'en', 'Malaysia, Chinese firms'), ('us-zht', 'United States', 'zh-Hant', 'en', 'US, Taiwanese firms')"
+  );
+  db.query("UPDATE outreach_recipients SET campaign_id = 'my-zh' WHERE id = 'rcp_1'");
+  db.query("UPDATE outreach_recipients SET campaign_id = 'us-zht' WHERE id = 'rcp_2'");
+  const hans = await (await handleUnsubscribe(request(TOKEN), context())).text();
+  assert.match(hans, /<html lang="zh-Hans">/);
+  assert.match(hans, /退订 StarTech Innovation 的邮件/);
+  assert.match(hans, /Unsubscribe from StarTech Innovation emails/);
+  const hant = await (await handleUnsubscribe(request("tok_another_recipient_00001"), context())).text();
+  assert.match(hant, /取消訂閱 StarTech Innovation 的郵件/);
+  const browser = (lang) =>
+    handleUnsubscribe(request("tok_nobody_has_this_token_0", { headers: { "Accept-Language": lang } }), context()).then((r) => r.text());
+  assert.match(await browser("zh-TW,zh;q=0.9"), /此連結無效/);
+  assert.match(await browser("zh-CN,zh;q=0.9"), /此链接无效/);
+  assert.match(await browser("pt-BR,pt;q=0.9"), /Este link não é válido/);
+  assert.match(await browser("es-MX,es;q=0.9"), /Este enlace no es válido/);
+});
+
 test("a malformed token is never looked up", async () => {
   for (const path of ["short", "tok_9fJ2kQ7x%27%20OR%201=1--x", `${TOKEN}/extra`, ""]) {
     const res = await handleUnsubscribe(request(path), context(brokenD1()));

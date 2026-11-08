@@ -27,6 +27,7 @@ CREATE TABLE outreach_campaigns (
   id TEXT PRIMARY KEY,
   country TEXT NOT NULL,
   language TEXT NOT NULL,
+  local_language TEXT, -- st_dasboard migrations/0011_outreach_local_language.sql
   name TEXT NOT NULL,
   segment_tags TEXT NOT NULL DEFAULT '[]',
   steps TEXT NOT NULL DEFAULT '[]',

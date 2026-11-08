@@ -72,6 +72,14 @@ test("picks the language from the site and, where it varies, the visitor's own",
     [{ topic: "japan" }, "お問い合わせありがとうございます（StarTech Innovation）"],
     [{ topic: "malaysia" }, "Thank you for your message to StarTech Innovation"],
     [{ topic: "philippines", locale: "ja" }, "Thank you for your message to StarTech Innovation"],
+    // The main site sends its page locale.
+    [{ topic: "", locale: "es" }, "Gracias por su mensaje a StarTech Innovation"],
+    [{ topic: "", locale: "pt" }, "Obrigado pela sua mensagem à StarTech Innovation"],
+    [{ topic: "", locale: "zh-Hans" }, "感谢您联系 StarTech Innovation"],
+    [{ topic: "", locale: "zh-Hant" }, "感謝您聯絡 StarTech Innovation"],
+    [{ topic: "", locale: "ja" }, "お問い合わせありがとうございます（StarTech Innovation）"],
+    [{ topic: "", locale: "ko" }, "Thank you for your message to StarTech Innovation"],
+    [{ topic: "" }, "Thank you for your message to StarTech Innovation"],
   ];
   for (const [overrides, subject] of cases) {
     const calls = fakeFetch();
