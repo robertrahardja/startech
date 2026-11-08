@@ -102,20 +102,24 @@ ID = {
 }
 
 
-def country_site(base, country):
-    """The base copy with the link and QR code of <country>'s own site."""
+def country_site(base, country, path=""):
+    """The base copy with the link and QR code of <country>'s own site.
+
+    `path` is the locale prefix where the site's default language is not the
+    flyer's: Thailand and Vietnam serve Japanese at / and English at /en.
+    """
     host = f"{country}.startech-innovation.com"
-    return {**base, "name": f"{country}-{base['lang']}", "link": host,
-            "qr": f"https://{host}/?utm_source=qr"}
+    return {**base, "name": f"{country}-{base['lang']}", "link": f"{host}{path}",
+            "qr": f"https://{host}{path or '/'}?utm_source=qr"}
 
 
 COUNTRY_FLYERS = (
     country_site(EN, "malaysia"),
     country_site(EN, "philippines"),
     country_site(JA, "thailand"),
-    country_site(EN, "thailand"),
+    country_site(EN, "thailand", "/en"),
     country_site(JA, "vietnam"),
-    country_site(EN, "vietnam"),
+    country_site(EN, "vietnam", "/en"),
 )
 
 FLYERS = (EN, JA, ID, *COUNTRY_FLYERS)
