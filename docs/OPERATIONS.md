@@ -20,6 +20,9 @@ Picked up where this left off:
 - **AI chat is off in production.** The OpenAI account returns 429 on every
   call. Gated behind `VITE_ENABLE_AI_CHAT`, not deleted — see
   [AI chat](#ai-chat--currently-disabled).
+- **Outreach mail and enquiry acknowledgements are off** until
+  `mail.startech-innovation.com` is verified in Resend and `OUTREACH_FROM`
+  is set — see [Switching sending on](#switching-sending-on).
 
 ## Hosting
 
@@ -112,6 +115,9 @@ the message. A company is created or matched by name when one is given. A
 repeat enquiry from the same email address adds a note to the existing
 contact.
 
+Once `OUTREACH_FROM` is set, a lead that reached the CRM also gets one
+short acknowledgement — see [Outreach mail](#outreach-mail).
+
 ### Where the lead came from
 
 The contact's `source` is the `utm_source` of the URL the visitor arrived
@@ -166,6 +172,147 @@ the same Gmail inbox. The client picks a credit (name and company, role
 and industry only, or do not publish) and agrees to see the final wording
 before it goes online, so nothing is published from the form itself. A
 hidden honeypot field drops bot submissions; the limit is 3 a minute.
+
+## Outreach mail
+
+hq (`st-dasboard`) runs the outreach campaigns, but it cannot send mail:
+the Resend key is a secret of this Worker only. This Worker does the
+sending side. Written 2026-11-08; nothing here sends until `OUTREACH_FROM`
+is set.
+
+| Piece | Where |
+| --- | --- |
+| `Mailer` RPC entrypoint for hq | `worker/mailer-entrypoint.ts` |
+| Rules every outreach email must pass | `worker/outreach-rules.ts` |
+| Unsubscribe page, `/u/<token>` | `worker/unsubscribe.ts` |
+| Acknowledgement to website enquiries | `worker/ack.ts` |
+
+### The Mailer entrypoint
+
+hq binds it in its `wrangler.toml`. It is not an HTTP route: only the
+default export answers requests.
+
+```toml
+[[services]]
+binding = "MAILER"
+service = "startech"
+entrypoint = "Mailer"
+```
+
+Deploy this Worker before hq, so the entrypoint exists when hq binds it.
+
+- `send(message)` — one outreach email from `OUTREACH_FROM`. Refused with
+  `sender-not-configured` while `OUTREACH_FROM` is unset, and with
+  `missing-required-footer` unless the text part (and the HTML part, if
+  any) carries a `https://startech-innovation.com/u/<token>` link and the
+  postal address (`1003 Bukit Merah Central`, `Singapore 159836`). That
+  is what the Spam Control Act and 特定電子メール法 require. It also refuses
+  an address in `outreach_suppression`, in any letter case, as a second
+  check after hq's.
+- `status(id)` — Resend's last event for a sent email (`delivered`,
+  `bounced`, `complained`...), so hq can suppress without a webhook.
+- `notifyOwner(subject, text)` — plain text to
+  `rr.startech.innovation@gmail.com`, e.g. hq's weekly report. Works
+  before `OUTREACH_FROM` is set, from the sandbox sender.
+
+Every method returns `{ ok: false, error }` rather than throwing. Replies
+to outreach go to the Gmail inbox unless hq sets `replyTo`, because the
+sending subdomain has no mailbox.
+
+### Unsubscribe
+
+`GET /u/<token>` shows a confirmation and changes nothing, because mail
+scanners open every link. `POST` (the page's button, or a mail provider's
+RFC 8058 one-click request) adds the address to `outreach_suppression`
+(reason `unsubscribe`, source the recipient id) and sets that recipient's
+status to `unsubscribed`. It answers in the campaign's language (en, ja,
+id). An unknown token gets a neutral 404 page. Tokens are
+`[A-Za-z0-9_-]`, 16 to 128 characters; hq generates them.
+
+Recipient rows must not be deleted while mail that links to them is
+still out there: a token with no row cannot be mapped to an address, so
+that click cannot suppress anything.
+
+### Acknowledgement to enquiries
+
+After `/api/contact` has saved a lead, the visitor gets one short reply
+from `OUTREACH_FROM`, reply-to the Gmail inbox: thanks, Robert replies
+within one working day, the spreadsheet arrived (if one did), nothing more
+is automatic. The language is Indonesian for the Indonesia site. For
+Thailand, Vietnam and Japan it is the visitor's language when the form
+sends a `locale` field, or when the country site's `utm_campaign` default
+(`thailand-en`) shows it; otherwise Japanese. Everything else is English.
+
+It carries fixed copy only (nothing the visitor typed), reaches an
+address at most once a day, and runs after the response. A failure is
+logged and never affects the enquiry.
+
+### Switching sending on
+
+1. Resend dashboard → Domains → Add Domain:
+   `mail.startech-innovation.com`. Pick the Tokyo region
+   (`ap-northeast-1`), the closest to Singapore and Japan.
+2. Resend shows three records. They go in the Cloudflare zone for
+   `startech-innovation.com`, as DNS only:
+
+   | Type | Name | Value |
+   | --- | --- | --- |
+   | TXT | `resend._domainkey.mail` | the DKIM key Resend shows (`p=...`) |
+   | MX | `send.mail` | `feedback-smtp.ap-northeast-1.amazonses.com` |
+   | TXT | `send.mail` | `v=spf1 include:amazonses.com ~all` |
+
+   The MX record has priority 10. Copy the values from Resend's own screen
+   if they differ from these. The existing `_dmarc` record (`p=none`) covers
+   the subdomain; it needs
+   no record of its own. An agent session can add these with
+   `CLOUDFLARE_DNS_TOKEN` from `.envrc.local` (zone DNS edit; expires
+   2026-11-10, after which it needs a new token or the dashboard):
+
+   ```bash
+   cd ~/Projects/startech/startech && direnv exec . bash -c '
+     api=https://api.cloudflare.com/client/v4
+     auth="Authorization: Bearer $CLOUDFLARE_DNS_TOKEN"
+     zone=$(curl -s -H "$auth" "$api/zones?name=startech-innovation.com" |
+       jq -r ".result[0].id")
+     add() { curl -s -X POST -H "$auth" -H "Content-Type: application/json" \
+       "$api/zones/$zone/dns_records" --data "$1" | jq -c "{success,errors}"; }
+     d=startech-innovation.com
+     add "{\"type\":\"TXT\",\"name\":\"resend._domainkey.mail.$d\",
+       \"content\":\"<DKIM value from Resend>\"}"
+     add "{\"type\":\"MX\",\"name\":\"send.mail.$d\",\"priority\":10,
+       \"content\":\"feedback-smtp.ap-northeast-1.amazonses.com\"}"
+     add "{\"type\":\"TXT\",\"name\":\"send.mail.$d\",
+       \"content\":\"v=spf1 include:amazonses.com ~all\"}"
+   '
+   ```
+
+3. Back in Resend, Verify DNS Records, and wait for Verified. Turn open
+   and click tracking off for this domain: rewritten links and tracking
+   pixels hurt delivery of cold mail.
+4. Set the sender. A secret rather than a `[vars]` entry, so it takes
+   effect without a build, and deleting it is an instant off switch:
+
+   ```bash
+   npx wrangler secret put OUTREACH_FROM
+   # value: Robert Rahardja <robert@mail.startech-innovation.com>
+   ```
+
+5. Check it: send the site's contact form to your own address. The
+   acknowledgement should arrive from the new sender, with `dkim=pass`
+   for `mail.startech-innovation.com` in the headers.
+
+To switch off: `npx wrangler secret delete OUTREACH_FROM`.
+
+### Tests
+
+```bash
+npm test
+```
+
+`node --test` with no framework: `scripts/test-hooks.mjs` transpiles the
+Worker's TypeScript with esbuild, and `test/fake-d1.mjs` runs the queries
+as real SQL on `node:sqlite` with the outreach tables from st_dasboard's
+`migrations/0007_outreach.sql`.
 
 ## Singpass demo
 
@@ -503,6 +650,11 @@ Set, and not stored in the repository:
 - `OPENAI_API_KEY` — chat and the AI demos
 - `ELEVENLABS_API_KEY` — text to speech
 - `RESEND_API_KEY` — the contact form
+
+Not set yet:
+
+- `OUTREACH_FROM` — the outreach and acknowledgement sender; see
+  [Switching sending on](#switching-sending-on)
 
 ```bash
 npx wrangler secret list
