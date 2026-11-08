@@ -147,7 +147,7 @@ behind its Access gate. Nothing expires these files; delete one with
 The email's footer says whether the CRM write worked. The visitor sees an
 error only when the lead reached neither the CRM nor the inbox. The schema
 belongs to `st_dasboard/migrations/`; change it there, then check
-`saveLead` in `worker/index.ts`.
+`saveLead` in `worker/crm.ts`.
 
 Two things worth changing:
 
@@ -313,6 +313,13 @@ npm test
 Worker's TypeScript with esbuild, and `test/fake-d1.mjs` runs the queries
 as real SQL on `node:sqlite` with the outreach tables from st_dasboard's
 `migrations/0007_outreach.sql`.
+
+`npm run check:parity` compares how a running Worker answers 40 requests
+(pages, `/u/`, Singpass, the API's CORS, origin, method and rate-limit
+checks, and each form's validation) with a saved snapshot. Use it for a
+refactor of `worker/`: snapshot the old code, then compare the new, both
+on one `npm run build`. Usage and the optional CRM seed are in the header
+of `scripts/check-worker-parity.mjs`.
 
 ## Singpass demo
 
@@ -494,7 +501,7 @@ The app is an SPA — one `index.html` answers every route — so React could
 only set these after boot, and crawlers read the markup as delivered. The
 Worker now rewrites `<html lang>` and appends the alternates with
 `HTMLRewriter` as the response streams (`withLocaleMarkup` in
-`worker/index.ts`). Verify after any deploy:
+`worker/locale-markup.ts`). Verify after any deploy:
 
 ```bash
 curl -s https://startech-innovation.com/ja/ | grep -oP '(?<=<html lang=")[^"]*'

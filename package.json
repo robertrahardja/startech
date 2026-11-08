@@ -17,7 +17,8 @@
     "check:untranslated": "node scripts/check-untranslated.mjs",
     "check:i18n": "npm run check:locales && npm run check:untranslated",
     "check:invoicenow": "node scripts/check-invoicenow.mjs",
-    "check:rendered": "node scripts/check-rendered.mjs"
+    "check:rendered": "node scripts/check-rendered.mjs",
+    "check:parity": "node scripts/check-worker-parity.mjs"
   },
   "repository": {
     "type": "git",

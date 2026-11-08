@@ -15,7 +15,7 @@ const EMPTY_FORM: ContactFormData = {
   staff: "",
 };
 
-/** Must match SPREADSHEET_MAX_BYTES in worker/index.ts. */
+/** Must match SPREADSHEET_MAX_BYTES in worker/contact-form.ts. */
 const SPREADSHEET_MAX_BYTES = 10 * 1024 * 1024;
 const SPREADSHEET_ACCEPT = ".xlsx,.xls,.xlsm,.csv,.ods,.numbers,.tsv";
 

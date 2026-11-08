@@ -1,6 +1,6 @@
 /**
  * The one automatic reply a website enquiry gets (handleContact in
- * worker/index.ts): thank you, Robert replies within one working day, the
+ * worker/contact.ts): thank you, Robert replies within one working day, the
  * spreadsheet arrived (when there was one), and nothing more is automatic.
  *
  * Off until OUTREACH_FROM is set. It runs after the response has gone

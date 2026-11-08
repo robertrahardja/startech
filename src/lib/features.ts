@@ -22,7 +22,7 @@ export const AI_CHAT_ENABLED = import.meta.env.VITE_ENABLE_AI_CHAT === "true";
  * result and PDF only, with no button that leads to a dead end.
  *
  * Before turning it back on, also check that:
- * - the Gemini model in worker/index.ts is still served (gemini-2.0-flash was
+ * - the Gemini model in worker/model-providers.ts is still served (gemini-2.0-flash was
  *   listed for shutdown on 1 June 2026, and only a 429 falls back to Workers AI);
  * - D1 migrations 0002 and 0003 are applied to startech-demos remotely, or every
  *   demo_leads insert fails on the missing google_sub/model_provider columns.
