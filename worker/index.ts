@@ -164,6 +164,9 @@ function sanitizeEmail(input: string): string {
     .slice(0, 320);
 }
 
+/** Country sites at <name>.startech-innovation.com whose forms post to /api/contact. */
+const COUNTRY_SITES = ["indonesia", "malaysia", "philippines", "thailand", "vietnam"] as const;
+
 function validateOrigin(request: Request, env: Env): boolean {
   const origin = request.headers.get("Origin");
   if (!origin) return false;
@@ -171,8 +174,9 @@ function validateOrigin(request: Request, env: Env): boolean {
   const allowedOrigins = [
     "https://startech-innovation.com",
     "https://www.startech-innovation.com",
-    // StarTech Indonesia (apps/indonesia) posts its form here so leads land in hq.
-    "https://indonesia.startech-innovation.com",
+    // Country sites (apps/indonesia, apps/country-site) post their forms
+    // here so leads land in hq.
+    ...COUNTRY_SITES.map((c) => `https://${c}.startech-innovation.com`),
   ];
 
   if (env.ENVIRONMENT !== "production") {
@@ -182,7 +186,7 @@ function validateOrigin(request: Request, env: Env): boolean {
   // Preview versions (`wrangler versions upload`) are served from
   // <8-hex>-startech.rr-startech-innovation.workers.dev; only this Worker's
   // own previews match, so testing a preview does not need the live domain.
-  if (/^https:\/\/[0-9a-f]{8}-startech(-indonesia)?\.rr-startech-innovation\.workers\.dev$/.test(origin)) {
+  if (/^https:\/\/[0-9a-f]{8}-startech(-(indonesia|malaysia|philippines|thailand|vietnam))?\.rr-startech-innovation\.workers\.dev$/.test(origin)) {
     return true;
   }
 
@@ -969,6 +973,10 @@ async function handleContact(
   const TOPIC_SUBJECTS: Record<string, string> = {
     singpass: "Singpass check",
     indonesia: "Indonesia site enquiry",
+    malaysia: "Malaysia site enquiry",
+    philippines: "Philippines site enquiry",
+    thailand: "Thailand site enquiry",
+    vietnam: "Vietnam site enquiry",
   };
   const topic = TOPIC_SUBJECTS[body.topic] ?? null;
 
