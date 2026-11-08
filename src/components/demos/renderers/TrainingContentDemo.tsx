@@ -155,7 +155,7 @@ export default function TrainingContentDemo(props: DemoRendererProps) {
                         <button
                           type="button"
                           onClick={() => toggleQuiz(mi)}
-                          className="text-[12px] font-normal text-st-text-muted transition-colors duration-300 hover:text-st-text"
+                          className="-my-[10px] inline-flex min-h-[44px] items-center text-[12px] font-normal text-st-text-muted transition-colors duration-300 hover:text-st-text"
                         >
                           {quizVisible ? "Hide Quiz" : "Show Quiz"} (
                           {mod.quiz.length} questions)
@@ -194,7 +194,7 @@ export default function TrainingContentDemo(props: DemoRendererProps) {
                                   <button
                                     type="button"
                                     onClick={() => toggleAnswer(mi, qi)}
-                                    className="mt-2 text-[11px] font-medium text-st-text-muted transition-colors duration-300 hover:text-st-text"
+                                    className="inline-flex min-h-[44px] items-center text-[11px] font-medium text-st-text-muted transition-colors duration-300 hover:text-st-text"
                                   >
                                     {isRevealed
                                       ? "Hide Answer"
@@ -238,7 +238,7 @@ export default function TrainingContentDemo(props: DemoRendererProps) {
       <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-normal leading-relaxed text-st-gold-light/80">
         <p className="mb-2 font-medium text-st-gold-light">How to use this demo</p>
         <p>Paste your Standard Operating Procedure (SOP), process document, or step-by-step guide. The AI will transform it into a structured training course — with learning modules, objectives, content summaries, and quiz questions with multiple-choice answers.</p>
-        <p className="mt-2 text-[12px] text-st-gold-light/60">The output follows SkillsFuture course structure standards. Include as much procedural detail as possible — the AI will organize it into logical learning modules with assessments.</p>
+        <p className="mt-2 text-[12px] text-st-gold-light/60">The output is a draft for your trainer to review. Include as much procedural detail as possible — the AI will organize it into logical learning modules with assessments.</p>
       </div>
       <div>
         <label className={labelClass}>SOP or Process Document</label>

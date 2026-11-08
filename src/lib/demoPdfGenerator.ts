@@ -458,17 +458,18 @@ function salesAssistant(doc: import("jspdf").jsPDF, _autoTable: any, r: Record<s
 
 function complianceChecker(doc: import("jspdf").jsPDF, autoTable: any, r: Record<string, unknown>) {
   const score = r.risk_score as number;
-  let y = addHeader(doc, "Compliance Review", `${r.document_type} — Risk Score: ${score}/10`);
+  let y = addHeader(doc, "Contract Review", `${r.document_type} — Risk Score: ${score}/10`);
 
   y = addSectionTitle(doc, y, "Summary");
   y = addParagraph(doc, y, r.summary as string);
+  y = addParagraph(doc, y, "A first pass for a qualified lawyer to review. Not legal advice.");
   y += 4;
 
   const findings = (r.findings as any[]) || [];
   y = addSectionTitle(doc, y, "Findings");
   autoTable(doc, {
     startY: y,
-    head: [["Severity", "Issue", "Regulation", "Suggestion"]],
+    head: [["Severity", "Issue", "Reference", "Suggestion"]],
     body: findings.map((f: any) => [f.severity.toUpperCase(), f.issue, f.regulation, f.suggestion]),
     margin: { left: 20, right: 20 },
     styles: { fontSize: 8.5, cellPadding: 3 },

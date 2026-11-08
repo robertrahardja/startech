@@ -217,7 +217,7 @@ export default function FinancialReportDemo(props: DemoRendererProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-normal leading-relaxed text-st-gold-light/80">
         <p className="mb-2 font-medium text-st-gold-light">How to use this demo</p>
-        <p>Enter the reporting period, total revenue, and total expenses in SGD. Optionally, add a breakdown of revenue sources or expense categories. The AI will generate a financial analysis with profit margins, key metrics, trend observations, and actionable recommendations.</p>
+        <p>Enter the reporting period, total revenue, and total expenses in SGD. Optionally, add a breakdown of revenue sources or expense categories. The AI drafts a summary with profit margins, key metrics, trend observations and recommendations, for your accountant to review. It is not a set of financial statements.</p>
         <p className="mt-2 text-[12px] text-st-gold-light/60">Example: Period &apos;Q1 2026&apos;, Revenue &apos;$250,000&apos;, Expenses &apos;$180,000&apos;, Breakdown &apos;Product sales $150K, Services $100K. Rent $30K, Salaries $120K, Marketing $30K&apos;. The more detail, the richer the analysis.</p>
       </div>
       <div>

@@ -181,19 +181,19 @@ export const SOLUTIONS: Solution[] = [
     slug: "employee-onboarding",
     title: "AI Employee Onboarding",
     tagline:
-      "New hires fill in their details once, and AI generates all the HR documents automatically.",
+      "New hires fill in their details once, and AI drafts the HR documents for you to review.",
     problem:
-      "Onboarding a new employee means collecting the same information across a dozen forms. HR spends hours on paperwork instead of making new hires feel welcome. Mistakes in employment contracts create compliance risk.",
+      "Onboarding a new employee means collecting the same information across a dozen forms. HR spends hours on paperwork instead of making new hires feel welcome, and retyping the same details into every document is where mistakes creep in.",
     steps: [
       {
         title: "New Hire Fills One Form",
         description:
-          "A single smart form collects all personal, banking, and tax details.",
+          "A single form collects the new hire's personal and contact details, once.",
       },
       {
-        title: "AI Generates Documents",
+        title: "AI Drafts Documents",
         description:
-          "Employment contract, NDA, IT access requests, and welcome pack are created automatically.",
+          "An offer letter, NDA, IT access request and welcome pack are drafted for HR to review.",
       },
       {
         title: "E-Signatures",
@@ -207,12 +207,12 @@ export const SOLUTIONS: Solution[] = [
       },
     ],
     features: [
-      "Singapore Employment Act compliant contract templates",
+      "Drafts start from your own templates, and HR reviews them before anyone signs",
       "Offer letter, NDA and first-week checklist drafted from one form",
       "Digital e-signature workflow",
       "Customisable onboarding checklists per department",
       "Employee self-service portal for document access",
-      "Exports new-hire details to the HR or payroll provider you already use",
+      "Exports new-hire details to the HR system you already use",
     ],
     icon: "users",
   },
@@ -335,9 +335,9 @@ export const SOLUTIONS: Solution[] = [
     slug: "training-content-generator",
     title: "AI Training Content Generator",
     tagline:
-      "Turn your SOPs into SkillsFuture-ready training courses with AI-generated content.",
+      "Turn your SOPs into structured training courses, with AI drafting the modules and quizzes.",
     problem:
-      "Creating training materials is tedious and expensive. Most SMEs have SOPs but lack the resources to convert them into structured courses. Missing out on SkillsFuture funding means paying full training costs.",
+      "Creating training materials is tedious and expensive. Most SMEs have SOPs but lack the resources to convert them into structured courses, so the know-how stays in documents nobody reads.",
     steps: [
       {
         title: "Upload Your SOPs",
@@ -347,7 +347,7 @@ export const SOLUTIONS: Solution[] = [
       {
         title: "AI Structures the Course",
         description:
-          "Content is organised into modules, lessons, and assessments aligned with competency frameworks.",
+          "The AI drafts modules, learning objectives and quiz questions from your SOP, for your trainer to review.",
       },
       {
         title: "Generate Materials",
@@ -357,15 +357,15 @@ export const SOLUTIONS: Solution[] = [
       {
         title: "Publish & Track",
         description:
-          "Deploy on your LMS or our hosted platform. Track completions for SkillsFuture reporting.",
+          "Publish on your own LMS and track who has completed each module.",
       },
     ],
     features: [
-      "Aligned with Singapore Workforce Skills Qualifications (WSQ) framework",
-      "Auto-generates quizzes, assessments, and certification criteria",
+      "Drafts follow the structure of your own SOP, for your trainer to review",
+      "Drafts quiz questions and assessments for each module",
       "Multi-format output: slides, video scripts, PDFs, and SCORM packages",
       "Learner progress tracking and completion certificates",
-      "SkillsFuture Enterprise Credit eligible course formatting",
+      "Course drafts your own trainers or a training provider can adapt",
       "Supports bilingual content delivery",
     ],
     icon: "graduation",
@@ -451,7 +451,7 @@ export const SOLUTIONS: Solution[] = [
     slug: "financial-report-builder",
     title: "AI Financial Report Builder",
     tagline:
-      "Pull data from your spreadsheets and generate professional financial reports automatically.",
+      "Summarise the figures in your spreadsheets into a draft management report for your accountant to review.",
     problem:
       "Monthly financial reporting takes days of manual work: pulling data from multiple spreadsheets, formatting tables, writing commentary, and checking numbers. Errors in reports erode stakeholder trust.",
     steps: [
@@ -461,26 +461,26 @@ export const SOLUTIONS: Solution[] = [
           "Upload Google Sheets or Excel files, including exports from your accounting software.",
       },
       {
-        title: "Choose Report Type",
+        title: "Choose the Focus",
         description:
-          "Select from P&L, balance sheet, cash flow, management report, or custom templates.",
+          "Pick what the summary covers: revenue and costs, margins, or a monthly management overview.",
       },
       {
         title: "AI Analyses & Writes",
         description:
-          "The AI calculates ratios, identifies trends, and writes executive commentary.",
+          "The AI works out margins from your figures, points out trends and drafts commentary.",
       },
       {
-        title: "Review & Present",
+        title: "Review with Your Accountant",
         description:
-          "Get a boardroom-ready PDF with charts, tables, and narrative insights.",
+          "Download the draft as a PDF with tables and commentary, for your accountant to check before anyone relies on it.",
       },
     ],
     features: [
       "Works from Excel and Google Sheets, including exports from your accounting software",
-      "Auto-generates P&L, balance sheet, and cash flow statements",
-      "AI-written executive summary with trend analysis",
-      "Variance analysis against budget and prior periods",
+      "Summarises revenue, costs and margins from the figures you provide; it does not prepare financial statements",
+      "Drafts a plain-language summary with trends",
+      "Compares against budget and prior periods when you include them",
       "Professional charts and visualisations",
       "Scheduled reports: auto-generate monthly or quarterly",
     ],
@@ -490,9 +490,9 @@ export const SOLUTIONS: Solution[] = [
     slug: "compliance-checker",
     title: "AI Compliance Checker",
     tagline:
-      "Upload a contract or policy, and AI flags issues against Singapore regulations instantly.",
+      "Paste a contract or policy, and AI flags the clauses worth a closer look, for your lawyer to review.",
     problem:
-      "Singapore's regulatory landscape is complex and constantly evolving. SMEs can't afford full-time legal counsel, and missing a compliance requirement can mean fines, penalties, or losing business licences.",
+      "Contracts and policies pile up, and reading every clause before a lawyer sees it takes time. A first pass that points out the clauses worth asking about makes that conversation shorter.",
     steps: [
       {
         title: "Upload Your Document",
@@ -500,28 +500,28 @@ export const SOLUTIONS: Solution[] = [
           "Drop in contracts, policies, or terms of service in PDF or Word format.",
       },
       {
-        title: "Select Regulation Set",
+        title: "Say What It Is",
         description:
-          "Choose from Employment Act, PDPA, Companies Act, or industry-specific regulations.",
+          "Tell the AI what kind of document it is, such as an employment contract or a privacy policy.",
       },
       {
-        title: "AI Analyses & Flags",
+        title: "AI Flags Clauses",
         description:
-          "The AI cross-references every clause against the selected regulations and highlights risks.",
+          "The AI reads each clause and flags the ones that may raise questions, with a severity and the topic each one touches.",
       },
       {
-        title: "Get Actionable Report",
+        title: "Take It to Your Lawyer",
         description:
-          "Receive a detailed report with risk levels, specific clause references, and suggested fixes.",
+          "A short report lists the flagged clauses and suggested wording to discuss. It is a starting point, not legal advice.",
       },
     ],
     features: [
-      "Covers Employment Act, PDPA, Companies Act, and GST regulations",
+      "Flags clauses on topics such as notice periods, data protection and restraint of trade",
       "Risk-rated findings: critical, high, medium, low",
-      "Specific clause-by-clause analysis with regulation references",
-      "Suggested remediation language for each finding",
-      "Audit trail for compliance documentation",
-      "Regular updates as regulations change",
+      "Each flag points to the clause it came from",
+      "Suggested wording to discuss with your lawyer",
+      "Keeps a record of each review",
+      "Not legal advice: every flag is for a qualified lawyer to confirm",
     ],
     icon: "shield",
   },

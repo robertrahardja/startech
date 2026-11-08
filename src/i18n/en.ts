@@ -42,7 +42,7 @@ export const en = {
       yearsFigure: "20+",
       yearsLabel: "years, both sides",
       testsFigure: "7,060",
-      testsLabel: "tests that must pass",
+      testsLabel: "tests in our internal ERP build, not deployed",
       jurisdictionsFigure: "2",
       jurisdictionsLabel: "jurisdictions",
       languagesFigure: "7",
@@ -153,7 +153,7 @@ export const en = {
     metric: { figure: "7,060", caption: "automated tests across 484 calculation classes" },
     detail: [
       "The test figures are from the August 2026 run and cover all 484 calculation classes in the build.",
-      "51 REST controllers. Multi-currency, multi-tenant, role-based, audit-logged.",
+      "115 REST controllers. Multi-currency, multi-tenant, role-based, audit-logged.",
       "Shown as evidence of how we build and test complex systems. It is not a deployed client system, and we make no accuracy claim for it.",
     ],
   },

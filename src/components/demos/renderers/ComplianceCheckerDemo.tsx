@@ -74,7 +74,7 @@ export default function ComplianceCheckerDemo(props: DemoRendererProps) {
             <div className="flex-1">
               <div className="mb-2 flex items-center gap-2">
                 <h3 className="text-[15px] font-normal text-st-text">
-                  Compliance Review
+                  Contract Review
                 </h3>
                 <span className="rounded-full bg-st-surface px-2 py-0.5 text-[11px] font-medium text-st-text-muted">
                   {documentType}
@@ -141,10 +141,10 @@ export default function ComplianceCheckerDemo(props: DemoRendererProps) {
                       </p>
                     </div>
 
-                    {/* Regulation */}
+                    {/* Reference: the topic or law the AI linked the flag to */}
                     <div>
                       <span className="text-[11px] font-medium text-st-text-muted">
-                        Regulation
+                        Reference
                       </span>
                       <p className="mt-0.5 text-[13px] font-normal text-st-text">
                         {finding.regulation}
@@ -190,8 +190,8 @@ export default function ComplianceCheckerDemo(props: DemoRendererProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-normal leading-relaxed text-st-gold-light/80">
         <p className="mb-2 font-medium text-st-gold-light">How to use this demo</p>
-        <p>Paste the text from a contract, employee policy, terms of service, or any business agreement. The AI will analyze it against key Singapore regulations — Employment Act, PDPA (data protection), Companies Act — and flag potential compliance issues with severity ratings and fix suggestions.</p>
-        <p className="mt-2 text-[12px] text-st-gold-light/60">For best results, paste at least 2-3 paragraphs. The AI generates a risk score (0-10), identifies specific clauses of concern, cites the relevant regulation, and suggests corrective language.</p>
+        <p>Paste the text from a contract, employee policy, terms of service, or any business agreement. The AI reads it and flags the clauses worth a closer look, with a severity and suggested wording to discuss.</p>
+        <p className="mt-2 text-[12px] text-st-gold-light/60">For best results, paste at least 2-3 paragraphs. The AI gives a risk score (0-10), points to the clauses it flagged and names the topic each one touches. It is a first pass for your lawyer to review, not legal advice.</p>
       </div>
       <div>
         <label className={labelClass}>Contract or Policy Text</label>
@@ -213,7 +213,7 @@ export default function ComplianceCheckerDemo(props: DemoRendererProps) {
         disabled={isLoading || !contractText.trim()}
         className="relative w-full overflow-hidden rounded-xl border border-st-gold/30 bg-st-gold/15 px-4 py-3.5 text-[13px] font-normal tracking-wide text-st-gold-light transition-all duration-500 hover:bg-st-gold/25 hover:border-st-gold/50 disabled:opacity-40"
       >
-        {isLoading ? "Generating..." : "Check Compliance"}
+        {isLoading ? "Generating..." : "Flag Clauses"}
       </button>
     </form>
   );

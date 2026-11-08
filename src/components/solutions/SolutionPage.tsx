@@ -221,11 +221,11 @@ function SolutionStrip({
     <section className="pt-28 pb-8 sm:pt-32 sm:pb-10">
       <div className="mx-auto max-w-4xl px-6 sm:px-8">
         <nav className="mb-6 flex items-center gap-2 text-[11px] font-medium tracking-wide text-st-text-muted">
-          <Link href="/" className="inline-flex min-h-[44px] items-center transition-colors duration-300 hover:text-st-text">
+          <Link href="/" className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center transition-colors duration-300 hover:text-st-text">
             Home
           </Link>
           <span className="text-st-text-muted/40">/</span>
-          <Link href="/solutions" className="inline-flex min-h-[44px] items-center transition-colors duration-300 hover:text-st-text">
+          <Link href="/solutions" className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center transition-colors duration-300 hover:text-st-text">
             Solutions
           </Link>
           <span className="text-st-text-muted/40">/</span>

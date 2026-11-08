@@ -44,7 +44,7 @@ export const ja: Messages = {
       yearsFigure: "20年以上",
       yearsLabel: "ビジネスと技術の両分野",
       testsFigure: "7,060",
-      testsLabel: "自動テスト",
+      testsLabel: "自動テスト（自社開発ERP、未導入）",
       jurisdictionsFigure: "2",
       jurisdictionsLabel: "法域に対応",
       languagesFigure: "7",
@@ -146,7 +146,7 @@ export const ja: Messages = {
         metric: { figure: "7,060", caption: "484の計算クラスにわたる自動テスト" },
         detail: [
           "テストの数値は2026年8月の実行結果で、ビルド内の484の計算クラスすべてを対象としています。",
-          "51のRESTコントローラー。多通貨、マルチテナント、権限管理、監査ログ対応。",
+          "115のRESTコントローラー。多通貨、マルチテナント、権限管理、監査ログ対応。",
           "複雑なシステムをどう作り、どうテストするかを示すための事例です。顧客向けに導入したシステムではなく、計算の正確性を保証するものでもありません。",
         ],
       },

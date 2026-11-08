@@ -135,7 +135,14 @@ QuickBooks integration, HL7 and FHIR records or AI triage, and
 healthcare gave way to trading and logistics. The EDGE answer says
 Enterprise Singapore decides support and StarTech is not a pre-approved
 EDGE vendor. The approach says about twelve weeks, not 90 days, and the
-hero counts the site's seven languages.
+hero counts the site's seven languages. The hero's 7,060 figure is
+labelled as the internal ERP build, not deployed. The ERP case said "51
+REST controllers"; the ERP source has 115 classes annotated
+`@RestController` (git HEAD c194396, 22 Sep 2026; 102 at the end of
+August), so the site now says 115. The onboarding, contract-review,
+training and financial-report demos describe drafts for HR, a lawyer, a
+trainer or an accountant to review, with no CPF, Employment Act,
+SkillsFuture, WSQ or financial-statement claims.
 
 Other inconsistencies:
 

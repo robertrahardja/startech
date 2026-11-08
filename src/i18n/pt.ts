@@ -44,7 +44,7 @@ export const pt: Messages = {
       yearsFigure: "20+",
       yearsLabel: "anos, dos dois lados",
       testsFigure: "7.060",
-      testsLabel: "testes automatizados",
+      testsLabel: "testes automatizados no nosso ERP próprio, não implantado",
       jurisdictionsFigure: "2",
       jurisdictionsLabel: "jurisdições",
       languagesFigure: "7",
@@ -146,7 +146,7 @@ export const pt: Messages = {
         metric: { figure: "7.060", caption: "testes automatizados em 484 classes de cálculo" },
         detail: [
           "Os números de testes são da execução de agosto de 2026 e cobrem as 484 classes de cálculo do desenvolvimento.",
-          "51 controladores REST. Multimoeda, multiempresa, permissões por papel e registro de auditoria.",
+          "115 controladores REST. Multimoeda, multiempresa, permissões por papel e registro de auditoria.",
           "É mostrado como evidência de como construímos e testamos sistemas complexos. Não é um sistema implantado em cliente, e não fazemos nenhuma afirmação sobre a exatidão dos seus cálculos.",
         ],
       },

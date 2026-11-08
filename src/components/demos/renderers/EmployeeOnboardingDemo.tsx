@@ -153,8 +153,8 @@ export default function EmployeeOnboardingDemo(props: DemoRendererProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="rounded-lg border border-st-gold/20 bg-st-gold/[0.04] px-4 py-3.5 text-[13px] font-normal leading-relaxed text-st-gold-light/80">
         <p className="mb-2 font-medium text-st-gold-light">How to use this demo</p>
-        <p>Enter the new employee&apos;s details — full name, job title, department, start date, and monthly salary in SGD. The AI will generate Singapore-compliant documents: an offer letter (with CPF, probation, and notice period), an NDA, and a first-week onboarding checklist.</p>
-        <p className="mt-2 text-[12px] text-st-gold-light/60">The generated documents follow Singapore Employment Act standards. These are previews — the full version produces legally reviewed, company-branded documents.</p>
+        <p>Enter the new employee&apos;s details — full name, job title, department, start date, and monthly salary in SGD. The AI drafts an offer letter (with probation and notice period), an NDA, and a first-week onboarding checklist.</p>
+        <p className="mt-2 text-[12px] text-st-gold-light/60">These are drafts for HR to review and adapt to your own templates. They are not legal advice.</p>
       </div>
       <div>
         <label className={labelClass}>Employee Name</label>

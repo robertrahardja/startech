@@ -448,7 +448,7 @@ ${PROMPT_SUFFIX}`,
     ],
     systemPrompt: `${PROMPT_PREFIX("Employee Onboarding")}
 
-Generate Singapore-compliant onboarding documents: offer letter preview (include CPF, probation period, notice period), NDA preview, and first-week onboarding checklist.
+Draft onboarding documents for a Singapore company, for HR to review: an offer letter preview (include probation period, notice period and annual leave), an NDA preview, and a first-week onboarding checklist. Do not mention CPF, payroll, tax or GST filing, and do not say the documents are legally compliant: they are drafts.
 
 Return JSON matching this schema:
 {
@@ -539,7 +539,7 @@ ${PROMPT_SUFFIX}`,
     ],
     systemPrompt: `${PROMPT_PREFIX("Compliance Checker")}
 
-Analyze the text for compliance issues under Singapore law (Employment Act, PDPA, Companies Act, etc.). Flag issues with severity.
+Read the text as a first pass before a lawyer reviews it. Flag clauses that may raise questions for a Singapore business, each with a severity, the topic or law it relates to (in "regulation"), and suggested wording to discuss. Never state that a clause is legally compliant or non-compliant; say what to ask a lawyer about.
 
 Return JSON matching this schema:
 {
@@ -575,7 +575,7 @@ ${PROMPT_SUFFIX}`,
     ],
     systemPrompt: `${PROMPT_PREFIX("Training Content Generator")}
 
-Transform the SOP into a structured training course. Generate modules with learning objectives, content summary, and quiz questions. Make it SkillsFuture-ready.
+Transform the SOP into a structured training course draft for the trainer to review. Generate modules with learning objectives, content summary, and quiz questions. Do not claim SkillsFuture, WSQ or any other accreditation or funding eligibility.
 
 Return JSON matching this schema:
 {
@@ -637,7 +637,7 @@ ${PROMPT_SUFFIX}`,
     ],
     systemPrompt: `${PROMPT_PREFIX("Financial Report Builder")}
 
-Generate a financial analysis report for a Singapore SME. Include P&L summary, margin analysis, trends, and actionable recommendations.
+Summarise the figures provided for a Singapore SME as a draft management report for the owner's accountant to review. Include a profit and loss summary of the figures given, margin analysis, trends, and recommendations. Use only the figures provided, and do not present the result as financial statements or checked accounts.
 
 Return JSON matching this schema:
 {

@@ -44,7 +44,7 @@ export const zhHant: Messages = {
       yearsFigure: "20+",
       yearsLabel: "年，業務與技術",
       testsFigure: "7,060",
-      testsLabel: "項自動化測試",
+      testsLabel: "項自動化測試（內部 ERP 專案，未部署）",
       jurisdictionsFigure: "2",
       jurisdictionsLabel: "個司法管轄區",
       languagesFigure: "7",
@@ -146,7 +146,7 @@ export const zhHant: Messages = {
         metric: { figure: "7,060", caption: "涵蓋 484 個計算類別的自動化測試" },
         detail: [
           "測試數據來自 2026 年 8 月的執行，涵蓋該版本全部 484 個計算類別。",
-          "51 個 REST 介面。多幣別、多租戶、角色權限、完整稽核紀錄。",
+          "115 個 REST 介面。多幣別、多租戶、角色權限、完整稽核紀錄。",
           "這是展示我們如何打造與測試複雜系統的例子，並非已為客戶部署的系統，我們也不就其計算準確性做任何聲明。",
         ],
       },

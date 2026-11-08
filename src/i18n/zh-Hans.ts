@@ -44,7 +44,7 @@ export const zhHans: Messages = {
       yearsFigure: "20+",
       yearsLabel: "年，业务与技术",
       testsFigure: "7,060",
-      testsLabel: "项自动化测试",
+      testsLabel: "项自动化测试（内部 ERP 项目，未部署）",
       jurisdictionsFigure: "2",
       jurisdictionsLabel: "个司法辖区",
       languagesFigure: "7",
@@ -146,7 +146,7 @@ export const zhHans: Messages = {
         metric: { figure: "7,060", caption: "覆盖 484 个计算类的自动化测试" },
         detail: [
           "测试数据来自 2026 年 8 月的运行，覆盖该版本全部 484 个计算类。",
-          "51 个 REST 接口。多币种、多租户、基于角色的权限、完整审计日志。",
+          "115 个 REST 接口。多币种、多租户、基于角色的权限、完整审计日志。",
           "这是展示我们如何构建和测试复杂系统的例子，并非已为客户部署的系统，我们也不就其计算准确性作任何声明。",
         ],
       },

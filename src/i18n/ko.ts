@@ -43,7 +43,7 @@ export const ko: Messages = {
       yearsFigure: "20년+",
       yearsLabel: "비즈니스와 기술 양쪽",
       testsFigure: "7,060",
-      testsLabel: "자동화 테스트",
+      testsLabel: "자동화 테스트(자체 개발 ERP, 미배포)",
       jurisdictionsFigure: "2",
       jurisdictionsLabel: "관할 지역",
       languagesFigure: "7",
@@ -145,7 +145,7 @@ export const ko: Messages = {
         metric: { figure: "7,060", caption: "484개 계산 클래스에 걸친 자동화 테스트" },
         detail: [
           "테스트 수치는 2026년 8월 실행 결과이며, 빌드 내 484개 계산 클래스 전체를 포함합니다.",
-          "51개의 REST 컨트롤러. 다통화, 멀티테넌트, 권한 관리, 감사 로그.",
+          "115개의 REST 컨트롤러. 다통화, 멀티테넌트, 권한 관리, 감사 로그.",
           "복잡한 시스템을 어떻게 만들고 테스트하는지 보여 주는 사례입니다. 고객에게 배포한 시스템이 아니며, 계산 정확성을 주장하지 않습니다.",
         ],
       },

@@ -45,7 +45,7 @@ export const es: Messages = {
       yearsFigure: "20+",
       yearsLabel: "años, ambos lados",
       testsFigure: "7.060",
-      testsLabel: "pruebas automatizadas",
+      testsLabel: "pruebas automatizadas en nuestro ERP propio, no implantado",
       jurisdictionsFigure: "2",
       jurisdictionsLabel: "jurisdicciones",
       languagesFigure: "7",
@@ -147,7 +147,7 @@ export const es: Messages = {
         metric: { figure: "7.060", caption: "pruebas automatizadas en 484 clases de cálculo" },
         detail: [
           "Las cifras de pruebas son de la ejecución de agosto de 2026 y cubren las 484 clases de cálculo del desarrollo.",
-          "51 controladores REST. Multidivisa, multiempresa, permisos por rol y registro de auditoría.",
+          "115 controladores REST. Multidivisa, multiempresa, permisos por rol y registro de auditoría.",
           "Se presenta como prueba de cómo construimos y probamos sistemas complejos. No es un sistema implantado en un cliente y no hacemos ninguna afirmación sobre la exactitud de sus cálculos.",
         ],
       },
