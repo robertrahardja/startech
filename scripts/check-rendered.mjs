@@ -37,6 +37,9 @@ const values = [];
 const SHARED = /^(StarTech|UEN |Robert Rahardja|[\d\s.,+%-]+)/;
 const needles = [...new Set(values)].filter((v) => v.length >= 6 && !SHARED.test(v));
 
+// Proper nouns that legitimately appear in Latin script on every locale's page.
+const PROPER_NOUNS = ["Enterprise Singapore"];
+
 // Uses the Chromium already on this machine rather than pinning a download:
 // the playwright package and the installed browser builds drift apart, and a
 // version mismatch fails with a download prompt rather than a useful result.
@@ -50,7 +53,12 @@ let bad = 0;
 
 for (const loc of ["ja", "ko", "zh-Hans", "zh-Hant", "es", "pt"]) {
   await page.goto(`${process.env.BASE ?? "http://localhost:4321"}/${loc}/`, { waitUntil: "networkidle" });
-  const text = await page.evaluate(() => document.body.innerText);
+  // Official names stay in their own script in every language; "Enterprise
+  // Singapore" would otherwise read as a stray English "Singapore".
+  const text = PROPER_NOUNS.reduce(
+    (acc, name) => acc.replaceAll(name, ""),
+    await page.evaluate(() => document.body.innerText)
+  );
   // Whole-string containment is not enough: English "Contact" is a substring
   // of Spanish "Contacto", which reported a leak that was not there. Require a
   // non-letter (or an edge) on both sides so only a standalone run matches.

@@ -77,14 +77,15 @@ const ICONS: Record<string, React.ReactNode> = {
 };
 
 /**
- * Cards 1 and 2 (invoice scanner, chatbot) get the wide hero treatment —
- * they are the two most immediately legible demos to a first-time visitor.
- * Every other tile is a standard 1x1 spotlight card. Per the bento-grid
- * guidance this repo's design notes call out: equal cells read as a plain
- * grid, not a bento, and motion belongs on one hero tile, not all thirteen.
+ * Cards 1 and 2 (invoice scanner, inventory tracker) get the wide treatment:
+ * they lead the Singapore order in solutionsData and carry the most
+ * production proof. Every other tile is a standard 1x1 spotlight card. Per
+ * the bento-grid guidance this repo's design notes call out: equal cells read
+ * as a plain grid, not a bento, and motion belongs on one hero tile, not all
+ * thirteen.
  */
 const HERO_SLUG = "invoice-scanner";
-const WIDE_SLUGS = new Set([HERO_SLUG, "compliance-checker"]);
+const WIDE_SLUGS = new Set([HERO_SLUG, "inventory-tracker"]);
 
 function DemoCard({ demo, index }: { demo: ShowcaseDemo; index: number }) {
   const { t } = useI18n();

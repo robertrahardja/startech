@@ -45,8 +45,8 @@ export const en = {
       testsLabel: "tests that must pass",
       jurisdictionsFigure: "2",
       jurisdictionsLabel: "jurisdictions",
-      languagesFigure: "4",
-      languagesLabel: "languages",
+      languagesFigure: "7",
+      languagesLabel: "languages on this site",
     },
     card: {
       role: "Managing Director",
@@ -76,24 +76,41 @@ export const en = {
       },
       {
         headline: "The numbers have to be right, not roughly right",
-        body: "Money, payroll, claims — the places where close enough is not good enough, and being wrong costs more than being late.",
+        body: "Invoices, payments, stock — the places where close enough is not good enough, and being wrong costs more than being late.",
       },
     ],
+    // One sentence each, for Singapore firms with operations next door.
+    regions: [
+      "Running operations in Johor or the JS-SEZ? We build systems that work across a border, like the export system live with our client in Japan.",
+      "We also support teams in the Philippines and Vietnam that are run from Singapore.",
+    ],
+    // Points Japanese-affiliated firms in Singapore to the Japanese-first
+    // site. Only en and ja set it; null hides the line in other locales.
+    japanSite:
+      "Working for a Japanese-affiliated company? The full showcases in Japanese are on our Japan site:" as
+        | string
+        | null,
     pricing:
       "On price: you will get a range on the first call and a firm number after discovery, not a figure invented from an email. And if an off-the-shelf tool already does the job, we will tell you which one — that is a cheaper answer than anything we could build you.",
     pricingLead: "On price:",
   },
 
+  // Two client systems and one internal build, nothing more. Re-check these
+  // against docs/COMPANY.md ("Claims to keep honest") whenever an engagement
+  // starts or ends.
   work: {
     eyebrow: "Selected work",
-    title: "Systems running in production.",
-    sub: "Four builds, described the way a business owner would describe them — what the company was actually doing beforehand, and what went wrong on the way.",
+    title: "Two client systems, and one internal build.",
+    sub: "Described the way a business owner would describe them: what the company was actually doing beforehand, and what went wrong on the way. The third is our own build, tested but not deployed.",
     before: "Before",
     built: "What we built",
     result: "Result",
     details: "Details",
+    demosLine:
+      "Want to see something run rather than read about it? {count} working demos run in your browser on sample data.",
+    demosLink: "Try the working demos",
     disclaimer:
-      "Client names are withheld where the engagement is covered by confidentiality. Figures are drawn from the delivered systems and can be walked through in detail on a call.",
+      "Client names are withheld where the engagement is covered by confidentiality. Figures are drawn from the systems themselves and can be walked through in detail on a call.",
     cases: [
   {
     sector: "Cross-border trade",
@@ -111,48 +128,33 @@ export const en = {
     ],
   },
   {
-    sector: "Enterprise resource planning",
-    market: "Singapore & Indonesia",
-    title: "A payroll engine an accountant can audit line by line",
-    before:
-      "Singapore payroll compliance is unforgiving: CPF's three-step rounding, age and residency bands, ordinary-wage ceilings, SDL floors and caps. Most systems approximate it and hope nobody checks.",
-    built:
-      "A multi-tenant ERP backend in Java 21 and Spring Boot, with a Singapore payroll compliance engine verified against CPF Board tables scenario by scenario.",
-    metric: { figure: "7,060", caption: "automated tests across 484 calculators" },
-    detail: [
-      "48 CPF scenarios documented as a printable verification matrix — age bands, PR year-one and year-two rates, rounding edges, ceiling behaviour — for an accountant to sign off row by row.",
-      "A five-engine accounting harness independently recomputes every statement: ledger, trial balance, P&L, balance sheet and cash flow must all agree.",
-      "51 REST controllers. Multi-currency, multi-tenant, role-based, audit-logged.",
-    ],
-  },
-  {
     sector: "AI implementation",
     market: "Singapore",
     title: "An AI co-pilot that answers from the company's own documents",
     before:
       "A generic chatbot is worthless to an SME knowledge worker: it knows nothing about their role, their sector, or what their organisation has already decided.",
     built:
-      "A production co-pilot with four reasoning modes, layered organisational context (sector, org, role, individual), retrieval over the customer's own uploaded documents, and peer-to-peer coordination across departments.",
-    metric: { figure: "Live", caption: "production API, paying client" },
+      "A co-pilot with four reasoning modes, layered organisational context (sector, org, role, individual), retrieval over the customer's own uploaded documents, and peer-to-peer coordination across departments.",
+    metric: { figure: "2026", caption: "delivered to the client; the engagement completed that year" },
     detail: [
       "Multi-LLM routing with an abstraction layer — the default model was switched between providers on the client's instruction without touching product code.",
       "Speech-to-text for meeting capture, with action items extracted into tasks.",
-      "Runs on Cloudflare Workers with D1, KV, R2 and Vectorize.",
+      "Built on Cloudflare Workers with D1, KV, R2 and Vectorize.",
     ],
   },
   {
-    sector: "Healthcare",
-    market: "Indonesia & SEA",
-    title: "A health record the patient owns, not the hospital",
+    sector: "Internal build",
+    market: "Tested, not deployed",
+    title: "An ERP we build in-house, to show how we test",
     before:
-      "Patients moving between Indonesian and Singaporean providers carry their history in paper folders and photographs. Provider systems do not talk to each other, and cross-border data rules make naive integration unlawful.",
+      "Software that calculates money is easy to demo and hard to trust: most of it is checked by spot tests, if at all. We wanted a large build of our own that proves how we test, before any client relies on our code.",
     built:
-      "A trilingual patient-owned health platform operated from Singapore under Singapore-only data residency. Lifestyle tracking, insurance onboarding and an AI advisor are live; the cross-border vault and clinician portal are in build.",
-    metric: { figure: "3", caption: "languages, one codebase" },
+      "A multi-tenant ERP backend in Java 21 and Spring Boot. It is an internal build: tested, but not deployed for any client.",
+    metric: { figure: "7,060", caption: "automated tests across 484 calculation classes" },
     detail: [
-      "Custodian model by design: the platform holds patient-owned copies, never claims to be the provider's record system.",
-      "Data residency decided at architecture time, not retrofitted after a compliance review.",
-      "Insurer panel and hospital directory data curated across Singapore, Malaysia and Indonesia.",
+      "The test figures are from the August 2026 run and cover all 484 calculation classes in the build.",
+      "51 REST controllers. Multi-currency, multi-tenant, role-based, audit-logged.",
+      "Shown as evidence of how we build and test complex systems. It is not a deployed client system, and we make no accuracy claim for it.",
     ],
   },
     ],
@@ -202,36 +204,36 @@ export const en = {
     ],
   },
   {
-    title: "Enterprise Software",
+    title: "Business Systems",
     description:
-      "Full ERP and line-of-business systems — financials, HR, inventory, procurement and manufacturing — built to be audited, not just demoed.",
+      "Operations platforms, CRM, inventory, documents and workflow that replace spreadsheets and disconnected tools — built to be audited, not just demoed.",
     details: [
-      "General ledger, AP, AR, payroll and fixed assets",
+      "Inventory, deals, documents and payments in one system, in place of spreadsheets and chat threads",
       "Multi-tenant, multi-currency, role-based access, audit-ready logging",
-      "Singapore payroll compliance engine verified scenario-by-scenario against CPF Board tables",
-      "Integrates with Xero, QuickBooks, Sheets and Excel",
+      "Starts from the spreadsheets you already run on, with import and export to Excel and Google Sheets",
+      "Deployed on your own cloud account, database and repository",
     ],
   },
   {
-    title: "Financial Systems",
+    title: "Finance Workflows",
     description:
-      "Accounting engines, document AI, valuation and reconciliation for operators who answer to a regulator.",
+      "Invoicing, bank-statement import, reconciliation and document generation, with an audit trail your accountant can follow.",
     details: [
       "Automated reconciliation across accounts and currencies, with deterministic dedupe",
       "Bank statement ingestion — including formats that carry no transfer identifier",
-      "KYC and AML workflows, multi-jurisdiction regulatory reporting",
-      "DCF and comparable analysis with Monte Carlo simulation",
+      "Proforma invoices, commercial invoices and shipping documents generated from the same records",
+      "InvoiceNow e-invoices from the system or spreadsheet you invoice from, through an accredited access point",
     ],
   },
   {
-    title: "Healthcare & Public Sector",
+    title: "Cross-border Operations",
     description:
-      "Patient platforms, medical records and citizen services for high-volume, high-assurance environments where the data rules come first.",
+      "Multi-currency, multi-language systems for companies trading between Singapore, Japan and the region, where each country's rules come first.",
     details: [
       "Data residency decided at architecture time, not retrofitted after review",
-      "Patient-owned custodian model — never a claim to be the provider's record system",
-      "Multilingual delivery across English, Chinese, Malay and Bahasa Indonesia",
-      "High-availability infrastructure for critical services",
+      "Several currencies, tax regimes and document formats in one system",
+      "Screens and documents in English, Japanese, Chinese, Malay or Bahasa Indonesia",
+      "Live today for an exporter in Japan: stock, deals, documents and payments",
     ],
   },
     ],
@@ -243,23 +245,23 @@ export const en = {
     sub: "Deep understanding of your industry's regulatory, operational, and technical requirements.",
     items: [
   {
-    name: "Healthcare",
+    name: "Trading & Logistics",
     description:
-      "Hospital management, patient intake automation, medical record analysis, and AI-powered triage systems.",
+      "Stock, deals, shipping documents and payments for trading, wholesale and logistics firms that have outgrown their spreadsheets.",
     details: [
-      "Electronic medical records with HL7 and FHIR compliance",
-      "AI triage that prioritises patients by symptom severity",
-      "Automated insurance claim submission and tracking",
-      "Telemedicine integration with scheduling and billing",
+      "Stock and deals in one place, with each role seeing only its own view",
+      "Proforma invoices, commercial invoices and shipping instructions generated from the same record",
+      "Bank-statement import and reconciliation across currencies",
+      "Shipment tracking and buyer portals for customers abroad",
     ],
   },
   {
     name: "Finance & Banking",
     description:
-      "Accounting engines, insurance document processing, startup valuation, tax compliance, and fraud detection.",
+      "Document processing, reconciliation, insurance paperwork and risk checks for finance teams and the firms that serve them.",
     details: [
       "Real-time transaction monitoring and anomaly detection",
-      "Regulatory reporting — MAS, OJK, and the regime your auditor answers to",
+      "Statements, policies and claims read by document AI, with the source shown for every figure",
       "Automated reconciliation across accounts and currencies",
       "AI-powered credit scoring and risk assessment",
     ],
@@ -313,8 +315,8 @@ export const en = {
 
   approach: {
     eyebrow: "Approach",
-    title: "Strategy to production in 90 days",
-    sub: "A proven process refined across enterprise deployments. We implement, not just advise.",
+    title: "Discovery to production in about twelve weeks",
+    sub: "The same five steps on every engagement, with a written scope and cost before any code. We implement, not just advise.",
     deliverable: "Deliverable",
     step: "Go to step",
     previous: "Previous",
@@ -394,13 +396,13 @@ export const en = {
     said: "What happens to the system if you are unavailable?",
     answer:
       "The principal writes the core and specialists are brought in as the work demands. What protects you is not headcount, it is that the system is documented, tested and deployed on infrastructure you own — your Cloudflare account, your database, your repository. Another engineer can pick it up because the tests describe what it is supposed to do.",
-    proof: "7,060 automated tests across 484 calculator classes.",
+    proof: "7,060 automated tests across 484 calculation classes, in our internal ERP build.",
   },
   {
     said: "What does something like this usually cost?",
     answer:
-      "You get a range on the first call and a firm number after discovery. We will say the real figure early rather than late, then cut scope together until it fits — a smaller system that ships beats a large one that stalls. Singapore SMEs may qualify for support under the EDGE Grant, which replaced PSG; we check your project and prepare the vendor documents at no charge.",
-    proof: "Eligibility confirmed against current IMDA criteria, not assumed.",
+      "You get a range on the first call and a firm number after discovery. We will say the real figure early rather than late, then cut scope together until it fits — a smaller system that ships beats a large one that stalls. Singapore SMEs may qualify for support under the EDGE Grant, which replaced PSG; we help you check whether your project qualifies and prepare our vendor documents at no charge.",
+    proof: "Enterprise Singapore decides EDGE support, and StarTech is not a pre-approved EDGE vendor.",
   },
   {
     said: "Is there a cost to waiting a quarter or two?",
@@ -410,9 +412,8 @@ export const en = {
   {
     said: "How much will we have to explain about how our business works?",
     answer:
-      "That is the entire reason this firm exists. You will not be explaining what a trial balance is, what CPF is owed, or why a claim reconciles the way it does. Brief us the way you would brief your accountant.",
-    proof:
-      "The payroll engine is verified scenario by scenario against CPF Board tables.",
+      "That is the entire reason this firm exists. You will not be explaining what a trial balance is, what goes on a tax invoice, or why a payment reconciles the way it does. Brief us the way you would brief your accountant.",
+    proof: "20+ years in both business and technology.",
   },
     ],
   },

@@ -198,7 +198,7 @@ export default function Hero({ onAskAi }: HeroProps) {
             <a
               href="#work"
               onPointerMove={onPointerMove}
-              className="hero-btn-secondary group relative flex-1 overflow-hidden rounded-lg px-4 py-2.5 text-center text-[12.5px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:flex-none sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
+              className="hero-btn-secondary group relative min-h-[44px] flex-1 overflow-hidden rounded-lg px-4 py-2.5 text-center text-[12.5px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:flex-none sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
                 {t.hero.ctaWork}
@@ -209,7 +209,7 @@ export default function Hero({ onAskAi }: HeroProps) {
               <button
                 onClick={onAskAi}
                 onPointerMove={onPointerMove}
-                className="hero-btn-secondary group relative flex-1 overflow-hidden rounded-lg px-4 py-2.5 text-[12.5px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:flex-none sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
+                className="hero-btn-secondary group relative min-h-[44px] flex-1 overflow-hidden rounded-lg px-4 py-2.5 text-[12.5px] font-medium tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text sm:flex-none sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   <AiIcon className="btn-spark h-3.5 w-3.5" />
@@ -221,7 +221,7 @@ export default function Hero({ onAskAi }: HeroProps) {
             <a
               href="#capability-deck"
               onPointerMove={onPointerMove}
-              className="hero-btn-secondary group relative flex-1 overflow-hidden rounded-lg px-4 py-2.5 text-center text-[12.5px] font-medium tracking-wide transition-all duration-500 sm:flex-none sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
+              className="hero-btn-secondary group relative min-h-[44px] flex-1 overflow-hidden rounded-lg px-4 py-2.5 text-center text-[12.5px] font-medium tracking-wide transition-all duration-500 sm:flex-none sm:rounded-xl sm:px-8 sm:py-4 sm:text-[13px]"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
                 <span className="deck-text-shine deck-shine-play">{t.hero.ctaDeck}</span>
@@ -430,7 +430,7 @@ function HeroLanguageStrip({
             // The separator lives on the link itself (not a sibling span), so
             // wrapping the row can never strand a lone dot at a line start —
             // it travels with whichever word ends up starting the new line.
-            className={`inline-block text-[11px] font-normal leading-[1.9] tracking-wide transition-colors duration-300 before:mx-2 before:text-st-text-muted/30 before:content-['·'] first:before:content-none first:before:mx-0 sm:text-[10.5px] ${
+            className={`-my-[10px] inline-block py-[10px] text-[11px] font-normal leading-[1.9] tracking-wide transition-colors duration-300 before:mx-2 before:text-st-text-muted/30 before:content-['·'] first:before:content-none first:before:mx-0 sm:text-[10.5px] ${
               code === locale
                 ? "text-st-text-muted"
                 : armed === code

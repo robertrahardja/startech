@@ -17,6 +17,9 @@ import { useI18n } from "../i18n";
  * range on the first call, a firm number after discovery.
  */
 
+/** The Japanese-first site, for Japanese-affiliated firms in Singapore. */
+const JAPAN_SITE = "https://japan.startech-innovation.com";
+const JAPAN_SITE_LABEL = "japan.startech-innovation.com";
 
 export default function Qualify() {
   const { t } = useI18n();
@@ -72,6 +75,42 @@ export default function Qualify() {
             </button>
           ))}
         </div>
+
+        {/* Where else the same work applies: Singapore firms with operations
+            in Johor, teams in the Philippines and Vietnam run from Singapore,
+            and (in the locales that set it) the Japan site for
+            Japanese-affiliated firms. One sentence each, no new pages. */}
+        <ul className="mt-10 max-w-3xl space-y-3">
+          {t.qualify.regions.map((line) => (
+            <li key={line} className="flex gap-3">
+              <span
+                aria-hidden="true"
+                className="mt-[11px] h-1 w-1 flex-none rounded-full bg-st-gold-light/60"
+              />
+              <span className="text-[14px] leading-[1.8] text-st-text-muted/85">
+                {line}
+              </span>
+            </li>
+          ))}
+          {t.qualify.japanSite && (
+            <li className="flex gap-3">
+              <span
+                aria-hidden="true"
+                className="mt-[11px] h-1 w-1 flex-none rounded-full bg-st-gold-light/60"
+              />
+              <span className="text-[14px] leading-[1.8] text-st-text-muted/85">
+                {t.qualify.japanSite}{" "}
+                <a
+                  href={JAPAN_SITE}
+                  hrefLang="ja"
+                  className="inline-flex min-h-[44px] items-center text-st-text underline decoration-st-text-muted/40 underline-offset-4 transition-colors duration-300 hover:text-st-gold-light"
+                >
+                  {JAPAN_SITE_LABEL}
+                </a>
+              </span>
+            </li>
+          )}
+        </ul>
 
         {/* Pricing, said plainly rather than deferred.
             The one exclusion that survived is the only one that is actually

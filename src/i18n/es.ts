@@ -48,8 +48,8 @@ export const es: Messages = {
       testsLabel: "pruebas automatizadas",
       jurisdictionsFigure: "2",
       jurisdictionsLabel: "jurisdicciones",
-      languagesFigure: "4",
-      languagesLabel: "idiomas de trabajo",
+      languagesFigure: "7",
+      languagesLabel: "idiomas en este sitio",
     },
     card: {
       role: "Director General",
@@ -79,9 +79,14 @@ export const es: Messages = {
       },
       {
         headline: "Las cifras tienen que estar bien, no aproximadas",
-        body: "Dinero, nóminas, siniestros: donde lo aproximado no sirve y equivocarse cuesta más que llegar tarde.",
+        body: "Facturas, cobros, existencias: donde lo aproximado no sirve y equivocarse cuesta más que llegar tarde.",
       },
     ],
+    regions: [
+      "¿Tiene operaciones en Johor o en la JS-SEZ? Construimos sistemas que funcionan a ambos lados de una frontera, como el sistema de exportación que nuestro cliente ya usa en Japón.",
+      "También damos soporte a equipos en Filipinas y Vietnam que se gestionan desde Singapur.",
+    ],
+    japanSite: null,
     pricing:
       "Sobre el precio: en la primera llamada le damos un rango y, tras la fase de descubrimiento, una cifra firme. Nunca una cantidad improvisada por correo. Y si una herramienta que ya existe resuelve su caso, le diremos cuál: sale más barato que cualquier cosa que podamos construirle.",
     pricingLead: "Sobre el precio:",
@@ -89,14 +94,17 @@ export const es: Messages = {
 
   work: {
     eyebrow: "Proyectos seleccionados",
-    title: "Sistemas en producción.",
-    sub: "Cuatro proyectos, contados como los contaría el dueño del negocio: qué hacía la empresa antes y qué salió mal por el camino.",
+    title: "Dos sistemas de clientes y un desarrollo propio.",
+    sub: "Contados como los contaría el dueño del negocio: qué hacía la empresa antes y qué salió mal por el camino. El tercero es un desarrollo propio, probado pero no implantado.",
     before: "Antes",
     built: "Lo que construimos",
     result: "Resultado",
     details: "Detalles",
+    demosLine:
+      "¿Prefiere ver algo funcionando en lugar de leer sobre ello? {count} demos funcionan en su navegador con datos de ejemplo.",
+    demosLink: "Probar las demos",
     disclaimer:
-      "Omitimos el nombre del cliente cuando el acuerdo está sujeto a confidencialidad. Las cifras proceden de los sistemas entregados y podemos detallarlas en una llamada.",
+      "Omitimos el nombre del cliente cuando el acuerdo está sujeto a confidencialidad. Las cifras proceden de los propios sistemas y podemos detallarlas en una llamada.",
     cases: [
       {
         sector: "Comercio transfronterizo",
@@ -114,48 +122,33 @@ export const es: Messages = {
         ],
       },
       {
-        sector: "Sistemas de gestión",
-        market: "Singapur e Indonesia",
-        title: "Un motor de nóminas que un contable puede auditar línea a línea",
-        before:
-          "El cumplimiento de nóminas en Singapur no perdona: el redondeo en tres pasos del CPF, los tramos por edad y residencia, los topes de salario ordinario, los mínimos y máximos del SDL. La mayoría de sistemas lo aproximan y confían en que nadie lo compruebe.",
-        built:
-          "Un backend multiempresa en Java 21 y Spring Boot, con un motor de cumplimiento de nóminas de Singapur verificado caso por caso contra las tablas del CPF Board.",
-        metric: { figure: "7.060", caption: "pruebas automatizadas en 484 clases de cálculo" },
-        detail: [
-          "48 escenarios de CPF documentados como una tabla de verificación imprimible —tramos de edad, tarifas de primer y segundo año de residencia, límites de redondeo, comportamiento de los topes— para que un contable los firme fila a fila.",
-          "Cinco motores contables independientes recalculan cada estado: libro mayor, balance de comprobación, cuenta de resultados, balance y flujo de caja deben coincidir.",
-          "51 controladores REST. Multidivisa, multiempresa, permisos por rol y registro de auditoría.",
-        ],
-      },
-      {
         sector: "Implantación de IA",
         market: "Singapur",
         title: "Un copiloto que responde con los documentos de la propia empresa",
         before:
           "Un chatbot genérico no sirve a quien trabaja en una pyme: no conoce su puesto, ni su sector, ni lo que la organización ya ha decidido.",
         built:
-          "Un copiloto en producción con cuatro modos de razonamiento, contexto organizativo por capas (sector, empresa, puesto, persona), búsqueda sobre los documentos del propio cliente y coordinación entre departamentos.",
-        metric: { figure: "En producción", caption: "API en producción, cliente de pago" },
+          "Un copiloto con cuatro modos de razonamiento, contexto organizativo por capas (sector, empresa, puesto, persona), búsqueda sobre los documentos del propio cliente y coordinación entre departamentos.",
+        metric: { figure: "2026", caption: "entregado al cliente; el proyecto concluyó ese año" },
         detail: [
           "Enrutado entre varios modelos con una capa de abstracción: el modelo por defecto se cambió de proveedor por indicación del cliente sin tocar el código del producto.",
           "Transcripción de reuniones, con extracción de los acuerdos como tareas.",
-          "Funciona sobre Cloudflare Workers con D1, KV, R2 y Vectorize.",
+          "Construido sobre Cloudflare Workers con D1, KV, R2 y Vectorize.",
         ],
       },
       {
-        sector: "Salud",
-        market: "Indonesia y Sudeste Asiático",
-        title: "Un historial de salud que pertenece al paciente, no al hospital",
+        sector: "Desarrollo propio",
+        market: "Probado, no implantado",
+        title: "Un ERP de desarrollo propio que muestra cómo probamos",
         before:
-          "Los pacientes que se mueven entre centros de Indonesia y Singapur llevan su historial en carpetas de papel y fotografías. Los sistemas de los centros no se hablan entre sí, y la normativa de datos transfronterizos hace ilegal una integración ingenua.",
+          "El software que calcula dinero es fácil de enseñar y difícil de creer: casi siempre se revisa con pruebas puntuales, si es que se revisa. Queríamos un desarrollo propio de envergadura que demostrara cómo probamos antes de que ningún cliente dependa de nuestro código.",
         built:
-          "Una plataforma de salud trilingüe, propiedad del paciente, operada desde Singapur y con los datos alojados únicamente allí. El seguimiento de hábitos, el alta de seguros y un asesor con IA ya están en marcha; el archivo transfronterizo y el portal clínico están en desarrollo.",
-        metric: { figure: "3", caption: "idiomas, una sola base de código" },
+          "Un backend ERP multiempresa en Java 21 y Spring Boot. Es un desarrollo interno: probado, pero no implantado para ningún cliente.",
+        metric: { figure: "7.060", caption: "pruebas automatizadas en 484 clases de cálculo" },
         detail: [
-          "Modelo de custodia por diseño: la plataforma guarda copias que pertenecen al paciente y nunca se presenta como el sistema de registro del centro.",
-          "La ubicación de los datos se decidió al diseñar la arquitectura, no se añadió después de una revisión de cumplimiento.",
-          "Cuadros médicos aseguradores y directorio de centros recopilados en Singapur, Malasia e Indonesia.",
+          "Las cifras de pruebas son de la ejecución de agosto de 2026 y cubren las 484 clases de cálculo del desarrollo.",
+          "51 controladores REST. Multidivisa, multiempresa, permisos por rol y registro de auditoría.",
+          "Se presenta como prueba de cómo construimos y probamos sistemas complejos. No es un sistema implantado en un cliente y no hacemos ninguna afirmación sobre la exactitud de sus cálculos.",
         ],
       },
     ],
@@ -205,36 +198,36 @@ export const es: Messages = {
         ],
       },
       {
-        title: "Software empresarial",
+        title: "Sistemas de negocio",
         description:
-          "ERP y sistemas de negocio completos —finanzas, personal, inventario, compras y producción— construidos para resistir una auditoría, no solo para una demostración.",
+          "Plataformas de operaciones, CRM, inventario, documentos y flujos de trabajo que sustituyen a hojas de cálculo y herramientas sueltas, construidos para resistir una auditoría, no solo para una demostración.",
         details: [
-          "Libro mayor, cuentas a pagar y a cobrar, nóminas y activos fijos",
+          "Inventario, operaciones, documentos y cobros en un solo sistema, en lugar de hojas de cálculo y chats",
           "Multiempresa, multidivisa, permisos por rol y registro de auditoría",
-          "Motor de nóminas de Singapur verificado caso por caso contra las tablas del CPF Board",
-          "Integración con Xero, QuickBooks y hojas de cálculo",
+          "Parte de las hojas de cálculo que ya usa, con importación y exportación a Excel y Google Sheets",
+          "Implantado en su propia cuenta en la nube, su base de datos y su repositorio",
         ],
       },
       {
-        title: "Sistemas financieros",
+        title: "Procesos financieros",
         description:
-          "Motores contables, IA documental, valoración y conciliación para operadores que responden ante un regulador.",
+          "Facturación, importación de extractos bancarios, conciliación y generación de documentos, con un registro de auditoría que su contable puede seguir.",
         details: [
           "Conciliación automática entre cuentas y divisas, con detección determinista de duplicados",
           "Importación de extractos bancarios, incluidos formatos sin identificador de transferencia",
-          "Flujos de KYC y AML, informes para MAS y OJK",
-          "DCF y análisis de comparables con simulación de Montecarlo",
+          "Facturas proforma, facturas comerciales y documentos de embarque generados a partir de los mismos registros",
+          "Facturas electrónicas InvoiceNow desde el sistema o la hoja de cálculo con que factura, a través de un punto de acceso acreditado",
         ],
       },
       {
-        title: "Salud y sector público",
+        title: "Operaciones transfronterizas",
         description:
-          "Plataformas de pacientes, historiales médicos y servicios al ciudadano para entornos de alto volumen y alta exigencia, donde las normas sobre datos van primero.",
+          "Sistemas multidivisa y multilingües para empresas que comercian entre Singapur, Japón y la región, donde las normas de cada país van primero.",
         details: [
           "La ubicación de los datos se decide al diseñar, no se añade tras una revisión",
-          "Modelo de custodia: copias del paciente, nunca el registro del centro",
-          "Entrega multilingüe en inglés, chino, malayo e indonesio",
-          "Infraestructura de alta disponibilidad para servicios críticos",
+          "Varias divisas, regímenes fiscales y formatos de documento en un solo sistema",
+          "Pantallas y documentos en inglés, japonés, chino, malayo o indonesio",
+          "Ya en funcionamiento en un exportador de Japón: existencias, operaciones, documentos y cobros",
         ],
       },
     ],
@@ -246,23 +239,23 @@ export const es: Messages = {
     sub: "Entendemos a fondo los requisitos regulatorios, operativos y técnicos de su sector.",
     items: [
       {
-        name: "Salud",
+        name: "Comercio y logística",
         description:
-          "Gestión hospitalaria, automatización de la admisión, análisis de historiales y triaje asistido por IA.",
+          "Existencias, operaciones, documentos de embarque y cobros para empresas de comercio, distribución y logística a las que las hojas de cálculo ya se les quedan cortas.",
         details: [
-          "Historia clínica electrónica conforme a HL7 y FHIR",
-          "Triaje con IA que prioriza por gravedad de los síntomas",
-          "Presentación y seguimiento automáticos de reclamaciones al seguro",
-          "Integración de telemedicina con agenda y facturación",
+          "Existencias y operaciones en un solo lugar, y cada rol ve solo su parte",
+          "Facturas proforma, facturas comerciales e instrucciones de embarque generadas a partir del mismo registro",
+          "Importación de extractos bancarios y conciliación entre divisas",
+          "Seguimiento de envíos y portales para compradores en el extranjero",
         ],
       },
       {
         name: "Finanzas y banca",
         description:
-          "Motores contables, procesamiento de documentación de seguros, valoración de empresas, cumplimiento fiscal y detección de fraude.",
+          "Procesamiento de documentos, conciliación, documentación de seguros y control de riesgos para equipos financieros y las firmas que les dan servicio.",
         details: [
           "Vigilancia de transacciones en tiempo real y detección de anomalías",
-          "Informes regulatorios para MAS, OJK y el régimen ante el que responda su auditor",
+          "Extractos, pólizas y siniestros leídos con IA documental, con la fuente de cada cifra a la vista",
           "Conciliación automática entre cuentas y divisas",
           "Scoring crediticio y evaluación de riesgo con IA",
         ],
@@ -316,8 +309,8 @@ export const es: Messages = {
 
   approach: {
     eyebrow: "Cómo trabajamos",
-    title: "De la estrategia a producción en 90 días",
-    sub: "Un proceso depurado en proyectos empresariales. Lo implementamos nosotros; no nos limitamos a asesorar.",
+    title: "Del descubrimiento a producción en unas doce semanas",
+    sub: "Los mismos cinco pasos en cada proyecto, con alcance y coste por escrito antes de escribir código. Lo implementamos nosotros; no nos limitamos a asesorar.",
     deliverable: "Entregable",
     step: "Ir al paso",
     previous: "Anterior",
@@ -396,13 +389,13 @@ export const es: Messages = {
         said: "¿Qué pasa con el sistema si usted no está disponible?",
         answer:
           "El núcleo lo escribe el responsable y se incorporan especialistas según lo exija el trabajo. Lo que le protege no es el número de personas, sino que el sistema esté documentado, probado y desplegado en infraestructura suya: su cuenta, su base de datos, su repositorio. Otro ingeniero puede retomarlo porque las pruebas describen lo que debe hacer.",
-        proof: "7.060 pruebas automatizadas en 484 clases de cálculo.",
+        proof: "7.060 pruebas automatizadas en 484 clases de cálculo, en nuestro ERP de desarrollo propio.",
       },
       {
         said: "¿Cuánto suele costar algo así?",
         answer:
-          "En la primera llamada le damos un rango y, tras el descubrimiento, una cifra firme. Le decimos el número real antes, no después. Si no encaja en el presupuesto, recortamos alcance juntos: un sistema pequeño que se pone en marcha vale más que uno grande que se queda parado. Los proyectos de pymes de Singapur pueden optar a la ayuda EDGE, que sustituyó a PSG; comprobamos si el suyo encaja y preparamos sin coste la documentación del proveedor.",
-        proof: "La elegibilidad se comprueba con los criterios vigentes de IMDA, no se presupone.",
+          "En la primera llamada le damos un rango y, tras el descubrimiento, una cifra firme. Le decimos el número real antes, no después. Si no encaja en el presupuesto, recortamos alcance juntos: un sistema pequeño que se pone en marcha vale más que uno grande que se queda parado. Los proyectos de pymes de Singapur pueden optar a la ayuda EDGE, que sustituyó a PSG; le ayudamos a comprobar si el suyo encaja y preparamos sin coste nuestra documentación de proveedor.",
+        proof: "La ayuda EDGE la decide Enterprise Singapore, y StarTech no es un proveedor preaprobado de EDGE.",
       },
       {
         said: "¿Perdemos algo por esperar un trimestre o dos?",
@@ -412,9 +405,8 @@ export const es: Messages = {
       {
         said: "¿Cuánto tendremos que explicar sobre cómo funciona nuestro negocio?",
         answer:
-          "Esa es exactamente la razón de ser de esta firma. No tendrá que explicar qué es un balance de comprobación, cuánto se debe de CPF ni por qué un siniestro cuadra como cuadra. Cuéntenoslo como se lo contaría a su contable.",
-        proof:
-          "El motor de nóminas está verificado caso por caso contra las tablas del CPF Board.",
+          "Esa es exactamente la razón de ser de esta firma. No tendrá que explicar qué es un balance de comprobación, qué debe llevar una factura con impuestos ni por qué un cobro cuadra como cuadra. Cuéntenoslo como se lo contaría a su contable.",
+        proof: "Más de 20 años en negocio y tecnología.",
       },
     ],
   },

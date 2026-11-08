@@ -124,6 +124,19 @@ August 2026 verification report contradicts both claims, so they were
 removed. Its ERP test figures are now labelled as an internal build, not
 deployed.
 
+The website was brought in line on 2026-11-08, in all seven languages.
+"Selected work" now shows two client systems (the Japan exporter, live;
+the Singapore co-pilot, delivered in 2026) and the ERP as an internal
+build, tested and not deployed, with no payroll, CPF or five-engine
+claims. The health record is gone; a link to the working demos sits
+below the cases instead. Practices, industries, objections and the demo
+pages no longer claim payroll, general ledger, KYC and AML, Xero or
+QuickBooks integration, HL7 and FHIR records or AI triage, and
+healthcare gave way to trading and logistics. The EDGE answer says
+Enterprise Singapore decides support and StarTech is not a pre-approved
+EDGE vendor. The approach says about twelve weeks, not 90 days, and the
+hero counts the site's seven languages.
+
 Other inconsistencies:
 
 - The capability deck says its 7,060 tests are in "our Singapore payroll

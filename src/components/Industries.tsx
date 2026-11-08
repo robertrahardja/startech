@@ -140,7 +140,7 @@ function IndustryCard({
                 aria-expanded={open}
                 aria-controls={`industry-details-${index}`}
                 onClick={toggleOpen}
-                className="pressable flex items-center gap-1 text-[11px] font-medium tracking-[0.15em] uppercase text-st-text-muted/80 transition-colors duration-300 hover:text-st-gold-light"
+                className="pressable -my-3 flex min-h-[44px] items-center gap-1 text-[11px] font-medium tracking-[0.15em] uppercase text-st-text-muted/80 transition-colors duration-300 hover:text-st-gold-light"
               >
                 {open ? "Hide" : "Details"}
                 <span

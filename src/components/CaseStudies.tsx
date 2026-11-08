@@ -3,6 +3,8 @@ import { useInView } from "../hooks/useInView";
 import { useSnapRail } from "../hooks/useSnapRail";
 import { haptic } from "../lib/haptics";
 import { useI18n } from "../i18n";
+import Link from "./solutions/Link";
+import { SOLUTIONS } from "./solutions/solutionsData";
 import type { CaseStudy } from "./caseStudiesData";
 
 /** Full-detail card, every section visible at once — the desktop reading
@@ -150,7 +152,7 @@ function MobileCaseCard({ study }: { study: CaseStudy }) {
               haptic("select");
               setTab(key);
             }}
-            className={`flex-1 whitespace-nowrap rounded-md px-1.5 py-2 text-[10.5px] font-medium tracking-wide transition-colors duration-300 ${
+            className={`min-h-[44px] flex-1 whitespace-nowrap rounded-md px-1.5 py-2 text-[10.5px] font-medium tracking-wide transition-colors duration-300 ${
               tab === key
                 ? "bg-st-bg-card text-st-text"
                 : "text-st-text-muted/70"
@@ -281,7 +283,21 @@ export default function CaseStudies() {
           ))}
         </div>
 
-        <p className="mt-16 max-w-2xl border-t border-st-border pt-8 text-[12.5px] font-normal leading-[1.7] text-st-text-muted/80">
+        {/* The demos are not client work, so they sit outside the case list:
+            a way to see something run, not a fourth case. */}
+        <div className="mt-14 flex flex-col items-start gap-4 rounded-xl border border-st-border bg-st-bg-card p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8 sm:p-7">
+          <p className="max-w-xl text-[14px] font-normal leading-[1.7] text-st-text-muted">
+            {t.work.demosLine.replace("{count}", String(SOLUTIONS.length))}
+          </p>
+          <Link
+            href="/solutions"
+            className="hero-btn-secondary relative inline-flex min-h-[44px] shrink-0 items-center overflow-hidden rounded-xl px-6 text-[13px] font-normal tracking-wide text-st-text-muted transition-all duration-500 hover:text-st-text"
+          >
+            <span className="relative z-10">{t.work.demosLink} →</span>
+          </Link>
+        </div>
+
+        <p className="mt-12 max-w-2xl border-t border-st-border pt-8 text-[12.5px] font-normal leading-[1.7] text-st-text-muted/80">
           {t.work.disclaimer}
         </p>
       </div>

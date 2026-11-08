@@ -18,7 +18,7 @@ const WELCOME_MESSAGE: ChatMessage = {
 const QUICK_PROMPTS = [
   "What services do you offer?",
   "Tell me about your AI capabilities",
-  "How does the 90-day process work?",
+  "How does a project run?",
   "What industries do you serve?",
 ];
 

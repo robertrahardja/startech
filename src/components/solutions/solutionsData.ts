@@ -13,6 +13,15 @@ export interface Solution {
   icon: string;
 }
 
+/**
+ * The demos, in the order /solutions (and the homepage Showcase, when it is
+ * wired in) lists them. Singapore leads first: the ones with production proof
+ * or a Singapore buying trigger (invoice scanner, inventory, quotations, the
+ * chatbot as knowledge search, onboarding), then the rest. Social media, job
+ * posts, financial reports and compliance go last (8 Nov 2026 Singapore
+ * review: they sit furthest from the offer or read as accounting or legal
+ * advice).
+ */
 export const SOLUTIONS: Solution[] = [
   {
     slug: "invoice-scanner",
@@ -30,7 +39,7 @@ export const SOLUTIONS: Solution[] = [
       {
         title: "AI Extracts Data",
         description:
-          "Our AI reads every field: vendor, date, line items, tax, and totals with 99%+ accuracy.",
+          "Our AI reads every field: vendor, date, line items, tax, and totals.",
       },
       {
         title: "Review & Confirm",
@@ -40,7 +49,7 @@ export const SOLUTIONS: Solution[] = [
       {
         title: "Export Anywhere",
         description:
-          "One-click export to Excel, Google Sheets, Xero, or QuickBooks. Done.",
+          "One-click export to Excel or Google Sheets, ready to import into your accounting software.",
       },
     ],
     features: [
@@ -48,9 +57,86 @@ export const SOLUTIONS: Solution[] = [
       "Supports English, Chinese, and Malay text on the same document",
       "Automatic GST extraction and categorisation",
       "Batch upload: process dozens of documents at once",
-      "Integrates with Xero, QuickBooks, and Google Sheets",
+      "Exports to Excel and Google Sheets, in a format your accounting software can import",
     ],
     icon: "scan",
+  },
+  {
+    slug: "inventory-tracker",
+    title: "AI Inventory Tracker",
+    tagline:
+      "Scan items, predict restock needs, and get alerts before you run out.",
+    problem:
+      "Manual stock counting is unreliable and time-consuming. Running out of popular items means lost sales, while overstocking ties up cash. Most SMEs lack the tools for accurate demand forecasting.",
+    steps: [
+      {
+        title: "Scan & Catalogue",
+        description:
+          "Barcode or photo scanning to add items. Bulk import from spreadsheets.",
+      },
+      {
+        title: "Track in Real Time",
+        description:
+          "Every sale, delivery, and adjustment updates inventory automatically.",
+      },
+      {
+        title: "AI Predicts Demand",
+        description:
+          "Machine learning analyses sales patterns to forecast when you'll need to reorder.",
+      },
+      {
+        title: "Smart Alerts",
+        description:
+          "Get notified via WhatsApp or email before stock runs low.",
+      },
+    ],
+    features: [
+      "Barcode and QR code scanning via mobile",
+      "AI demand forecasting based on historical sales data",
+      "Low stock alerts via WhatsApp, email, or SMS",
+      "Multi-location inventory tracking",
+      "Integrates with POS systems and e-commerce platforms",
+      "Expiry date tracking for perishable goods",
+    ],
+    icon: "box",
+  },
+  {
+    slug: "quotation-generator",
+    title: "AI Quotation Generator",
+    tagline:
+      "Input the specs, get a professional quote PDF in minutes, not hours.",
+    problem:
+      "Creating quotes manually is slow and error-prone. Inconsistent formatting looks unprofessional, and delays in quoting mean lost deals to faster competitors.",
+    steps: [
+      {
+        title: "Enter Requirements",
+        description:
+          "Fill in client details, line items, quantities, and any special terms.",
+      },
+      {
+        title: "AI Formats & Calculates",
+        description:
+          "The system applies your pricing rules, discounts, GST, and generates a polished layout.",
+      },
+      {
+        title: "Review & Customise",
+        description:
+          "Tweak wording, add terms and conditions, or adjust formatting before sending.",
+      },
+      {
+        title: "Send as PDF",
+        description:
+          "One-click to generate a branded PDF and email it directly to your client.",
+      },
+    ],
+    features: [
+      "Professional branded PDF output with your logo and colours",
+      "Automatic GST calculation and discount rules",
+      "Template library for different service types",
+      "Quote tracking: know when clients open your quote",
+      "Convert accepted quotes to invoices in one click",
+    ],
+    icon: "document",
   },
   {
     slug: "customer-chatbot",
@@ -92,197 +178,43 @@ export const SOLUTIONS: Solution[] = [
     icon: "chat",
   },
   {
-    slug: "appointment-booking",
-    title: "AI Appointment Booking",
+    slug: "employee-onboarding",
+    title: "AI Employee Onboarding",
     tagline:
-      "Let AI handle scheduling via WhatsApp and web, so you never miss a booking.",
+      "New hires fill in their details once, and AI generates all the HR documents automatically.",
     problem:
-      "Playing phone tag and juggling calendars wastes hours every week. Double bookings frustrate customers, and after-hours enquiries go unanswered, meaning lost revenue.",
+      "Onboarding a new employee means collecting the same information across a dozen forms. HR spends hours on paperwork instead of making new hires feel welcome. Mistakes in employment contracts create compliance risk.",
     steps: [
       {
-        title: "Connect Your Calendar",
+        title: "New Hire Fills One Form",
         description:
-          "Sync with Google Calendar, Outlook, or any CalDAV calendar in one click.",
+          "A single smart form collects all personal, banking, and tax details.",
       },
       {
-        title: "Set Your Rules",
+        title: "AI Generates Documents",
         description:
-          "Define available hours, buffer times, service durations, and team members.",
+          "Employment contract, NDA, IT access requests, and welcome pack are created automatically.",
       },
       {
-        title: "Customers Book Naturally",
+        title: "E-Signatures",
         description:
-          "Clients message on WhatsApp or your website and the AI schedules them instantly.",
+          "All parties sign digitally. No printing, scanning, or chasing.",
       },
       {
-        title: "Automatic Reminders",
+        title: "Onboarding Checklist",
         description:
-          "Reduce no-shows with automated WhatsApp and email reminders.",
+          "Automated task list for IT setup, buddy assignment, and training schedule.",
       },
     ],
     features: [
-      "WhatsApp and web booking in natural language",
-      "Automatic conflict detection and rescheduling",
-      "Customisable booking rules per service type",
-      "Automated reminders reduce no-shows by up to 40%",
-      "Multi-staff calendar management",
+      "Singapore Employment Act compliant contract templates",
+      "Offer letter, NDA and first-week checklist drafted from one form",
+      "Digital e-signature workflow",
+      "Customisable onboarding checklists per department",
+      "Employee self-service portal for document access",
+      "Exports new-hire details to the HR or payroll provider you already use",
     ],
-    icon: "calendar",
-  },
-  {
-    slug: "quotation-generator",
-    title: "AI Quotation Generator",
-    tagline:
-      "Input the specs, get a professional quote PDF in minutes, not hours.",
-    problem:
-      "Creating quotes manually is slow and error-prone. Inconsistent formatting looks unprofessional, and delays in quoting mean lost deals to faster competitors.",
-    steps: [
-      {
-        title: "Enter Requirements",
-        description:
-          "Fill in client details, line items, quantities, and any special terms.",
-      },
-      {
-        title: "AI Formats & Calculates",
-        description:
-          "The system applies your pricing rules, discounts, GST, and generates a polished layout.",
-      },
-      {
-        title: "Review & Customise",
-        description:
-          "Tweak wording, add terms and conditions, or adjust formatting before sending.",
-      },
-      {
-        title: "Send as PDF",
-        description:
-          "One-click to generate a branded PDF and email it directly to your client.",
-      },
-    ],
-    features: [
-      "Professional branded PDF output with your logo and colours",
-      "Automatic GST calculation and discount rules",
-      "Template library for different service types",
-      "Quote tracking: know when clients open your quote",
-      "Convert accepted quotes to invoices in one click",
-    ],
-    icon: "document",
-  },
-  {
-    slug: "job-posting-writer",
-    title: "AI Job Posting Writer",
-    tagline:
-      "Input the role details, get an optimised job listing that attracts top talent.",
-    problem:
-      "Writing compelling job postings takes time most SMEs don't have. Generic listings attract the wrong candidates, and poor job descriptions lead to low application quality and wasted interview time.",
-    steps: [
-      {
-        title: "Describe the Role",
-        description:
-          "Enter job title, key responsibilities, requirements, and company culture notes.",
-      },
-      {
-        title: "AI Crafts the Listing",
-        description:
-          "Our AI writes an engaging, SEO-optimised posting with the right keywords for your market.",
-      },
-      {
-        title: "Review & Refine",
-        description:
-          "Edit tone, add specifics, or let the AI suggest improvements based on best practices.",
-      },
-      {
-        title: "Publish Everywhere",
-        description:
-          "Export to JobStreet, LinkedIn, MyCareersFuture, or any job board.",
-      },
-    ],
-    features: [
-      "Optimised for Singapore job boards and search algorithms",
-      "Inclusive language checker built in",
-      "Salary benchmarking against current market rates",
-      "Multiple tone options: corporate, startup, casual",
-      "Bulk generation for hiring drives",
-    ],
-    icon: "pen",
-  },
-
-  {
-    slug: "inventory-tracker",
-    title: "AI Inventory Tracker",
-    tagline:
-      "Scan items, predict restock needs, and get alerts before you run out.",
-    problem:
-      "Manual stock counting is unreliable and time-consuming. Running out of popular items means lost sales, while overstocking ties up cash. Most SMEs lack the tools for accurate demand forecasting.",
-    steps: [
-      {
-        title: "Scan & Catalogue",
-        description:
-          "Barcode or photo scanning to add items. Bulk import from spreadsheets.",
-      },
-      {
-        title: "Track in Real Time",
-        description:
-          "Every sale, delivery, and adjustment updates inventory automatically.",
-      },
-      {
-        title: "AI Predicts Demand",
-        description:
-          "Machine learning analyses sales patterns to forecast when you'll need to reorder.",
-      },
-      {
-        title: "Smart Alerts",
-        description:
-          "Get notified via WhatsApp or email before stock runs low.",
-      },
-    ],
-    features: [
-      "Barcode and QR code scanning via mobile",
-      "AI demand forecasting based on historical sales data",
-      "Low stock alerts via WhatsApp, email, or SMS",
-      "Multi-location inventory tracking",
-      "Integrates with POS systems and e-commerce platforms",
-      "Expiry date tracking for perishable goods",
-    ],
-    icon: "box",
-  },
-  {
-    slug: "social-media-manager",
-    title: "AI Social Media Manager",
-    tagline:
-      "Auto-generate posts, schedule across platforms, and respond to comments with AI.",
-    problem:
-      "Consistent social media presence is crucial but exhausting for small teams. Creating content daily, posting at optimal times, and responding to every comment requires a dedicated hire most SMEs can't afford.",
-    steps: [
-      {
-        title: "Connect Your Accounts",
-        description:
-          "Link Instagram, Facebook, LinkedIn, TikTok, and more in one dashboard.",
-      },
-      {
-        title: "AI Generates Content",
-        description:
-          "Describe your topic or product. The AI creates posts, captions, and hashtags.",
-      },
-      {
-        title: "Schedule & Publish",
-        description:
-          "Review the content calendar and let AI post at peak engagement times.",
-      },
-      {
-        title: "AI Handles Replies",
-        description:
-          "Routine comments and DMs are answered automatically. Flag complex ones for you.",
-      },
-    ],
-    features: [
-      "AI content generation with your brand voice",
-      "Optimal posting time recommendations per platform",
-      "Automated comment and DM responses",
-      "Content calendar with drag-and-drop scheduling",
-      "Performance analytics and engagement tracking",
-      "Hashtag research and trending topic suggestions",
-    ],
-    icon: "share",
+    icon: "users",
   },
   {
     slug: "document-translator",
@@ -323,45 +255,6 @@ export const SOLUTIONS: Solution[] = [
     icon: "globe",
   },
   {
-    slug: "employee-onboarding",
-    title: "AI Employee Onboarding",
-    tagline:
-      "New hires fill in their details once, and AI generates all the HR documents automatically.",
-    problem:
-      "Onboarding a new employee means collecting the same information across a dozen forms. HR spends hours on paperwork instead of making new hires feel welcome. Mistakes in employment contracts create compliance risk.",
-    steps: [
-      {
-        title: "New Hire Fills One Form",
-        description:
-          "A single smart form collects all personal, banking, and tax details.",
-      },
-      {
-        title: "AI Generates Documents",
-        description:
-          "Employment contract, NDA, IT access requests, and welcome pack are created automatically.",
-      },
-      {
-        title: "E-Signatures",
-        description:
-          "All parties sign digitally. No printing, scanning, or chasing.",
-      },
-      {
-        title: "Onboarding Checklist",
-        description:
-          "Automated task list for IT setup, buddy assignment, and training schedule.",
-      },
-    ],
-    features: [
-      "Singapore Employment Act compliant contract templates",
-      "Automatic CPF, IR8A, and tax form preparation",
-      "Digital e-signature workflow",
-      "Customisable onboarding checklists per department",
-      "Employee self-service portal for document access",
-      "Integration with payroll systems",
-    ],
-    icon: "users",
-  },
-  {
     slug: "sales-assistant",
     title: "AI Sales Assistant",
     tagline:
@@ -400,45 +293,43 @@ export const SOLUTIONS: Solution[] = [
     ],
     icon: "handshake",
   },
-
   {
-    slug: "compliance-checker",
-    title: "AI Compliance Checker",
+    slug: "appointment-booking",
+    title: "AI Appointment Booking",
     tagline:
-      "Upload a contract or policy, and AI flags issues against Singapore regulations instantly.",
+      "Let AI handle scheduling via WhatsApp and web, so you never miss a booking.",
     problem:
-      "Singapore's regulatory landscape is complex and constantly evolving. SMEs can't afford full-time legal counsel, and missing a compliance requirement can mean fines, penalties, or losing business licences.",
+      "Playing phone tag and juggling calendars wastes hours every week. Double bookings frustrate customers, and after-hours enquiries go unanswered, meaning lost revenue.",
     steps: [
       {
-        title: "Upload Your Document",
+        title: "Connect Your Calendar",
         description:
-          "Drop in contracts, policies, or terms of service in PDF or Word format.",
+          "Sync with Google Calendar, Outlook, or any CalDAV calendar in one click.",
       },
       {
-        title: "Select Regulation Set",
+        title: "Set Your Rules",
         description:
-          "Choose from Employment Act, PDPA, Companies Act, or industry-specific regulations.",
+          "Define available hours, buffer times, service durations, and team members.",
       },
       {
-        title: "AI Analyses & Flags",
+        title: "Customers Book Naturally",
         description:
-          "The AI cross-references every clause against the selected regulations and highlights risks.",
+          "Clients message on WhatsApp or your website and the AI schedules them instantly.",
       },
       {
-        title: "Get Actionable Report",
+        title: "Automatic Reminders",
         description:
-          "Receive a detailed report with risk levels, specific clause references, and suggested fixes.",
+          "Reduce no-shows with automated WhatsApp and email reminders.",
       },
     ],
     features: [
-      "Covers Employment Act, PDPA, Companies Act, and GST regulations",
-      "Risk-rated findings: critical, high, medium, low",
-      "Specific clause-by-clause analysis with regulation references",
-      "Suggested remediation language for each finding",
-      "Audit trail for compliance documentation",
-      "Regular updates as regulations change",
+      "WhatsApp and web booking in natural language",
+      "Automatic conflict detection and rescheduling",
+      "Customisable booking rules per service type",
+      "Automated reminders reduce no-shows by up to 40%",
+      "Multi-staff calendar management",
     ],
-    icon: "shield",
+    icon: "calendar",
   },
   {
     slug: "training-content-generator",
@@ -480,6 +371,83 @@ export const SOLUTIONS: Solution[] = [
     icon: "graduation",
   },
   {
+    slug: "social-media-manager",
+    title: "AI Social Media Manager",
+    tagline:
+      "Auto-generate posts, schedule across platforms, and respond to comments with AI.",
+    problem:
+      "Consistent social media presence is crucial but exhausting for small teams. Creating content daily, posting at optimal times, and responding to every comment requires a dedicated hire most SMEs can't afford.",
+    steps: [
+      {
+        title: "Connect Your Accounts",
+        description:
+          "Link Instagram, Facebook, LinkedIn, TikTok, and more in one dashboard.",
+      },
+      {
+        title: "AI Generates Content",
+        description:
+          "Describe your topic or product. The AI creates posts, captions, and hashtags.",
+      },
+      {
+        title: "Schedule & Publish",
+        description:
+          "Review the content calendar and let AI post at peak engagement times.",
+      },
+      {
+        title: "AI Handles Replies",
+        description:
+          "Routine comments and DMs are answered automatically. Flag complex ones for you.",
+      },
+    ],
+    features: [
+      "AI content generation with your brand voice",
+      "Optimal posting time recommendations per platform",
+      "Automated comment and DM responses",
+      "Content calendar with drag-and-drop scheduling",
+      "Performance analytics and engagement tracking",
+      "Hashtag research and trending topic suggestions",
+    ],
+    icon: "share",
+  },
+  {
+    slug: "job-posting-writer",
+    title: "AI Job Posting Writer",
+    tagline:
+      "Input the role details, get an optimised job listing that attracts top talent.",
+    problem:
+      "Writing compelling job postings takes time most SMEs don't have. Generic listings attract the wrong candidates, and poor job descriptions lead to low application quality and wasted interview time.",
+    steps: [
+      {
+        title: "Describe the Role",
+        description:
+          "Enter job title, key responsibilities, requirements, and company culture notes.",
+      },
+      {
+        title: "AI Crafts the Listing",
+        description:
+          "Our AI writes an engaging, SEO-optimised posting with the right keywords for your market.",
+      },
+      {
+        title: "Review & Refine",
+        description:
+          "Edit tone, add specifics, or let the AI suggest improvements based on best practices.",
+      },
+      {
+        title: "Publish Everywhere",
+        description:
+          "Export to JobStreet, LinkedIn, MyCareersFuture, or any job board.",
+      },
+    ],
+    features: [
+      "Optimised for Singapore job boards and search algorithms",
+      "Inclusive language checker built in",
+      "Salary benchmarking against current market rates",
+      "Multiple tone options: corporate, startup, casual",
+      "Bulk generation for hiring drives",
+    ],
+    icon: "pen",
+  },
+  {
     slug: "financial-report-builder",
     title: "AI Financial Report Builder",
     tagline:
@@ -490,7 +458,7 @@ export const SOLUTIONS: Solution[] = [
       {
         title: "Connect Data Sources",
         description:
-          "Link Google Sheets, Excel files, Xero, QuickBooks, or bank feeds.",
+          "Upload Google Sheets or Excel files, including exports from your accounting software.",
       },
       {
         title: "Choose Report Type",
@@ -509,7 +477,7 @@ export const SOLUTIONS: Solution[] = [
       },
     ],
     features: [
-      "Connects to Xero, QuickBooks, Google Sheets, and Excel",
+      "Works from Excel and Google Sheets, including exports from your accounting software",
       "Auto-generates P&L, balance sheet, and cash flow statements",
       "AI-written executive summary with trend analysis",
       "Variance analysis against budget and prior periods",
@@ -517,6 +485,45 @@ export const SOLUTIONS: Solution[] = [
       "Scheduled reports: auto-generate monthly or quarterly",
     ],
     icon: "barchart",
+  },
+  {
+    slug: "compliance-checker",
+    title: "AI Compliance Checker",
+    tagline:
+      "Upload a contract or policy, and AI flags issues against Singapore regulations instantly.",
+    problem:
+      "Singapore's regulatory landscape is complex and constantly evolving. SMEs can't afford full-time legal counsel, and missing a compliance requirement can mean fines, penalties, or losing business licences.",
+    steps: [
+      {
+        title: "Upload Your Document",
+        description:
+          "Drop in contracts, policies, or terms of service in PDF or Word format.",
+      },
+      {
+        title: "Select Regulation Set",
+        description:
+          "Choose from Employment Act, PDPA, Companies Act, or industry-specific regulations.",
+      },
+      {
+        title: "AI Analyses & Flags",
+        description:
+          "The AI cross-references every clause against the selected regulations and highlights risks.",
+      },
+      {
+        title: "Get Actionable Report",
+        description:
+          "Receive a detailed report with risk levels, specific clause references, and suggested fixes.",
+      },
+    ],
+    features: [
+      "Covers Employment Act, PDPA, Companies Act, and GST regulations",
+      "Risk-rated findings: critical, high, medium, low",
+      "Specific clause-by-clause analysis with regulation references",
+      "Suggested remediation language for each finding",
+      "Audit trail for compliance documentation",
+      "Regular updates as regulations change",
+    ],
+    icon: "shield",
   },
 ];
 
