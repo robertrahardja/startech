@@ -66,10 +66,10 @@ JA = {
 # Formal "Anda"; wording reused from brand/profile/content.py's ID profile.
 ID = {
     "lang": "id",
-    "headline": ["Dari spreadsheet", "ke sistem."],
+    "headline": ["Saatnya naik kelas", "dari Excel."],
     "who": (
         "Untuk perusahaan dengan 10–200 karyawan yang bekerja dengan "
-        "spreadsheet, atau dengan sistem yang tidak pernah diselesaikan "
+        "Excel, atau dengan sistem yang tidak pernah diselesaikan "
         "vendornya."
     ),
     "proof": [
@@ -81,7 +81,7 @@ ID = {
         ("Milik Anda",
          "Kode, basis data, dan akun cloud sepenuhnya milik Anda."),
     ],
-    "offer_head": "Kirimkan satu spreadsheet kepada kami.",
+    "offer_head": "Kirim satu file Excel Anda kepada kami.",
     "offer_body": (
         "Kami akan menunjukkannya berjalan sebagai sistem — gratis, tanpa "
         "komitmen."

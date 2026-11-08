@@ -439,9 +439,9 @@ ID = {
     ),
 
     "cta_kicker": "Kontak",
-    "cta_head": "Kirimkan satu spreadsheet kepada kami.",
+    "cta_head": "Kirim satu file Excel Anda kepada kami.",
     "cta_body": (
-        "Pilih spreadsheet yang paling ingin Anda ganti, dan kami akan "
+        "Pilih file Excel yang paling ingin Anda tinggalkan, dan kami akan "
         "menunjukkannya berjalan sebagai sistem — gratis, tanpa komitmen. "
         "Atau jadwalkan panggilan, dan kami akan menjelaskan bagaimana "
         "angka-angka dalam dek ini diukur."

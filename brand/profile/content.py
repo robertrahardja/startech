@@ -406,14 +406,14 @@ ID = {
     ],
 
     "cta_kicker": "Langkah berikutnya",
-    "cta_head": "Kirimkan satu spreadsheet kepada kami.",
+    "cta_head": "Kirim satu file Excel Anda kepada kami.",
     "cta_body": (
-        "Pilih spreadsheet yang paling ingin Anda ganti, dan kami akan "
+        "Pilih file Excel yang paling ingin Anda tinggalkan, dan kami akan "
         "menunjukkannya berjalan sebagai sistem — gratis, tanpa komitmen. "
         "Jika perangkat lunak bukan jawabannya, kami akan katakan itu "
         "juga."
     ),
-    "cta_offer": "Demo gratis dari spreadsheet Anda · Tanpa komitmen",
+    "cta_offer": "Demo gratis dari file Excel Anda · Tanpa komitmen",
     "contact_kicker": "Kontak",
     "labels": {
         "md": "Managing Director",

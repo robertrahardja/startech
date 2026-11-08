@@ -888,10 +888,10 @@ ID = {
 
     # 8 — contact
     "cta_kicker": "Kontak",
-    "cta_head": "Kirimkan satu spreadsheet kepada kami.",
+    "cta_head": "Kirim satu file Excel Anda kepada kami.",
     "cta_body": (
         (
-        "Pilih spreadsheet yang paling ingin Anda ganti, dan kami akan "
+        "Pilih file Excel yang paling ingin Anda tinggalkan, dan kami akan "
         "menunjukkannya berjalan sebagai sistem — gratis, tanpa "
         "komitmen. Jika perangkat lunak bukan jawabannya, kami akan "
         "katakan itu juga."
