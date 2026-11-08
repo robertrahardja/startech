@@ -183,7 +183,7 @@ test("status returns Resend's last event for an email", async () => {
   assert.equal(none.length, 0);
 });
 
-test("notifyOwner reaches StarTech's inbox, from the sandbox sender until OUTREACH_FROM is set", async () => {
+test("notifyOwner reaches StarTech's inbox, from the site domain until OUTREACH_FROM is set", async () => {
   const calls = fakeFetch();
   const report = "Sent 12, replied 1, bounced 0.";
   assert.deepEqual(await notifyOwner({ RESEND_API_KEY: "re_test" }, "Outreach: week 45", report), {

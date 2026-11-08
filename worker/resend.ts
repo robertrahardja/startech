@@ -13,7 +13,7 @@ const RESEND_EMAILS = "https://api.resend.com/emails";
  * The site's own sending domain, verified in Resend (2026-11-08). The
  * Resend key is restricted to it, so every email the site sends uses it.
  */
-export const SITE_MAIL_DOMAIN = "mail.startech-innovation.com";
+const SITE_MAIL_DOMAIN = "mail.startech-innovation.com";
 
 /** The From line for a site email: a display name and a role address. */
 export const siteSender = (name: string, local: string) => `${name} <${local}@${SITE_MAIL_DOMAIN}>`;
