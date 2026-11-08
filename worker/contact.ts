@@ -10,6 +10,7 @@ import { saveLead } from "./crm";
 import type { Env } from "./env";
 import { isRequestTooLarge } from "./http";
 import { countryName, leadTrail, type Lead } from "./lead";
+import { siteSender } from "./resend";
 import { escapeHtml, sanitizeEmail, sanitizeString } from "./sanitize";
 
 export async function handleContact(
@@ -123,7 +124,7 @@ export async function handleContact(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "StarTech Website <onboarding@resend.dev>",
+        from: siteSender("StarTech Website", "website"),
         to: ["rr.startech.innovation@gmail.com"],
         reply_to: email,
         subject: `${topic ?? "New Contact"}: ${escapeHtml(name).slice(0, 100)}`,

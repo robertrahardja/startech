@@ -190,7 +190,7 @@ test("notifyOwner reaches StarTech's inbox, from the sandbox sender until OUTREA
     ok: true,
     id: "email_1",
   });
-  assert.equal(calls[0].body.from, "StarTech HQ <onboarding@resend.dev>");
+  assert.equal(calls[0].body.from, "StarTech HQ <hq@mail.startech-innovation.com>");
   assert.deepEqual(calls[0].body.to, [OWNER_INBOX]);
   assert.equal(calls[0].body.text, report);
 

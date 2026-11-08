@@ -2,6 +2,7 @@ import { saveLead } from "./crm";
 import type { Env } from "./env";
 import { isRequestTooLarge } from "./http";
 import { countryName } from "./lead";
+import { siteSender } from "./resend";
 import { escapeHtml, sanitizeEmail, sanitizeString } from "./sanitize";
 
 /** How a client lets us credit their testimonial. */
@@ -103,7 +104,7 @@ export async function handleTestimonial(request: Request, env: Env): Promise<Res
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "StarTech Website <onboarding@resend.dev>",
+        from: siteSender("StarTech Website", "website"),
         to: ["rr.startech.innovation@gmail.com"],
         reply_to: email,
         subject: `Testimonial: ${escapeHtml(name).slice(0, 80)}, ${escapeHtml(company).slice(0, 80)}`,

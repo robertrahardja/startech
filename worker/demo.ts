@@ -11,6 +11,7 @@ import type { Env } from "./env";
 import { verifyGoogleIdToken } from "./google-auth";
 import { isRequestTooLarge, jsonError } from "./http";
 import { isBlocked, isRateLimited } from "./rate-limit";
+import { siteSender } from "./resend";
 import { escapeHtml, sanitizeEmail, sanitizeString } from "./sanitize";
 
 export async function handleDemo(
@@ -191,7 +192,7 @@ export async function handleDemo(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "StarTech Demos <onboarding@resend.dev>",
+          from: siteSender("StarTech Demos", "demos"),
           to: ["rr.startech.innovation@gmail.com"],
           reply_to: email,
           subject: `Demo Lead: ${escapeHtml(config.description)} — ${escapeHtml(email)}`,

@@ -65,7 +65,7 @@ test("a saved enquiry: the notification to StarTech is unchanged, then the visit
   assert.equal(calls.length, 2);
 
   const [notification, ack] = calls.map((c) => c.body);
-  assert.equal(notification.from, "StarTech Website <onboarding@resend.dev>");
+  assert.equal(notification.from, "StarTech Website <website@mail.startech-innovation.com>");
   assert.deepEqual(notification.to, ["rr.startech.innovation@gmail.com"]);
   assert.equal(notification.reply_to, "somchai@example.co.th");
   assert.equal(notification.subject, "Thailand site enquiry: Somchai P.");

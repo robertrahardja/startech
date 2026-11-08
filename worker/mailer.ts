@@ -10,7 +10,7 @@ import { isBody, isOneLine } from "./mail-checks";
 import { checkOutreach } from "./outreach-rules";
 import {
   OWNER_INBOX,
-  SANDBOX_SENDER,
+  siteSender,
   resendLastEvent,
   resendSend,
   type SendResult,
@@ -80,6 +80,6 @@ export async function notifyOwner(env: MailerEnv, subject: unknown, text: unknow
   if (!env.RESEND_API_KEY) return { ok: false, error: "resend-not-configured" };
   if (!isOneLine(subject, 200)) return { ok: false, error: "invalid-subject" };
   if (!isBody(text, 100_000)) return { ok: false, error: "invalid-text" };
-  const from = env.OUTREACH_FROM?.trim() || `StarTech HQ <${SANDBOX_SENDER}>`;
+  const from = env.OUTREACH_FROM?.trim() || siteSender("StarTech HQ", "hq");
   return resendSend(env.RESEND_API_KEY, { from, to: [OWNER_INBOX], subject, text });
 }
