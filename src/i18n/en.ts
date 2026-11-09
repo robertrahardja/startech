@@ -82,7 +82,7 @@ export const en = {
     // One sentence each, for Singapore firms with operations next door.
     regions: [
       "Running operations in Johor or the JS-SEZ? We build systems that work across a border, like the export system live with our client in Japan.",
-      "We also support teams in the Philippines and Vietnam that are run from Singapore.",
+      "From Singapore we can work with teams in any country, by email and video call.",
     ],
     // Points Japanese-affiliated firms in Singapore to the Japanese-first
     // site. Only en and ja set it; null hides the line in other locales.
@@ -241,8 +241,8 @@ export const en = {
 
   industries: {
     eyebrow: "Industries",
-    title: "Domain expertise",
-    sub: "Deep understanding of your industry's regulatory, operational, and technical requirements.",
+    title: "Where our systems fit",
+    sub: "What we build for each sector. Our delivered client work so far is an export system and an AI co-pilot; for the other sectors we show working demos, not past projects.",
     items: [
   {
     name: "Trading & Logistics",
@@ -315,8 +315,8 @@ export const en = {
 
   approach: {
     eyebrow: "Approach",
-    title: "Discovery to production in about twelve weeks",
-    sub: "The same five steps on every engagement, with a written scope and cost before any code. We implement, not just advise.",
+    title: "From first call to a working system",
+    sub: "Five steps, with a written scope and cost before any code. We plan a full build at about twelve weeks. We implement, not just advise.",
     deliverable: "Deliverable",
     step: "Go to step",
     previous: "Previous",

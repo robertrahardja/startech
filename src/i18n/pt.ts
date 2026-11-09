@@ -83,7 +83,7 @@ export const pt: Messages = {
     ],
     regions: [
       "Tem operações em Johor ou na JS-SEZ? Construímos sistemas que funcionam dos dois lados de uma fronteira, como o sistema de exportação que o nosso cliente no Japão já usa em produção.",
-      "Também apoiamos equipes nas Filipinas e no Vietnã gerenciadas a partir de Singapura.",
+      "De Singapura, podemos trabalhar com equipes de qualquer país, por e-mail e videochamada.",
     ],
     japanSite: null,
     pricing:
@@ -234,8 +234,8 @@ export const pt: Messages = {
 
   industries: {
     eyebrow: "Setores",
-    title: "Conhecimento do setor",
-    sub: "Entendemos a fundo as exigências regulatórias, operacionais e técnicas do seu setor.",
+    title: "Onde nossos sistemas se encaixam",
+    sub: "O que construímos para cada setor. Até agora entregamos a clientes um sistema de exportação e um copiloto de IA; para os demais setores mostramos demonstrações funcionando, não projetos anteriores.",
     items: [
       {
         name: "Comércio e logística",
@@ -308,8 +308,8 @@ export const pt: Messages = {
 
   approach: {
     eyebrow: "Metodologia",
-    title: "Do levantamento à produção em cerca de doze semanas",
-    sub: "Os mesmos cinco passos em todo projeto, com escopo e custo por escrito antes de qualquer linha de código. Nós implementamos, não ficamos só na consultoria.",
+    title: "Da primeira conversa a um sistema funcionando",
+    sub: "Cinco passos, com escopo e custo por escrito antes de qualquer linha de código. Planejamos uma implementação completa em cerca de doze semanas. Nós implementamos, não ficamos só na consultoria.",
     deliverable: "Entrega",
     step: "Ir para a etapa",
     previous: "Anterior",
