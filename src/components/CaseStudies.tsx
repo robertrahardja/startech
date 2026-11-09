@@ -152,7 +152,7 @@ function MobileCaseCard({ study }: { study: CaseStudy }) {
               haptic("select");
               setTab(key);
             }}
-            className={`min-h-[44px] flex-1 whitespace-nowrap rounded-md px-1.5 py-2 text-[10.5px] font-medium tracking-wide transition-colors duration-300 ${
+            className={`min-h-[44px] min-w-[44px] flex-1 whitespace-nowrap rounded-md px-1.5 py-2 text-[10.5px] font-medium tracking-wide transition-colors duration-300 ${
               tab === key
                 ? "bg-st-bg-card text-st-text"
                 : "text-st-text-muted/70"
