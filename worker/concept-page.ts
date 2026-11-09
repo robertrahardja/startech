@@ -37,7 +37,7 @@ const COPY: Record<PageLanguage, Record<ConceptPageState, { title: string; body:
   ja: {
     gone: {
       title: "このページは公開を終了しました",
-      body: `貴社向けにご用意したページは、公開を終了いたしました。ご不明な点がございましたら、メールにご返信いただくか、ロバート・ラハルジャ（${PHONE}）までご連絡ください。`,
+      body: `ご案内のためにご用意したページは、公開を終了いたしました。ご不明な点がございましたら、メールにご返信いただくか、ロバート・ラハルジャ（${PHONE}）までご連絡ください。`,
     },
     unknown: {
       title: "ページが見つかりませんでした",
