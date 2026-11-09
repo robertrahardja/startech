@@ -30,6 +30,8 @@ export interface Env extends SingpassRpEnv {
   CRM_DB?: D1Database;
   /** Spreadsheets attached to the flyer form. hq serves them back to the CEO. */
   LEADS?: R2Bucket;
+  /** The website programme's concepts, served at /c/<token>/ (worker/concepts.ts). */
+  CONCEPTS?: R2Bucket;
   /** OAuth client ID demo sign-in tokens must have been issued for. */
   GOOGLE_CLIENT_ID: string;
   /** Primary model for /api/demo — free tier, text and vision both. */

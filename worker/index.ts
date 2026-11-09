@@ -22,6 +22,12 @@
  *                        (worker/singpass-rp.ts), off unless configured
  * - GET/POST /u/<token> — public unsubscribe link in hq's outreach emails
  *                        (worker/unsubscribe.ts)
+ * - GET/POST /i/<token>, GET /wa/<token> — the one-button "I am interested"
+ *                        and the WhatsApp link (worker/interest.ts)
+ * - GET /c/<token>/...  — the private comparison page and concept website
+ *                        from R2 (CONCEPTS); POST /c/<token>/view counts a
+ *                        view (worker/concepts.ts)
+ *   These four come through worker/email-links.ts.
  *
  * Static assets are served by the ASSETS binding (Cloudflare Workers static
  * assets), with the locale markup on the HTML shell (worker/assets.ts).
@@ -52,8 +58,7 @@ import {
   handleSingpassRp,
 } from "./singpass-rp";
 import { handleTestimonial } from "./testimonial";
-import { UNSUBSCRIBE_PREFIX, handleUnsubscribe } from "./unsubscribe";
-import { INTEREST_PREFIX, WHATSAPP_PREFIX, handleInterest, notifyByEmail } from "./interest";
+import { emailLinkPage } from "./email-links";
 
 export { Mailer } from "./mailer-entrypoint";
 
@@ -172,29 +177,10 @@ export default {
       return withSecurityHeaders(await handleSingpassRp(request, env, singpassDeps(request, env)));
     }
 
-    // The unsubscribe link in hq's outreach emails. Before the static assets,
-    // which would otherwise answer it with the SPA shell.
-    if (url.pathname.startsWith(UNSUBSCRIBE_PREFIX)) {
-      return withSecurityHeaders(
-        await handleUnsubscribe(request, {
-          db: env.CRM_DB,
-          isRateLimited: rateLimiter(env.RATE_LIMIT),
-        })
-      );
-    }
-
-    // The one-button "I am interested" and the WhatsApp link in hq's
-    // outreach emails (worker/interest.ts), before the static assets too.
-    if (url.pathname.startsWith(INTEREST_PREFIX) || url.pathname.startsWith(WHATSAPP_PREFIX)) {
-      return withSecurityHeaders(
-        await handleInterest(request, {
-          db: env.CRM_DB,
-          isRateLimited: rateLimiter(env.RATE_LIMIT),
-          notify: notifyByEmail(env),
-          waitUntil: (p) => ctx.waitUntil(p),
-        })
-      );
-    }
+    // The pages hq's outreach emails link to (/u/, /i/, /wa/, /c/), before
+    // the static assets, which would answer them with the SPA shell.
+    const linked = await emailLinkPage(request, env, ctx, url.pathname);
+    if (linked) return linked;
 
     // Static assets — add security headers
     if (!url.pathname.startsWith("/api/")) {

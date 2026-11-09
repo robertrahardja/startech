@@ -233,6 +233,33 @@ Recipient rows must not be deleted while mail that links to them is
 still out there: a token with no row cannot be mapped to an address, so
 that click cannot suppress anything.
 
+### Website concepts (/c/)
+
+The website email links to `/c/<token>/?r=<unsub_token>`: the private
+comparison page and the concept built for that company
+(`worker/concepts.ts`). Files come from the R2 bucket `startech-concepts`
+(binding `CONCEPTS`), one immutable folder per version:
+
+```text
+c/<token>/v<n>/compare/index.html   comparison page, today-*.webp
+c/<token>/v<n>/site/...             concept website
+c/<token>/current.json              {"version": n, "pulled": false}
+```
+
+`/c/<token>/` serves the version in `current.json`; `/c/<token>/v<n>/`
+serves that version frozen (hq's "Open as sent"). Under either base,
+`site/...` is the concept and any other file is the comparison page's.
+`__INTEREST_HREF__` in the comparison page becomes `/i/<r>` when `r` is a
+valid unsub token, otherwise `#contact`. `"pulled": true` (hq's "Pull
+offline") makes every address of the concept answer a polite 410; the
+files stay. Everything is `noindex` and `Cache-Control: private`, with
+same-origin framing allowed so the comparison page can frame the concept.
+
+`POST /c/<token>/view` adds a row to `web_views` (st_dasboard migration
+0022). The comparison page sends it after 3 seconds visible, only from the
+unversioned base, so scanners and frozen copies do not count. 30 a minute
+per IP, as on `/i/`.
+
 ### Acknowledgement to enquiries
 
 After `/api/contact` has saved a lead, the visitor gets one short reply

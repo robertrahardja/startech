@@ -53,8 +53,8 @@ function fromBrowserTag(tag: string): PageLanguage | null {
   return asLanguage(t.slice(0, 2));
 }
 
-/** For a page that knows no campaign: the visitor's first supported browser language. */
-function browserLanguage(acceptLanguage: string | null): PageLanguage {
+/** For a page that knows no campaign: the visitor's first supported browser language. Also /c/'s pages. */
+export function browserLanguage(acceptLanguage: string | null): PageLanguage {
   const tags = (acceptLanguage ?? "").split(",");
   return tags.map(fromBrowserTag).find((language) => language !== null) ?? "en";
 }

@@ -38,6 +38,15 @@ database_id = "025fe80d-f9e2-473c-9433-158cca50902d"
 binding = "LEADS"
 bucket_name = "startech-leads"
 
+# The website programme's concepts (worker/concepts.ts): immutable files per
+# version at c/<token>/v<n>/{site,compare}/ and the pointer
+# c/<token>/current.json. Served at /c/<token>/; hq writes "pulled" through
+# its own binding. Create it before deploying:
+#   wrangler r2 bucket create startech-concepts --location apac
+[[r2_buckets]]
+binding = "CONCEPTS"
+bucket_name = "startech-concepts"
+
 # Shared across every isolate/edge location, so demo rate limiting and the
 # manual blocklist actually hold under distributed traffic instead of
 # resetting whenever Cloudflare spins up a fresh isolate.

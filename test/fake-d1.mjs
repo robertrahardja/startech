@@ -71,6 +71,11 @@ CREATE TABLE outreach_suppression (
   source TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+-- st_dasboard migrations/0022_web_concepts.sql
+CREATE TABLE web_views (
+  token TEXT NOT NULL,
+  at TEXT NOT NULL
+);
 `;
 
 /** A fresh in-memory database with the schema above, and a D1-shaped handle on it. */
