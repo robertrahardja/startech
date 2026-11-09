@@ -204,7 +204,7 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
   },
 };
 
-const STYLE = `:root{color-scheme:dark}
+export const STYLE = `:root{color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:#000;color:#fff;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Hiragino Sans","Noto Sans JP","PingFang SC","PingFang TC","Microsoft YaHei","Microsoft JhengHei",sans-serif}
 main{flex:1;width:100%;max-width:32rem;margin:0 auto;padding:3rem 1rem 2rem}
@@ -218,7 +218,7 @@ footer{padding:1rem;color:#c2c2cc;font-size:.8125rem;text-align:center}
 footer span{white-space:nowrap}`;
 
 /** One line for the company, and no break inside "#06-07" or the postcode. */
-const FOOTER = `StarTech Innovation Pte Ltd<br>${POSTAL_ADDRESS.split(", ")
+export const FOOTER = `StarTech Innovation Pte Ltd<br>${POSTAL_ADDRESS.split(", ")
   .map((part) => `<span>${part}</span>`)
   .join(", ")}`;
 

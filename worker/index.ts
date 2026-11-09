@@ -53,6 +53,7 @@ import {
 } from "./singpass-rp";
 import { handleTestimonial } from "./testimonial";
 import { UNSUBSCRIBE_PREFIX, handleUnsubscribe } from "./unsubscribe";
+import { INTEREST_PREFIX, WHATSAPP_PREFIX, handleInterest, notifyByEmail } from "./interest";
 
 export { Mailer } from "./mailer-entrypoint";
 
@@ -178,6 +179,19 @@ export default {
         await handleUnsubscribe(request, {
           db: env.CRM_DB,
           isRateLimited: rateLimiter(env.RATE_LIMIT),
+        })
+      );
+    }
+
+    // The one-button "I am interested" and the WhatsApp link in hq's
+    // outreach emails (worker/interest.ts), before the static assets too.
+    if (url.pathname.startsWith(INTEREST_PREFIX) || url.pathname.startsWith(WHATSAPP_PREFIX)) {
+      return withSecurityHeaders(
+        await handleInterest(request, {
+          db: env.CRM_DB,
+          isRateLimited: rateLimiter(env.RATE_LIMIT),
+          notify: notifyByEmail(env),
+          waitUntil: (p) => ctx.waitUntil(p),
         })
       );
     }

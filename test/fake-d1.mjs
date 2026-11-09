@@ -49,12 +49,21 @@ CREATE TABLE outreach_recipients (
   next_at TEXT,
   last_sent_at TEXT,
   replied_at TEXT,
+  interested_at TEXT, -- st_dasboard migrations/0019_outreach_intro_columns.sql
   unsub_token TEXT NOT NULL UNIQUE,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now')),
   UNIQUE (campaign_id, email),
   FOREIGN KEY (campaign_id) REFERENCES outreach_campaigns(id),
   FOREIGN KEY (company_id) REFERENCES companies(id)
+);
+CREATE TABLE outreach_sends (
+  id TEXT PRIMARY KEY, recipient_id TEXT NOT NULL, campaign_id TEXT NOT NULL, step INTEGER NOT NULL,
+  subject TEXT NOT NULL, body TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending', error TEXT, sent_at TEXT
+);
+CREATE TABLE deals (
+  id TEXT PRIMARY KEY, org_id TEXT, company_id TEXT, title TEXT, stage TEXT, value INTEGER, currency TEXT,
+  probability INTEGER, deal_type TEXT, notes TEXT, created_by TEXT, created_at TEXT, updated_at TEXT
 );
 CREATE TABLE outreach_suppression (
   email TEXT PRIMARY KEY,
