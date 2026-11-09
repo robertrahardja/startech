@@ -20,6 +20,14 @@ import {
 export interface MailerEnv {
   RESEND_API_KEY?: string;
   /**
+   * The second sending domain (outreach.startech-innovation.com), warmed up
+   * beside the first so twice as much can go out safely: its own Resend key
+   * (sending access to that domain only) and sender. hq picks it per message
+   * with `sender: "secondary"`.
+   */
+  RESEND_API_KEY_2?: string;
+  OUTREACH_FROM_2?: string;
+  /**
    * The outreach sender, e.g. "Robert Rahardja <robert@mail.startech-innovation.com>",
    * on a domain verified in Resend. Unset: outreach and acknowledgements are off.
    */
@@ -50,25 +58,39 @@ async function suppressionError(db: D1Database | undefined, to: string): Promise
   }
 }
 
-/** One outreach email from OUTREACH_FROM, once it passes every rule. */
+type Sender = { from: string | undefined; key: string | undefined };
+
+/** The sending domain a message asks for: primary unless it says "secondary". */
+function senderFor(env: MailerEnv, message: unknown): Sender | null {
+  const asked = typeof message === "object" && message !== null ? (message as { sender?: unknown }).sender : undefined;
+  if (asked === undefined || asked === "primary") return { from: env.OUTREACH_FROM?.trim(), key: env.RESEND_API_KEY };
+  if (asked === "secondary") return { from: env.OUTREACH_FROM_2?.trim(), key: env.RESEND_API_KEY_2 };
+  return null;
+}
+
+/** One outreach email from its sending domain's sender, once it passes every rule. */
 export async function sendOutreach(env: MailerEnv, message: unknown): Promise<SendResult> {
-  const from = env.OUTREACH_FROM?.trim();
+  const sender = senderFor(env, message);
+  if (!sender) return { ok: false, error: "invalid-sender" };
+  const { from, key } = sender;
   if (!from) return { ok: false, error: "sender-not-configured" };
-  if (!env.RESEND_API_KEY) return { ok: false, error: "resend-not-configured" };
+  if (!key) return { ok: false, error: "resend-not-configured" };
 
   const checked = checkOutreach(message);
   if (!checked.ok) return checked;
   const suppressed = await suppressionError(env.CRM_DB, checked.email.to[0]);
   if (suppressed) return { ok: false, error: suppressed };
 
-  return resendSend(env.RESEND_API_KEY, { from, ...checked.email }, checked.idempotencyKey);
+  return resendSend(key, { from, ...checked.email }, checked.idempotencyKey);
 }
 
 /** Resend's last event for an email it accepted, so hq can suppress bounces and complaints. */
 export async function outreachStatus(env: MailerEnv, id: unknown): Promise<StatusResult> {
   if (!env.RESEND_API_KEY) return { ok: false, error: "resend-not-configured" };
   if (typeof id !== "string" || !RESEND_ID.test(id)) return { ok: false, error: "invalid-id" };
-  return resendLastEvent(env.RESEND_API_KEY, id);
+  const first = await resendLastEvent(env.RESEND_API_KEY, id);
+  // An email from the second domain may only be visible to its own key.
+  return first.ok || !env.RESEND_API_KEY_2 ? first : resendLastEvent(env.RESEND_API_KEY_2, id);
 }
 
 /**

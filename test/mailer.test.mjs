@@ -204,3 +204,18 @@ test("notifyOwner reaches StarTech's inbox, from the site domain until OUTREACH_
   assert.deepEqual(await notifyOwner(env, "Week 45", "   "), { ok: false, error: "invalid-text" });
   assert.equal(calls.length, 2);
 });
+
+test("the second sending domain: its own sender and key; refused until both are set; unknown senders refused", async () => {
+  const calls = fakeFetch();
+  const second = { ...env, OUTREACH_FROM_2: "Robert Rahardja <robert@outreach.startech-innovation.com>", RESEND_API_KEY_2: "re_second" };
+  assert.deepEqual(await sendOutreach({ ...env, RESEND_API_KEY_2: "re_second" }, { ...outreachMessage(), sender: "secondary" }), { ok: false, error: "sender-not-configured" });
+  assert.deepEqual(await sendOutreach({ ...env, OUTREACH_FROM_2: second.OUTREACH_FROM_2 }, { ...outreachMessage(), sender: "secondary" }), { ok: false, error: "resend-not-configured" });
+  assert.deepEqual(await sendOutreach(second, { ...outreachMessage(), sender: "tertiary" }), { ok: false, error: "invalid-sender" });
+  const before = calls.length;
+  await sendOutreach(second, { ...outreachMessage(), sender: "secondary" });
+  const sent = calls.slice(before)[0];
+  assert.equal(sent.body.from, "Robert Rahardja <robert@outreach.startech-innovation.com>");
+  assert.match(sent.headers.get("authorization"), /re_second/);
+  await sendOutreach(second, outreachMessage());
+  assert.notEqual(calls[calls.length - 1].body.from, sent.body.from); // primary by default
+});

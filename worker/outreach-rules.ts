@@ -25,6 +25,8 @@ export interface OutreachMessage {
   tags?: { name: string; value: string }[];
   /** Resend sends at most once per key for 24 hours; the outreach_sends id fits. */
   idempotencyKey?: string;
+  /** Which sending domain: "primary" (default) or "secondary" (worker/mailer.ts). */
+  sender?: "primary" | "secondary";
 }
 
 export type CheckedOutreach =
