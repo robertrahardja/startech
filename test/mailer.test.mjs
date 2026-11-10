@@ -183,6 +183,14 @@ test("status returns Resend's last event for an email", async () => {
   assert.equal(none.length, 0);
 });
 
+test("status reads with RESEND_STATUS_KEY when set: the sending keys may not read", async () => {
+  const calls = fakeFetch(() => Response.json({ id: "4ef9a417", last_event: "delivered" }));
+  const withStatus = { ...env, RESEND_API_KEY_2: "re_second", RESEND_STATUS_KEY: "re_status" };
+  assert.deepEqual(await outreachStatus(withStatus, "4ef9a417"), { ok: true, id: "4ef9a417", lastEvent: "delivered" });
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].headers.get("Authorization"), "Bearer re_status");
+});
+
 test("notifyOwner reaches StarTech's inbox, from the site domain until OUTREACH_FROM is set", async () => {
   const calls = fakeFetch();
   const report = "Sent 12, replied 1, bounced 0.";

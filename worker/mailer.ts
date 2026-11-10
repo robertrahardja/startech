@@ -28,6 +28,13 @@ export interface MailerEnv {
   RESEND_API_KEY_2?: string;
   OUTREACH_FROM_2?: string;
   /**
+   * A Resend key that may read emails, for hq's delivery checks only. The
+   * two sending keys are "sending access" and Resend refuses their reads
+   * (restricted_api_key, found 10 Nov 2026), so without this key bounces
+   * and complaints go unseen.
+   */
+  RESEND_STATUS_KEY?: string;
+  /**
    * The outreach sender, e.g. "Robert Rahardja <robert@mail.startech-innovation.com>",
    * on a domain verified in Resend. Unset: outreach and acknowledgements are off.
    */
@@ -88,6 +95,7 @@ export async function sendOutreach(env: MailerEnv, message: unknown): Promise<Se
 export async function outreachStatus(env: MailerEnv, id: unknown): Promise<StatusResult> {
   if (!env.RESEND_API_KEY) return { ok: false, error: "resend-not-configured" };
   if (typeof id !== "string" || !RESEND_ID.test(id)) return { ok: false, error: "invalid-id" };
+  if (env.RESEND_STATUS_KEY) return resendLastEvent(env.RESEND_STATUS_KEY, id);
   const first = await resendLastEvent(env.RESEND_API_KEY, id);
   // An email from the second domain may only be visible to its own key.
   return first.ok || !env.RESEND_API_KEY_2 ? first : resendLastEvent(env.RESEND_API_KEY_2, id);

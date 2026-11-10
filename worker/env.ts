@@ -22,6 +22,8 @@ export interface Env extends SingpassRpEnv {
   /** The second sending domain's Resend key and sender (worker/mailer.ts). */
   RESEND_API_KEY_2?: string;
   OUTREACH_FROM_2?: string;
+  /** A Resend key that may read emails, for delivery checks (worker/mailer.ts). */
+  RESEND_STATUS_KEY?: string;
   ENVIRONMENT: string;
   /** "true" turns the chat and speech endpoints back on. Absent means off. */
   ENABLE_AI_CHAT?: string;
