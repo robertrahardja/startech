@@ -684,6 +684,17 @@ Set, and not stored in the repository:
 - `OPENAI_API_KEY` — chat and the AI demos
 - `ELEVENLABS_API_KEY` — text to speech
 - `RESEND_API_KEY` — the contact form
+- `RESEND_API_KEY_2` and `OUTREACH_FROM_2` — the second outreach domain
+  (sending access to outreach.startech-innovation.com only)
+
+Needed, not set yet (10 Nov 2026):
+
+- `RESEND_STATUS_KEY` — a Resend key with full access, used only to read
+  delivery events for hq (bounces, complaints). Both sending keys are
+  "sending access" and Resend refuses their reads (`restricted_api_key`).
+  Create it in Resend (API Keys, Full access) and set it from your own
+  terminal so the key never lands in a chat: `npx wrangler secret put
+  RESEND_STATUS_KEY`.
 
 Not set yet:
 
