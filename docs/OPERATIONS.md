@@ -686,20 +686,18 @@ Set, and not stored in the repository:
 - `RESEND_API_KEY` — the contact form
 - `RESEND_API_KEY_2` and `OUTREACH_FROM_2` — the second outreach domain
   (sending access to outreach.startech-innovation.com only)
-
-Needed, not set yet (10 Nov 2026):
-
 - `RESEND_STATUS_KEY` — a Resend key with full access, used only to read
-  delivery events for hq (bounces, complaints). Both sending keys are
+  delivery events for hq (bounces, complaints); set by Robert 10 Nov 2026,
+  first good check 18:30 SGT (10 of 10 delivered). Both sending keys are
   "sending access" and Resend refuses their reads (`restricted_api_key`).
-  Create it in Resend (API Keys, Full access) and set it from your own
-  terminal so the key never lands in a chat: `npx wrangler secret put
-  RESEND_STATUS_KEY`.
-
-Not set yet:
-
+  To replace it, create one in Resend (API Keys, Full access) and set it
+  from your own terminal so the key never lands in a chat: `npx wrangler
+  secret put RESEND_STATUS_KEY`.
 - `OUTREACH_FROM` — the outreach and acknowledgement sender; see
   [Switching sending on](#switching-sending-on)
+
+Checked with `npx wrangler secret list` on 10 Nov 2026: all of the above
+are set.
 
 ```bash
 npx wrangler secret list
