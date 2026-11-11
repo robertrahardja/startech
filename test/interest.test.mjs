@@ -65,13 +65,46 @@ test("POST records interest like a reply: replied, sequence stopped, a lead deal
   assert.equal(db.query("SELECT status FROM outreach_sends WHERE id = 'snd_1'")[0].status, "skipped");
   const deals = db.query("SELECT title, stage FROM deals");
   assert.deepEqual(deals, [{ title: "Interested (outreach): PT Sample", stage: "lead" }]);
-  assert.deepEqual(notified, [{ company: "PT Sample", country: "Indonesia", email: "info@sample.co.id", campaignId: "id-ja", step: 1 }]);
+  const press = { at: "2026-11-10T02:00:00.000Z", asn: null, org: null, country: null, ua: null, scanner: true };
+  assert.deepEqual(notified, [
+    { company: "PT Sample", country: "Indonesia", email: "info@sample.co.id", campaignId: "id-ja", step: 1, press, again: false },
+  ]);
 
   // Pressed again: nothing new, no second email to Robert, no second deal.
   await handleInterest(request(`/i/${TOKEN}`, "POST"), context());
   await Promise.all(pending);
   assert.equal(notified.length, 1);
   assert.equal(db.query("SELECT COUNT(*) AS n FROM deals")[0].n, 1);
+  assert.equal(JSON.parse(db.query("SELECT interest_presses FROM outreach_recipients")[0].interest_presses).length, 2);
+});
+
+const CHROME = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36";
+const pressFrom = (cf) => {
+  const r = new Request(`https://startech-innovation.com/i/${TOKEN}`, {
+    method: "POST",
+    headers: { "CF-Connecting-IP": "203.0.113.7", "User-Agent": CHROME },
+  });
+  Object.defineProperty(r, "cf", { value: cf });
+  return r;
+};
+
+test("each press is kept without the IP; a person after a scanner tells Robert again", async () => {
+  await handleInterest(pressFrom({ asn: 8075, asOrganization: "Microsoft Corporation", country: "GB" }), context());
+  await handleInterest(pressFrom({ asn: 8075, asOrganization: "Microsoft Corporation", country: "GB" }), context());
+  await handleInterest(pressFrom({ asn: 2856, asOrganization: "British Telecommunications PLC", country: "GB" }), context());
+  await Promise.all(pending);
+  const presses = JSON.parse(db.query("SELECT interest_presses FROM outreach_recipients")[0].interest_presses);
+  assert.deepEqual(presses.map((p) => [p.org, p.scanner]), [
+    ["Microsoft Corporation", true],
+    ["Microsoft Corporation", true],
+    ["British Telecommunications PLC", false],
+  ]);
+  assert.ok(!JSON.stringify(presses).includes("203.0.113.7"), "no IP address is kept");
+  assert.deepEqual(notified.map((n) => n.again), [false, true]);
+  assert.match(db.query("SELECT notes FROM deals")[0].notes, /Microsoft Corporation \(AS8075\), GB.*automatic link check/);
+  // At most five presses are kept.
+  for (let i = 0; i < 4; i++) await handleInterest(pressFrom({ asn: 2856, asOrganization: "BT", country: "GB" }), context());
+  assert.equal(JSON.parse(db.query("SELECT interest_presses FROM outreach_recipients")[0].interest_presses).length, 5);
 });
 
 test("an unknown token is a neutral 404 and changes nothing", async () => {
@@ -95,8 +128,14 @@ test("Robert's email names the company and replies to it", async () => {
     sent.push(email);
     return { ok: true, id: "e1" };
   });
-  await notify({ company: "PT Sample", country: "Indonesia", email: "info@sample.co.id", campaignId: "id-ja", step: 1 });
+  const press = { at: "2026-11-10T02:00:00.000Z", asn: 8075, org: "Microsoft Corporation", country: "GB", ua: "Mozilla/5.0", scanner: true };
+  const who = { company: "PT Sample", country: "Indonesia", email: "info@sample.co.id", campaignId: "id-ja", step: 1, press, again: false };
+  await notify(who);
   assert.equal(sent[0].subject, "Interested: PT Sample (Indonesia)");
   assert.equal(sent[0].reply_to, "info@sample.co.id");
   assert.match(sent[0].text, /pressed "I am interested"/);
+  assert.match(sent[0].text, /Microsoft Corporation \(AS8075\), GB.*probably an automatic link check, not a person/);
+  await notify({ ...who, again: true, press: { ...press, org: "BT", asn: 2856, scanner: false } });
+  assert.equal(sent[1].subject, "Interested again: PT Sample (Indonesia)");
+  assert.match(sent[1].text, /probably a person/);
 });

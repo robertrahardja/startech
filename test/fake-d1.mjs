@@ -50,6 +50,7 @@ CREATE TABLE outreach_recipients (
   last_sent_at TEXT,
   replied_at TEXT,
   interested_at TEXT, -- st_dasboard migrations/0019_outreach_intro_columns.sql
+  interest_presses TEXT, -- st_dasboard migrations/0023_interest_presses.sql
   unsub_token TEXT NOT NULL UNIQUE,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now')),

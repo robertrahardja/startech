@@ -39,6 +39,67 @@ export interface Interested {
   email: string;
   campaignId: string;
   step: number;
+  /** What pressed the button this time. */
+  press: Press;
+  /** True when an earlier press looked like a scanner and this one does not. */
+  again: boolean;
+}
+
+/**
+ * What pressed the button, as Cloudflare saw the request; no IP address is
+ * kept. Yonex UK's press on 10 Nov 2026 came 12 s after its help desk logged
+ * the email: mail-security systems open links and some press buttons, so hq
+ * keeps enough to tell (outreach_recipients.interest_presses, st_dasboard
+ * migrations/0023).
+ */
+export interface Press {
+  at: string;
+  asn: number | null;
+  org: string | null;
+  country: string | null;
+  ua: string | null;
+  scanner: boolean;
+}
+
+// Clouds and mail-security services. Privacy relays and VPN hosts (Cloudflare,
+// Akamai, Fastly, M247) are left out: people browse through them too.
+const SCANNER_ORG =
+  /microsoft|amazon|google(?! fiber)|oracle|alibaba|tencent|digitalocean|proofpoint|mimecast|barracuda|cisco|ironport|forcepoint|trend ?micro|sophos|zscaler|palo alto|fortinet|symantec|broadcom|trustwave|check ?point|vade|hornet|libraesva|kaspersky/i;
+const SCANNER_UA = /headless|bot\b|crawler|spider|python|curl|wget|go-http|java\/|okhttp|scanner/i;
+const MAX_PRESSES = 5;
+
+export function pressOf(request: Request, now: Date): Press {
+  const cf = (request as Request & { cf?: { asn?: unknown; asOrganization?: unknown; country?: unknown } }).cf;
+  const text = (v: unknown, max: number) => (typeof v === "string" && v ? v.slice(0, max) : null);
+  const ua = text(request.headers.get("User-Agent"), 200);
+  const org = text(cf?.asOrganization, 120);
+  return {
+    at: now.toISOString(),
+    asn: typeof cf?.asn === "number" ? cf.asn : null,
+    org,
+    country: text(cf?.country, 2),
+    ua,
+    scanner: (!!org && SCANNER_ORG.test(org)) || !ua || SCANNER_UA.test(ua),
+  };
+}
+
+/** One sentence for Robert: where the press came from and what it probably was. */
+export function describePress(p: Press): string {
+  const net = p.org ? `${p.org}${p.asn ? ` (AS${p.asn})` : ""}` : "an unknown network";
+  const where = p.country ? `, ${p.country}` : "";
+  const verdict = p.scanner
+    ? "That is a cloud or mail-security network, or no ordinary browser, so it was probably an automatic link check, not a person."
+    : "That is an ordinary network and browser, so it was probably a person.";
+  return `Pressed from ${net}${where}, browser "${p.ua ?? "none given"}". ${verdict}`;
+}
+
+function earlierPresses(json: string | null): Press[] {
+  try {
+    const list: unknown = JSON.parse(json ?? "[]");
+    return Array.isArray(list) ? (list as Press[]) : [];
+  } catch {
+    return [];
+  }
 }
 
 export interface InterestContext {
@@ -57,6 +118,7 @@ interface Row {
   campaign_id: string;
   company_id: string | null;
   interested_at: string | null;
+  interest_presses: string | null;
   language: string | null;
   local_language: string | null;
   company: string | null;
@@ -70,7 +132,7 @@ const asLanguage = (code: string | null | undefined): PageLanguage | null =>
 async function findRow(db: D1Database, token: string): Promise<Row | null> {
   return db
     .prepare(
-      `SELECT r.id, r.email, r.step, r.campaign_id, r.company_id, r.interested_at,
+      `SELECT r.id, r.email, r.step, r.campaign_id, r.company_id, r.interested_at, r.interest_presses,
               c.language, c.local_language, co.name AS company, co.country
          FROM outreach_recipients r
          LEFT JOIN outreach_campaigns c ON c.id = r.campaign_id
@@ -83,7 +145,7 @@ async function findRow(db: D1Database, token: string): Promise<Row | null> {
 }
 
 /** The reply rule (hq replies.ts stopOnReply), plus interested_at and a deal. */
-async function record(db: D1Database, row: Row, now: Date): Promise<void> {
+async function record(db: D1Database, row: Row, now: Date, press: Press): Promise<void> {
   const at = now.toISOString();
   const crmAt = at.replace("T", " ").slice(0, 19);
   const statements = [
@@ -102,6 +164,13 @@ async function record(db: D1Database, row: Row, now: Date): Promise<void> {
           WHERE recipient_id = ?1 AND status IN ('pending', 'approved')`
       )
       .bind(row.id),
+    db
+      .prepare(
+        `UPDATE outreach_recipients
+            SET interest_presses = json_insert(COALESCE(interest_presses, '[]'), '$[#]', json(?2))
+          WHERE id = ?1 AND json_array_length(COALESCE(interest_presses, '[]')) < ?3`
+      )
+      .bind(row.id, JSON.stringify(press), MAX_PRESSES),
   ];
   if (row.company_id) {
     statements.push(
@@ -118,7 +187,7 @@ async function record(db: D1Database, row: Row, now: Date): Promise<void> {
           `deal_${crypto.randomUUID()}`,
           ORG_ID,
           row.company_id,
-          `Opened when the company pressed "I am interested" in outreach campaign ${row.campaign_id}. Set the stage and value as it moves.`,
+          `Opened when the company pressed "I am interested" in outreach campaign ${row.campaign_id}. ${describePress(press)} Set the stage and value as it moves.`,
           USER_ID,
           crmAt
         )
@@ -152,10 +221,21 @@ async function answer(request: Request, db: D1Database, token: string, isWhatsAp
   const language = asLanguage(row.language) ?? "en";
   const second = asLanguage(row.local_language);
   if (request.method !== "POST") return renderInterestPage(language, "confirm", 200, token, second);
-  await record(db, row, ctx.now?.() ?? new Date());
-  if (!row.interested_at) {
+  const press = pressOf(request, ctx.now?.() ?? new Date());
+  const before = earlierPresses(row.interest_presses);
+  await record(db, row, new Date(press.at), press);
+  const again = !!row.interested_at && !press.scanner && before.length > 0 && before.every((p) => p.scanner);
+  if (!row.interested_at || again) {
     ctx.waitUntil(
-      ctx.notify({ company: row.company ?? row.email, country: row.country, email: row.email, campaignId: row.campaign_id, step: row.step })
+      ctx.notify({
+        company: row.company ?? row.email,
+        country: row.country,
+        email: row.email,
+        campaignId: row.campaign_id,
+        step: row.step,
+        press,
+        again,
+      })
     );
   }
   return renderInterestPage(language, "done", 200, token, second);
@@ -203,9 +283,12 @@ export function notifyByEmail(env: NotifyEnv, send: typeof resendSend = resendSe
         from,
         to: [OWNER_INBOX],
         reply_to: who.email,
-        subject: `Interested: ${who.company}${where}`,
+        subject: `${who.again ? "Interested again" : "Interested"}: ${who.company}${where}`,
         text: [
-          `${who.company}${where} pressed "I am interested" after email ${who.step} of 3 in outreach campaign ${who.campaignId}.`,
+          who.again
+            ? `${who.company}${where} pressed "I am interested" again. The earlier press looked like an automatic link check; this one does not.`
+            : `${who.company}${where} pressed "I am interested" after email ${who.step} of 3 in outreach campaign ${who.campaignId}.`,
+          describePress(who.press),
           "",
           `Their address: ${who.email} (reply to this email to answer them).`,
           "A lead deal is open in hq (Clients > Deals), and their remaining outreach emails are cancelled.",
