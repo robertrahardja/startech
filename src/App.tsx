@@ -7,6 +7,7 @@ import StickyCta from "./components/StickyCta";
 import Footer from "./components/Footer";
 import SplashScreen from "./components/SplashScreen";
 import { useCurrentPage } from "./lib/router";
+import { pageMeta } from "./lib/pageMeta";
 import { I18nProvider } from "./i18n";
 import LanguageHint from "./components/LanguageHint";
 import { AI_CHAT_ENABLED } from "./lib/features";
@@ -55,6 +56,17 @@ export default function App() {
     });
     return () => cancelAnimationFrame(frame);
   }, []);
+
+  // The Worker serves each page with its own title. Pages that set no title
+  // of their own (the homepage and the demos) take it from the same table
+  // after a client-side navigation, so the last page's title never lingers.
+  // The flyer, InvoiceNow, Singpass and testimonial pages set theirs, in
+  // the visitor's language.
+  useEffect(() => {
+    if (page.type === "home" || page.type === "solutions-index" || page.type === "solution-page") {
+      document.title = pageMeta(page).title;
+    }
+  }, [page]);
 
   const toggleChat = useCallback(() => setChatOpen((prev) => !prev), []);
   const openChat = useCallback(() => setChatOpen(true), []);

@@ -59,6 +59,7 @@ import {
 } from "./singpass-rp";
 import { handleTestimonial } from "./testimonial";
 import { emailLinkPage } from "./email-links";
+import { sitemapResponse } from "./sitemap";
 
 export { Mailer } from "./mailer-entrypoint";
 
@@ -181,6 +182,11 @@ export default {
     // the static assets, which would answer them with the SPA shell.
     const linked = await emailLinkPage(request, env, ctx, url.pathname);
     if (linked) return linked;
+
+    // Built from the route table rather than kept as a static file.
+    if (url.pathname === "/sitemap.xml") {
+      return withSecurityHeaders(sitemapResponse());
+    }
 
     // Static assets — add security headers
     if (!url.pathname.startsWith("/api/")) {

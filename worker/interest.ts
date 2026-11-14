@@ -68,7 +68,7 @@ const SCANNER_ORG =
 const SCANNER_UA = /headless|bot\b|crawler|spider|python|curl|wget|go-http|java\/|okhttp|scanner/i;
 const MAX_PRESSES = 5;
 
-export function pressOf(request: Request, now: Date): Press {
+function pressOf(request: Request, now: Date): Press {
   const cf = (request as Request & { cf?: { asn?: unknown; asOrganization?: unknown; country?: unknown } }).cf;
   const text = (v: unknown, max: number) => (typeof v === "string" && v ? v.slice(0, max) : null);
   const ua = text(request.headers.get("User-Agent"), 200);
@@ -84,7 +84,7 @@ export function pressOf(request: Request, now: Date): Press {
 }
 
 /** One sentence for Robert: where the press came from and what it probably was. */
-export function describePress(p: Press): string {
+function describePress(p: Press): string {
   const net = p.org ? `${p.org}${p.asn ? ` (AS${p.asn})` : ""}` : "an unknown network";
   const where = p.country ? `, ${p.country}` : "";
   const verdict = p.scanner

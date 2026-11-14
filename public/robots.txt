@@ -1,0 +1,2 @@
+# The sitemap lists every page in every language.
+Sitemap: https://startech-innovation.com/sitemap.xml

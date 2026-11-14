@@ -5,8 +5,40 @@
 // every translated page is announced as English. HTMLRewriter patches the
 // response as it streams, so the cost is negligible and the client-side code
 // stays unchanged (it simply sets the same values again).
+//
+// The same pass writes each page's title, description, canonical URL and
+// link-preview tags (src/lib/pageMeta.ts), and the homepage's structured
+// data, for the same reason: crawlers and the apps that build link previews
+// read the HTML as delivered, without running the app.
 
-const SITE = "https://startech-innovation.com";
+import { pageMeta } from "../src/lib/pageMeta";
+import { resolvePage } from "../src/lib/routes";
+import { SITE_NAME, SITE_URL as SITE, SOCIAL_PROFILES } from "../src/lib/site";
+
+/** The image link previews show, 1200 x 630 (public/assets/). */
+const SHARE_IMAGE = {
+  url: `${SITE}/assets/startech-share.png`,
+  width: "1200",
+  height: "630",
+  alt: "StarTech Innovation: From spreadsheet to system.",
+};
+
+/**
+ * Who StarTech is, as schema.org structured data, on the homepage: the
+ * name, logo and contact details shown on the site, and the four social
+ * accounts as the same organisation.
+ */
+const ORGANIZATION = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_NAME,
+  url: `${SITE}/`,
+  logo: `${SITE}/assets/startech-logo-full.png`,
+  email: "info@startech-innovation.com",
+  telephone: "+65 9069 3236",
+  address: { "@type": "PostalAddress", addressCountry: "SG" },
+  sameAs: SOCIAL_PROFILES.map((p) => p.href),
+};
 
 /** Locale prefixes, and the BCP 47 tag each one is announced as. */
 const HTML_LANG: Record<string, string> = {
@@ -17,6 +49,9 @@ const HTML_LANG: Record<string, string> = {
   es: "es",
   pt: "pt",
 };
+
+/** Every published locale, English first. */
+export const LOCALE_CODES = ["en", ...Object.keys(HTML_LANG)];
 
 /** The locale a pathname sits under, or "en" when it carries no prefix. */
 function localeFromPath(pathname: string): string {
@@ -55,14 +90,28 @@ function stripPrerenderedContent(response: Response): Response {
     .transform(response);
 }
 
+/** Escapes a value for a double-quoted HTML attribute. */
+function attr(value: string): string {
+  return value.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+/** The page's URL in a locale; English keeps the bare route. */
+export function localeUrl(locale: string, route: string): string {
+  return locale === "en" ? `${SITE}${route}` : `${SITE}/${locale}${route}`;
+}
+
 export function withLocaleMarkup(response: Response, pathname: string): Response {
   const locale = localeFromPath(pathname);
-  const route = routeWithoutLocale(pathname);
+  const page = resolvePage(routeWithoutLocale(pathname));
+  const meta = pageMeta(page);
+  // An unknown path shows the homepage, so it names the homepage as its
+  // canonical URL rather than becoming a second copy of it.
+  const route = meta.route;
+  const canonical = localeUrl(locale, route);
 
-  const alternates = ["en", ...Object.keys(HTML_LANG)].map((code) => {
-    const href = code === "en" ? `${SITE}${route}` : `${SITE}/${code}${route}`;
+  const alternates = LOCALE_CODES.map((code) => {
     const tag = code === "en" ? "en" : HTML_LANG[code];
-    return `<link rel="alternate" hreflang="${tag}" href="${href}">`;
+    return `<link rel="alternate" hreflang="${tag}" href="${localeUrl(code, route)}">`;
   });
 
   // x-default points at the unprefixed route, which serves English.
@@ -70,15 +119,54 @@ export function withLocaleMarkup(response: Response, pathname: string): Response
     `<link rel="alternate" hreflang="x-default" href="${SITE}${route}">`
   );
 
-  let rewriter = new HTMLRewriter()
+  const head = [
+    ...alternates,
+    `<link rel="canonical" href="${attr(canonical)}">`,
+    `<meta property="og:url" content="${attr(canonical)}">`,
+    `<meta property="og:site_name" content="${attr(SITE_NAME)}">`,
+    `<meta property="og:image" content="${attr(SHARE_IMAGE.url)}">`,
+    `<meta property="og:image:width" content="${SHARE_IMAGE.width}">`,
+    `<meta property="og:image:height" content="${SHARE_IMAGE.height}">`,
+    `<meta property="og:image:alt" content="${attr(SHARE_IMAGE.alt)}">`,
+    `<meta name="twitter:card" content="summary_large_image">`,
+  ];
+  if (!meta.indexable) head.push(`<meta name="robots" content="noindex">`);
+  if (page.type === "home") {
+    // "<" escaped so no value can close the script element early.
+    const json = JSON.stringify(ORGANIZATION).replace(/</g, "\\u003c");
+    head.push(`<script type="application/ld+json">${json}</script>`);
+  }
+
+  const rewriter = new HTMLRewriter()
     .on("html", {
       element(el) {
         el.setAttribute("lang", locale === "en" ? "en" : HTML_LANG[locale]);
       },
     })
+    .on("title", {
+      element(el) {
+        el.setInnerContent(meta.title);
+      },
+    })
+    .on('meta[name="description"]', {
+      element(el) {
+        el.setAttribute("content", meta.description);
+      },
+    })
+    .on('meta[property="og:title"]', {
+      element(el) {
+        el.setAttribute("content", meta.title);
+      },
+    })
+    // The homepage keeps the shorter share text index.html already has.
+    .on('meta[property="og:description"]', {
+      element(el) {
+        if (page.type !== "home") el.setAttribute("content", meta.description);
+      },
+    })
     .on("head", {
       element(el) {
-        el.append(alternates.join(""), { html: true });
+        el.append(head.join(""), { html: true });
       },
     });
 

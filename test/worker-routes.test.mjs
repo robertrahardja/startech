@@ -131,3 +131,19 @@ test("/u/<token> is served by the Worker with the site's security headers", asyn
   assert.match(await done.text(), /You are unsubscribed/);
   assert.equal(db.query("SELECT reason FROM outreach_suppression")[0].reason, "unsubscribe");
 });
+
+test("/sitemap.xml lists every indexed page in every language, and no unlisted page", async () => {
+  const { call } = setup();
+  const response = await call(new Request("https://startech-innovation.com/sitemap.xml"));
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("Content-Type"), /^application\/xml/);
+  const body = await response.text();
+  const locs = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+  assert.ok(locs.includes("https://startech-innovation.com/"));
+  assert.ok(locs.includes("https://startech-innovation.com/flyer"));
+  assert.ok(locs.includes("https://startech-innovation.com/ja/"));
+  assert.ok(locs.includes("https://startech-innovation.com/zh-Hant/solutions/invoice-scanner"));
+  assert.ok(!locs.some((u) => u.includes("/testimonial")));
+  assert.equal(new Set(locs).size, locs.length);
+  assert.equal(locs.length % 7, 0);
+});
