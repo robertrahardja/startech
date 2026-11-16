@@ -10,6 +10,7 @@ export type Page =
   | { type: "testimonial" }
   | { type: "invoicenow" }
   | { type: "singpass" }
+  | { type: "updates" }
   | { type: "solutions-index" }
   | { type: "solution-page"; solution: Solution };
 
@@ -47,6 +48,11 @@ export function resolvePage(pathname: string): Page {
   // Singpass FAPI 2.0: the deadline, a working demo, and the upgrade offer.
   if (pathname === "/singpass") {
     return { type: "singpass" };
+  }
+
+  // What the quarterly update contains, and the sign-up.
+  if (pathname === "/updates") {
+    return { type: "updates" };
   }
 
   const match = pathname.match(SOLUTION_PATH);

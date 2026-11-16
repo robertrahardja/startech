@@ -17,7 +17,7 @@
 
 import { renderInterestPage } from "./interest-page";
 import { OWNER_INBOX, resendSend } from "./resend";
-import { TOKEN_CHARS } from "./unsubscribe";
+import { TOKEN_CHARS, asLanguage } from "./unsubscribe";
 import type { PageLanguage } from "./unsubscribe-page";
 
 export const INTEREST_PREFIX = "/i/";
@@ -68,7 +68,8 @@ const SCANNER_ORG =
 const SCANNER_UA = /headless|bot\b|crawler|spider|python|curl|wget|go-http|java\/|okhttp|scanner/i;
 const MAX_PRESSES = 5;
 
-function pressOf(request: Request, now: Date): Press {
+/** Also what /k/ (worker/keep-updated.ts) judges a press by. */
+export function pressOf(request: Request, now: Date): Press {
   const cf = (request as Request & { cf?: { asn?: unknown; asOrganization?: unknown; country?: unknown } }).cf;
   const text = (v: unknown, max: number) => (typeof v === "string" && v ? v.slice(0, max) : null);
   const ua = text(request.headers.get("User-Agent"), 200);
@@ -84,7 +85,7 @@ function pressOf(request: Request, now: Date): Press {
 }
 
 /** One sentence for Robert: where the press came from and what it probably was. */
-function describePress(p: Press): string {
+export function describePress(p: Press): string {
   const net = p.org ? `${p.org}${p.asn ? ` (AS${p.asn})` : ""}` : "an unknown network";
   const where = p.country ? `, ${p.country}` : "";
   const verdict = p.scanner
@@ -125,9 +126,6 @@ interface Row {
   country: string | null;
 }
 
-const LANGUAGES = new Set<string>(["en", "ja", "id", "es", "pt", "zh-Hans", "zh-Hant"]);
-const asLanguage = (code: string | null | undefined): PageLanguage | null =>
-  code && LANGUAGES.has(code) ? (code as PageLanguage) : null;
 
 async function findRow(db: D1Database, token: string): Promise<Row | null> {
   return db
@@ -181,7 +179,7 @@ async function record(db: D1Database, row: Row, now: Date, press: Press): Promis
            SELECT ?1, ?2, c.id, 'Interested (outreach): ' || c.name, 'lead', 0, 'SGD', 20, 'new', ?4, ?5, ?6, ?6
              FROM companies c
             WHERE c.id = ?3
-              AND NOT EXISTS (SELECT 1 FROM deals d WHERE d.company_id = c.id AND d.stage NOT IN ('won', 'lost'))`
+              AND NOT EXISTS (SELECT 1 FROM deals d WHERE d.company_id = c.id AND d.stage NOT IN ('won', 'lost', 'keep_in_touch'))`
         )
         .bind(
           `deal_${crypto.randomUUID()}`,

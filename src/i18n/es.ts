@@ -878,6 +878,32 @@ export const es: Messages = {
     rights: "StarTech Innovation Pte. Ltd.",
   },
 
+  // The "Get our updates" sign-up: the footer and /updates (src/components/UpdatesSignup.tsx).
+  // consent must match SIGNUP_CONSENT in worker/subscribe.ts word for word.
+  updates: {
+    eyebrow: "Novedades",
+    title: "Reciba nuestras novedades",
+    intro: "Un correo breve de StarTech Innovation aproximadamente una vez por trimestre. Puede darse de baja en cualquier momento.",
+    containsTitle: "Qué incluye cada actualización",
+    contains: [
+      "Lo que hemos construido recientemente y qué cambió para la empresa que lo usa.",
+      "Nuevas demos funcionales que puede probar con datos de ejemplo.",
+      "Consejos prácticos sobre software e IA para empresas.",
+    ],
+    confirmNote: "Primero le pedimos que confirme por correo, así nadie puede suscribirle sin que usted lo sepa.",
+    email: "Correo electrónico",
+    consent: "Deseo recibir la actualización de StarTech Innovation aproximadamente una vez por trimestre. Puedo darme de baja en cualquier momento.",
+    send: "Suscribirme",
+    sending: "Enviando…",
+    thanksTitle: "Revise su bandeja de entrada",
+    thanksBody: "Si esta dirección aún no está en nuestra lista, le enviamos un correo con un enlace para confirmarla.",
+    errorEmail: "Introduzca una dirección de correo válida.",
+    errorConsent: "Marque esta casilla para suscribirse.",
+    error: "Algo salió mal. Inténtelo de nuevo.",
+    footerLead: "Aproximadamente una vez por trimestre: lo que construimos, nuevas demos y consejos prácticos.",
+    more: "Qué incluye la actualización",
+  },
+
   demos: {
     signIn: {
       title: "Personalizar {title}",

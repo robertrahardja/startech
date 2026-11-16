@@ -51,6 +51,8 @@ export function pageMeta(page: Page): PageMeta {
       return { title: titled(en.invoicenow.eyebrow), description: en.invoicenow.lead, route: "/invoicenow", indexable: true };
     case "singpass":
       return { title: titled(en.singpass.eyebrow), description: en.singpass.intro, route: "/singpass", indexable: true };
+    case "updates":
+      return { title: titled(en.updates.title), description: en.updates.intro, route: "/updates", indexable: true };
     // Reached only by a link we send to clients, so it stays unlisted.
     case "testimonial":
       return { title: titled(en.testimonial.eyebrow), description: en.testimonial.intro, route: "/testimonial", indexable: false };
@@ -64,5 +66,6 @@ export const INDEXED_ROUTES = [
   "/flyer",
   "/invoicenow",
   "/singpass",
+  "/updates",
   ...SOLUTIONS.map((s) => `/solutions/${s.slug}`),
 ];

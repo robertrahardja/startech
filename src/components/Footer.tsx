@@ -1,6 +1,7 @@
 import Link from "./solutions/Link";
 import { useI18n } from "../i18n";
 import { SOCIAL_PROFILES } from "../lib/site";
+import UpdatesSignup from "./UpdatesSignup";
 
 // The icon for each of StarTech's accounts in SOCIAL_PROFILES (lib/site).
 const ICON_PATHS: Record<(typeof SOCIAL_PROFILES)[number]["name"], string> = {
@@ -14,13 +15,34 @@ const ICON_PATHS: Record<(typeof SOCIAL_PROFILES)[number]["name"], string> = {
     "M6.9 8.8H3.6V20h3.3V8.8zM5.3 3.5a1.9 1.9 0 1 0 0 3.8 1.9 1.9 0 0 0 0-3.8zM20.4 13.6c0-3-.6-5.1-4.1-5.1-1.7 0-2.8.9-3.3 1.8h-.1V8.8H9.8V20h3.3v-5.5c0-1.5.3-2.9 2.1-2.9 1.8 0 1.8 1.7 1.8 3V20h3.3l.1-6.4z",
 };
 
-export default function Footer() {
+/** `signup`: false on /updates, which shows the same form itself. */
+export default function Footer({ signup = true }: { signup?: boolean }) {
   const { t } = useI18n();
   const year = new Date().getFullYear();
 
   return (
     <footer className="border-t border-st-border">
       <div className="mx-auto max-w-7xl px-6 py-12 sm:px-8">
+        {signup && (
+          <section aria-labelledby="footer-updates" className="mb-10 border-b border-st-border pb-10 sm:mb-12 sm:pb-12">
+            <div className="mx-auto max-w-xl">
+              <h2 id="footer-updates" className="font-display text-xl text-st-text">
+                {t.updates.title}
+              </h2>
+              <p className="mt-2 text-[13px] leading-[1.7] text-st-text-muted">{t.updates.footerLead}</p>
+              <div className="mt-4">
+                <UpdatesSignup />
+              </div>
+              <Link
+                href="/updates"
+                className="mt-1 inline-flex min-h-[44px] items-center text-[13px] text-st-blue-light underline-offset-4 hover:underline"
+              >
+                {t.updates.more}
+              </Link>
+            </div>
+          </section>
+        )}
+
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
           <div className="flex flex-col items-center gap-2.5 sm:items-start">
             <img

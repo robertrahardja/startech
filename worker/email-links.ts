@@ -1,7 +1,9 @@
 /**
  * The pages hq's outreach emails link to: /u/ (unsubscribe), /i/ and /wa/
- * (the one-button "I am interested" and WhatsApp, worker/interest.ts) and
- * /c/ (the website email's comparison page, worker/concepts.ts). The router
+ * (the one-button "I am interested" and WhatsApp, worker/interest.ts), /k/
+ * (keep me updated, and the updates list's confirm and unsubscribe links,
+ * worker/keep-updated.ts) and /c/ (the website email's comparison page,
+ * worker/concepts.ts). The router
  * (worker/index.ts) asks here before the static assets, which would
  * otherwise answer these paths with the SPA shell.
  */
@@ -9,6 +11,7 @@
 import { CONCEPT_PREFIX, handleConcept } from "./concepts";
 import type { Env } from "./env";
 import { INTEREST_PREFIX, WHATSAPP_PREFIX, handleInterest, notifyByEmail } from "./interest";
+import { KEEP_PREFIX, handleKeepUpdated } from "./keep-updated";
 import { rateLimiter } from "./rate-limit";
 import { withSecurityHeaders } from "./security";
 import { UNSUBSCRIBE_PREFIX, handleUnsubscribe } from "./unsubscribe";
@@ -33,6 +36,9 @@ export async function emailLinkPage(
         waitUntil: (p) => ctx.waitUntil(p),
       })
     );
+  }
+  if (pathname.startsWith(KEEP_PREFIX)) {
+    return withSecurityHeaders(await handleKeepUpdated(request, { db: env.CRM_DB, isRateLimited }));
   }
   // Sets its own headers: the site's, with same-origin framing for the concept.
   if (pathname.startsWith(CONCEPT_PREFIX)) {

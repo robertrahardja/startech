@@ -12,6 +12,8 @@
  *                        (worker/contact.ts)
  * - POST /api/testimonial — a client's testimonial from /testimonial
  *                        (worker/testimonial.ts)
+ * - POST /api/subscribe — the "Get our updates" sign-up in the footer and
+ *                        on /updates; emails a confirm link (worker/subscribe.ts)
  * - POST /api/demo    — AI-powered product demos with lead capture, backed
  *                        by Gemini (free tier) with a Workers AI fallback
  *                        (worker/demo.ts)
@@ -24,10 +26,13 @@
  *                        (worker/unsubscribe.ts)
  * - GET/POST /i/<token>, GET /wa/<token> — the one-button "I am interested"
  *                        and the WhatsApp link (worker/interest.ts)
+ * - GET/POST /k/<token>, /k/c/<token>, /k/u/<token> — "keep me updated" in
+ *                        hq's outreach emails, and the updates list's confirm
+ *                        and unsubscribe links (worker/keep-updated.ts)
  * - GET /c/<token>/...  — the private comparison page and concept website
  *                        from R2 (CONCEPTS); POST /c/<token>/view counts a
  *                        view (worker/concepts.ts)
- *   These four come through worker/email-links.ts.
+ *   These five come through worker/email-links.ts.
  *
  * Static assets are served by the ASSETS binding (Cloudflare Workers static
  * assets), with the locale markup on the HTML shell (worker/assets.ts).
@@ -57,6 +62,7 @@ import {
   handleRpJwks,
   handleSingpassRp,
 } from "./singpass-rp";
+import { handleSubscribe } from "./subscribe";
 import { handleTestimonial } from "./testimonial";
 import { emailLinkPage } from "./email-links";
 import { sitemapResponse } from "./sitemap";
@@ -75,6 +81,7 @@ const API_ROUTES: Partial<Record<string, ApiHandler>> = {
   "/api/tts": ttsIfEnabled,
   "/api/contact": handleContact,
   "/api/testimonial": handleTestimonial,
+  "/api/subscribe": handleSubscribe,
   "/api/demo": handleDemo,
 };
 
@@ -87,6 +94,7 @@ const API_RATE_LIMITS: Record<string, [number, number]> = {
   "/api/tts": [10, 60],
   "/api/contact": [3, 60],
   "/api/testimonial": [3, 60],
+  "/api/subscribe": [3, 60],
 };
 
 /** What both Singpass modules check origin and rate-limit with. */
@@ -178,7 +186,7 @@ export default {
       return withSecurityHeaders(await handleSingpassRp(request, env, singpassDeps(request, env)));
     }
 
-    // The pages hq's outreach emails link to (/u/, /i/, /wa/, /c/), before
+    // The pages hq's outreach emails link to (/u/, /i/, /wa/, /k/, /c/), before
     // the static assets, which would answer them with the SPA shell.
     const linked = await emailLinkPage(request, env, ctx, url.pathname);
     if (linked) return linked;

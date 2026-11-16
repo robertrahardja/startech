@@ -865,6 +865,32 @@ export const zhHant: Messages = {
     rights: "StarTech Innovation Pte. Ltd.",
   },
 
+  // The "Get our updates" sign-up: the footer and /updates (src/components/UpdatesSignup.tsx).
+  // consent must match SIGNUP_CONSENT in worker/subscribe.ts word for word.
+  updates: {
+    eyebrow: "最新動態",
+    title: "訂閱我們的最新動態",
+    intro: "StarTech Innovation 大約每季寄送一封簡短的郵件。可隨時取消訂閱。",
+    containsTitle: "每期內容",
+    contains: [
+      "我們最近開發的系統，以及它為使用它的公司帶來的改變。",
+      "可用範例資料試用的新展示。",
+      "關於企業軟體與 AI 應用的實用建議。",
+    ],
+    confirmNote: "我們會先透過郵件請您確認，因此沒有人能在您不知情的情況下替您訂閱。",
+    email: "電子郵件地址",
+    consent: "我希望大約每季收到一次 StarTech Innovation 的最新動態。可隨時取消訂閱。",
+    send: "訂閱",
+    sending: "送出中…",
+    thanksTitle: "請查看您的收件匣",
+    thanksBody: "如果此地址尚未訂閱，我們已寄出一封附有確認連結的郵件。",
+    errorEmail: "請輸入有效的電子郵件地址。",
+    errorConsent: "請勾選此項以完成訂閱。",
+    error: "發生問題，請再試一次。",
+    footerLead: "大約每季一次：我們開發的系統、新展示和實用建議。",
+    more: "了解每期內容",
+  },
+
   demos: {
     signIn: {
       title: "自訂{title}",

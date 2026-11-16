@@ -876,6 +876,32 @@ export const ja: Messages = {
     rights: "StarTech Innovation Pte. Ltd.",
   },
 
+  // The "Get our updates" sign-up: the footer and /updates (src/components/UpdatesSignup.tsx).
+  // consent must match SIGNUP_CONSENT in worker/subscribe.ts word for word.
+  updates: {
+    eyebrow: "お知らせ",
+    title: "最新情報をお届けします",
+    intro: "StarTech Innovation より、四半期に一度程度、簡単なメールをお送りします。配信はいつでも停止いただけます。",
+    containsTitle: "お知らせの内容",
+    contains: [
+      "最近開発したシステムと、導入先の企業で何が変わったか。",
+      "サンプルデータでお試しいただける新しいデモ。",
+      "企業のソフトウェアと AI 活用に役立つ実践的なヒント。",
+    ],
+    confirmNote: "ご登録の前にメールでの確認をお願いしているため、ご本人の知らないうちに登録されることはありません。",
+    email: "メールアドレス",
+    consent: "StarTech Innovation からの四半期に一度程度のお知らせの受け取りを希望します。配信はいつでも停止できます。",
+    send: "登録する",
+    sending: "送信中…",
+    thanksTitle: "受信トレイをご確認ください",
+    thanksBody: "このアドレスがまだ登録されていない場合は、確認用のリンクをメールでお送りしました。",
+    errorEmail: "有効なメールアドレスをご入力ください。",
+    errorConsent: "登録するには、チェックボックスにチェックを入れてください。",
+    error: "問題が発生しました。もう一度お試しください。",
+    footerLead: "四半期に一度程度、開発事例、新しいデモ、実践的なヒントをお届けします。",
+    more: "お知らせの内容を見る",
+  },
+
   demos: {
     signIn: {
       title: "{title}をカスタマイズ",

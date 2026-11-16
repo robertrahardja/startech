@@ -871,6 +871,32 @@ export const ko: Messages = {
     rights: "StarTech Innovation Pte. Ltd.",
   },
 
+  // The "Get our updates" sign-up: the footer and /updates (src/components/UpdatesSignup.tsx).
+  // consent must match SIGNUP_CONSENT in worker/subscribe.ts word for word.
+  updates: {
+    eyebrow: "소식",
+    title: "StarTech 소식 받기",
+    intro: "StarTech Innovation이 분기에 한 번 정도 짧은 이메일을 보내 드립니다. 언제든지 수신을 거부할 수 있습니다.",
+    containsTitle: "소식에 담기는 내용",
+    contains: [
+      "최근에 만든 시스템과, 그 시스템을 쓰는 회사에서 달라진 점.",
+      "샘플 데이터로 직접 써 볼 수 있는 새 데모.",
+      "기업의 소프트웨어와 AI 활용에 관한 실용적인 팁.",
+    ],
+    confirmNote: "먼저 이메일로 확인을 받으므로, 본인도 모르게 신청되는 일은 없습니다.",
+    email: "이메일 주소",
+    consent: "StarTech Innovation의 소식을 분기에 한 번 정도 받겠습니다. 언제든지 수신을 거부할 수 있습니다.",
+    send: "신청하기",
+    sending: "보내는 중…",
+    thanksTitle: "받은편지함을 확인해 주십시오",
+    thanksBody: "아직 등록되지 않은 주소라면, 확인 링크가 담긴 이메일을 보내 드렸습니다.",
+    errorEmail: "올바른 이메일 주소를 입력해 주십시오.",
+    errorConsent: "신청하려면 확인란에 체크해 주십시오.",
+    error: "문제가 발생했습니다. 다시 시도해 주십시오.",
+    footerLead: "분기에 한 번 정도, 만든 시스템과 새 데모, 실용적인 팁을 보내 드립니다.",
+    more: "소식에 담기는 내용 보기",
+  },
+
   demos: {
     signIn: {
       title: "{title} 맞춤 설정",

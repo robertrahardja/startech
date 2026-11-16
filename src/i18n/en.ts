@@ -889,6 +889,32 @@ export const en = {
     rights: "StarTech Innovation Pte. Ltd.",
   },
 
+  // The "Get our updates" sign-up: the footer and /updates (src/components/UpdatesSignup.tsx).
+  // consent must match SIGNUP_CONSENT in worker/subscribe.ts word for word.
+  updates: {
+    eyebrow: "Updates",
+    title: "Get our updates",
+    intro: "A short email from StarTech Innovation about once a quarter. Unsubscribe any time.",
+    containsTitle: "What each update contains",
+    contains: [
+      "What we have built recently, and what it changed for the company using it.",
+      "New working demos you can try on sample data.",
+      "Practical tips on software and AI for companies.",
+    ],
+    confirmNote: "We ask you to confirm by email first, so nobody can sign you up without your knowledge.",
+    email: "Email address",
+    consent: "I would like to receive StarTech Innovation's update about once a quarter. Unsubscribe any time.",
+    send: "Sign up",
+    sending: "Signing up…",
+    thanksTitle: "Please check your inbox",
+    thanksBody: "If this address is not on our list yet, we have sent it an email with a link to confirm.",
+    errorEmail: "Please enter a valid email address.",
+    errorConsent: "Please tick the box to sign up.",
+    error: "Something went wrong. Please try again.",
+    footerLead: "About once a quarter: what we built, new demos and practical tips.",
+    more: "What the update contains",
+  },
+
   demos: {
     signIn: {
       title: "Customize {title}",

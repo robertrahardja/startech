@@ -42,7 +42,8 @@ interface Recipient {
 
 const LANGUAGES = new Set<string>(["en", "ja", "id", "es", "pt", "zh-Hans", "zh-Hant"]);
 
-function asLanguage(code: string | null | undefined): PageLanguage | null {
+/** A campaign or subscriber language code as a page language, or null. Also /i/ and /k/. */
+export function asLanguage(code: string | null | undefined): PageLanguage | null {
   return code && LANGUAGES.has(code) ? (code as PageLanguage) : null;
 }
 
