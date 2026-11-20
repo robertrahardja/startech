@@ -10,7 +10,7 @@ export const SITE_NAME = "StarTech Innovation";
 // the same organisation (schema.org sameAs).
 export const SOCIAL_PROFILES = [
   { name: "Facebook", href: "https://www.facebook.com/profile.php?id=61596311469671" },
-  { name: "Instagram", href: "https://www.instagram.com/startechinnovation/" },
+  { name: "Instagram", href: "https://www.instagram.com/startech.innovation/" },
   { name: "YouTube", href: "https://www.youtube.com/@startechinnovation" },
   { name: "LinkedIn", href: "https://www.linkedin.com/company/startech-innovation/" },
 ] as const;
