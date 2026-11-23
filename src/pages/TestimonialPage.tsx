@@ -10,8 +10,8 @@ import { useI18n } from "../i18n";
  *   /testimonial?name=Michael%20Choy&company=TechTree
  *
  * The Worker (POST /api/testimonial) saves it as a "Testimonial" note on the
- * client's contact in hq and emails StarTech. Nothing is published from here:
- * the client agrees to see the final wording first, and picks how they are
+ * client's contact in hq and emails StarTech. Sending is the client's approval to
+ * publish it as credited (shortened if needed). They pick how they are
  * credited, including "do not publish".
  */
 

@@ -16,8 +16,9 @@ const TESTIMONIAL_CREDITS = {
  * POST /api/testimonial — a client's testimonial from /testimonial.
  *
  * Saved as a "Testimonial" note on the client's contact in hq (found by
- * email, created as a customer if new) and emailed to StarTech. Nothing is
- * published automatically: the client agreed to see the final wording first.
+ * email, created as a customer if new) and emailed to StarTech. Sending is the
+ * client's approval to publish it as credited (shortened if needed);
+ * "private" is never published.
  */
 export async function handleTestimonial(request: Request, env: Env): Promise<Response> {
   const json = (status: number, body: object) =>
@@ -73,7 +74,7 @@ export async function handleTestimonial(request: Request, env: Env): Promise<Res
   const details = [
     `Role: ${role}`,
     `Credit: ${TESTIMONIAL_CREDITS[credit]}`,
-    "Agreed: StarTech may shorten it, and shows the final wording before publishing.",
+    "Agreed: StarTech may publish it as credited, and may shorten it for length.",
   ].join("\n");
 
   let saved = false;
