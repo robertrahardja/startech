@@ -76,7 +76,7 @@ export async function saveLead(db: D1Database, lead: Lead): Promise<void> {
   }
 
   // Logged as a completed note, not an email: last_contacted_at is left alone
-  // because nobody at Startech has replied yet.
+  // because nobody at StarTech has replied yet.
   writes.push(
     db
       .prepare(

@@ -15,7 +15,7 @@ JPMorgan just made AI a $19B bet. Here's what Singapore SMBs should copy.
 ```
 A breakdown of JPMorgan's 2026 AI reclassification and the three things every Singapore SMB should do this month.
 
-Want this implemented for your business? Startech runs 90-day AI implementations for Singapore SMBs.
+Want this implemented for your business? StarTech runs 90-day AI implementations for Singapore SMBs.
 → https://startech-innovation.com
 
 The 3 plays from this video:
@@ -35,20 +35,20 @@ Sources:
 - JPMorgan 2026 technology budget reclassification reporting (Marketing Profs, May 2026)
 - Dell Technologies World 2026 enterprise AI announcements (Dell)
 
-About Startech Innovation:
-Startech Innovation Pte. Ltd. is a Singapore-based AI consultancy. We help SMBs ship their first AI win in 14 days and build production AI in 90 days.
+About StarTech Innovation:
+StarTech Innovation Pte. Ltd. is a Singapore-based AI consultancy. We help SMBs ship their first AI win in 14 days and build production AI in 90 days.
 
 Connect:
 Website: https://startech-innovation.com
 Email: info@startech-innovation.com
 
-#AI #SingaporeBusiness #SMB #Startech #EnterpriseAI #AIStrategy
+#AI #SingaporeBusiness #SMB #StarTech #EnterpriseAI #AIStrategy
 ```
 
 ## Tags (paste comma-separated)
 
 ```
-AI, AI for SMB, Singapore business, Singapore SME, JPMorgan AI, enterprise AI, AI implementation, AI strategy, business automation, Startech, AI consultancy, AI for small business, 2026 AI, AI ROI, AI infrastructure
+AI, AI for SMB, Singapore business, Singapore SME, JPMorgan AI, enterprise AI, AI implementation, AI strategy, business automation, StarTech, AI consultancy, AI for small business, 2026 AI, AI ROI, AI infrastructure
 ```
 
 ## Visibility
@@ -58,14 +58,14 @@ AI, AI for SMB, Singapore business, Singapore SME, JPMorgan AI, enterprise AI, A
 
 ## Playlist
 
-Create a new playlist called: **AI Insights — Startech**
+Create a new playlist called: **AI Insights — StarTech**
 
 All future videos go in this playlist. It compounds watch time across videos.
 
 ## Cards & End Screen
 
 **Cards** (add at these timestamps):
-- 1:30 — "Visit Startech" link card pointing to `https://startech-innovation.com`
+- 1:30 — "Visit StarTech" link card pointing to `https://startech-innovation.com`
 
 **End Screen** (last 20 seconds):
 - Slot 1: "Subscribe" element

@@ -32,7 +32,7 @@ const COPY: Record<PageLanguage, Copy> = {
     button: "I am interested",
     pages: {
       confirm: {
-        title: "Tell Startech Innovation you are interested",
+        title: "Tell StarTech Innovation you are interested",
         body: "Press the button below and Robert Rahardja, our Managing Director, will contact you within one working day.",
       },
       done: {
@@ -60,7 +60,7 @@ const COPY: Record<PageLanguage, Copy> = {
     button: "話を聞いてみたい",
     pages: {
       confirm: {
-        title: "Startech Innovation へのご関心をお知らせください",
+        title: "StarTech Innovation へのご関心をお知らせください",
         body: "下のボタンを押していただくと、1営業日以内に代表のロバート・ラハルジャよりご連絡いたします。",
       },
       done: {
@@ -88,7 +88,7 @@ const COPY: Record<PageLanguage, Copy> = {
     button: "我有兴趣，请联系我",
     pages: {
       confirm: {
-        title: "告诉 Startech Innovation 您有兴趣",
+        title: "告诉 StarTech Innovation 您有兴趣",
         body: "点击下方按钮后，我们的董事总经理 Robert Rahardja 将在一个工作日内与您联系。",
       },
       done: {
@@ -116,7 +116,7 @@ const COPY: Record<PageLanguage, Copy> = {
     button: "我有興趣，請與我聯繫",
     pages: {
       confirm: {
-        title: "告訴 Startech Innovation 您有興趣",
+        title: "告訴 StarTech Innovation 您有興趣",
         body: "按下方按鈕後，我們的董事總經理 Robert Rahardja 將在一個工作天內與您聯繫。",
       },
       done: {
@@ -144,7 +144,7 @@ const COPY: Record<PageLanguage, Copy> = {
     button: "Saya tertarik",
     pages: {
       confirm: {
-        title: "Beri tahu Startech Innovation bahwa Bapak/Ibu tertarik",
+        title: "Beri tahu StarTech Innovation bahwa Bapak/Ibu tertarik",
         body: "Tekan tombol di bawah, dan Robert Rahardja, Managing Director kami, akan menghubungi Bapak/Ibu dalam satu hari kerja.",
       },
       done: {
@@ -172,7 +172,7 @@ const COPY: Record<PageLanguage, Copy> = {
     button: "Me interesa",
     pages: {
       confirm: {
-        title: "Indique a Startech Innovation que le interesa",
+        title: "Indique a StarTech Innovation que le interesa",
         body: "Presione el botón y Robert Rahardja, nuestro director general, se pondrá en contacto con usted en un día hábil.",
       },
       done: {
@@ -200,7 +200,7 @@ const COPY: Record<PageLanguage, Copy> = {
     button: "Tenho interesse",
     pages: {
       confirm: {
-        title: "Avise a Startech Innovation do seu interesse",
+        title: "Avise a StarTech Innovation do seu interesse",
         body: "Clique no botão e Robert Rahardja, nosso diretor-geral, entrará em contato em até um dia útil.",
       },
       done: {
@@ -286,7 +286,7 @@ ${EXTRA_STYLE}</style>
 </head>
 <body>
 <main>
-<img class="mark" src="/assets/startech-mark.svg" alt="Startech Innovation" width="40" height="40">
+<img class="mark" src="/assets/startech-mark.svg" alt="StarTech Innovation" width="40" height="40">
 ${sections(languages, state)}
 ${form}${reach}
 </main>

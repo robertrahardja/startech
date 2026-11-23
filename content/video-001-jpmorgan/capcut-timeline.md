@@ -6,7 +6,7 @@ Follow top to bottom. Estimated time: 60 minutes for video 1, dropping to 25 min
 
 1. Download CapCut from `capcut.com` if you don't have it
 2. New Project → **16:9 aspect ratio**, **1080p**
-3. Rename project: `Startech-AI-Insights-001-JPMorgan`
+3. Rename project: `StarTech-AI-Insights-001-JPMorgan`
 
 ## Step 1 — Drop in audio (5 min)
 
@@ -26,7 +26,7 @@ Follow top to bottom. Estimated time: 60 minutes for video 1, dropping to 25 min
 ## Step 3 — Intro card, 3 seconds (5 min)
 
 1. Add a **black/navy solid background** clip from CapCut's stock library
-2. Add text overlay: `Startech AI Insights`
+2. Add text overlay: `StarTech AI Insights`
 3. Font: bold (any Sans-Serif heavy weight)
 4. Color: white with a thin gold underline
 5. Add fade-in 0.5s, fade-out 0.5s

@@ -124,7 +124,7 @@ export async function handleContact(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: siteSender("Startech Website", "website"),
+        from: siteSender("StarTech Website", "website"),
         to: ["rr.startech.innovation@gmail.com"],
         reply_to: email,
         subject: `${topic ?? "New Contact"}: ${escapeHtml(name).slice(0, 100)}`,
@@ -139,7 +139,7 @@ export async function handleContact(
           <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
           ${trail ? `<p>${escapeHtml(trail).replace(/\n/g, "<br>")}</p>` : ""}
           <hr>
-          <p><small>Sent from Startech Innovation website. ${crmLine}</small></p>
+          <p><small>Sent from StarTech Innovation website. ${crmLine}</small></p>
         `,
         text: `Name: ${escapeHtml(name)}\n${company ? `Company: ${escapeHtml(company)}\n` : ""}Email: ${escapeHtml(email)}\n${phone ? `Phone: ${escapeHtml(phone)}\n` : ""}${lead.country ? `Country: ${escapeHtml(lead.country)}\n` : ""}Message:\n${escapeHtml(message)}\n${trail ? `\n${escapeHtml(trail)}\n` : ""}\n${crmLine}`,
       }),

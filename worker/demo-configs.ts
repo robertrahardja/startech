@@ -28,7 +28,7 @@ export interface DemoConfig {
 }
 
 const PROMPT_PREFIX = (toolName: string) =>
-  `You are an AI demo for Startech Innovation's ${toolName}. Given the user's input, generate realistic sample output.`;
+  `You are an AI demo for StarTech Innovation's ${toolName}. Given the user's input, generate realistic sample output.`;
 
 const PROMPT_SUFFIX =
   "This is a demo — produce realistic but clearly sample data. Use SGD for currency. You MUST respond with valid JSON matching the schema above. Do not include any text outside the JSON. Keep all content professional and relevant to Singapore businesses.";

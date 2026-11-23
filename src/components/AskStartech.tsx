@@ -11,7 +11,7 @@ const WELCOME_MESSAGE: ChatMessage = {
   id: "welcome",
   role: "assistant",
   content:
-    "How can I help you learn about Startech Innovation? I can answer questions about our services, technology, and implementation approach.",
+    "How can I help you learn about StarTech Innovation? I can answer questions about our services, technology, and implementation approach.",
   timestamp: Date.now(),
 };
 
@@ -362,7 +362,7 @@ export default function AskStartech({ isOpen, onClose }: AskStartechProps) {
           <div className="flex items-center gap-2.5">
             <AiIcon className="h-4 w-4 text-st-accent" />
             <span className="text-sm font-medium text-st-text">
-              Ask Startech
+              Ask StarTech
             </span>
           </div>
           <div className="flex items-center gap-1">

@@ -4,7 +4,7 @@
  *
  * The footer rule enforces the anti-spam laws (Singapore's Spam Control
  * Act, Japan's 特定電子メール法 and the others): a working unsubscribe link
- * to /u/<token> and Startech's postal address, in the text part and in the
+ * to /u/<token> and StarTech's postal address, in the text part and in the
  * HTML part when there is one.
  */
 
@@ -18,7 +18,7 @@ export interface OutreachMessage {
   subject: string;
   text: string;
   html?: string;
-  /** Defaults to Startech's inbox: the sending domain has no mailbox. */
+  /** Defaults to StarTech's inbox: the sending domain has no mailbox. */
   replyTo?: string;
   /** List-Unsubscribe, List-Unsubscribe-Post, List-Id, In-Reply-To, References, X-Entity-Ref-ID. */
   headers?: Record<string, string>;

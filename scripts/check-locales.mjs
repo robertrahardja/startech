@@ -33,7 +33,7 @@ const FORBIDDEN = /[\p{Script=Cyrillic}\p{Script=Arabic}\p{Script=Hebrew}\p{Scri
  * registration numbers, and figures. Anything else appearing in English on a
  * translated page means a string is still hardcoded in a component.
  */
-const SHARED_WITH_ENGLISH = /^(Startech|UEN |7[.,]060|20\+|[0-9]+$)/;
+const SHARED_WITH_ENGLISH = /^(StarTech|UEN |7[.,]060|20\+|[0-9]+$)/;
 
 let failures = 0;
 

@@ -123,7 +123,7 @@ export default function Nav({ onAskAi }: NavProps) {
             >
               <img
                 src="/assets/startech-logo-full.svg"
-                alt="Startech Innovation"
+                alt="StarTech Innovation"
                 className="h-32 w-auto"
               />
             </Link>
@@ -189,7 +189,7 @@ export default function Nav({ onAskAi }: NavProps) {
           >
             <img
               src="/assets/startech-logo-full.svg"
-              alt="Startech Innovation"
+              alt="StarTech Innovation"
               className="h-7 w-auto opacity-90 transition-opacity duration-300 hover:opacity-100 lg:h-9"
             />
           </Link>

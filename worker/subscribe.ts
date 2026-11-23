@@ -34,13 +34,13 @@ type Locale = "en" | "ja" | "ko" | "zh-Hans" | "zh-Hant" | "es" | "pt";
  * text shown, not text a request supplies.
  */
 export const SIGNUP_CONSENT: Record<Locale, string> = {
-  en: "I would like to receive Startech Innovation's update about once a quarter. Unsubscribe any time.",
-  ja: "Startech Innovation からの四半期に一度程度のお知らせの受け取りを希望します。配信はいつでも停止できます。",
-  ko: "Startech Innovation의 소식을 분기에 한 번 정도 받겠습니다. 언제든지 수신을 거부할 수 있습니다.",
-  "zh-Hans": "我希望大约每季度收到一次 Startech Innovation 的最新动态。可随时退订。",
-  "zh-Hant": "我希望大約每季收到一次 Startech Innovation 的最新動態。可隨時取消訂閱。",
-  es: "Deseo recibir la actualización de Startech Innovation aproximadamente una vez por trimestre. Puedo darme de baja en cualquier momento.",
-  pt: "Quero receber a atualização da Startech Innovation cerca de uma vez por trimestre. Posso cancelar quando quiser.",
+  en: "I would like to receive StarTech Innovation's update about once a quarter. Unsubscribe any time.",
+  ja: "StarTech Innovation からの四半期に一度程度のお知らせの受け取りを希望します。配信はいつでも停止できます。",
+  ko: "StarTech Innovation의 소식을 분기에 한 번 정도 받겠습니다. 언제든지 수신을 거부할 수 있습니다.",
+  "zh-Hans": "我希望大约每季度收到一次 StarTech Innovation 的最新动态。可随时退订。",
+  "zh-Hant": "我希望大約每季收到一次 StarTech Innovation 的最新動態。可隨時取消訂閱。",
+  es: "Deseo recibir la actualización de StarTech Innovation aproximadamente una vez por trimestre. Puedo darme de baja en cualquier momento.",
+  pt: "Quero receber a atualização da StarTech Innovation cerca de uma vez por trimestre. Posso cancelar quando quiser.",
 };
 
 /** One confirmation email per address per ten minutes. */
@@ -55,15 +55,15 @@ const ACCEPTED = { success: true, message: "Thank you. If this address is not on
 const json = (status: number, body: object) =>
   new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
 
-export const CONFIRM_SUBJECT = "Please confirm: Startech Innovation updates";
+export const CONFIRM_SUBJECT = "Please confirm: StarTech Innovation updates";
 
 /** The confirmation email's text. Fixed copy: only the token varies. */
 export function confirmText(token: string): string {
   return [
-    "Please open this link and press Confirm if you would like a short update from Startech Innovation about once a quarter:",
+    "Please open this link and press Confirm if you would like a short update from StarTech Innovation about once a quarter:",
     `${SITE_URL}/k/c/${token}`,
     "If you did not ask for this, ignore this email.",
-    `Startech Innovation Pte. Ltd., ${POSTAL_ADDRESS}`,
+    `StarTech Innovation Pte. Ltd., ${POSTAL_ADDRESS}`,
   ].join("\n\n");
 }
 

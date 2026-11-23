@@ -127,8 +127,8 @@ test("a two-language campaign shows both: Japanese, then Spanish below", async (
   db.query("UPDATE outreach_recipients SET campaign_id = 'mx-ja' WHERE id = 'rcp_1'");
   const confirm = await (await handleUnsubscribe(request(TOKEN), context())).text();
   assert.match(confirm, /<html lang="ja">/);
-  assert.match(confirm, /<section lang="ja"><h1>Startech Innovation からのメール配信停止<\/h1>/);
-  assert.match(confirm, /<section lang="es"><h2>Dejar de recibir correos de Startech Innovation<\/h2>/);
+  assert.match(confirm, /<section lang="ja"><h1>StarTech Innovation からのメール配信停止<\/h1>/);
+  assert.match(confirm, /<section lang="es"><h2>Dejar de recibir correos de StarTech Innovation<\/h2>/);
   assert.match(confirm, />配信を停止する \/ Darse de baja<\/button>/);
   const done = await (await handleUnsubscribe(post(TOKEN), context())).text();
   assert.match(done, /配信を停止しました/);
@@ -144,10 +144,10 @@ test("Chinese: Simplified for mainland campaigns, Traditional for Taiwanese, and
   db.query("UPDATE outreach_recipients SET campaign_id = 'us-zht' WHERE id = 'rcp_2'");
   const hans = await (await handleUnsubscribe(request(TOKEN), context())).text();
   assert.match(hans, /<html lang="zh-Hans">/);
-  assert.match(hans, /退订 Startech Innovation 的邮件/);
-  assert.match(hans, /Unsubscribe from Startech Innovation emails/);
+  assert.match(hans, /退订 StarTech Innovation 的邮件/);
+  assert.match(hans, /Unsubscribe from StarTech Innovation emails/);
   const hant = await (await handleUnsubscribe(request("tok_another_recipient_00001"), context())).text();
-  assert.match(hant, /取消訂閱 Startech Innovation 的郵件/);
+  assert.match(hant, /取消訂閱 StarTech Innovation 的郵件/);
   const browser = (lang) =>
     handleUnsubscribe(request("tok_nobody_has_this_token_0", { headers: { "Accept-Language": lang } }), context()).then((r) => r.text());
   assert.match(await browser("zh-TW,zh;q=0.9"), /此連結無效/);

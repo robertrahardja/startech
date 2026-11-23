@@ -31,7 +31,7 @@ export class Mailer extends WorkerEntrypoint<MailerEnv> {
     return outreachStatus(this.env, id);
   }
 
-  /** A plain-text email to Startech's own inbox, such as hq's weekly report. */
+  /** A plain-text email to StarTech's own inbox, such as hq's weekly report. */
   notifyOwner(subject: string, text: string): Promise<SendResult> {
     return notifyOwner(this.env, subject, text);
   }

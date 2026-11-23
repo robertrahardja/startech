@@ -495,7 +495,7 @@ export const ja: Messages = {
 
   testimonial: {
     eyebrow: "お客様の声",
-    title: "Startechとのお仕事はいかがでしたか？",
+    title: "StarTechとのお仕事はいかがでしたか？",
     intro: "プロジェクトについて一言いただけると、他の企業が依頼を検討する際の大きな参考になります。最終的な文章をご確認・ご承認いただくまで、公開することはありません。",
     name: "お名前",
     role: "役職",
@@ -508,7 +508,7 @@ export const ja: Messages = {
     creditFull: "お名前・役職・会社名を掲載",
     creditAnonymous: "役職と業種のみ（お名前なし）",
     creditPrivate: "フィードバックのみ（掲載不可）",
-    consent: "Startechが長さの調整のために文章を短くすること、また公開前に最終的な文章を確認させてもらえることに同意します。",
+    consent: "StarTechが長さの調整のために文章を短くすること、また公開前に最終的な文章を確認させてもらえることに同意します。",
     send: "送信する",
     sending: "送信中…",
     thanksTitle: "ありがとうございます！",
@@ -563,7 +563,7 @@ export const ja: Messages = {
       "アクセスポイントのAPIで送信",
       "配信状況とエラーを普段の画面に表示",
     ],
-    offerHonest: "Startechはアクセスポイント事業者ではなく、IMDAの認定も受けていません。実際の接続は、御社と一緒に選ぶIMDA認定のアクセスポイントを通じて行います。",
+    offerHonest: "StarTechはアクセスポイント事業者ではなく、IMDAの認定も受けていません。実際の接続は、御社と一緒に選ぶIMDA認定のアクセスポイントを通じて行います。",
     demoEyebrow: "試してみる",
     demoTitle: "サンプル請求書をPINT SGのXMLに変換",
     demoIntro: "請求書を入力するか、CSVテンプレートをアップロードしてください。ブラウザがXMLを作成し、PINT SGのルールの一部で確認します。データはどこにも送信されません。",
@@ -636,7 +636,7 @@ export const ja: Messages = {
     checksSummary: "{total}項目中{passed}項目に合格",
     pass: "合格",
     fail: "不合格",
-    demoCheck: "Startech独自のデモ用確認。PINT SGのルールではありません",
+    demoCheck: "StarTech独自のデモ用確認。PINT SGのルールではありません",
     checksSource: "ルールIDは2026年5月25日公開のPINT SG Billing v1.4.1のスキーマトロンによるものです。これはブラウザで実行する一部の確認で、送信前にはアクセスポイントが完全な検証を行います。",
     checks: {
       specIds: "仕様IDと業務プロセスIDがPINT SGの請求用である",
@@ -859,7 +859,7 @@ export const ja: Messages = {
     formSend: "Singpass チェックを依頼する",
     flyerLine: "Singpass は2026年12月31日までに FAPI 2.0 への移行が必要です。新しいログインフローの動作デモをご覧ください。",
     stagingTitle: "Singpass のステージング環境で試す",
-    stagingBody: "このボタンは、同じクライアントを Startech のステージング用アプリとして Singpass 自身のステージング環境に対して実行します。ログインできるのは Singpass ステージングのテスト用アカウントだけで、実際の Singpass アカウントは使えません。",
+    stagingBody: "このボタンは、同じクライアントを StarTech のステージング用アプリとして Singpass 自身のステージング環境に対して実行します。ログインできるのは Singpass ステージングのテスト用アカウントだけで、実際の Singpass アカウントは使えません。",
     stagingButton: "Singpass でログイン（ステージング）",
     stagingResult: "Singpass ステージングが返した ID トークン（復号・検証済み）",
     stagingCancelled: "ステージングでのログインはキャンセルされました。",
@@ -873,7 +873,7 @@ export const ja: Messages = {
 
   footer: {
     location: "シンガポール",
-    rights: "Startech Innovation Pte. Ltd.",
+    rights: "StarTech Innovation Pte. Ltd.",
   },
 
   // The "Get our updates" sign-up: the footer and /updates (src/components/UpdatesSignup.tsx).
@@ -881,7 +881,7 @@ export const ja: Messages = {
   updates: {
     eyebrow: "お知らせ",
     title: "最新情報をお届けします",
-    intro: "Startech Innovation より、四半期に一度程度、簡単なメールをお送りします。配信はいつでも停止いただけます。",
+    intro: "StarTech Innovation より、四半期に一度程度、簡単なメールをお送りします。配信はいつでも停止いただけます。",
     containsTitle: "お知らせの内容",
     contains: [
       "最近開発したシステムと、導入先の企業で何が変わったか。",
@@ -890,7 +890,7 @@ export const ja: Messages = {
     ],
     confirmNote: "ご登録の前にメールでの確認をお願いしているため、ご本人の知らないうちに登録されることはありません。",
     email: "メールアドレス",
-    consent: "Startech Innovation からの四半期に一度程度のお知らせの受け取りを希望します。配信はいつでも停止できます。",
+    consent: "StarTech Innovation からの四半期に一度程度のお知らせの受け取りを希望します。配信はいつでも停止できます。",
     send: "登録する",
     sending: "送信中…",
     thanksTitle: "受信トレイをご確認ください",

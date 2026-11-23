@@ -14,7 +14,7 @@ import type { Page } from "./routes";
 const DEFAULT_TITLE = `${SITE_NAME} | Business. Finance. Tech.`;
 
 const DEFAULT_DESCRIPTION =
-  "Startech Innovation is a Singapore software and AI consultancy. We turn operations that run on spreadsheets into systems you own: business systems, AI implementation, finance workflows and cross-border operations.";
+  "StarTech Innovation is a Singapore software and AI consultancy. We turn operations that run on spreadsheets into systems you own: business systems, AI implementation, finance workflows and cross-border operations.";
 
 // The /solutions heading and lead, as SolutionsIndex shows them.
 const SOLUTIONS_TITLE = "Working demos";

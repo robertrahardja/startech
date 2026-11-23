@@ -27,7 +27,7 @@ import { join } from "node:path";
  * its registration number, and bare figures.
  */
 const SHARED = [
-  /^Startech/,
+  /^StarTech/,
   /^UEN /,
   /^[\d.,+%\s]+$/,
 ];

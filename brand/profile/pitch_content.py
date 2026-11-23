@@ -36,7 +36,7 @@ EN = {
     "pos_kicker": "Who we are",
     "pos_head": "Founder-led, start to finish.",
     "pos_body": (
-        "Startech Innovation is a custom software house, not a "
+        "StarTech Innovation is a custom software house, not a "
         "product vendor. We do not sell you a shelf system and hope "
         "it fits — we build the system around how your business "
         "actually runs."
@@ -362,7 +362,7 @@ JA = {
     "pos_kicker": "会社概要",
     "pos_head": "創業者が最初から最後まで担当します。",
     "pos_body": (
-        "Startech Innovationはパッケージ製品を販売するベンダーではなく、"
+        "StarTech Innovationはパッケージ製品を販売するベンダーではなく、"
         "カスタムソフトウェア開発会社です。"
         "既存のパッケージを提供するのではなく、"
         "貴社の実際の業務フローに合わせてシステムを構築いたします。"
@@ -592,7 +592,7 @@ ID = {
     "pos_kicker": "Siapa kami",
     "pos_head": "Dipimpin langsung oleh pendirinya, dari awal hingga akhir.",
     "pos_body": (
-        "Startech Innovation adalah rumah pengembangan perangkat "
+        "StarTech Innovation adalah rumah pengembangan perangkat "
         "lunak kustom, bukan vendor produk. Kami tidak menjual sistem "
         "siap pakai dan berharap cocok — kami membangun sistem sesuai "
         "cara bisnis Anda sebenarnya berjalan."
@@ -929,7 +929,7 @@ KO = {
     "pos_kicker": "회사 소개",
     "pos_head": "창업자가 처음부터 끝까지 직접 맡습니다.",
     "pos_body": (
-        "Startech Innovation은 패키지 제품을 파는 벤더가 아니라 "
+        "StarTech Innovation은 패키지 제품을 파는 벤더가 아니라 "
         "맞춤형 소프트웨어 개발사입니다. 기성 제품을 "
         "제공하는 것이 아니라, 귀사의 실제 업무 흐름에 맞게 "
         "시스템을 구축합니다."
@@ -1196,7 +1196,7 @@ ZH_HANS = {
     "pos_kicker": "关于我们",
     "pos_head": "创始人亲自负责，从头到尾。",
     "pos_body": (
-        "Startech Innovation 是定制软件开发公司，而非"
+        "StarTech Innovation 是定制软件开发公司，而非"
         "标准产品供应商。我们不提供现成系统"
         "并希望它恰好适用，而是根据您企业的"
         "实际运作方式来构建系统。"
@@ -1386,7 +1386,7 @@ ZH_HANT = {
     "pos_kicker": "關於我們",
     "pos_head": "創辦人親自負責，從頭到尾。",
     "pos_body": (
-        "Startech Innovation 是定製軟體開發公司，而非"
+        "StarTech Innovation 是定製軟體開發公司，而非"
         "標準產品供應商。我們不提供現成系統"
         "並希望它恰好適用，而是根據您企業的"
         "實際運作方式來打造系統。"
@@ -1576,7 +1576,7 @@ ES = {
     "pos_kicker": "Quiénes somos",
     "pos_head": "Dirigido por su fundador, de principio a fin.",
     "pos_body": (
-        "Startech Innovation es una empresa de software a medida, no "
+        "StarTech Innovation es una empresa de software a medida, no "
         "un proveedor de producto. No le vendemos un sistema "
         "genérico esperando que encaje — construimos el sistema "
         "alrededor de cómo funciona realmente su negocio."
@@ -1915,7 +1915,7 @@ PT = {
     "pos_kicker": "Quem somos",
     "pos_head": "Conduzido pelo fundador, do início ao fim.",
     "pos_body": (
-        "A Startech Innovation é uma casa de software sob medida, "
+        "A StarTech Innovation é uma casa de software sob medida, "
         "não um fornecedor de produto. Não vendemos um sistema "
         "pronto na esperança de que sirva — construímos o sistema em "
         "torno de como o seu negócio realmente funciona."

@@ -9,7 +9,7 @@ import { useI18n } from "../i18n";
  * offer, and a working PINT SG demo that runs entirely in the browser.
  *
  * Claims to keep honest (see docs/COMPANY.md, "Claims to keep honest"):
- *   - Startech is not an access point provider and not IMDA-accredited, and
+ *   - StarTech is not an access point provider and not IMDA-accredited, and
  *     has not yet delivered an InvoiceNow integration for a client.
  *   - Software integration only: no accounting, GST-filing or tax-accuracy
  *     claims. GST treatment is for the client's accountant.
@@ -29,7 +29,7 @@ export default function InvoiceNowPage() {
 
   useEffect(() => {
     const previous = document.title;
-    document.title = `${m.eyebrow} · Startech Innovation`;
+    document.title = `${m.eyebrow} · StarTech Innovation`;
     return () => {
       document.title = previous;
     };

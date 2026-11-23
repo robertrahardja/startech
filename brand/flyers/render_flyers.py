@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Render the Startech image flyers (EN, JA, ID, country sites) to PNG.
+"""Render the StarTech image flyers (EN, JA, ID, country sites) to PNG.
 
 The image flyer is what gets sent on WhatsApp, LINE, Instagram and LinkedIn:
 headline, who it is for, three proof lines, the spreadsheet offer, the link
@@ -248,7 +248,7 @@ def page(d, size, qr_src, qr_px):
         f'<li><div class="i">{i:02d}</div><div><div class="t">{e(t)}</div>'
         f'<div class="d">{e(b)}</div></div></li>'
         for i, (t, b) in enumerate(d["proof"], 1))
-    brand = (f'<div class="brand"><img src="{LOGO}" alt="Startech">'
+    brand = (f'<div class="brand"><img src="{LOGO}" alt="StarTech">'
              f'<span>{e(d["company"])}</span></div>')
     intro = (f'<h1>{headline}</h1><div class="rule"></div>'
              f'<p class="who">{e(d["who"])}</p>')
@@ -279,7 +279,7 @@ def page(d, size, qr_src, qr_px):
 <html lang="{d['lang']}" class="{size}">
 <head>
 <meta charset="utf-8">
-<title>Startech Innovation flyer ({d['name']}, {size})</title>
+<title>StarTech Innovation flyer ({d['name']}, {size})</title>
 {fonts}
 <style>{css()}</style>
 </head>

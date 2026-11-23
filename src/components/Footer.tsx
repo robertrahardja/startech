@@ -3,7 +3,7 @@ import { useI18n } from "../i18n";
 import { SOCIAL_PROFILES } from "../lib/site";
 import UpdatesSignup from "./UpdatesSignup";
 
-// The icon for each of Startech's accounts in SOCIAL_PROFILES (lib/site).
+// The icon for each of StarTech's accounts in SOCIAL_PROFILES (lib/site).
 const ICON_PATHS: Record<(typeof SOCIAL_PROFILES)[number]["name"], string> = {
   Facebook:
     "M14 7h3V3h-3c-2.8 0-5 2.2-5 5v2H7v4h2v8h4v-8h3l1-4h-4V8c0-.6.4-1 1-1z",
@@ -47,7 +47,7 @@ export default function Footer({ signup = true }: { signup?: boolean }) {
           <div className="flex flex-col items-center gap-2.5 sm:items-start">
             <img
               src="/assets/startech-logo-full.svg"
-              alt="Startech Innovation"
+              alt="StarTech Innovation"
               className="h-6 w-auto opacity-70"
             />
             <p className="text-center text-[11px] font-medium leading-relaxed text-st-text-muted sm:text-left">
@@ -93,7 +93,7 @@ export default function Footer({ signup = true }: { signup?: boolean }) {
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`Startech Innovation on ${s.name}`}
+                    aria-label={`StarTech Innovation on ${s.name}`}
                     title={s.name}
                     className="inline-flex h-11 w-11 items-center justify-center rounded-full transition-colors duration-300 hover:text-st-text"
                   >

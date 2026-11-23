@@ -6,7 +6,7 @@
  * Parameter names, endpoints and checks follow the Singpass integration
  * guide (docs.developer.singpass.gov.sg, "Integration Guide" and "Technical
  * Concepts"). Everything environment-specific is in SingpassClientConfig:
- * the same code talks to the Startech mock server, Singpass staging
+ * the same code talks to the StarTech mock server, Singpass staging
  * (https://stg-id.singpass.gov.sg/fapi) or production
  * (https://id.singpass.gov.sg/fapi). See docs/OPERATIONS.md, "Singpass demo".
  *

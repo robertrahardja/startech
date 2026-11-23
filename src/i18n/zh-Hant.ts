@@ -390,7 +390,7 @@ export const zhHant: Messages = {
         said: "這樣一套系統通常要多少錢？",
         answer:
           "第一次通話時給出價格區間，需求盤點之後給出確定報價。我們會盡早說出真實的數字，而不是拖到最後；接著與您一起縮減範圍，直到符合預算——能上線的小系統，勝過半途停擺的大系統。新加坡中小企業或可獲得 EDGE 補助（已取代 PSG）；我們會協助您確認專案是否符合資格，並免費準備我方的供應商文件。",
-        proof: "EDGE 補助由新加坡企業發展局（Enterprise Singapore）審核決定，Startech 並非 EDGE 預先核准的供應商。",
+        proof: "EDGE 補助由新加坡企業發展局（Enterprise Singapore）審核決定，StarTech 並非 EDGE 預先核准的供應商。",
       },
       {
         said: "再等一兩季，會有什麼代價嗎？",
@@ -490,7 +490,7 @@ export const zhHant: Messages = {
 
   testimonial: {
     eyebrow: "客戶評價",
-    title: "與 Startech 合作的體驗如何？",
+    title: "與 StarTech 合作的體驗如何？",
     intro: "您對專案的一兩句評價，能幫助其他企業判斷是否與我們合作。在您查看並核准最終文字之前，我們不會發布任何內容。",
     name: "您的姓名",
     role: "您的職位",
@@ -503,7 +503,7 @@ export const zhHant: Messages = {
     creditFull: "姓名、職位和公司",
     creditAnonymous: "僅顯示職位和產業，不顯示姓名",
     creditPrivate: "僅作回饋，請勿發布",
-    consent: "我同意 Startech 因篇幅需要刪減內容；Startech 會在發布前讓我確認最終文字。",
+    consent: "我同意 StarTech 因篇幅需要刪減內容；StarTech 會在發布前讓我確認最終文字。",
     send: "送出評價",
     sending: "送出中…",
     thanksTitle: "謝謝您！",
@@ -558,7 +558,7 @@ export const zhHant: Messages = {
       "透過存取點的 API 傳送",
       "傳送狀態與錯誤顯示在您日常使用的介面",
     ],
-    offerHonest: "Startech 不是存取點服務商，也未獲得 IMDA 認證。正式連線須透過我們與您共同選定、經 IMDA 認證的存取點進行。",
+    offerHonest: "StarTech 不是存取點服務商，也未獲得 IMDA 認證。正式連線須透過我們與您共同選定、經 IMDA 認證的存取點進行。",
     demoEyebrow: "試一試",
     demoTitle: "把範例發票轉換成 PINT SG XML",
     demoIntro: "填寫發票，或上傳 CSV 範本。瀏覽器會產生 XML，並依部分 PINT SG 規則進行檢查。資料不會傳送到任何地方。",
@@ -631,7 +631,7 @@ export const zhHant: Messages = {
     checksSummary: "{total} 項檢查中，{passed} 項通過",
     pass: "通過",
     fail: "未通過",
-    demoCheck: "Startech 示範用檢查，並非 PINT SG 規則",
+    demoCheck: "StarTech 示範用檢查，並非 PINT SG 規則",
     checksSource: "規則編號來自 2026 年 5 月 25 日發布的 PINT SG Billing v1.4.1 schematron。這裡只是在瀏覽器中執行的部分檢查；正式傳送前，存取點會執行完整驗證。",
     checks: {
       specIds: "規範識別碼與業務流程識別碼均為 PINT SG 開票（Billing）",
@@ -848,7 +848,7 @@ export const zhHant: Messages = {
     formSend: "申請 Singpass 檢查",
     flyerLine: "Singpass 必須在 2026 年 12 月 31 日前升級到 FAPI 2.0。查看新登入流程的可執行示範。",
     stagingTitle: "在 Singpass staging 環境中試用",
-    stagingBody: "這個按鈕以 Startech 的 staging 應用程式身分，對 Singpass 官方的 staging 服務執行同一套用戶端。只有 Singpass staging 測試帳號可以登入，真實的 Singpass 帳號無法登入。",
+    stagingBody: "這個按鈕以 StarTech 的 staging 應用程式身分，對 Singpass 官方的 staging 服務執行同一套用戶端。只有 Singpass staging 測試帳號可以登入，真實的 Singpass 帳號無法登入。",
     stagingButton: "使用 Singpass 登入（staging）",
     stagingResult: "Singpass staging 環境傳回的 ID 權杖（已解密並驗證）",
     stagingCancelled: "Staging 登入已取消。",
@@ -862,7 +862,7 @@ export const zhHant: Messages = {
 
   footer: {
     location: "新加坡",
-    rights: "Startech Innovation Pte. Ltd.",
+    rights: "StarTech Innovation Pte. Ltd.",
   },
 
   // The "Get our updates" sign-up: the footer and /updates (src/components/UpdatesSignup.tsx).
@@ -870,7 +870,7 @@ export const zhHant: Messages = {
   updates: {
     eyebrow: "最新動態",
     title: "訂閱我們的最新動態",
-    intro: "Startech Innovation 大約每季寄送一封簡短的郵件。可隨時取消訂閱。",
+    intro: "StarTech Innovation 大約每季寄送一封簡短的郵件。可隨時取消訂閱。",
     containsTitle: "每期內容",
     contains: [
       "我們最近開發的系統，以及它為使用它的公司帶來的改變。",
@@ -879,7 +879,7 @@ export const zhHant: Messages = {
     ],
     confirmNote: "我們會先透過郵件請您確認，因此沒有人能在您不知情的情況下替您訂閱。",
     email: "電子郵件地址",
-    consent: "我希望大約每季收到一次 Startech Innovation 的最新動態。可隨時取消訂閱。",
+    consent: "我希望大約每季收到一次 StarTech Innovation 的最新動態。可隨時取消訂閱。",
     send: "訂閱",
     sending: "送出中…",
     thanksTitle: "請查看您的收件匣",

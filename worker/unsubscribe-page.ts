@@ -31,7 +31,7 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
     button: "Unsubscribe",
     pages: {
       confirm: {
-        title: "Unsubscribe from Startech Innovation emails",
+        title: "Unsubscribe from StarTech Innovation emails",
         body: "Press the button below and we will not email this address again.",
       },
       done: {
@@ -40,7 +40,7 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
       },
       unknown: {
         title: "This link is not valid",
-        body: "We could not find this unsubscribe link. If you would like no more emails from Startech Innovation, reply to any of them with the word \"unsubscribe\" and we will remove your address.",
+        body: "We could not find this unsubscribe link. If you would like no more emails from StarTech Innovation, reply to any of them with the word \"unsubscribe\" and we will remove your address.",
       },
       error: {
         title: "Something went wrong",
@@ -56,12 +56,12 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
     button: "配信を停止する",
     pages: {
       confirm: {
-        title: "Startech Innovation からのメール配信停止",
+        title: "StarTech Innovation からのメール配信停止",
         body: "下のボタンを押すと、このアドレスへのメール送信を停止いたします。",
       },
       done: {
         title: "配信を停止しました",
-        body: "今後、Startech Innovation からメールをお送りすることはございません。お手数をおかけしました。ご連絡いただき、ありがとうございました。",
+        body: "今後、StarTech Innovation からメールをお送りすることはございません。お手数をおかけしました。ご連絡いただき、ありがとうございました。",
       },
       unknown: {
         title: "このリンクは無効です",
@@ -81,7 +81,7 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
     button: "Berhenti berlangganan",
     pages: {
       confirm: {
-        title: "Berhenti menerima email dari Startech Innovation",
+        title: "Berhenti menerima email dari StarTech Innovation",
         body: "Tekan tombol di bawah ini, dan kami tidak akan mengirim email lagi ke alamat ini.",
       },
       done: {
@@ -90,7 +90,7 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
       },
       unknown: {
         title: "Tautan ini tidak valid",
-        body: "Kami tidak dapat menemukan tautan berhenti berlangganan ini. Jika Anda tidak ingin menerima email dari Startech Innovation lagi, silakan balas salah satu email kami dengan kata \"berhenti\", dan alamat Anda akan kami hapus.",
+        body: "Kami tidak dapat menemukan tautan berhenti berlangganan ini. Jika Anda tidak ingin menerima email dari StarTech Innovation lagi, silakan balas salah satu email kami dengan kata \"berhenti\", dan alamat Anda akan kami hapus.",
       },
       error: {
         title: "Terjadi kendala",
@@ -106,7 +106,7 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
     button: "Darse de baja",
     pages: {
       confirm: {
-        title: "Dejar de recibir correos de Startech Innovation",
+        title: "Dejar de recibir correos de StarTech Innovation",
         body: "Haga clic en el botón de abajo y no volveremos a enviar correos a esta dirección.",
       },
       done: {
@@ -115,7 +115,7 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
       },
       unknown: {
         title: "Este enlace no es válido",
-        body: "No encontramos este enlace para darse de baja. Si no desea recibir más correos de Startech Innovation, responda a cualquiera de ellos con la palabra «baja» y eliminaremos su dirección.",
+        body: "No encontramos este enlace para darse de baja. Si no desea recibir más correos de StarTech Innovation, responda a cualquiera de ellos con la palabra «baja» y eliminaremos su dirección.",
       },
       error: {
         title: "Algo salió mal",
@@ -131,7 +131,7 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
     button: "Descadastrar",
     pages: {
       confirm: {
-        title: "Deixar de receber e-mails da Startech Innovation",
+        title: "Deixar de receber e-mails da StarTech Innovation",
         body: "Clique no botão abaixo e não enviaremos mais e-mails para este endereço.",
       },
       done: {
@@ -140,7 +140,7 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
       },
       unknown: {
         title: "Este link não é válido",
-        body: "Não encontramos este link de descadastro. Se não quiser receber mais e-mails da Startech Innovation, responda a qualquer um deles com a palavra \"descadastrar\" e removeremos o seu endereço.",
+        body: "Não encontramos este link de descadastro. Se não quiser receber mais e-mails da StarTech Innovation, responda a qualquer um deles com a palavra \"descadastrar\" e removeremos o seu endereço.",
       },
       error: {
         title: "Algo deu errado",
@@ -156,7 +156,7 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
     button: "退订",
     pages: {
       confirm: {
-        title: "退订 Startech Innovation 的邮件",
+        title: "退订 StarTech Innovation 的邮件",
         body: "点击下方按钮后，我们将不再向此邮箱发送邮件。",
       },
       done: {
@@ -165,7 +165,7 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
       },
       unknown: {
         title: "此链接无效",
-        body: "我们找不到这个退订链接。如果您不希望再收到 Startech Innovation 的邮件，请回复任意一封邮件并写上“退订”，我们会删除您的邮箱地址。",
+        body: "我们找不到这个退订链接。如果您不希望再收到 StarTech Innovation 的邮件，请回复任意一封邮件并写上“退订”，我们会删除您的邮箱地址。",
       },
       error: {
         title: "出现了问题",
@@ -181,7 +181,7 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
     button: "取消訂閱",
     pages: {
       confirm: {
-        title: "取消訂閱 Startech Innovation 的郵件",
+        title: "取消訂閱 StarTech Innovation 的郵件",
         body: "點選下方按鈕後，我們將不再寄送郵件到此信箱。",
       },
       done: {
@@ -190,7 +190,7 @@ const COPY: Record<PageLanguage, LanguageCopy> = {
       },
       unknown: {
         title: "此連結無效",
-        body: "我們找不到這個取消訂閱連結。如果您不希望再收到 Startech Innovation 的郵件，請回覆任一封郵件並寫上「取消訂閱」，我們會刪除您的信箱地址。",
+        body: "我們找不到這個取消訂閱連結。如果您不希望再收到 StarTech Innovation 的郵件，請回覆任一封郵件並寫上「取消訂閱」，我們會刪除您的信箱地址。",
       },
       error: {
         title: "發生問題",
@@ -218,7 +218,7 @@ footer{padding:1rem;color:#c2c2cc;font-size:.8125rem;text-align:center}
 footer span{white-space:nowrap}`;
 
 /** One line for the company, and no break inside "#06-07" or the postcode. */
-export const FOOTER = `Startech Innovation Pte Ltd<br>${POSTAL_ADDRESS.split(", ")
+export const FOOTER = `StarTech Innovation Pte Ltd<br>${POSTAL_ADDRESS.split(", ")
   .map((part) => `<span>${part}</span>`)
   .join(", ")}`;
 
@@ -265,7 +265,7 @@ export function renderPage(
 </head>
 <body>
 <main>
-<img class="mark" src="/assets/startech-mark.svg" alt="Startech Innovation" width="40" height="40">
+<img class="mark" src="/assets/startech-mark.svg" alt="StarTech Innovation" width="40" height="40">
 ${sections(languages, state)}
 ${form}
 </main>

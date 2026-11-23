@@ -31,7 +31,7 @@ export default function FlyerPage() {
 
   useEffect(() => {
     const previous = document.title;
-    document.title = `${f.headline} · Startech Innovation`;
+    document.title = `${f.headline} · StarTech Innovation`;
     return () => {
       document.title = previous;
     };

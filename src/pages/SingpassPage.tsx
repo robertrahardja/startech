@@ -11,7 +11,7 @@ import { useI18n } from "../i18n";
  * reference demo of the new flow, and the offer to check and upgrade an
  * existing integration.
  *
- * Honesty rules for this page (marketing copy): Startech has not yet done a
+ * Honesty rules for this page (marketing copy): StarTech has not yet done a
  * Singpass migration for a client and is not a Singpass or GovTech partner.
  * The demo runs against a mock server (worker/singpass-demo.ts) and says so.
  * Deadlines link to Singpass's and Corppass's own documentation.
@@ -30,7 +30,7 @@ export default function SingpassPage() {
 
   useEffect(() => {
     const previous = document.title;
-    document.title = `${s.eyebrow} · Startech Innovation`;
+    document.title = `${s.eyebrow} · StarTech Innovation`;
     return () => {
       document.title = previous;
     };

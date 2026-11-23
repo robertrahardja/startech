@@ -375,7 +375,7 @@ function discovery(issuer: string): Response {
       authorization_response_iss_parameter_supported: true,
       service_documentation: "https://docs.developer.singpass.gov.sg/docs/technical-specifications/integration-guide",
       x_mock_notice:
-        "Startech reference demo. Not Singpass and not affiliated with Singpass or GovTech. Sample data only.",
+        "StarTech reference demo. Not Singpass and not affiliated with Singpass or GovTech. Sample data only.",
     },
     200,
     "public, max-age=300"

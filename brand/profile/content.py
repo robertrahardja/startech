@@ -13,7 +13,7 @@ percentage until Enterprise Singapore confirms one for the project.
 """
 
 COMMON = {
-    "legal_name": "Startech Innovation Pte Ltd",
+    "legal_name": "StarTech Innovation Pte Ltd",
     "uen": "202110461R",
     "addr": "1003 Bukit Merah Central #06-07, Singapore 159836",
     "corr": "7500A Beach Road, Singapore 199591",
@@ -43,7 +43,7 @@ EN = {
     "about_kicker": "Who we are",
     "about_head": "Founder-led, start to finish.",
     "about_body": [
-        "Startech Innovation is a custom software house, not a product "
+        "StarTech Innovation is a custom software house, not a product "
         "vendor. We do not sell you a shelf system and hope it fits — we "
         "build the system around how your business actually runs: "
         "operations, customers, stock, invoices and the documents in "
@@ -249,7 +249,7 @@ ID = {
     "about_kicker": "Siapa kami",
     "about_head": "Dipimpin langsung oleh pendirinya, dari awal hingga akhir.",
     "about_body": [
-        "Startech Innovation adalah rumah pengembangan perangkat lunak "
+        "StarTech Innovation adalah rumah pengembangan perangkat lunak "
         "kustom, bukan vendor produk. Kami tidak menjual sistem siap pakai "
         "dan berharap cocok — kami membangun sistem sesuai cara bisnis "
         "Anda sebenarnya berjalan: operasional, pelanggan, stok, faktur, "

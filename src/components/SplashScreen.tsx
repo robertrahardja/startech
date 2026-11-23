@@ -17,7 +17,7 @@ const HOLD_MS = 1080;
 const FADE_MS = 420;
 
 /**
- * A black screen with the full lockup (mark + "Startech Innovation")
+ * A black screen with the full lockup (mark + "StarTech Innovation")
  * centred, fading away to the homepage underneath. Mobile only
  * (sm:hidden — desktop never had a first-load moment this was solving)
  * and only once per browser: a returning visitor has already seen it, so

@@ -6,7 +6,7 @@ Tick as you go. Realistic time: ~2 hours total.
 
 - [ ] Sign up at `elevenlabs.io` (free tier)
 - [ ] Voice Lab → Instant Voice Clone → record 60 sec of your voice in a quiet room
-- [ ] Save voice as `Startech-RR`
+- [ ] Save voice as `StarTech-RR`
 - [ ] Download CapCut desktop from `capcut.com`
 - [ ] Sign up at `pexels.com` (free, only needed if you want to favorite clips)
 - [ ] Sign up at `canva.com` (free)
@@ -14,7 +14,7 @@ Tick as you go. Realistic time: ~2 hours total.
 ## Audio generation (20 min)
 
 - [ ] Open ElevenLabs → Text to Speech
-- [ ] Select your cloned voice (`Startech-RR`)
+- [ ] Select your cloned voice (`StarTech-RR`)
 - [ ] Settings: Stability 50, Similarity 75, Style 0
 - [ ] Paste `script-chunk-01.txt` → Generate → download as `audio-01.mp3`
 - [ ] Repeat for chunks 02, 03, 04
@@ -51,7 +51,7 @@ Tick as you go. Realistic time: ~2 hours total.
 - [ ] Upload `thumbnail.png` as the custom thumbnail
 - [ ] Add chapters (in description)
 - [ ] Set to **Public** (or schedule for next 9am SGT)
-- [ ] Create + add to playlist "AI Insights — Startech"
+- [ ] Create + add to playlist "AI Insights — StarTech"
 - [ ] Add cards + end screen per metadata doc
 - [ ] Publish
 - [ ] Post the pinned comment immediately

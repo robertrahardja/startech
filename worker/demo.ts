@@ -192,7 +192,7 @@ export async function handleDemo(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: siteSender("Startech Demos", "demos"),
+          from: siteSender("StarTech Demos", "demos"),
           to: ["rr.startech.innovation@gmail.com"],
           reply_to: email,
           subject: `Demo Lead: ${escapeHtml(config.description)} — ${escapeHtml(email)}`,
@@ -203,7 +203,7 @@ export async function handleDemo(
             ${name ? `<p><strong>Name:</strong> ${escapeHtml(name)}</p>` : ""}
             <p><strong>Time:</strong> ${new Date().toISOString()}</p>
             <hr>
-            <p><small>Startech AI Demo Lead Capture — verified via Google sign-in</small></p>
+            <p><small>StarTech AI Demo Lead Capture — verified via Google sign-in</small></p>
           `,
           text: `Demo: ${config.description}\nEmail: ${email}\n${name ? `Name: ${name}\n` : ""}`,
         }),

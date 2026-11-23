@@ -1,9 +1,9 @@
 // Facts about the site that the page and the Worker both need.
 
 export const SITE_URL = "https://startech-innovation.com";
-export const SITE_NAME = "Startech Innovation";
+export const SITE_NAME = "StarTech Innovation";
 
-// Startech's own accounts (opened 13 Nov 2026, see
+// StarTech's own accounts (opened 13 Nov 2026, see
 // startech_marketing/gtm/channels/social/profiles.md). The profiles link
 // back here with ?utm_source=<platform>, so visits from them are measured.
 // The footer links to them; the homepage's structured data lists them as

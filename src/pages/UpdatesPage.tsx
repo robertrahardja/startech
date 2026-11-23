@@ -3,7 +3,7 @@ import { useI18n } from "../i18n";
 import UpdatesSignup from "../components/UpdatesSignup";
 
 /**
- * /updates: what Startech's quarterly update contains, and the sign-up.
+ * /updates: what StarTech's quarterly update contains, and the sign-up.
  * The footer carries the same form, so the footer leaves it out here.
  */
 export default function UpdatesPage() {
@@ -12,7 +12,7 @@ export default function UpdatesPage() {
 
   useEffect(() => {
     const previous = document.title;
-    document.title = `${m.title} · Startech Innovation`;
+    document.title = `${m.title} · StarTech Innovation`;
     return () => {
       document.title = previous;
     };

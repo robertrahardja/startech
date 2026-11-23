@@ -10,7 +10,7 @@ import { useI18n } from "../i18n";
  *   /testimonial?name=Michael%20Choy&company=TechTree
  *
  * The Worker (POST /api/testimonial) saves it as a "Testimonial" note on the
- * client's contact in hq and emails Startech. Nothing is published from here:
+ * client's contact in hq and emails StarTech. Nothing is published from here:
  * the client agrees to see the final wording first, and picks how they are
  * credited, including "do not publish".
  */
@@ -35,7 +35,7 @@ export default function TestimonialPage() {
 
   useEffect(() => {
     const previous = document.title;
-    document.title = `${m.eyebrow} · Startech Innovation`;
+    document.title = `${m.eyebrow} · StarTech Innovation`;
     const robots = document.createElement("meta");
     robots.name = "robots";
     robots.content = "noindex";
