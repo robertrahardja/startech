@@ -402,7 +402,7 @@ export const en = {
     said: "What does something like this usually cost?",
     answer:
       "You get a range on the first call and a firm number after discovery. We will say the real figure early rather than late, then cut scope together until it fits — a smaller system that ships beats a large one that stalls. Singapore SMEs may qualify for support under the EDGE Grant, which replaced PSG; we help you check whether your project qualifies and prepare our vendor documents at no charge.",
-    proof: "Enterprise Singapore decides EDGE support, and StarTech is not a pre-approved EDGE vendor.",
+    proof: "Enterprise Singapore decides EDGE support, and Startech is not a pre-approved EDGE vendor.",
   },
   {
     said: "Is there a cost to waiting a quarter or two?",
@@ -504,7 +504,7 @@ export const en = {
 
   testimonial: {
     eyebrow: "Testimonial",
-    title: "How was working with StarTech?",
+    title: "How was working with Startech?",
     intro: "A sentence or two about the project helps other companies decide whether to work with us. Nothing is published until you have seen and approved the final wording.",
     name: "Your name",
     role: "Your role",
@@ -517,7 +517,7 @@ export const en = {
     creditFull: "Name, role and company",
     creditAnonymous: "Role and industry only, no name",
     creditPrivate: "Feedback only, please do not publish",
-    consent: "StarTech may shorten this for length, and will show me the final wording before publishing it.",
+    consent: "Startech may shorten this for length, and will show me the final wording before publishing it.",
     send: "Send testimonial",
     sending: "Sending…",
     thanksTitle: "Thank you!",
@@ -572,7 +572,7 @@ export const en = {
       "Sent through the access point's API",
       "Delivery status and errors shown where you work",
     ],
-    offerHonest: "StarTech is not an access point provider and is not IMDA-accredited. A real connection goes through an IMDA-accredited access point that we choose together with you.",
+    offerHonest: "Startech is not an access point provider and is not IMDA-accredited. A real connection goes through an IMDA-accredited access point that we choose together with you.",
     demoEyebrow: "Try it",
     demoTitle: "Turn a sample invoice into PINT SG XML",
     demoIntro: "Fill in the invoice or upload the CSV template. Your browser builds the XML and checks it against a set of PINT SG rules. Nothing is sent anywhere.",
@@ -645,7 +645,7 @@ export const en = {
     checksSummary: "{passed} of {total} checks passed",
     pass: "Pass",
     fail: "Fail",
-    demoCheck: "StarTech demo check, not a PINT SG rule",
+    demoCheck: "Startech demo check, not a PINT SG rule",
     checksSource: "Rule IDs are from the PINT SG Billing v1.4.1 schematron, released 25 May 2026. This is a subset run in your browser; an access point runs the full validation before anything is sent.",
     checks: {
       specIds: "Specification and business process identifiers are PINT SG billing",
@@ -708,7 +708,7 @@ export const en = {
     backHome: "Back to the main site",
   },
 
-  // The Singpass FAPI 2.0 page at /singpass. StarTech has not yet done a
+  // The Singpass FAPI 2.0 page at /singpass. Startech has not yet done a
   // Singpass migration for a client and is not a Singpass or GovTech
   // partner; the copy must never say otherwise. Deadlines are Singpass's and
   // Corppass's own, linked on the page.
@@ -872,7 +872,7 @@ export const en = {
     formSend: "Ask for a Singpass check",
     flyerLine: "Singpass must move to FAPI 2.0 by 31 December 2026. See our working demo of the new login flow.",
     stagingTitle: "Try it against Singpass staging",
-    stagingBody: "This button runs the same client against Singpass's own staging service, under StarTech's staging app. Only Singpass staging test accounts can log in; real Singpass accounts cannot.",
+    stagingBody: "This button runs the same client against Singpass's own staging service, under Startech's staging app. Only Singpass staging test accounts can log in; real Singpass accounts cannot.",
     stagingButton: "Log in with Singpass (staging)",
     stagingResult: "Singpass staging returned this ID token, decrypted and verified",
     stagingCancelled: "The staging login was cancelled.",
@@ -886,7 +886,7 @@ export const en = {
 
   footer: {
     location: "Singapore",
-    rights: "StarTech Innovation Pte. Ltd.",
+    rights: "Startech Innovation Pte. Ltd.",
   },
 
   // The "Get our updates" sign-up: the footer and /updates (src/components/UpdatesSignup.tsx).
@@ -894,7 +894,7 @@ export const en = {
   updates: {
     eyebrow: "Updates",
     title: "Get our updates",
-    intro: "A short email from StarTech Innovation about once a quarter. Unsubscribe any time.",
+    intro: "A short email from Startech Innovation about once a quarter. Unsubscribe any time.",
     containsTitle: "What each update contains",
     contains: [
       "What we have built recently, and what it changed for the company using it.",
@@ -903,7 +903,7 @@ export const en = {
     ],
     confirmNote: "We ask you to confirm by email first, so nobody can sign you up without your knowledge.",
     email: "Email address",
-    consent: "I would like to receive StarTech Innovation's update about once a quarter. Unsubscribe any time.",
+    consent: "I would like to receive Startech Innovation's update about once a quarter. Unsubscribe any time.",
     send: "Sign up",
     sending: "Signing up…",
     thanksTitle: "Please check your inbox",

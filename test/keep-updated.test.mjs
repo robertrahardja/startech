@@ -112,8 +112,8 @@ test("a person's press: subscribed and confirmed, sequence stopped, one CRM note
       language: "ja",
       source: "outreach",
       consent_text:
-        "StarTech Innovation より、四半期に一度程度、簡単なお知らせをお送りいたします。配信はいつでも停止いただけます。\n" +
-        "Kabar singkat dari StarTech Innovation sekitar sekali per kuartal; berhenti berlangganan kapan saja.\n" +
+        "Startech Innovation より、四半期に一度程度、簡単なお知らせをお送りいたします。配信はいつでも停止いただけます。\n" +
+        "Kabar singkat dari Startech Innovation sekitar sekali per kuartal; berhenti berlangganan kapan saja.\n" +
         "[最新情報を受け取る / Kirimi saya kabar terbaru]",
       consent_at: NOW,
       confirmed_at: NOW,
@@ -193,7 +193,7 @@ test("a person's press brings back an unsubscribed address; other recipient stat
   assert.equal(sub.unsubscribed_at, null);
   assert.equal(sub.confirmed_at, NOW);
   assert.equal(sub.company_id, "co_1");
-  assert.match(sub.consent_text, /^StarTech Innovation より/);
+  assert.match(sub.consent_text, /^Startech Innovation より/);
   assert.match(await res.text(), /href="\/k\/u\/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/);
   assert.equal(recipient().status, "replied");
 });
@@ -288,15 +288,15 @@ test("a new address is saved unconfirmed and gets one confirmation email", async
   assert.equal(email.from, SENDER);
   assert.deepEqual(email.to, ["mei@example.sg"]);
   assert.equal(email.subject, CONFIRM_SUBJECT);
-  assert.equal(email.subject, "Please confirm: StarTech Innovation updates");
+  assert.equal(email.subject, "Please confirm: Startech Innovation updates");
   assert.equal(email.html, undefined, "plain text only");
   assert.equal(
     email.text,
     [
-      "Please open this link and press Confirm if you would like a short update from StarTech Innovation about once a quarter:",
+      "Please open this link and press Confirm if you would like a short update from Startech Innovation about once a quarter:",
       `https://startech-innovation.com/k/c/${sub.token}`,
       "If you did not ask for this, ignore this email.",
-      "StarTech Innovation Pte. Ltd., 1003 Bukit Merah Central #06-07, Singapore 159836",
+      "Startech Innovation Pte. Ltd., 1003 Bukit Merah Central #06-07, Singapore 159836",
     ].join("\n\n")
   );
   assert.ok(!email.text.includes("Tan Mei"), "nothing the visitor typed is in the email");

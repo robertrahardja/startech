@@ -43,7 +43,7 @@ test("the entrypoint class hq binds to delegates each RPC method with the Worker
 test("refuses a message without the unsubscribe link or the postal address", async () => {
   const calls = fakeFetch();
   const cases = [
-    "Hello.\n\nStarTech Innovation Pte Ltd, 1003 Bukit Merah Central #06-07, Singapore 159836",
+    "Hello.\n\nStartech Innovation Pte Ltd, 1003 Bukit Merah Central #06-07, Singapore 159836",
     `Hello.\n\nUnsubscribe: ${LINK}`,
     // A link to some other site's /u/ page does not count.
     `Hello.\n\n1003 Bukit Merah Central, Singapore 159836\nhttps://example.com/u/${TOKEN}`,
@@ -117,7 +117,7 @@ test("sends from OUTREACH_FROM to one recipient, with one-click unsubscribe head
     to: ["info@example.co.jp"],
     subject: message.subject,
     text: message.text,
-    // The sending subdomain has no mailbox, so replies go to StarTech's inbox.
+    // The sending subdomain has no mailbox, so replies go to Startech's inbox.
     reply_to: OWNER_INBOX,
     headers: {
       "List-Unsubscribe": `<${LINK}>`,
@@ -191,14 +191,14 @@ test("status reads with RESEND_STATUS_KEY when set: the sending keys may not rea
   assert.equal(calls[0].headers.get("Authorization"), "Bearer re_status");
 });
 
-test("notifyOwner reaches StarTech's inbox, from the site domain until OUTREACH_FROM is set", async () => {
+test("notifyOwner reaches Startech's inbox, from the site domain until OUTREACH_FROM is set", async () => {
   const calls = fakeFetch();
   const report = "Sent 12, replied 1, bounced 0.";
   assert.deepEqual(await notifyOwner({ RESEND_API_KEY: "re_test" }, "Outreach: week 45", report), {
     ok: true,
     id: "email_1",
   });
-  assert.equal(calls[0].body.from, "StarTech HQ <hq@mail.startech-innovation.com>");
+  assert.equal(calls[0].body.from, "Startech HQ <hq@mail.startech-innovation.com>");
   assert.deepEqual(calls[0].body.to, [OWNER_INBOX]);
   assert.equal(calls[0].body.text, report);
 

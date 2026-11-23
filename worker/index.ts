@@ -1,5 +1,5 @@
 /**
- * StarTech Innovation - Cloudflare Worker
+ * Startech Innovation - Cloudflare Worker
  *
  * Handles API endpoints:
  * - POST /api/chat    — Proxies to OpenAI GPT-4o-mini with streaming SSE
@@ -20,7 +20,7 @@
  * - /api/demo/singpass/* — mock Singpass FAPI 2.0 authorization server for
  *                        the /singpass demo (worker/singpass-demo.ts)
  * - /.well-known/jwks.json, /singpass/callback, /api/demo/singpass/staging/*
- *                      — StarTech as a Singpass staging relying party
+ *                      — Startech as a Singpass staging relying party
  *                        (worker/singpass-rp.ts), off unless configured
  * - GET/POST /u/<token> — public unsubscribe link in hq's outreach emails
  *                        (worker/unsubscribe.ts)

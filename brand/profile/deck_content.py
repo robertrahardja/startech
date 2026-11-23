@@ -29,7 +29,7 @@ EN = {
     "cover_head_1": "Software built",
     "cover_head_2": "to be checked.",
     "cover_sub": (
-        "How StarTech Innovation designs, tests and hands over production "
+        "How Startech Innovation designs, tests and hands over production "
         "systems — for the technical lead who will review the work. Every "
         "figure can be walked through on a call."
     ),
@@ -247,7 +247,7 @@ ID = {
     "cover_head_1": "Perangkat lunak yang dibangun",
     "cover_head_2": "untuk diperiksa.",
     "cover_sub": (
-        "Cara StarTech Innovation merancang, menguji, dan menyerahkan "
+        "Cara Startech Innovation merancang, menguji, dan menyerahkan "
         "sistem produksi — untuk pimpinan teknis yang akan meninjau "
         "pekerjaannya. Setiap angka dapat dijelaskan dalam panggilan."
     ),

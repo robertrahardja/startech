@@ -31,7 +31,7 @@ test("sends nothing until OUTREACH_FROM is set", async () => {
   assert.equal(calls.length, 0);
 });
 
-test("one short English reply from OUTREACH_FROM, replies going to StarTech's inbox", async () => {
+test("one short English reply from OUTREACH_FROM, replies going to Startech's inbox", async () => {
   const calls = fakeFetch();
   await acknowledgeEnquiry(env(), enquiry({ topic: "singpass" }));
 
@@ -40,7 +40,7 @@ test("one short English reply from OUTREACH_FROM, replies going to StarTech's in
   assert.equal(body.from, SENDER);
   assert.deepEqual(body.to, ["somchai@example.co.th"]);
   assert.equal(body.reply_to, OWNER_INBOX);
-  assert.equal(body.subject, "Thank you for your message to StarTech Innovation");
+  assert.equal(body.subject, "Thank you for your message to Startech Innovation");
   assert.match(body.text, /within one working day/);
   assert.match(body.text, /the only automatic email you will receive from us/);
   assert.match(body.text, /1003 Bukit Merah Central #06-07, Singapore 159836/);
@@ -58,28 +58,28 @@ test("mentions the spreadsheet only when one was attached", async () => {
 
 test("picks the language from the site and, where it varies, the visitor's own", async () => {
   const cases = [
-    [{ topic: "indonesia" }, "Terima kasih atas pesan Anda kepada StarTech Innovation"],
-    [{ topic: "indonesia", utmCampaign: "indonesia-en" }, "Terima kasih atas pesan Anda kepada StarTech Innovation"],
-    [{ topic: "thailand" }, "お問い合わせありがとうございます（StarTech Innovation）"],
-    [{ topic: "thailand", utmCampaign: "thailand-ja" }, "お問い合わせありがとうございます（StarTech Innovation）"],
-    [{ topic: "thailand", utmCampaign: "thailand-en" }, "Thank you for your message to StarTech Innovation"],
-    [{ topic: "vietnam", locale: "en" }, "Thank you for your message to StarTech Innovation"],
-    [{ topic: "vietnam", locale: "ja", utmCampaign: "vietnam-en" }, "お問い合わせありがとうございます（StarTech Innovation）"],
+    [{ topic: "indonesia" }, "Terima kasih atas pesan Anda kepada Startech Innovation"],
+    [{ topic: "indonesia", utmCampaign: "indonesia-en" }, "Terima kasih atas pesan Anda kepada Startech Innovation"],
+    [{ topic: "thailand" }, "お問い合わせありがとうございます（Startech Innovation）"],
+    [{ topic: "thailand", utmCampaign: "thailand-ja" }, "お問い合わせありがとうございます（Startech Innovation）"],
+    [{ topic: "thailand", utmCampaign: "thailand-en" }, "Thank you for your message to Startech Innovation"],
+    [{ topic: "vietnam", locale: "en" }, "Thank you for your message to Startech Innovation"],
+    [{ topic: "vietnam", locale: "ja", utmCampaign: "vietnam-en" }, "お問い合わせありがとうございます（Startech Innovation）"],
     // A tagged campaign says nothing about the language.
-    [{ topic: "vietnam", utmCampaign: "flyer-nov" }, "お問い合わせありがとうございます（StarTech Innovation）"],
+    [{ topic: "vietnam", utmCampaign: "flyer-nov" }, "お問い合わせありがとうございます（Startech Innovation）"],
     // A language we have no copy in reads better in English than in Japanese.
-    [{ topic: "thailand", locale: "th" }, "Thank you for your message to StarTech Innovation"],
-    [{ topic: "japan" }, "お問い合わせありがとうございます（StarTech Innovation）"],
-    [{ topic: "malaysia" }, "Thank you for your message to StarTech Innovation"],
-    [{ topic: "philippines", locale: "ja" }, "Thank you for your message to StarTech Innovation"],
+    [{ topic: "thailand", locale: "th" }, "Thank you for your message to Startech Innovation"],
+    [{ topic: "japan" }, "お問い合わせありがとうございます（Startech Innovation）"],
+    [{ topic: "malaysia" }, "Thank you for your message to Startech Innovation"],
+    [{ topic: "philippines", locale: "ja" }, "Thank you for your message to Startech Innovation"],
     // The main site sends its page locale.
-    [{ topic: "", locale: "es" }, "Gracias por su mensaje a StarTech Innovation"],
-    [{ topic: "", locale: "pt" }, "Obrigado pela sua mensagem à StarTech Innovation"],
-    [{ topic: "", locale: "zh-Hans" }, "感谢您联系 StarTech Innovation"],
-    [{ topic: "", locale: "zh-Hant" }, "感謝您聯絡 StarTech Innovation"],
-    [{ topic: "", locale: "ja" }, "お問い合わせありがとうございます（StarTech Innovation）"],
-    [{ topic: "", locale: "ko" }, "Thank you for your message to StarTech Innovation"],
-    [{ topic: "" }, "Thank you for your message to StarTech Innovation"],
+    [{ topic: "", locale: "es" }, "Gracias por su mensaje a Startech Innovation"],
+    [{ topic: "", locale: "pt" }, "Obrigado pela sua mensagem à Startech Innovation"],
+    [{ topic: "", locale: "zh-Hans" }, "感谢您联系 Startech Innovation"],
+    [{ topic: "", locale: "zh-Hant" }, "感謝您聯絡 Startech Innovation"],
+    [{ topic: "", locale: "ja" }, "お問い合わせありがとうございます（Startech Innovation）"],
+    [{ topic: "", locale: "ko" }, "Thank you for your message to Startech Innovation"],
+    [{ topic: "" }, "Thank you for your message to Startech Innovation"],
   ];
   for (const [overrides, subject] of cases) {
     const calls = fakeFetch();

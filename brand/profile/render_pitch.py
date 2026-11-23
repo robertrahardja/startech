@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Render the StarTech Innovation pitch deck to HTML (EN).
+"""Render the Startech Innovation pitch deck to HTML (EN).
 
 Customer-facing capability deck for Singapore and Japan prospects.
 Landscape 16:9 slides, PDF-ready. Same brand system as render_deck.py

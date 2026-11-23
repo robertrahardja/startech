@@ -20,11 +20,11 @@ const SHARE_IMAGE = {
   url: `${SITE}/assets/startech-share.png`,
   width: "1200",
   height: "630",
-  alt: "StarTech Innovation: From spreadsheet to system.",
+  alt: "Startech Innovation: From spreadsheet to system.",
 };
 
 /**
- * Who StarTech is, as schema.org structured data, on the homepage: the
+ * Who Startech is, as schema.org structured data, on the homepage: the
  * name, logo and contact details shown on the site, and the four social
  * accounts as the same organisation.
  */

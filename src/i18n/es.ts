@@ -395,7 +395,7 @@ export const es: Messages = {
         said: "¿Cuánto suele costar algo así?",
         answer:
           "En la primera llamada le damos un rango y, tras el diagnóstico, una cifra en firme. Le diremos la cifra real pronto, no tarde, y después recortaremos el alcance juntos hasta que encaje: un sistema más pequeño que llega a producción vale más que uno grande que se estanca. Las pymes de Singapur pueden optar a la subvención EDGE, que sustituyó al PSG; le ayudamos a comprobar si su proyecto cumple los requisitos y preparamos sin costo nuestra documentación como proveedor.",
-        proof: "Quien concede la subvención EDGE es Enterprise Singapore, y StarTech no es un proveedor preaprobado de EDGE.",
+        proof: "Quien concede la subvención EDGE es Enterprise Singapore, y Startech no es un proveedor preaprobado de EDGE.",
       },
       {
         said: "¿Perdemos algo por esperar un trimestre o dos?",
@@ -497,7 +497,7 @@ export const es: Messages = {
 
   testimonial: {
     eyebrow: "Testimonio",
-    title: "¿Qué tal fue trabajar con StarTech?",
+    title: "¿Qué tal fue trabajar con Startech?",
     intro: "Una o dos frases sobre el proyecto ayudan a otras empresas a decidir si trabajar con nosotros. No publicamos nada hasta que usted haya visto y aprobado el texto final.",
     name: "Su nombre",
     role: "Su cargo",
@@ -510,7 +510,7 @@ export const es: Messages = {
     creditFull: "Nombre, cargo y empresa",
     creditAnonymous: "Solo cargo y sector, sin nombre",
     creditPrivate: "Solo comentarios internos; por favor, no lo publiquen",
-    consent: "StarTech puede acortarlo si es demasiado largo y me mostrará el texto final antes de publicarlo.",
+    consent: "Startech puede acortarlo si es demasiado largo y me mostrará el texto final antes de publicarlo.",
     send: "Enviar testimonio",
     sending: "Enviando…",
     thanksTitle: "¡Gracias!",
@@ -565,7 +565,7 @@ export const es: Messages = {
       "Enviados por la API del punto de acceso",
       "Estado de entrega y errores visibles donde usted trabaja",
     ],
-    offerHonest: "StarTech no es proveedor de puntos de acceso ni está acreditada por IMDA. Una conexión real pasa por un punto de acceso acreditado por IMDA que elegimos junto con usted.",
+    offerHonest: "Startech no es proveedor de puntos de acceso ni está acreditada por IMDA. Una conexión real pasa por un punto de acceso acreditado por IMDA que elegimos junto con usted.",
     demoEyebrow: "Pruébelo",
     demoTitle: "Convierta una factura de ejemplo en XML PINT SG",
     demoIntro: "Rellene la factura o suba la plantilla CSV. Su navegador genera el XML y lo comprueba con un conjunto de reglas PINT SG. No se envía nada a ninguna parte.",
@@ -638,7 +638,7 @@ export const es: Messages = {
     checksSummary: "{passed} de {total} comprobaciones superadas",
     pass: "Correcto",
     fail: "Error",
-    demoCheck: "Comprobación de la demo de StarTech, no es una regla de PINT SG",
+    demoCheck: "Comprobación de la demo de Startech, no es una regla de PINT SG",
     checksSource: "Los ID de regla proceden del schematron de PINT SG Billing v1.4.1, publicado el 25 de mayo de 2026. Es un subconjunto que se ejecuta en su navegador; un punto de acceso realiza la validación completa antes de enviar nada.",
     checks: {
       specIds: "Los identificadores de especificación y de proceso de negocio son los de facturación PINT SG",
@@ -861,7 +861,7 @@ export const es: Messages = {
     formSend: "Solicitar una revisión de Singpass",
     flyerLine: "Singpass debe pasar a FAPI 2.0 antes del 31 de diciembre de 2026. Vea nuestra demo funcional del nuevo inicio de sesión.",
     stagingTitle: "Pruébelo en el entorno de pruebas de Singpass",
-    stagingBody: "Este botón ejecuta el mismo cliente contra el propio entorno de pruebas de Singpass, con la app de pruebas de StarTech. Solo pueden entrar las cuentas de prueba de Singpass; las cuentas reales no.",
+    stagingBody: "Este botón ejecuta el mismo cliente contra el propio entorno de pruebas de Singpass, con la app de pruebas de Startech. Solo pueden entrar las cuentas de prueba de Singpass; las cuentas reales no.",
     stagingButton: "Iniciar sesión con Singpass (pruebas)",
     stagingResult: "El entorno de pruebas de Singpass devolvió este token de ID, descifrado y verificado",
     stagingCancelled: "Se canceló el inicio de sesión de prueba.",
@@ -875,7 +875,7 @@ export const es: Messages = {
 
   footer: {
     location: "Singapur",
-    rights: "StarTech Innovation Pte. Ltd.",
+    rights: "Startech Innovation Pte. Ltd.",
   },
 
   // The "Get our updates" sign-up: the footer and /updates (src/components/UpdatesSignup.tsx).
@@ -883,7 +883,7 @@ export const es: Messages = {
   updates: {
     eyebrow: "Novedades",
     title: "Reciba nuestras novedades",
-    intro: "Un correo breve de StarTech Innovation aproximadamente una vez por trimestre. Puede darse de baja en cualquier momento.",
+    intro: "Un correo breve de Startech Innovation aproximadamente una vez por trimestre. Puede darse de baja en cualquier momento.",
     containsTitle: "Qué incluye cada actualización",
     contains: [
       "Lo que hemos construido recientemente y qué cambió para la empresa que lo usa.",
@@ -892,7 +892,7 @@ export const es: Messages = {
     ],
     confirmNote: "Primero le pedimos que confirme por correo, así nadie puede suscribirle sin que usted lo sepa.",
     email: "Correo electrónico",
-    consent: "Deseo recibir la actualización de StarTech Innovation aproximadamente una vez por trimestre. Puedo darme de baja en cualquier momento.",
+    consent: "Deseo recibir la actualización de Startech Innovation aproximadamente una vez por trimestre. Puedo darme de baja en cualquier momento.",
     send: "Suscribirme",
     sending: "Enviando…",
     thanksTitle: "Revise su bandeja de entrada",

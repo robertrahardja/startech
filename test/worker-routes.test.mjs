@@ -54,7 +54,7 @@ test("the module exports the Mailer entrypoint beside the default handler, and n
   assert.equal(typeof worker.fetch, "function");
 });
 
-test("a saved enquiry: the notification to StarTech is unchanged, then the visitor's acknowledgement", async () => {
+test("a saved enquiry: the notification to Startech is unchanged, then the visitor's acknowledgement", async () => {
   const calls = fakeFetch();
   const { db, call } = setup();
   const res = await call(enquiry({ topic: "thailand", utm_campaign: "thailand-en" }));
@@ -65,21 +65,21 @@ test("a saved enquiry: the notification to StarTech is unchanged, then the visit
   assert.equal(calls.length, 2);
 
   const [notification, ack] = calls.map((c) => c.body);
-  assert.equal(notification.from, "StarTech Website <website@mail.startech-innovation.com>");
+  assert.equal(notification.from, "Startech Website <website@mail.startech-innovation.com>");
   assert.deepEqual(notification.to, ["rr.startech.innovation@gmail.com"]);
   assert.equal(notification.reply_to, "somchai@example.co.th");
   assert.equal(notification.subject, "Thailand site enquiry: Somchai P.");
 
   assert.equal(ack.from, SENDER);
   assert.deepEqual(ack.to, ["somchai@example.co.th"]);
-  assert.equal(ack.subject, "Thank you for your message to StarTech Innovation");
+  assert.equal(ack.subject, "Thank you for your message to Startech Innovation");
 });
 
 test("the request's locale field picks the acknowledgement's language", async () => {
   const calls = fakeFetch();
   const { call } = setup();
   await call(enquiry({ topic: "vietnam", locale: "ja", utm_campaign: "vietnam-en" }));
-  assert.equal(calls[1].body.subject, "お問い合わせありがとうございます（StarTech Innovation）");
+  assert.equal(calls[1].body.subject, "お問い合わせありがとうございます（Startech Innovation）");
 });
 
 test("no acknowledgement without OUTREACH_FROM, or when the lead did not reach the CRM", async () => {
@@ -120,7 +120,7 @@ test("/u/<token> is served by the Worker with the site's security headers", asyn
   const res = await call(new Request(`https://startech-innovation.com/u/${TOKEN}`));
 
   assert.equal(res.status, 200);
-  assert.match(await res.text(), /Unsubscribe from StarTech Innovation emails/);
+  assert.match(await res.text(), /Unsubscribe from Startech Innovation emails/);
   assert.equal(res.headers.get("X-Frame-Options"), "DENY");
   assert.match(res.headers.get("Content-Security-Policy"), /frame-ancestors 'none'/);
   assert.equal(res.headers.get("X-Robots-Tag"), "noindex, nofollow");

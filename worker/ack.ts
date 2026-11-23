@@ -41,61 +41,61 @@ interface AckCopy {
   closing: string;
 }
 
-const SIGNATURE = `StarTech Innovation Pte Ltd\n${POSTAL_ADDRESS}\nhttps://startech-innovation.com`;
+const SIGNATURE = `Startech Innovation Pte Ltd\n${POSTAL_ADDRESS}\nhttps://startech-innovation.com`;
 
 const ACK_COPY: Record<AckLanguage, AckCopy> = {
   en: {
-    subject: "Thank you for your message to StarTech Innovation",
+    subject: "Thank you for your message to Startech Innovation",
     opening:
-      "Hello,\n\nThank you for contacting StarTech Innovation. Your message has reached us, and Robert Rahardja, our Managing Director, will reply to you personally within one working day.",
+      "Hello,\n\nThank you for contacting Startech Innovation. Your message has reached us, and Robert Rahardja, our Managing Director, will reply to you personally within one working day.",
     spreadsheet: "We have also received the spreadsheet you attached.",
     closing:
       "This is an automatic confirmation, and the only automatic email you will receive from us. Everything after this comes from Robert directly.\n\nIf you did not contact us, please ignore this email.\n\nKind regards,",
   },
   ja: {
-    subject: "お問い合わせありがとうございます（StarTech Innovation）",
+    subject: "お問い合わせありがとうございます（Startech Innovation）",
     opening:
-      "このたびは StarTech Innovation にお問い合わせいただき、誠にありがとうございます。\n\nメッセージを確かに受け付けました。1営業日以内に、代表取締役のロバート・ラハルジャよりご返信いたします。",
+      "このたびは Startech Innovation にお問い合わせいただき、誠にありがとうございます。\n\nメッセージを確かに受け付けました。1営業日以内に、代表取締役のロバート・ラハルジャよりご返信いたします。",
     spreadsheet: "添付いただいたファイルも、確かに受け取りました。",
     closing:
       "本メールは受付確認のための自動送信です。自動でお送りするメールはこの1通のみで、今後のご連絡はすべてロバートより直接差し上げます。\n\nお心当たりのない場合は、恐れ入りますが本メールを破棄してください。\n\n今後ともよろしくお願いいたします。",
   },
   id: {
-    subject: "Terima kasih atas pesan Anda kepada StarTech Innovation",
+    subject: "Terima kasih atas pesan Anda kepada Startech Innovation",
     opening:
-      "Yth. Bapak/Ibu,\n\nTerima kasih telah menghubungi StarTech Innovation. Pesan Anda sudah kami terima, dan Robert Rahardja, Managing Director kami, akan membalas langsung dalam satu hari kerja.",
+      "Yth. Bapak/Ibu,\n\nTerima kasih telah menghubungi Startech Innovation. Pesan Anda sudah kami terima, dan Robert Rahardja, Managing Director kami, akan membalas langsung dalam satu hari kerja.",
     spreadsheet: "File yang Anda lampirkan juga sudah kami terima.",
     closing:
       "Email ini adalah konfirmasi otomatis dan merupakan satu-satunya email otomatis dari kami. Balasan selanjutnya akan dikirim langsung oleh Robert.\n\nJika Anda tidak merasa menghubungi kami, mohon abaikan email ini.\n\nHormat kami,",
   },
   es: {
-    subject: "Gracias por su mensaje a StarTech Innovation",
+    subject: "Gracias por su mensaje a Startech Innovation",
     opening:
-      "Hola:\n\nGracias por contactar a StarTech Innovation. Recibimos su mensaje, y Robert Rahardja, nuestro director general, le responderá personalmente en un plazo de un día hábil.",
+      "Hola:\n\nGracias por contactar a Startech Innovation. Recibimos su mensaje, y Robert Rahardja, nuestro director general, le responderá personalmente en un plazo de un día hábil.",
     spreadsheet: "También recibimos la hoja de cálculo que adjuntó.",
     closing:
       "Este es un correo de confirmación automático y el único correo automático que recibirá de nuestra parte. A partir de ahora, todo le llegará directamente de Robert.\n\nSi usted no nos contactó, ignore este correo.\n\nSaludos cordiales,",
   },
   pt: {
-    subject: "Obrigado pela sua mensagem à StarTech Innovation",
+    subject: "Obrigado pela sua mensagem à Startech Innovation",
     opening:
-      "Olá,\n\nObrigado por entrar em contato com a StarTech Innovation. Recebemos a sua mensagem, e Robert Rahardja, nosso diretor-geral, vai responder pessoalmente em até um dia útil.",
+      "Olá,\n\nObrigado por entrar em contato com a Startech Innovation. Recebemos a sua mensagem, e Robert Rahardja, nosso diretor-geral, vai responder pessoalmente em até um dia útil.",
     spreadsheet: "Também recebemos a planilha que você anexou.",
     closing:
       "Esta é uma confirmação automática e o único e-mail automático que você receberá de nós. Daqui em diante, tudo vem diretamente do Robert.\n\nSe você não entrou em contato conosco, por favor ignore este e-mail.\n\nAtenciosamente,",
   },
   "zh-Hans": {
-    subject: "感谢您联系 StarTech Innovation",
+    subject: "感谢您联系 Startech Innovation",
     opening:
-      "您好：\n\n感谢您联系 StarTech Innovation。我们已收到您的留言，董事总经理 Robert Rahardja 会在一个工作日内亲自回复您。",
+      "您好：\n\n感谢您联系 Startech Innovation。我们已收到您的留言，董事总经理 Robert Rahardja 会在一个工作日内亲自回复您。",
     spreadsheet: "您附上的表格我们也已收到。",
     closing:
       "这是一封自动确认邮件，也是我们发送的唯一一封自动邮件。之后的所有回复都将由 Robert 亲自发送。\n\n如果您并未联系过我们，请忽略此邮件。\n\n谢谢！",
   },
   "zh-Hant": {
-    subject: "感謝您聯絡 StarTech Innovation",
+    subject: "感謝您聯絡 Startech Innovation",
     opening:
-      "您好：\n\n感謝您聯絡 StarTech Innovation。我們已收到您的訊息，董事總經理 Robert Rahardja 會在一個工作天內親自回覆您。",
+      "您好：\n\n感謝您聯絡 Startech Innovation。我們已收到您的訊息，董事總經理 Robert Rahardja 會在一個工作天內親自回覆您。",
     spreadsheet: "您附上的表格我們也已收到。",
     closing:
       "這是一封自動確認郵件，也是我們寄送的唯一一封自動郵件。之後的所有回覆都將由 Robert 親自寄送。\n\n如果您並未與我們聯絡，請忽略此郵件。\n\n謝謝！",

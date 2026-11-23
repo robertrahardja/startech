@@ -25,7 +25,7 @@ shared by link, for example
 ## What each flyer says
 
 Headline, who it is for, three proof lines, the spreadsheet offer, the
-link written out with a QR code, and the logo with "StarTech Innovation
+link written out with a QR code, and the logo with "Startech Innovation
 Pte. Ltd." and the country. The proof lines are the deck's and nothing
 more: the exporter system live in Japan, the 7,060 tests in the internal
 ERP build (not deployed), and the client owning the code, database and

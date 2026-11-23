@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Render the StarTech Innovation technical profile deck to HTML (EN + ID).
+"""Render the Startech Innovation technical profile deck to HTML (EN + ID).
 
 Landscape 16:9 slides, PDF-ready. On-brand per
 ../guidelines/brand-guidelines.md — dark theme, matching the business

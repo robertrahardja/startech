@@ -1,6 +1,6 @@
 # startech
 
-The StarTech Innovation website — [startech-innovation.com](https://startech-innovation.com).
+The Startech Innovation website — [startech-innovation.com](https://startech-innovation.com).
 
 React and TanStack-flavoured Vite on the front end, a Cloudflare Worker
 serving it with `[assets]` and handling the API routes.

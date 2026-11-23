@@ -31,15 +31,15 @@ const COPY: Record<PageLanguage, Copy> = {
     buttons: { keep: "Keep me updated", confirm: "Confirm", unsubscribe: "Unsubscribe" },
     pages: {
       keep: {
-        title: "Keep up with StarTech Innovation",
-        body: "A short update from StarTech Innovation about once a quarter; unsubscribe any time.",
+        title: "Keep up with Startech Innovation",
+        body: "A short update from Startech Innovation about once a quarter; unsubscribe any time.",
       },
       confirm: {
-        title: "Confirm your StarTech Innovation updates",
-        body: "Press the button to confirm that you would like a short update from StarTech Innovation about once a quarter; unsubscribe any time.",
+        title: "Confirm your Startech Innovation updates",
+        body: "Press the button to confirm that you would like a short update from Startech Innovation about once a quarter; unsubscribe any time.",
       },
       unsubscribe: {
-        title: "Unsubscribe from StarTech Innovation updates",
+        title: "Unsubscribe from Startech Innovation updates",
         body: "Press the button below and we will stop sending you our updates.",
       },
       done: {
@@ -52,7 +52,7 @@ const COPY: Record<PageLanguage, Copy> = {
       },
       unknown: {
         title: "This link is not valid",
-        body: "We could not find this link. If you would like no more emails from StarTech Innovation, reply to any of them and we will remove your address.",
+        body: "We could not find this link. If you would like no more emails from Startech Innovation, reply to any of them and we will remove your address.",
       },
       error: {
         title: "Something went wrong",
@@ -69,15 +69,15 @@ const COPY: Record<PageLanguage, Copy> = {
     buttons: { keep: "最新情報を受け取る", confirm: "確認する", unsubscribe: "配信を停止する" },
     pages: {
       keep: {
-        title: "StarTech Innovation の最新情報",
-        body: "StarTech Innovation より、四半期に一度程度、簡単なお知らせをお送りいたします。配信はいつでも停止いただけます。",
+        title: "Startech Innovation の最新情報",
+        body: "Startech Innovation より、四半期に一度程度、簡単なお知らせをお送りいたします。配信はいつでも停止いただけます。",
       },
       confirm: {
         title: "配信登録のご確認",
-        body: "StarTech Innovation からの四半期に一度程度のお知らせをご希望の場合は、下のボタンを押してご確認ください。配信はいつでも停止いただけます。",
+        body: "Startech Innovation からの四半期に一度程度のお知らせをご希望の場合は、下のボタンを押してご確認ください。配信はいつでも停止いただけます。",
       },
       unsubscribe: {
-        title: "StarTech Innovation のお知らせの配信停止",
+        title: "Startech Innovation のお知らせの配信停止",
         body: "下のボタンを押すと、お知らせの配信を停止いたします。",
       },
       done: {
@@ -107,15 +107,15 @@ const COPY: Record<PageLanguage, Copy> = {
     buttons: { keep: "订阅最新动态", confirm: "确认", unsubscribe: "退订" },
     pages: {
       keep: {
-        title: "关注 StarTech Innovation 最新动态",
-        body: "StarTech Innovation 大约每季度发送一次简短的最新动态，您可随时退订。",
+        title: "关注 Startech Innovation 最新动态",
+        body: "Startech Innovation 大约每季度发送一次简短的最新动态，您可随时退订。",
       },
       confirm: {
-        title: "确认订阅 StarTech Innovation 最新动态",
-        body: "请点击下方按钮，确认您希望大约每季度收到一次 StarTech Innovation 的简短动态。您可随时退订。",
+        title: "确认订阅 Startech Innovation 最新动态",
+        body: "请点击下方按钮，确认您希望大约每季度收到一次 Startech Innovation 的简短动态。您可随时退订。",
       },
       unsubscribe: {
-        title: "退订 StarTech Innovation 最新动态",
+        title: "退订 Startech Innovation 最新动态",
         body: "点击下方按钮后，我们将不再向您发送最新动态。",
       },
       done: {
@@ -128,7 +128,7 @@ const COPY: Record<PageLanguage, Copy> = {
       },
       unknown: {
         title: "此链接无效",
-        body: "我们找不到这个链接。如果您不希望再收到 StarTech Innovation 的邮件，请回复其中任意一封，我们会删除您的地址。",
+        body: "我们找不到这个链接。如果您不希望再收到 Startech Innovation 的邮件，请回复其中任意一封，我们会删除您的地址。",
       },
       error: {
         title: "出现了问题",
@@ -145,15 +145,15 @@ const COPY: Record<PageLanguage, Copy> = {
     buttons: { keep: "訂閱最新動態", confirm: "確認", unsubscribe: "取消訂閱" },
     pages: {
       keep: {
-        title: "關注 StarTech Innovation 最新動態",
-        body: "StarTech Innovation 大約每季寄送一次簡短的最新動態，您可隨時取消訂閱。",
+        title: "關注 Startech Innovation 最新動態",
+        body: "Startech Innovation 大約每季寄送一次簡短的最新動態，您可隨時取消訂閱。",
       },
       confirm: {
-        title: "確認訂閱 StarTech Innovation 最新動態",
-        body: "請按下方按鈕，確認您希望大約每季收到一次 StarTech Innovation 的簡短動態。您可隨時取消訂閱。",
+        title: "確認訂閱 Startech Innovation 最新動態",
+        body: "請按下方按鈕，確認您希望大約每季收到一次 Startech Innovation 的簡短動態。您可隨時取消訂閱。",
       },
       unsubscribe: {
-        title: "取消訂閱 StarTech Innovation 最新動態",
+        title: "取消訂閱 Startech Innovation 最新動態",
         body: "按下方按鈕後，我們將不再寄送最新動態給您。",
       },
       done: {
@@ -166,7 +166,7 @@ const COPY: Record<PageLanguage, Copy> = {
       },
       unknown: {
         title: "此連結無效",
-        body: "我們找不到這個連結。如果您不希望再收到 StarTech Innovation 的郵件，請回覆其中任何一封，我們會刪除您的地址。",
+        body: "我們找不到這個連結。如果您不希望再收到 Startech Innovation 的郵件，請回覆其中任何一封，我們會刪除您的地址。",
       },
       error: {
         title: "發生問題",
@@ -183,15 +183,15 @@ const COPY: Record<PageLanguage, Copy> = {
     buttons: { keep: "Kirimi saya kabar terbaru", confirm: "Konfirmasi", unsubscribe: "Berhenti berlangganan" },
     pages: {
       keep: {
-        title: "Ikuti kabar dari StarTech Innovation",
-        body: "Kabar singkat dari StarTech Innovation sekitar sekali per kuartal; berhenti berlangganan kapan saja.",
+        title: "Ikuti kabar dari Startech Innovation",
+        body: "Kabar singkat dari Startech Innovation sekitar sekali per kuartal; berhenti berlangganan kapan saja.",
       },
       confirm: {
-        title: "Konfirmasi kabar dari StarTech Innovation",
-        body: "Tekan tombol untuk mengonfirmasi bahwa Bapak/Ibu ingin menerima kabar singkat dari StarTech Innovation sekitar sekali per kuartal; berhenti berlangganan kapan saja.",
+        title: "Konfirmasi kabar dari Startech Innovation",
+        body: "Tekan tombol untuk mengonfirmasi bahwa Bapak/Ibu ingin menerima kabar singkat dari Startech Innovation sekitar sekali per kuartal; berhenti berlangganan kapan saja.",
       },
       unsubscribe: {
-        title: "Berhenti berlangganan kabar StarTech Innovation",
+        title: "Berhenti berlangganan kabar Startech Innovation",
         body: "Tekan tombol di bawah, dan kami tidak akan mengirimkan kabar kami lagi.",
       },
       done: {
@@ -204,7 +204,7 @@ const COPY: Record<PageLanguage, Copy> = {
       },
       unknown: {
         title: "Tautan ini tidak valid",
-        body: "Kami tidak menemukan tautan ini. Jika Bapak/Ibu tidak ingin menerima email lagi dari StarTech Innovation, balas salah satu email kami dan kami akan menghapus alamat Bapak/Ibu.",
+        body: "Kami tidak menemukan tautan ini. Jika Bapak/Ibu tidak ingin menerima email lagi dari Startech Innovation, balas salah satu email kami dan kami akan menghapus alamat Bapak/Ibu.",
       },
       error: {
         title: "Terjadi kesalahan",
@@ -221,15 +221,15 @@ const COPY: Record<PageLanguage, Copy> = {
     buttons: { keep: "Quiero recibir novedades", confirm: "Confirmar", unsubscribe: "Darme de baja" },
     pages: {
       keep: {
-        title: "Manténgase al día con StarTech Innovation",
-        body: "Una breve actualización de StarTech Innovation aproximadamente una vez por trimestre; puede darse de baja en cualquier momento.",
+        title: "Manténgase al día con Startech Innovation",
+        body: "Una breve actualización de Startech Innovation aproximadamente una vez por trimestre; puede darse de baja en cualquier momento.",
       },
       confirm: {
-        title: "Confirme las novedades de StarTech Innovation",
-        body: "Presione el botón para confirmar que desea recibir una breve actualización de StarTech Innovation aproximadamente una vez por trimestre; puede darse de baja en cualquier momento.",
+        title: "Confirme las novedades de Startech Innovation",
+        body: "Presione el botón para confirmar que desea recibir una breve actualización de Startech Innovation aproximadamente una vez por trimestre; puede darse de baja en cualquier momento.",
       },
       unsubscribe: {
-        title: "Darse de baja de las novedades de StarTech Innovation",
+        title: "Darse de baja de las novedades de Startech Innovation",
         body: "Presione el botón y dejaremos de enviarle nuestras novedades.",
       },
       done: {
@@ -242,7 +242,7 @@ const COPY: Record<PageLanguage, Copy> = {
       },
       unknown: {
         title: "Este enlace no es válido",
-        body: "No encontramos este enlace. Si no desea recibir más correos de StarTech Innovation, responda a cualquiera de ellos y eliminaremos su dirección.",
+        body: "No encontramos este enlace. Si no desea recibir más correos de Startech Innovation, responda a cualquiera de ellos y eliminaremos su dirección.",
       },
       error: {
         title: "Algo salió mal",
@@ -259,15 +259,15 @@ const COPY: Record<PageLanguage, Copy> = {
     buttons: { keep: "Quero receber novidades", confirm: "Confirmar", unsubscribe: "Cancelar inscrição" },
     pages: {
       keep: {
-        title: "Acompanhe a StarTech Innovation",
-        body: "Uma breve atualização da StarTech Innovation cerca de uma vez por trimestre; cancele quando quiser.",
+        title: "Acompanhe a Startech Innovation",
+        body: "Uma breve atualização da Startech Innovation cerca de uma vez por trimestre; cancele quando quiser.",
       },
       confirm: {
-        title: "Confirme as novidades da StarTech Innovation",
-        body: "Clique no botão para confirmar que deseja receber uma breve atualização da StarTech Innovation cerca de uma vez por trimestre; cancele quando quiser.",
+        title: "Confirme as novidades da Startech Innovation",
+        body: "Clique no botão para confirmar que deseja receber uma breve atualização da Startech Innovation cerca de uma vez por trimestre; cancele quando quiser.",
       },
       unsubscribe: {
-        title: "Cancelar as novidades da StarTech Innovation",
+        title: "Cancelar as novidades da Startech Innovation",
         body: "Clique no botão e deixaremos de enviar as nossas novidades.",
       },
       done: {
@@ -280,7 +280,7 @@ const COPY: Record<PageLanguage, Copy> = {
       },
       unknown: {
         title: "Este link não é válido",
-        body: "Não encontramos este link. Se não quiser receber mais e-mails da StarTech Innovation, responda a qualquer um deles e removeremos o seu endereço.",
+        body: "Não encontramos este link. Se não quiser receber mais e-mails da Startech Innovation, responda a qualquer um deles e removeremos o seu endereço.",
       },
       error: {
         title: "Algo deu errado",
@@ -365,7 +365,7 @@ ${EXTRA_STYLE}</style>
 </head>
 <body>
 <main>
-<img class="mark" src="/assets/startech-mark.svg" alt="StarTech Innovation" width="40" height="40">
+<img class="mark" src="/assets/startech-mark.svg" alt="Startech Innovation" width="40" height="40">
 ${sections(languages, state)}
 ${form}${unsubscribe}
 </main>

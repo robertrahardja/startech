@@ -1,5 +1,5 @@
 /**
- * StarTech as a real Singpass relying party, for the staging app registered
+ * Startech as a real Singpass relying party, for the staging app registered
  * on the Singpass Developer Portal. Off unless SINGPASS_MODE is "staging";
  * the mock in singpass-demo.ts stays the default demo either way.
  *

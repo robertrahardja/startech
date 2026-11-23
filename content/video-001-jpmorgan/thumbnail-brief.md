@@ -23,7 +23,7 @@ Stop the scroll on YouTube's home feed. The thumbnail must read in <0.5 seconds.
 │   What SMBs                                     │
 │   Should Copy →                                 │
 │                                                 │
-│                              [StarTech logo]    │
+│                              [Startech logo]    │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -40,10 +40,10 @@ Stop the scroll on YouTube's home feed. The thumbnail must read in <0.5 seconds.
 > What SMBs
 > Should Copy →
 
-(In yellow/gold to match StarTech brand. The arrow is part of the text.)
+(In yellow/gold to match Startech brand. The arrow is part of the text.)
 
 **Bottom right corner, small**:
-> StarTech logo (use your existing logo PNG from `public/assets/startech-logo-full.png`)
+> Startech logo (use your existing logo PNG from `public/assets/startech-logo-full.png`)
 
 ## Right half — image
 

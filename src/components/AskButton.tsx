@@ -7,7 +7,7 @@ interface AskButtonProps {
 }
 
 /**
- * Floating button that opens the Ask StarTech panel.
+ * Floating button that opens the Ask Startech panel.
  *
  * Phones only. From md: the nav bar is expanded and its own "Ask us" button
  * is permanently on screen, so a second floating one is just clutter; below
@@ -20,7 +20,7 @@ export default function AskButton({ onClick, hidden = false }: AskButtonProps) {
   return (
     <button
       onClick={onClick}
-      aria-label="Ask StarTech AI"
+      aria-label="Ask Startech AI"
       style={{
         // The CTA bar occupies this corner and already offers the primary
         // action, so the button retires while it is up rather than stacking

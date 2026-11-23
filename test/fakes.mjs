@@ -59,7 +59,7 @@ export const TOKEN = "tok_9fJ2kQ7xLmP4vR8sT1wY6zB3";
 /** The footer every outreach email must carry: the link and the postal address. */
 const FOOTER = [
   "--",
-  "StarTech Innovation Pte Ltd, 1003 Bukit Merah Central #06-07, Singapore 159836",
+  "Startech Innovation Pte Ltd, 1003 Bukit Merah Central #06-07, Singapore 159836",
   `To stop these emails: https://startech-innovation.com/u/${TOKEN}`,
 ].join("\n");
 

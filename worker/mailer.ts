@@ -102,7 +102,7 @@ export async function outreachStatus(env: MailerEnv, id: unknown): Promise<Statu
 }
 
 /**
- * A plain-text email to StarTech's own inbox, e.g. hq's weekly report.
+ * A plain-text email to Startech's own inbox, e.g. hq's weekly report.
  * Without OUTREACH_FROM it uses Resend's sandbox sender, which can still
  * reach the owner's inbox.
  */
@@ -110,6 +110,6 @@ export async function notifyOwner(env: MailerEnv, subject: unknown, text: unknow
   if (!env.RESEND_API_KEY) return { ok: false, error: "resend-not-configured" };
   if (!isOneLine(subject, 200)) return { ok: false, error: "invalid-subject" };
   if (!isBody(text, 100_000)) return { ok: false, error: "invalid-text" };
-  const from = env.OUTREACH_FROM?.trim() || siteSender("StarTech HQ", "hq");
+  const from = env.OUTREACH_FROM?.trim() || siteSender("Startech HQ", "hq");
   return resendSend(env.RESEND_API_KEY, { from, to: [OWNER_INBOX], subject, text });
 }

@@ -1,6 +1,6 @@
 /**
  * The updates list's links (Robert, 16 Nov 2026: people who want to keep up
- * with StarTech join a list with real consent, for a quarterly update).
+ * with Startech join a list with real consent, for a quarterly update).
  *
  * /k/<token>    "Not now, but keep me updated" in hq's outreach emails. The
  *               token is the recipient's unsub_token, as on /u/ and /i/.

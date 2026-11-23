@@ -1,6 +1,6 @@
 # Company Overview
 
-What StarTech Innovation is, what it sells, and how this website fits into
+What Startech Innovation is, what it sells, and how this website fits into
 the wider set of repositories. Written 2026-09-28 from a survey of the
 working repositories.
 
@@ -12,7 +12,7 @@ withheld under confidentiality"). Keep it that way when editing.
 
 | | |
 | --- | --- |
-| Legal name | StarTech Innovation Pte Ltd |
+| Legal name | Startech Innovation Pte Ltd |
 | UEN | 202110461R |
 | Managing Director | Robert Rahardja |
 | Web | [startech-innovation.com](https://startech-innovation.com) |
@@ -77,12 +77,12 @@ Status is as of 2026-09-28.
 | Product | Repository | Status |
 | --- | --- | --- |
 | Multi-tenant ERP with Singapore compliance (GST, CPF) | `startech_erp_java` | Most mature code, active |
-| StarTech Central: accounting and compliance as a service for SMEs | `startech_central` | Planning only |
+| Startech Central: accounting and compliance as a service for SMEs | `startech_central` | Planning only |
 | Primary-school practice app for parents | `~/Projects/st_edu_sass` | Research only |
 
 ### Internal tools
 
-- `st_dasboard`: the CEO dashboard, becoming "StarTech Hub".
+- `st_dasboard`: the CEO dashboard, becoming "Startech Hub".
 - `ref/`: the internal knowledge base (services, grants, Singapore
   accounting fixtures).
 - `homelab_template`: a reusable infrastructure template.
@@ -92,7 +92,7 @@ Status is as of 2026-09-28.
 
 **Alliance Digital Concierge (VIPhealth)** is a separate company that the
 Managing Director co-founded. It is a cross-border medical concierge for
-Indonesian patients receiving care in Singapore. It is not a StarTech
+Indonesian patients receiving care in Singapore. It is not a Startech
 product.
 
 ## Claims to keep honest
@@ -107,7 +107,7 @@ eight languages to what holds up:
 3. The ERP, titled a payroll engine until 2026-11-08: shown as an internal
    build, tested and not deployed, with no payroll or accuracy claim.
 4. Patient-owned health record: VIPhealth belongs to the related company,
-   not StarTech, so it is no longer shown. Its slot now shows the working
+   not Startech, so it is no longer shown. Its slot now shows the working
    demos on both sites.
 
 The deck no longer claims accounting engines or payroll compliance, gives
@@ -118,7 +118,7 @@ The A4 company profile (`brand/profile/content.py`) and the technical
 profile deck (`brand/profile/deck_content.py`) were rewritten to the same
 claims on 2026-11-02, in English and Indonesian. They had said "Singapore,
 Indonesia", "strategy to production in 90 days" and, in the profile, that
-StarTech runs PSG and SFEC applications. The technical deck also claimed
+Startech runs PSG and SFEC applications. The technical deck also claimed
 "5-engine verification" and "schema-per-tenant isolation". The ERP's own
 August 2026 verification report contradicts both claims, so they were
 removed. Its ERP test figures are now labelled as an internal build, not
@@ -133,7 +133,7 @@ below the cases instead. Practices, industries, objections and the demo
 pages no longer claim payroll, general ledger, KYC and AML, Xero or
 QuickBooks integration, HL7 and FHIR records or AI triage, and
 healthcare gave way to trading and logistics. The EDGE answer says
-Enterprise Singapore decides support and StarTech is not a pre-approved
+Enterprise Singapore decides support and Startech is not a pre-approved
 EDGE vendor. The approach says about twelve weeks, not 90 days, and the
 hero counts the site's seven languages. The hero's 7,060 figure is
 labelled as the internal ERP build, not deployed. The ERP case said "51

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Render the StarTech Innovation company profile to HTML (EN + ID).
+"""Render the Startech Innovation company profile to HTML (EN + ID).
 
 On-brand per startech/brand/guidelines/brand-guidelines.md.
 Dark theme, matching the business card and startech-innovation.com.

@@ -159,7 +159,7 @@ export function renderConceptPage(language: PageLanguage, state: ConceptPageStat
 </head>
 <body>
 <main>
-<img class="mark" src="/assets/startech-mark.svg" alt="StarTech Innovation" width="40" height="40">
+<img class="mark" src="/assets/startech-mark.svg" alt="Startech Innovation" width="40" height="40">
 <section lang="${language}"><h1>${title}</h1><p>${body}</p></section>
 </main>
 <footer>${FOOTER}</footer>

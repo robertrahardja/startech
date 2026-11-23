@@ -16,7 +16,7 @@ const TESTIMONIAL_CREDITS = {
  * POST /api/testimonial — a client's testimonial from /testimonial.
  *
  * Saved as a "Testimonial" note on the client's contact in hq (found by
- * email, created as a customer if new) and emailed to StarTech. Nothing is
+ * email, created as a customer if new) and emailed to Startech. Nothing is
  * published automatically: the client agreed to see the final wording first.
  */
 export async function handleTestimonial(request: Request, env: Env): Promise<Response> {
@@ -73,7 +73,7 @@ export async function handleTestimonial(request: Request, env: Env): Promise<Res
   const details = [
     `Role: ${role}`,
     `Credit: ${TESTIMONIAL_CREDITS[credit]}`,
-    "Agreed: StarTech may shorten it, and shows the final wording before publishing.",
+    "Agreed: Startech may shorten it, and shows the final wording before publishing.",
   ].join("\n");
 
   let saved = false;
@@ -104,7 +104,7 @@ export async function handleTestimonial(request: Request, env: Env): Promise<Res
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: siteSender("StarTech Website", "website"),
+        from: siteSender("Startech Website", "website"),
         to: ["rr.startech.innovation@gmail.com"],
         reply_to: email,
         subject: `Testimonial: ${escapeHtml(name).slice(0, 80)}, ${escapeHtml(company).slice(0, 80)}`,

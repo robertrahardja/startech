@@ -104,7 +104,7 @@ export default function Hero({ onAskAi }: HeroProps) {
           </div>
           <div>
             <div className="font-display text-5xl leading-none tracking-[-0.02em] text-st-text">
-              StarTech
+              Startech
             </div>
             <div className="mt-2.5 text-[11px] font-medium tracking-[0.42em] uppercase text-st-text-muted">
               Innovation

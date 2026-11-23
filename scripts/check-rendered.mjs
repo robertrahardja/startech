@@ -34,7 +34,7 @@ const values = [];
 
 // Legitimately identical in every language: the legal entity, its registration
 // number, the founder's name, and bare figures.
-const SHARED = /^(StarTech|UEN |Robert Rahardja|[\d\s.,+%-]+)/;
+const SHARED = /^(Startech|UEN |Robert Rahardja|[\d\s.,+%-]+)/;
 const needles = [...new Set(values)].filter((v) => v.length >= 6 && !SHARED.test(v));
 
 // Proper nouns that legitimately appear in Latin script on every locale's page.

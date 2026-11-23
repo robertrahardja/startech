@@ -389,7 +389,7 @@ export const ko: Messages = {
         said: "이런 시스템은 보통 얼마나 듭니까?",
         answer:
           "첫 상담에서 범위를, 요건 정의 후에 확정 금액을 알려드립니다. 실제 숫자를 나중이 아니라 먼저 말씀드립니다. 예산에 맞지 않으면 함께 범위를 줄입니다. 멈추는 큰 시스템보다 돌아가는 작은 시스템이 낫습니다. 싱가포르 중소기업의 프로젝트는 PSG를 대체한 EDGE 보조금 대상이 될 수 있습니다. 해당 여부 확인을 도와드리고, 저희 측 공급업체 서류는 무상으로 준비해 드립니다.",
-        proof: "EDGE 지원 여부는 싱가포르 기업청(Enterprise Singapore)이 결정하며, StarTech는 EDGE 사전 승인 공급업체가 아닙니다.",
+        proof: "EDGE 지원 여부는 싱가포르 기업청(Enterprise Singapore)이 결정하며, Startech는 EDGE 사전 승인 공급업체가 아닙니다.",
       },
       {
         said: "한두 분기 기다리면 손해가 있습니까?",
@@ -490,7 +490,7 @@ export const ko: Messages = {
 
   testimonial: {
     eyebrow: "고객 후기",
-    title: "StarTech와의 작업은 어떠셨나요?",
+    title: "Startech와의 작업은 어떠셨나요?",
     intro: "프로젝트에 대한 한두 문장은 다른 기업이 저희와 일할지 결정하는 데 큰 도움이 됩니다. 최종 문구를 확인하고 승인하시기 전에는 아무것도 게시하지 않습니다.",
     name: "성함",
     role: "직책",
@@ -503,7 +503,7 @@ export const ko: Messages = {
     creditFull: "성함, 직책, 회사명",
     creditAnonymous: "직책과 업종만 (성함 제외)",
     creditPrivate: "피드백만, 게시하지 마세요",
-    consent: "StarTech가 길이에 맞게 내용을 줄일 수 있으며, 게시 전에 최종 문구를 보여 주는 것에 동의합니다.",
+    consent: "Startech가 길이에 맞게 내용을 줄일 수 있으며, 게시 전에 최종 문구를 보여 주는 것에 동의합니다.",
     send: "후기 보내기",
     sending: "보내는 중…",
     thanksTitle: "감사합니다!",
@@ -558,7 +558,7 @@ export const ko: Messages = {
       "액세스 포인트의 API로 전송",
       "전달 상태와 오류를 평소 화면에 표시",
     ],
-    offerHonest: "StarTech는 액세스 포인트 사업자가 아니며 IMDA 인증을 받지 않았습니다. 실제 연결은 귀사와 함께 고르는 IMDA 인증 액세스 포인트를 통해 이루어집니다.",
+    offerHonest: "Startech는 액세스 포인트 사업자가 아니며 IMDA 인증을 받지 않았습니다. 실제 연결은 귀사와 함께 고르는 IMDA 인증 액세스 포인트를 통해 이루어집니다.",
     demoEyebrow: "체험하기",
     demoTitle: "샘플 청구서를 PINT SG XML로 변환",
     demoIntro: "청구서를 입력하거나 CSV 템플릿을 업로드하세요. 브라우저가 XML을 만들고 PINT SG 규칙 일부로 확인합니다. 어디에도 전송되지 않습니다.",
@@ -631,7 +631,7 @@ export const ko: Messages = {
     checksSummary: "{total}개 중 {passed}개 통과",
     pass: "통과",
     fail: "실패",
-    demoCheck: "StarTech 데모용 확인이며 PINT SG 규칙이 아닙니다",
+    demoCheck: "Startech 데모용 확인이며 PINT SG 규칙이 아닙니다",
     checksSource: "규칙 ID는 2026년 5월 25일 공개된 PINT SG Billing v1.4.1 스키마트론에서 가져왔습니다. 브라우저에서 실행하는 일부 확인이며, 전송 전에는 액세스 포인트가 전체 검증을 수행합니다.",
     checks: {
       specIds: "사양 ID와 업무 프로세스 ID가 PINT SG 청구용이다",
@@ -854,7 +854,7 @@ export const ko: Messages = {
     formSend: "Singpass 점검 요청하기",
     flyerLine: "Singpass는 2026년 12월 31일까지 FAPI 2.0으로 전환해야 합니다. 새 로그인 흐름의 작동 데모를 확인하세요.",
     stagingTitle: "Singpass 스테이징 환경에서 시험하기",
-    stagingBody: "이 버튼은 같은 클라이언트를 StarTech의 스테이징 앱으로 Singpass 자체 스테이징 서비스에 연결해 실행합니다. Singpass 스테이징 테스트 계정만 로그인할 수 있으며, 실제 Singpass 계정은 사용할 수 없습니다.",
+    stagingBody: "이 버튼은 같은 클라이언트를 Startech의 스테이징 앱으로 Singpass 자체 스테이징 서비스에 연결해 실행합니다. Singpass 스테이징 테스트 계정만 로그인할 수 있으며, 실제 Singpass 계정은 사용할 수 없습니다.",
     stagingButton: "Singpass로 로그인 (스테이징)",
     stagingResult: "Singpass 스테이징이 반환한 ID 토큰 (복호화 및 검증 완료)",
     stagingCancelled: "스테이징 로그인이 취소되었습니다.",
@@ -868,15 +868,15 @@ export const ko: Messages = {
 
   footer: {
     location: "싱가포르",
-    rights: "StarTech Innovation Pte. Ltd.",
+    rights: "Startech Innovation Pte. Ltd.",
   },
 
   // The "Get our updates" sign-up: the footer and /updates (src/components/UpdatesSignup.tsx).
   // consent must match SIGNUP_CONSENT in worker/subscribe.ts word for word.
   updates: {
     eyebrow: "소식",
-    title: "StarTech 소식 받기",
-    intro: "StarTech Innovation이 분기에 한 번 정도 짧은 이메일을 보내 드립니다. 언제든지 수신을 거부할 수 있습니다.",
+    title: "Startech 소식 받기",
+    intro: "Startech Innovation이 분기에 한 번 정도 짧은 이메일을 보내 드립니다. 언제든지 수신을 거부할 수 있습니다.",
     containsTitle: "소식에 담기는 내용",
     contains: [
       "최근에 만든 시스템과, 그 시스템을 쓰는 회사에서 달라진 점.",
@@ -885,7 +885,7 @@ export const ko: Messages = {
     ],
     confirmNote: "먼저 이메일로 확인을 받으므로, 본인도 모르게 신청되는 일은 없습니다.",
     email: "이메일 주소",
-    consent: "StarTech Innovation의 소식을 분기에 한 번 정도 받겠습니다. 언제든지 수신을 거부할 수 있습니다.",
+    consent: "Startech Innovation의 소식을 분기에 한 번 정도 받겠습니다. 언제든지 수신을 거부할 수 있습니다.",
     send: "신청하기",
     sending: "보내는 중…",
     thanksTitle: "받은편지함을 확인해 주십시오",

@@ -107,7 +107,7 @@ Manage → Advanced DNS.
 | --- | --- |
 | Stored in | D1 `startech-crm` (binding `CRM_DB`), the st_dasboard CRM |
 | To | `rr.startech.innovation@gmail.com` |
-| From | `StarTech Website <onboarding@resend.dev>` |
+| From | `Startech Website <onboarding@resend.dev>` |
 | Reply-To | the visitor's address |
 
 Each enquiry becomes a `lead` contact, plus a "Website enquiry" note holding
@@ -382,7 +382,7 @@ per IP. A full run is about 17 KV writes, counting the rate limiter.
 ### Singpass staging (real relying party)
 
 `worker/singpass-rp.ts` runs the same `SingpassClient` server-side, as
-StarTech's own staging Login app on the
+Startech's own staging Login app on the
 [Singpass Developer Portal](https://developer.singpass.gov.sg). It is off
 until switched on, and the mock stays the default demo. When on, `/singpass`
 shows a "Log in with Singpass (staging)" button. Only Singpass staging

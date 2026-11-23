@@ -45,7 +45,7 @@ EN = {
     "offer_body": "We will show it working as a system. Free, no commitment.",
     "link": "startech-innovation.com/flyer",
     "qr": "https://startech-innovation.com/flyer?utm_source=qr",
-    "company": "StarTech Innovation Pte. Ltd. · Singapore",
+    "company": "Startech Innovation Pte. Ltd. · Singapore",
 }
 
 JA = {
@@ -69,7 +69,7 @@ JA = {
     "offer_body": "システムとして動く様子を、無料・契約義務なしでお見せします。",
     "link": "japan.startech-innovation.com/flyer",
     "qr": "https://japan.startech-innovation.com/flyer?utm_source=qr",
-    "company": "StarTech Innovation Pte. Ltd. · シンガポール",
+    "company": "Startech Innovation Pte. Ltd. · シンガポール",
 }
 
 # Formal "Anda"; wording reused from brand/profile/content.py's ID profile.
@@ -98,7 +98,7 @@ ID = {
     ),
     "link": "indonesia.startech-innovation.com",
     "qr": "https://indonesia.startech-innovation.com/?utm_source=qr",
-    "company": "StarTech Innovation Pte. Ltd. · Singapura",
+    "company": "Startech Innovation Pte. Ltd. · Singapura",
 }
 
 

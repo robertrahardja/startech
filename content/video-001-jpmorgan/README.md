@@ -1,6 +1,6 @@
 # Video 001 — JPMorgan AI Reclassification
 
-Your first StarTech AI Insights video. Everything in this folder is ready to use.
+Your first Startech AI Insights video. Everything in this folder is ready to use.
 
 ## What's in this folder
 
