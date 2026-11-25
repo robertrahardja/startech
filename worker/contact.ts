@@ -54,6 +54,7 @@ export async function handleContact(
   // Which page's form it came from; only known topics change the subject.
   const TOPIC_SUBJECTS: Record<string, string> = {
     singpass: "Singpass check",
+    charities: "Charity grant quote",
     indonesia: "Indonesia site enquiry",
     malaysia: "Malaysia site enquiry",
     philippines: "Philippines site enquiry",

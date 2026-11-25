@@ -93,6 +93,7 @@ const CASES = [
   ["GET /solutions/invoice-scanner", "/solutions/invoice-scanner", {}],
   ["GET /singpass", "/singpass", {}],
   ["GET /invoicenow", "/invoicenow", {}],
+  ["GET /charities", "/charities", {}],
   ["GET /testimonial", "/testimonial", {}],
   ["GET /no-such-page (SPA fallback)", "/no-such-page", {}],
   ["GET /fonts/inter-latin.woff2", "/fonts/inter-latin.woff2", {}],

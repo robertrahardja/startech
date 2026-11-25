@@ -867,6 +867,96 @@ export const pt: Messages = {
     stagingFailed: "O login de teste não foi concluído. Tente de novo mais tarde.",
   },
 
+  charities: {
+    eyebrow: "Subsídios para instituições de caridade",
+    title: "Um subsídio pode pagar até 80% do novo sistema da sua instituição",
+    intro: "Instituições de caridade e agências de serviço social em Singapura podem ter a maior parte de um sistema de reservas, de registos de casos ou de um assistente de IA para a equipe pago por um subsídio. A StarTech desenvolve o sistema e entrega, sem custo, um orçamento fechado no formato que a sua candidatura exige.",
+    ctaQuote: "Pedir um orçamento",
+    ctaWhich: "Ver qual subsídio se aplica",
+    grantsEyebrow: "Qual subsídio se aplica",
+    grantsTitle: "Dois subsídios, conforme o tipo de organização",
+    grants: [
+      {
+        who: "Agências de serviço social",
+        name: "Programa de Transformação e Sustentabilidade do NCSS (Green Lane)",
+        points: [
+          "Até 80% do custo, por até 3 anos.",
+          "Ferramentas de reservas, gestão de eventos, gestão de casos e produtividade com IA: até S$30.000 cada.",
+          "Um único orçamento, no modelo do próprio NCSS. Não há lista de fornecedores aprovados.",
+          "Para agências com pelo menos 2 anos de atividade e uma avaliação OHFSS dos últimos 12 meses.",
+        ],
+        source: "O programa no site do NCSS",
+      },
+      {
+        who: "Outras instituições de caridade registadas e IPCs",
+        name: "Fundo de Capacitação de Instituições de Caridade (Charities Capability Fund)",
+        points: [
+          "80% no primeiro ano e 50% nos anos 2 e 3, até S$40.000 por instituição.",
+          "Sistemas de reservas, voluntariado, doadores e gestão de casos, e ferramentas de produtividade com IA.",
+          "Um novo site: 80%, até S$3.000, para instituições com receitas abaixo de S$10 milhões.",
+          "As candidaturas encerram em 31 de janeiro de 2027.",
+        ],
+        source: "O fundo em charities.gov.sg",
+      },
+    ],
+    examplesEyebrow: "Quanto custa para si",
+    examplesTitle: "Três exemplos, ao longo de 3 anos",
+    examples: [
+      {
+        name: "Reservas e presenças online",
+        grant: "Agências de serviço social: Green Lane",
+        detail: "Inscrições, lembretes, check-in por QR e relatórios de presença, sem voltar a digitar formulários.",
+      },
+      {
+        name: "Assistente de IA para a equipe",
+        grant: "Agências de serviço social: Green Lane",
+        detail: "Redige relatórios, resumos de casos, cartas e respostas a partir dos seus próprios modelos, para a equipe rever.",
+      },
+      {
+        name: "Reservas ou inscrição de voluntários",
+        grant: "Instituições de caridade: Charities Capability Fund",
+        detail: "Inscrições alojadas, com lembretes e exportação de presenças. Abaixo de S$6.000, por isso basta um orçamento.",
+      },
+    ],
+    priceLabel: "Total em 3 anos",
+    netLabel: "Você paga após o subsídio",
+    examplesNote: "Preços sem GST, com alojamento e suporte incluídos. A agência decide o valor final do subsídio.",
+    stepsEyebrow: "Como funciona",
+    stepsTitle: "Da sua primeira mensagem a um sistema que a sua equipe usa",
+    steps: [
+      {
+        lead: "Diga-nos o que toma mais tempo",
+        detail: "Um formulário que imprime, uma planilha que volta a digitar, uma lista que cobra por telefone.",
+      },
+      {
+        lead: "Receba um orçamento fechado",
+        detail: "No formato que a sua candidatura exige, com o custo detalhado ano a ano. Sem custo.",
+      },
+      {
+        lead: "Você se candidata",
+        detail: "O trabalho só começa depois de o subsídio ser aprovado. Nada é pago antes disso.",
+      },
+      {
+        lead: "A sua equipe começa a usar",
+        detail: "Configuração, os seus registos transferidos e uma sessão prática para a equipe.",
+      },
+    ],
+    rulesEyebrow: "Bom saber",
+    rulesTitle: "Quatro regras antes de se candidatar",
+    rules: [
+      "Candidate-se pelo menos 2 meses antes de o trabalho começar. Para o Charities Capability Fund, envie a candidatura até meados de janeiro de 2027.",
+      "No Charities Capability Fund, um projeto acima de S$6.000 precisa de três orçamentos comparáveis, que a sua instituição reúne. O fundo paga com base no mais baixo.",
+      "No Green Lane, sistemas de voluntariado e de doadores só contam como melhorias de um que já usa.",
+      "Começar ou pagar antes da aprovação pode fazer perder o subsídio.",
+    ],
+    honesty: "A StarTech não é um fornecedor designado pelo NCSS, e o Green Lane não tem fornecedores designados. Confirme as regras em vigor com o NCSS ou em charities.gov.sg antes de se candidatar.",
+    formEyebrow: "Pedir um orçamento",
+    formTitle: "Peça um orçamento para a sua candidatura",
+    formSub: "Diga-nos o que a sua equipe faz hoje à mão. Respondemos em dois dias úteis com o que pode ser criado e qual subsídio se aplica.",
+    formPlaceholder: "O que toma mais tempo à sua equipe? A sua organização é uma agência de serviço social (membro do NCSS) ou outra instituição de caridade?",
+    formSend: "Pedir um orçamento",
+  },
+
   stickyCta: {
     line: "Trinta minutos sobre o seu processo e uma visão clara do que desenvolver primeiro.",
     action: "Vamos conversar",

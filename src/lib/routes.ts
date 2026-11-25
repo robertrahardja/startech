@@ -10,6 +10,7 @@ export type Page =
   | { type: "testimonial" }
   | { type: "invoicenow" }
   | { type: "singpass" }
+  | { type: "charities" }
   | { type: "updates" }
   | { type: "solutions-index" }
   | { type: "solution-page"; solution: Solution };
@@ -48,6 +49,11 @@ export function resolvePage(pathname: string): Page {
   // Singpass FAPI 2.0: the deadline, a working demo, and the upgrade offer.
   if (pathname === "/singpass") {
     return { type: "singpass" };
+  }
+
+  // Grants for charities and social service agencies, and the quote offer.
+  if (pathname === "/charities") {
+    return { type: "charities" };
   }
 
   // What the quarterly update contains, and the sign-up.

@@ -868,6 +868,96 @@ export const es: Messages = {
     stagingFailed: "El inicio de sesión de prueba no se completó. Inténtelo de nuevo más tarde.",
   },
 
+  charities: {
+    eyebrow: "Subvenciones para organizaciones benéficas",
+    title: "Una subvención puede pagar hasta el 80% del nuevo sistema de su organización benéfica",
+    intro: "Las organizaciones benéficas y las agencias de servicios sociales de Singapur pueden obtener financiación para la mayor parte de un sistema de reservas, un sistema de expedientes o un asistente de IA para su personal. StarTech lo desarrolla y le entrega, sin coste, un presupuesto cerrado en el formato que exige su solicitud.",
+    ctaQuote: "Pedir un presupuesto",
+    ctaWhich: "Ver qué subvención encaja",
+    grantsEyebrow: "Qué subvención encaja",
+    grantsTitle: "Dos subvenciones, según el tipo de organización",
+    grants: [
+      {
+        who: "Agencias de servicios sociales",
+        name: "Programa de Transformación y Sostenibilidad de NCSS (Green Lane)",
+        points: [
+          "Hasta el 80% del coste, durante un máximo de 3 años.",
+          "Herramientas de reservas, gestión de eventos, gestión de casos y productividad con IA: hasta S$30.000 cada una.",
+          "Un solo presupuesto, en la plantilla de NCSS. No hay lista de proveedores aprobados.",
+          "Para agencias con al menos 2 años de actividad y una evaluación OHFSS de los últimos 12 meses.",
+        ],
+        source: "El programa en el sitio de NCSS",
+      },
+      {
+        who: "Otras organizaciones benéficas registradas e IPC",
+        name: "Fondo de Capacidades para Organizaciones Benéficas (Charities Capability Fund)",
+        points: [
+          "El 80% el primer año y el 50% los años 2 y 3, hasta S$40.000 por organización.",
+          "Sistemas de reservas, voluntariado, donantes y gestión de casos, y herramientas de productividad con IA.",
+          "Un sitio web nuevo: el 80%, hasta S$3.000, para organizaciones con ingresos inferiores a S$10 millones.",
+          "Las solicitudes cierran el 31 de enero de 2027.",
+        ],
+        source: "El fondo en charities.gov.sg",
+      },
+    ],
+    examplesEyebrow: "Lo que le cuesta",
+    examplesTitle: "Tres ejemplos, a 3 años",
+    examples: [
+      {
+        name: "Reservas y asistencia en línea",
+        grant: "Agencias de servicios sociales: Green Lane",
+        detail: "Inscripciones, recordatorios, registro con código QR e informes de asistencia, sin volver a teclear formularios.",
+      },
+      {
+        name: "Asistente de IA para el personal",
+        grant: "Agencias de servicios sociales: Green Lane",
+        detail: "Redacta informes, resúmenes de casos, cartas y respuestas a partir de sus propias plantillas, para que el personal los revise.",
+      },
+      {
+        name: "Reservas o inscripción de voluntarios",
+        grant: "Organizaciones benéficas: Charities Capability Fund",
+        detail: "Inscripciones alojadas, con recordatorios y exportación de asistencia. Menos de S$6.000, así que basta un presupuesto.",
+      },
+    ],
+    priceLabel: "Total a 3 años",
+    netLabel: "Usted paga tras la subvención",
+    examplesNote: "Precios sin GST, con alojamiento y soporte incluidos. La agencia decide el importe final de la subvención.",
+    stepsEyebrow: "Cómo funciona",
+    stepsTitle: "De su primer mensaje a un sistema que su equipo usa",
+    steps: [
+      {
+        lead: "Cuéntenos qué le quita más tiempo",
+        detail: "Un formulario que imprime, una hoja de cálculo que vuelve a teclear, una lista que persigue por teléfono.",
+      },
+      {
+        lead: "Reciba un presupuesto cerrado",
+        detail: "En el formato que exige su solicitud, con el coste desglosado año por año. Sin coste.",
+      },
+      {
+        lead: "Usted presenta la solicitud",
+        detail: "El trabajo empieza solo cuando se aprueba la subvención. No se paga nada antes.",
+      },
+      {
+        lead: "Su equipo empieza a usarlo",
+        detail: "Configuración, traslado de sus registros y una sesión práctica para su personal.",
+      },
+    ],
+    rulesEyebrow: "Conviene saber",
+    rulesTitle: "Cuatro reglas antes de solicitar",
+    rules: [
+      "Solicite al menos 2 meses antes de que empiece el trabajo. Para el Charities Capability Fund, envíe la solicitud antes de mediados de enero de 2027.",
+      "En el Charities Capability Fund, un proyecto de más de S$6.000 necesita tres presupuestos comparables, que reúne su organización. El fondo paga sobre el más bajo.",
+      "En Green Lane, los sistemas de voluntariado y de donantes solo cuentan como mejoras de uno que ya usa.",
+      "Empezar o pagar antes de la aprobación puede hacerle perder la subvención.",
+    ],
+    honesty: "StarTech no es un proveedor designado por NCSS, y Green Lane no tiene proveedores designados. Confirme las reglas vigentes con NCSS o en charities.gov.sg antes de solicitar.",
+    formEyebrow: "Pedir un presupuesto",
+    formTitle: "Pida un presupuesto para su solicitud",
+    formSub: "Cuéntenos qué hace hoy su equipo a mano. Respondemos en dos días hábiles con lo que se podría crear y qué subvención encaja.",
+    formPlaceholder: "¿Qué le quita más tiempo a su equipo? ¿Su organización es una agencia de servicios sociales (miembro de NCSS) u otra organización benéfica?",
+    formSend: "Pedir un presupuesto",
+  },
+
   stickyCta: {
     line: "Treinta minutos sobre su proceso y una idea clara de qué desarrollar primero.",
     action: "Hablemos",

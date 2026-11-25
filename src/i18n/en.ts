@@ -879,6 +879,98 @@ export const en = {
     stagingFailed: "The staging login did not complete. Please try again later.",
   },
 
+  charities: {
+    eyebrow: "Grants for charities",
+    title: "A grant can pay up to 80% of your charity's new system",
+    intro:
+      "Singapore charities and social service agencies can get most of a booking system, a case notes system or an AI staff assistant paid for. StarTech builds it, and gives you a fixed quote in the form your application needs, at no charge.",
+    ctaQuote: "Ask for a quote",
+    ctaWhich: "See which grant fits",
+    grantsEyebrow: "Which grant fits",
+    grantsTitle: "Two grants, depending on who you are",
+    grants: [
+      {
+        who: "Social service agencies",
+        name: "NCSS Transformation Sustainability Scheme, Green Lane",
+        points: [
+          "Up to 80% of the cost, for up to 3 years.",
+          "Booking, event management, case management and AI productivity tools: up to S$30,000 each.",
+          "One quote, on NCSS's own template. There is no list of approved vendors.",
+          "For agencies running at least 2 years, with an OHFSS assessment from the last 12 months.",
+        ],
+        source: "The scheme on NCSS's site",
+      },
+      {
+        who: "Other registered charities and IPCs",
+        name: "Charities Capability Fund",
+        points: [
+          "80% in the first year, 50% in years 2 and 3, up to S$40,000 per charity.",
+          "Booking, volunteer, donor and case management systems, and AI productivity tools.",
+          "A new website: 80%, up to S$3,000, for charities with receipts under S$10 million.",
+          "Applications close on 31 January 2027.",
+        ],
+        source: "The fund on charities.gov.sg",
+      },
+    ],
+    examplesEyebrow: "What it costs you",
+    examplesTitle: "Three examples, over 3 years",
+    examples: [
+      {
+        name: "Online booking and attendance",
+        grant: "Social service agencies: Green Lane",
+        detail: "Sign-ups, reminders, QR check-in and attendance reports, with nothing retyped from forms.",
+      },
+      {
+        name: "AI staff assistant",
+        grant: "Social service agencies: Green Lane",
+        detail: "Drafts reports, case summaries, letters and replies from your own templates, for staff to check.",
+      },
+      {
+        name: "Booking or volunteer sign-up",
+        grant: "Charities: Charities Capability Fund",
+        detail: "Hosted sign-ups with reminders and an attendance export. Under S$6,000, so one quote is enough.",
+      },
+    ],
+    priceLabel: "Total over 3 years",
+    netLabel: "You pay after the grant",
+    examplesNote: "Prices exclude GST and include hosting and support. The agency decides the final grant amount.",
+    stepsEyebrow: "How it works",
+    stepsTitle: "From your first message to a system your team uses",
+    steps: [
+      {
+        lead: "Tell us what takes the most time",
+        detail: "A form you print, a spreadsheet you retype, a list you chase by phone.",
+      },
+      {
+        lead: "Get a fixed quote",
+        detail: "In the form your application needs, with the cost set out year by year. No charge.",
+      },
+      {
+        lead: "You apply",
+        detail: "Work starts only after the grant is approved. Nothing is paid before then.",
+      },
+      {
+        lead: "Your team starts using it",
+        detail: "Set-up, your records moved in, and a hands-on session for your staff.",
+      },
+    ],
+    rulesEyebrow: "Good to know",
+    rulesTitle: "Four rules to know before you apply",
+    rules: [
+      "Apply at least 2 months before the work starts. For the Charities Capability Fund, send your application by mid-January 2027.",
+      "Under the Charities Capability Fund, a project over S$6,000 needs three comparable quotes, which your charity collects. The fund pays on the lowest.",
+      "Under Green Lane, volunteer and donor systems count only as upgrades to one you already use.",
+      "Starting or paying before approval can cost you the grant.",
+    ],
+    honesty:
+      "StarTech is not an NCSS-appointed vendor, and Green Lane has no appointed vendors. Check the current rules with NCSS or on charities.gov.sg before you apply.",
+    formEyebrow: "Ask for a quote",
+    formTitle: "Get a quote for your grant application",
+    formSub: "Tell us what your team does by hand today. We reply within two working days with what could be built and which grant fits.",
+    formPlaceholder: "What takes your team the most time? Is your organisation a social service agency (NCSS member) or another charity?",
+    formSend: "Ask for a quote",
+  },
+
   stickyCta: {
     line: "Thirty minutes on your process, and a clear view of what to build first.",
     action: "Let's talk",

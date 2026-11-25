@@ -25,7 +25,7 @@ interface ContactProps {
    * its heading from the flyer copy: that page's offer is "send us one
    * spreadsheet", so the form has to be able to take one.
    */
-  variant?: "default" | "flyer" | "singpass";
+  variant?: "default" | "flyer" | "singpass" | "charities";
 }
 
 export default function Contact({ variant = "default" }: ContactProps) {
@@ -42,6 +42,9 @@ export default function Contact({ variant = "default" }: ContactProps) {
   // On /singpass the enquiry is a Singpass check: its own copy, and a topic
   // the Worker turns into the "Singpass check" subject in hq and the email.
   const isSingpass = variant === "singpass";
+  // On /charities the enquiry is a grant quote request, with its own topic.
+  const isCharities = variant === "charities";
+  const topic = isSingpass ? "singpass" : isCharities ? "charities" : null;
 
   const handleChange = useCallback(
     (
@@ -79,7 +82,7 @@ export default function Contact({ variant = "default" }: ContactProps) {
 
       // locale: the page's language, so the automatic acknowledgement
       // (worker/ack.ts) answers in it.
-      const payload = { ...form, locale, ...getUtm(), ...(isSingpass ? { topic: "singpass" } : {}) };
+      const payload = { ...form, locale, ...getUtm(), ...(topic ? { topic } : {}) };
 
       try {
         // JSON unless a spreadsheet is attached; the Worker reads both.
@@ -115,14 +118,16 @@ export default function Contact({ variant = "default" }: ContactProps) {
         );
       }
     },
-    [form, file, isSingpass, locale, t.contact.error]
+    [form, file, topic, locale, t.contact.error]
   );
 
   const header = isFlyer
     ? { label: t.flyer.formEyebrow, title: t.flyer.formTitle, subtitle: t.flyer.formSub }
     : isSingpass
       ? { label: t.singpass.formEyebrow, title: t.singpass.formTitle, subtitle: t.singpass.formSub }
-      : { label: t.contact.eyebrow, title: t.contact.title, subtitle: t.contact.sub };
+      : isCharities
+        ? { label: t.charities.formEyebrow, title: t.charities.formTitle, subtitle: t.charities.formSub }
+        : { label: t.contact.eyebrow, title: t.contact.title, subtitle: t.contact.sub };
 
   return (
     <section id="contact" className="relative py-20 sm:py-24">
@@ -270,7 +275,9 @@ export default function Contact({ variant = "default" }: ContactProps) {
                     ? t.flyer.messagePlaceholder
                     : isSingpass
                       ? t.singpass.formPlaceholder
-                      : t.contact.messagePlaceholder
+                      : isCharities
+                        ? t.charities.formPlaceholder
+                        : t.contact.messagePlaceholder
                 }
               />
             </div>
@@ -295,7 +302,9 @@ export default function Contact({ variant = "default" }: ContactProps) {
                     ? t.flyer.formSend
                     : isSingpass
                       ? t.singpass.formSend
-                      : t.contact.send}
+                      : isCharities
+                        ? t.charities.formSend
+                        : t.contact.send}
               </button>
             )}
           </form>

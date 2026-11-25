@@ -27,6 +27,7 @@ const FlyerPage = lazy(() => import("./pages/FlyerPage"));
 const TestimonialPage = lazy(() => import("./pages/TestimonialPage"));
 const InvoiceNowPage = lazy(() => import("./pages/InvoiceNowPage"));
 const SingpassPage = lazy(() => import("./pages/SingpassPage"));
+const CharitiesPage = lazy(() => import("./pages/CharitiesPage"));
 const UpdatesPage = lazy(() => import("./pages/UpdatesPage"));
 const AskStartech = lazy(() => import("./components/AskStartech"));
 
@@ -61,7 +62,7 @@ export default function App() {
   // The Worker serves each page with its own title. Pages that set no title
   // of their own (the homepage and the demos) take it from the same table
   // after a client-side navigation, so the last page's title never lingers.
-  // The flyer, InvoiceNow, Singpass, testimonial and updates pages set theirs, in
+  // The flyer, InvoiceNow, Singpass, charities, testimonial and updates pages set theirs, in
   // the visitor's language.
   useEffect(() => {
     if (page.type === "home" || page.type === "solutions-index" || page.type === "solution-page") {
@@ -105,6 +106,12 @@ export default function App() {
         {page.type === "singpass" && (
           <Suspense fallback={<RouteFallback />}>
             <SingpassPage />
+          </Suspense>
+        )}
+
+        {page.type === "charities" && (
+          <Suspense fallback={<RouteFallback />}>
+            <CharitiesPage />
           </Suspense>
         )}
 

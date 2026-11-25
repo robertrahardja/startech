@@ -855,6 +855,96 @@ export const zhHant: Messages = {
     stagingFailed: "Staging 登入未能完成，請稍後再試。",
   },
 
+  charities: {
+    eyebrow: "慈善機構補助金",
+    title: "補助金最高可支付慈善機構新系統費用的80%",
+    intro: "新加坡的慈善機構和社會服務機構，可以用補助金支付預約系統、個案記錄系統或員工AI助理的大部分費用。StarTech負責開發，並免費提供符合申請要求格式的固定報價。",
+    ctaQuote: "索取報價",
+    ctaWhich: "看看適合哪項補助金",
+    grantsEyebrow: "適合哪項補助金",
+    grantsTitle: "兩項補助金，依機構類型區分",
+    grants: [
+      {
+        who: "社會服務機構",
+        name: "NCSS 轉型與永續計畫（Green Lane）",
+        points: [
+          "最高補助費用的80%，最長3年。",
+          "預約、活動管理、個案管理和AI辦公效率工具：每項最高S$30,000。",
+          "只需一份報價，使用NCSS的範本。沒有核准供應商名單。",
+          "適用於運作至少2年、並在過去12個月內完成OHFSS評估的機構。",
+        ],
+        source: "NCSS網站上的計畫介紹",
+      },
+      {
+        who: "其他註冊慈善機構和IPC",
+        name: "慈善機構能力基金（Charities Capability Fund）",
+        points: [
+          "第一年80%，第二和第三年50%，每個機構最高S$40,000。",
+          "預約、志工、捐款人和個案管理系統，以及AI辦公效率工具。",
+          "新網站：收入低於S$1,000萬的機構可獲80%，最高S$3,000。",
+          "申請截止日期為2027年1月31日。",
+        ],
+        source: "charities.gov.sg上的基金介紹",
+      },
+    ],
+    examplesEyebrow: "機構自付多少",
+    examplesTitle: "三個例子，以3年計算",
+    examples: [
+      {
+        name: "線上預約與出席",
+        grant: "社會服務機構：Green Lane",
+        detail: "報名、提醒、QR碼簽到和出席報告，不必再從表單重新輸入。",
+      },
+      {
+        name: "員工AI助理",
+        grant: "社會服務機構：Green Lane",
+        detail: "根據機構自己的範本草擬報告、個案摘要、信函和回覆，由員工審閱。",
+      },
+      {
+        name: "預約或志工報名",
+        grant: "慈善機構：Charities Capability Fund",
+        detail: "託管式報名系統，附提醒和出席資料匯出。低於S$6,000，只需一份報價。",
+      },
+    ],
+    priceLabel: "3年總價",
+    netLabel: "扣除補助後自付",
+    examplesNote: "價格不含GST，包含託管和支援。最終補助金額由主管機構決定。",
+    stepsEyebrow: "流程",
+    stepsTitle: "從第一則留言，到團隊每天在用的系統",
+    steps: [
+      {
+        lead: "告訴我們最花時間的工作",
+        detail: "要列印的表單、要重新輸入的試算表、要打電話追的名單。",
+      },
+      {
+        lead: "取得固定報價",
+        detail: "符合申請要求的格式，費用按年列明。免費。",
+      },
+      {
+        lead: "由機構提出申請",
+        detail: "補助金核准後才開始工作，之前不需支付任何費用。",
+      },
+      {
+        lead: "團隊開始使用",
+        detail: "設定、移轉記錄，並為員工安排實作課程。",
+      },
+    ],
+    rulesEyebrow: "須知",
+    rulesTitle: "申請前要知道的四條規則",
+    rules: [
+      "請在工作開始前至少2個月提出申請。Charities Capability Fund請在2027年1月中旬前提交。",
+      "在Charities Capability Fund下，超過S$6,000的專案需要三份可比報價，由機構自行蒐集。基金按最低報價補助。",
+      "在Green Lane下，志工和捐款人管理系統只限於升級現有系統。",
+      "在核准前開始工作或付款，可能會失去補助金。",
+    ],
+    honesty: "StarTech不是NCSS指定的供應商，Green Lane也沒有指定供應商。申請前，請向NCSS或在charities.gov.sg確認最新規則。",
+    formEyebrow: "索取報價",
+    formTitle: "為補助金申請索取報價",
+    formSub: "告訴我們團隊現在有哪些工作仍靠手工完成。我們會在兩個工作天內回覆，說明可以做什麼、適合哪項補助金。",
+    formPlaceholder: "團隊最花時間的是哪項工作？貴機構是社會服務機構（NCSS會員），還是其他慈善機構？",
+    formSend: "索取報價",
+  },
+
   stickyCta: {
     line: "用三十分鐘了解您的流程，釐清應該先開發什麼。",
     action: "預約洽談",
