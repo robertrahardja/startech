@@ -882,8 +882,8 @@ export const es: Messages = {
         name: "Programa de Transformación y Sostenibilidad de NCSS (Green Lane)",
         points: [
           "Hasta el 80% del coste, durante un máximo de 3 años.",
-          "Herramientas de reservas, gestión de eventos, gestión de casos y productividad con IA: hasta S$30.000 cada una.",
-          "Un solo presupuesto, en la plantilla de NCSS. No hay lista de proveedores aprobados.",
+          "Herramientas de reservas, gestión de eventos, gestión de casos y productividad con IA: una subvención de hasta S$30.000 para cada una.",
+          "Basta un solo presupuesto: el nuestro, en la plantilla de NCSS. No hay lista de proveedores aprobados.",
           "Para agencias con al menos 2 años de actividad y una evaluación OHFSS de los últimos 12 meses.",
         ],
         source: "El programa en el sitio de NCSS",
@@ -893,7 +893,7 @@ export const es: Messages = {
         name: "Fondo de Capacidades para Organizaciones Benéficas (Charities Capability Fund)",
         points: [
           "El 80% el primer año y el 50% los años 2 y 3, hasta S$40.000 por organización.",
-          "Sistemas de reservas, voluntariado, donantes y gestión de casos, y herramientas de productividad con IA.",
+          "Sistemas de reservas, voluntariado, donantes y gestión de casos, y herramientas de productividad con IA. Basta un solo presupuesto: el nuestro.",
           "Un sitio web nuevo: el 80%, hasta S$3.000, para organizaciones con ingresos inferiores a S$10 millones.",
           "Las solicitudes cierran el 31 de enero de 2027.",
         ],
@@ -906,22 +906,22 @@ export const es: Messages = {
       {
         name: "Reservas y asistencia en línea",
         grant: "Agencias de servicios sociales: Green Lane",
-        detail: "Inscripciones, recordatorios, registro con código QR e informes de asistencia, sin volver a teclear formularios.",
+        detail: "Las personas se inscriben en línea, reciben recordatorios y registran su llegada con un código QR. Usted ve quién vino sin volver a teclear nada.",
       },
       {
         name: "Asistente de IA para el personal",
         grant: "Agencias de servicios sociales: Green Lane",
-        detail: "Redacta informes, resúmenes de casos, cartas y respuestas a partir de sus propias plantillas, para que el personal los revise.",
+        detail: "Escribe el primer borrador de sus cartas, informes y respuestas a partir de sus propias plantillas, para que el personal lo revise. También responde a las preguntas del personal a partir de sus propios archivos y muestra de dónde sale cada respuesta. Para un máximo de 30 empleados.",
       },
       {
         name: "Reservas o inscripción de voluntarios",
         grant: "Organizaciones benéficas: Charities Capability Fund",
-        detail: "Inscripciones alojadas, con recordatorios y exportación de asistencia. Menos de S$6.000, así que basta un presupuesto.",
+        detail: "Las personas se inscriben en línea y reciben recordatorios, y usted puede descargar una lista de quién vino.",
       },
     ],
     priceLabel: "Total a 3 años",
     netLabel: "Usted paga tras la subvención",
-    examplesNote: "Precios sin GST, con alojamiento y soporte incluidos. La agencia decide el importe final de la subvención.",
+    examplesNote: "Precios sin GST, con alojamiento y soporte incluidos. NCSS decide el importe final de la subvención. Cada factura se paga en un plazo de 7 días.",
     stepsEyebrow: "Cómo funciona",
     stepsTitle: "De su primer mensaje a un sistema que su equipo usa",
     steps: [
@@ -946,7 +946,7 @@ export const es: Messages = {
     rulesTitle: "Cuatro reglas antes de solicitar",
     rules: [
       "Solicite al menos 2 meses antes de que empiece el trabajo. Para el Charities Capability Fund, envíe la solicitud antes de mediados de enero de 2027.",
-      "En el Charities Capability Fund, un proyecto de más de S$6.000 necesita tres presupuestos comparables, que reúne su organización. El fondo paga sobre el más bajo.",
+      "En el Charities Capability Fund, las herramientas de reservas, eventos, voluntariado, gestión de casos e IA solo necesitan un presupuesto: el nuestro. Solo unos pocos elementos de más de S$6.000 necesitan tres presupuestos: trabajo remoto, inicio de sesión con Singpass y Singpass myInfo.",
       "En Green Lane, los sistemas de voluntariado y de donantes solo cuentan como mejoras de uno que ya usa.",
       "Empezar o pagar antes de la aprobación puede hacerle perder la subvención.",
     ],

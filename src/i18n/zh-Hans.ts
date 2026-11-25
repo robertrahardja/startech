@@ -869,8 +869,8 @@ export const zhHans: Messages = {
         name: "NCSS 转型与可持续计划（Green Lane）",
         points: [
           "最高资助费用的80%，最长3年。",
-          "预约、活动管理、个案管理和AI办公效率工具：每项最高S$30,000。",
-          "只需一份报价，使用NCSS的模板。没有核准供应商名单。",
+          "预约、活动管理、个案管理和AI办公效率工具：每项补助最高S$30,000。",
+          "只需一份报价，即我们的报价，使用NCSS的模板。没有核准供应商名单。",
           "适用于运营至少2年、并在过去12个月内完成OHFSS评估的机构。",
         ],
         source: "NCSS网站上的计划介绍",
@@ -880,7 +880,7 @@ export const zhHans: Messages = {
         name: "慈善机构能力基金（Charities Capability Fund）",
         points: [
           "第一年80%，第二和第三年50%，每个机构最高S$40,000。",
-          "预约、义工、捐款人和个案管理系统，以及AI办公效率工具。",
+          "预约、义工、捐款人和个案管理系统，以及AI办公效率工具。只需一份报价，即我们的报价。",
           "新网站：收入低于S$1,000万的机构可获80%，最高S$3,000。",
           "申请截止日期为2027年1月31日。",
         ],
@@ -893,22 +893,22 @@ export const zhHans: Messages = {
       {
         name: "在线预约与出勤",
         grant: "社会服务机构：Green Lane",
-        detail: "报名、提醒、二维码签到和出勤报告，不必再从表格重新输入。",
+        detail: "参加者在线报名、收到提醒，并用二维码签到。谁来了一目了然，不必重新输入。",
       },
       {
         name: "员工AI助手",
         grant: "社会服务机构：Green Lane",
-        detail: "根据机构自己的模板起草报告、个案摘要、信函和回复，由员工审阅。",
+        detail: "根据机构自己的模板起草信函、报告和回复的初稿，由员工审阅。它也能根据机构自己的文件回答员工的问题，并注明每个答案的出处。最多供30名员工使用。",
       },
       {
         name: "预约或义工报名",
         grant: "慈善机构：Charities Capability Fund",
-        detail: "托管式报名系统，附提醒和出勤数据导出。低于S$6,000，只需一份报价。",
+        detail: "参加者在线报名并收到提醒，您可以下载出勤名单。",
       },
     ],
     priceLabel: "3年总价",
     netLabel: "扣除补助后自付",
-    examplesNote: "价格不含GST，包含托管和支持。最终补助金额由主管机构决定。",
+    examplesNote: "价格不含GST，包含托管和支持。最终补助金额由NCSS决定。每张发票须在7天内付款。",
     stepsEyebrow: "流程",
     stepsTitle: "从第一条留言，到团队每天在用的系统",
     steps: [
@@ -933,7 +933,7 @@ export const zhHans: Messages = {
     rulesTitle: "申请前要知道的四条规则",
     rules: [
       "请在工作开始前至少2个月提出申请。Charities Capability Fund请在2027年1月中旬前提交。",
-      "在Charities Capability Fund下，超过S$6,000的项目需要三份可比报价，由机构自行收集。基金按最低报价资助。",
+      "在Charities Capability Fund下，预约、活动、义工、个案管理和AI工具只需一份报价，即我们的报价。只有少数超过S$6,000的项目需要三份报价：远程办公、Singpass登录和Singpass myInfo。",
       "在Green Lane下，义工和捐款人管理系统只限于升级现有系统。",
       "在批准前开始工作或付款，可能会失去补助金。",
     ],

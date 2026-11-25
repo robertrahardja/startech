@@ -869,8 +869,8 @@ export const zhHant: Messages = {
         name: "NCSS 轉型與永續計畫（Green Lane）",
         points: [
           "最高補助費用的80%，最長3年。",
-          "預約、活動管理、個案管理和AI辦公效率工具：每項最高S$30,000。",
-          "只需一份報價，使用NCSS的範本。沒有核准供應商名單。",
+          "預約、活動管理、個案管理和AI辦公效率工具：每項補助最高S$30,000。",
+          "只需一份報價，即我們的報價，使用NCSS的範本。沒有核准供應商名單。",
           "適用於運作至少2年、並在過去12個月內完成OHFSS評估的機構。",
         ],
         source: "NCSS網站上的計畫介紹",
@@ -880,7 +880,7 @@ export const zhHant: Messages = {
         name: "慈善機構能力基金（Charities Capability Fund）",
         points: [
           "第一年80%，第二和第三年50%，每個機構最高S$40,000。",
-          "預約、志工、捐款人和個案管理系統，以及AI辦公效率工具。",
+          "預約、志工、捐款人和個案管理系統，以及AI辦公效率工具。只需一份報價，即我們的報價。",
           "新網站：收入低於S$1,000萬的機構可獲80%，最高S$3,000。",
           "申請截止日期為2027年1月31日。",
         ],
@@ -893,22 +893,22 @@ export const zhHant: Messages = {
       {
         name: "線上預約與出席",
         grant: "社會服務機構：Green Lane",
-        detail: "報名、提醒、QR碼簽到和出席報告，不必再從表單重新輸入。",
+        detail: "參加者線上報名、收到提醒，並用QR碼簽到。誰來了一目了然，不必重新輸入。",
       },
       {
         name: "員工AI助理",
         grant: "社會服務機構：Green Lane",
-        detail: "根據機構自己的範本草擬報告、個案摘要、信函和回覆，由員工審閱。",
+        detail: "根據機構自己的範本草擬信函、報告和回覆的初稿，由員工審閱。它也能根據機構自己的檔案回答員工的問題，並註明每個答案的出處。最多供30名員工使用。",
       },
       {
         name: "預約或志工報名",
         grant: "慈善機構：Charities Capability Fund",
-        detail: "託管式報名系統，附提醒和出席資料匯出。低於S$6,000，只需一份報價。",
+        detail: "參加者線上報名並收到提醒，您可以下載出席名單。",
       },
     ],
     priceLabel: "3年總價",
     netLabel: "扣除補助後自付",
-    examplesNote: "價格不含GST，包含託管和支援。最終補助金額由主管機構決定。",
+    examplesNote: "價格不含GST，包含託管和支援。最終補助金額由NCSS決定。每張發票須在7天內付款。",
     stepsEyebrow: "流程",
     stepsTitle: "從第一則留言，到團隊每天在用的系統",
     steps: [
@@ -933,7 +933,7 @@ export const zhHant: Messages = {
     rulesTitle: "申請前要知道的四條規則",
     rules: [
       "請在工作開始前至少2個月提出申請。Charities Capability Fund請在2027年1月中旬前提交。",
-      "在Charities Capability Fund下，超過S$6,000的專案需要三份可比報價，由機構自行蒐集。基金按最低報價補助。",
+      "在Charities Capability Fund下，預約、活動、志工、個案管理和AI工具只需一份報價，即我們的報價。只有少數超過S$6,000的項目需要三份報價：遠距辦公、Singpass登入和Singpass myInfo。",
       "在Green Lane下，志工和捐款人管理系統只限於升級現有系統。",
       "在核准前開始工作或付款，可能會失去補助金。",
     ],

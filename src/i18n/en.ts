@@ -894,8 +894,8 @@ export const en = {
         name: "NCSS Transformation Sustainability Scheme, Green Lane",
         points: [
           "Up to 80% of the cost, for up to 3 years.",
-          "Booking, event management, case management and AI productivity tools: up to S$30,000 each.",
-          "One quote, on NCSS's own template. There is no list of approved vendors.",
+          "Booking, event management, case management and AI productivity tools: a grant of up to S$30,000 each.",
+          "One quote is enough: ours, on NCSS's own template. There is no list of approved vendors.",
           "For agencies running at least 2 years, with an OHFSS assessment from the last 12 months.",
         ],
         source: "The scheme on NCSS's site",
@@ -905,7 +905,7 @@ export const en = {
         name: "Charities Capability Fund",
         points: [
           "80% in the first year, 50% in years 2 and 3, up to S$40,000 per charity.",
-          "Booking, volunteer, donor and case management systems, and AI productivity tools.",
+          "Booking, volunteer, donor and case management systems, and AI productivity tools. One quote is enough: ours.",
           "A new website: 80%, up to S$3,000, for charities with receipts under S$10 million.",
           "Applications close on 31 January 2027.",
         ],
@@ -918,22 +918,24 @@ export const en = {
       {
         name: "Online booking and attendance",
         grant: "Social service agencies: Green Lane",
-        detail: "Sign-ups, reminders, QR check-in and attendance reports, with nothing retyped from forms.",
+        detail: "People sign up online, get reminders and check in with a QR code. You see who came without retyping anything.",
       },
       {
         name: "AI staff assistant",
         grant: "Social service agencies: Green Lane",
-        detail: "Drafts reports, case summaries, letters and replies from your own templates, for staff to check.",
+        detail:
+          "Writes the first draft of your letters, reports and replies from your own templates, for staff to check. It also answers staff questions from your own files and shows where each answer came from. For up to 30 staff.",
       },
       {
         name: "Booking or volunteer sign-up",
         grant: "Charities: Charities Capability Fund",
-        detail: "Hosted sign-ups with reminders and an attendance export. Under S$6,000, so one quote is enough.",
+        detail: "People sign up online and get reminders, and you can download a list of who came.",
       },
     ],
     priceLabel: "Total over 3 years",
     netLabel: "You pay after the grant",
-    examplesNote: "Prices exclude GST and include hosting and support. The agency decides the final grant amount.",
+    examplesNote:
+      "Prices exclude GST and include hosting and support. NCSS decides the final grant amount. Each invoice is due within 7 days.",
     stepsEyebrow: "How it works",
     stepsTitle: "From your first message to a system your team uses",
     steps: [
@@ -958,7 +960,7 @@ export const en = {
     rulesTitle: "Four rules to know before you apply",
     rules: [
       "Apply at least 2 months before the work starts. For the Charities Capability Fund, send your application by mid-January 2027.",
-      "Under the Charities Capability Fund, a project over S$6,000 needs three comparable quotes, which your charity collects. The fund pays on the lowest.",
+      "Under the Charities Capability Fund, booking, event, volunteer, case management and AI tools need only one quote: ours. Three quotes are needed only for a few items over S$6,000: remote working, Singpass login and Singpass myInfo.",
       "Under Green Lane, volunteer and donor systems count only as upgrades to one you already use.",
       "Starting or paying before approval can cost you the grant.",
     ],

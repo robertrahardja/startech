@@ -10,9 +10,13 @@ import { useI18n } from "../i18n";
  * Honesty rules for this page (marketing copy): every grant fact is from the
  * official page, checked 24 Nov 2026 (NCSS's TSS and Green Lane pages, the
  * Charities Capability Fund page on charities.gov.sg). StarTech is not an
- * NCSS-appointed vendor; Green Lane has none. The charity collects the other
- * quotes CCF needs above S$6,000; StarTech never supplies or arranges them.
+ * NCSS-appointed vendor; Green Lane has none. CCF needs 3 quotes only for the
+ * asterisked items over S$6,000 (remote working, Singpass login, Singpass
+ * myInfo); booking, event, volunteer, case management and AI tools go in with
+ * one quote, StarTech's (CCF page, read 25 Nov 2026). StarTech never supplies
+ * or arranges anyone else's quote.
  * Research: startech_marketing gtm/playbooks/grant-routes/1-charities.md.
+ * Prices: startech_marketing gtm/pricing/suite-2026-11/README.md.
  */
 
 const TSS = "https://ncss.gov.sg/grants/organisation-development/transformation-sustainability-scheme/pre-scoped-and-green-lane-solutions/";
@@ -23,13 +27,15 @@ const GRANT_SOURCES = [TSS, CCF];
 /**
  * The three worked examples' figures, in the same order as the catalogue's
  * examples. Kept out of the catalogue: they are the same in every language.
- * Green Lane pays 80% of the 3-year total; CCF pays 80% of year 1 (S$4,600)
- * and 50% of years 2-3 (S$600 each).
+ * Green Lane pays 80% of the 3-year total, and its S$30,000 cap is on the
+ * grant, not the cost: Bookings S$30,700 gets S$24,560, Assist S$24,000 gets
+ * S$19,200. CCF pays 80% of year 1 (S$2,400, so S$1,920) and 50% of years 2-3
+ * (S$300 a year, so S$150 each): S$2,220, leaving the charity S$780.
  */
 const EXAMPLE_FIGURES = [
+  { price: "S$30,700", net: "S$6,140" },
   { price: "S$24,000", net: "S$4,800" },
-  { price: "S$18,000", net: "S$3,600" },
-  { price: "S$5,800", net: "S$1,520" },
+  { price: "S$3,000", net: "S$780" },
 ];
 
 const EXTERNAL = "underline underline-offset-4 decoration-st-border hover:text-st-text hover:decoration-st-text";
