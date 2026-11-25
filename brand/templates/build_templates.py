@@ -387,7 +387,7 @@ def build_quotation():
     body(doc, "")
     body(
         doc,
-        "Payment terms: invoices payable within 30 days of issue. "
+        "Payment terms: invoices payable within 7 days of issue. "
         "Late payment charges: 1.5% per month.",
         italic=True, color=MUTED, size=9,
     )
@@ -575,7 +575,7 @@ def build_invoice():
     h2(doc, "Terms & conditions")
     body(
         doc,
-        "Payment to be made within 30 days via the payment method shown "
+        "Payment to be made within 7 days via the payment method shown "
         "above. This invoice confirms your order.",
     )
 
